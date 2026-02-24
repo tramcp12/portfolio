@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <rect width="32" height="32" rx="6" fill="#2d4a3e"/>
+  <text x="16" y="13" font-family="Georgia, serif" font-size="7" font-weight="600" fill="#b8cabd" text-anchor="middle" letter-spacing="1">TRẠM</text>
+  <text x="16" y="24" font-family="Georgia, serif" font-size="10" font-weight="600" fill="#c9a96e" text-anchor="middle" letter-spacing="-0.5">CP12</text>
+</svg>

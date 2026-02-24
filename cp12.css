@@ -1,0 +1,2515 @@
+/*
+ * ============================================================
+ *  Trạm CP12 — Master CSS Source
+ *  Compiled for Wix HtmlComponent Full-Page Embed
+ *  Last updated: 2026-02-24
+ * ============================================================
+ *
+ *  Section index:
+ *    1.  Design tokens (CSS custom properties)
+ *    2.  Root wrapper + base resets
+ *    3.  Accessibility utilities
+ *    4.  Navigation (desktop + mobile overlay)
+ *    5.  Hero section
+ *    6.  Animations + reveal system
+ *    7.  Utility overrides (section-label variants)
+ *    8.  Responsive breakpoints (900px, 480px)
+ *    9.  Video section
+ *   10.  Rooms section
+ *   11.  Travel / Explore section
+ *   12.  About section
+ *   13.  Blog / Journal section
+ *   14.  CTA section
+ *   15.  Footer + social links
+ *   16.  Modal
+ *   17.  @supports progressive enhancements
+ * ============================================================
+ */
+
+/* ── 1. Design tokens ─────────────────────────────────────── */
+
+:root {
+  /* Greens */
+  --cream: #f5f0e8;
+  --warm-white: #fdfaf5;
+  --pine: #2d4a3e;
+  --pine-light: #3d6357;
+  --pine-dark: #1a3028;
+  --pine-mid: #5c8b7a;
+  --mist: #b8cabd;
+
+  /* Earths */
+  --earth: #8b6347;
+  --terracotta: #c4724a;
+  --gold: #c9a96e;
+
+  /* Darks */
+  --charcoal: #2a2522;
+  --charcoal-deep: #1a1a17;
+  --slate: #4a5568;
+  --slate-light: #718096;
+  --slate-dark: #2d3748;
+  --text-warm: #3d3530;
+
+  /* Blues */
+  --slate-blue: #2d4a7a;
+  --slate-blue-mid: #4a6aad;
+
+  /* Typography */
+  --font-serif: "Cormorant Garamond", serif;
+  --font-sans: "Be Vietnam Pro", sans-serif;
+
+  /* Semi-transparent alpha variants (CSS-3) */
+  --gold-10: rgba(201, 169, 110, 0.10);
+  --gold-20: rgba(201, 169, 110, 0.20);
+  --gold-35: rgba(201, 169, 110, 0.35);
+  --gold-40: rgba(201, 169, 110, 0.40);
+  --mist-20: rgba(184, 202, 189, 0.20);
+  --mist-50: rgba(184, 202, 189, 0.50);
+  --pine-dark-80: rgba(26, 48, 40, 0.80);
+  --pine-dark-90: rgba(26, 48, 40, 0.90);
+  --pine-dark-92: rgba(26, 48, 40, 0.92);
+  --pine-29: rgba(29, 42, 38, 0.90);
+  --cream-90: rgba(253, 250, 245, 0.90);
+
+  /* Gradient interpolation stops (used in room/blog card backgrounds) */
+  --brown-deep: #6b3a22;
+  --terracotta-dark: #c45a30;
+  --pine-deep: #243d38;
+  --slate-mid: #5a6a84;
+  --brown-dark: #5c3318;
+  --earth-warm: #b86040;
+  --blue-deep: #3a5a9a;
+  --indigo-muted: #3d5490;
+
+  /* Layout */
+  --nav-height: 80px;
+}
+
+/* ── 2. Root wrapper + base resets ───────────────────────── */
+
+#cp12-wrap {
+  position: relative;
+  min-height: 100vh;
+  z-index: 1;
+  background: var(--warm-white);
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  font-family: var(--font-sans);
+  font-weight: 300;
+  color: var(--text-warm);
+}
+
+#cp12-wrap * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+#cp12-wrap a {
+  text-decoration: none;
+}
+
+/* ── 3. Accessibility utilities ──────────────────────────── */
+
+#cp12-wrap .sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+#cp12-wrap .skip-nav {
+  position: absolute;
+  top: -100%;
+  left: 1rem;
+  background: var(--gold);
+  color: var(--charcoal);
+  padding: 0.75rem 1.5rem;
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 500;
+  z-index: 999999;
+  transition: top 0.2s;
+  border: none;
+  cursor: pointer;
+}
+
+#cp12-wrap .skip-nav:focus {
+  top: 1rem;
+}
+
+#cp12-wrap *:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+  border-radius: 1px;
+}
+
+/* :focus fallback for browsers without :focus-visible support */
+#cp12-wrap *:focus:not(:focus-visible) {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}
+
+#cp12-wrap button:focus-visible,
+#cp12-wrap a:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}
+
+/* Mobile nav CTA colour (replaces inline style) */
+#cp12-wrap .nav-mobile-cta {
+  color: var(--gold);
+}
+
+/* ── 4. Navigation ───────────────────────────────────────── */
+
+#cp12-wrap .cp12-main-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  padding: 1.5rem 3rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* Dark-to-transparent gradient ensures cream/mist text is always readable
+     at the top of the page, regardless of the content scrolled behind */
+  background: linear-gradient(
+    to bottom,
+    rgba(26, 48, 40, 0.72) 0%,
+    rgba(26, 48, 40, 0.20) 70%,
+    rgba(26, 48, 40, 0.00) 100%
+  );
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border-bottom: 1px solid transparent;
+  transition:
+    background 0.45s ease,
+    backdrop-filter 0.45s ease,
+    border-color 0.45s ease,
+    box-shadow 0.45s ease;
+}
+
+/* ── Nav element base styles ─────────────────────────────── */
+
+#cp12-wrap .nav-logo {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--cream);
+  letter-spacing: 0.05em;
+  transition: color 0.45s ease;
+}
+
+#cp12-wrap .nav-logo span {
+  font-style: italic;
+  font-weight: 300;
+  color: var(--gold);
+  transition: color 0.45s ease;
+}
+
+#cp12-wrap .nav-links {
+  display: flex;
+  gap: 2.5rem;
+  list-style: none;
+}
+
+#cp12-wrap .nav-links a {
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--mist);
+  transition: color 0.3s;
+}
+
+#cp12-wrap .nav-links a:hover { color: var(--cream); }
+
+#cp12-wrap .cp12-main-nav a.nav-cta {
+  background: var(--pine);
+  color: var(--cream);
+  padding: 0.6rem 1.4rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+#cp12-wrap .cp12-main-nav a.nav-cta:hover {
+  background: var(--terracotta);
+  color: var(--cream);
+}
+
+/* Hero (not scrolled) state — gold ghost pill; stands out on dark gradient */
+#cp12-wrap .cp12-main-nav:not(.scrolled) a.nav-cta {
+  background: transparent;
+  color: var(--gold);
+  border: 1px solid rgba(201, 169, 110, 0.65);
+  box-shadow: 0 0 0 0 transparent;
+}
+
+#cp12-wrap .cp12-main-nav:not(.scrolled) a.nav-cta:hover {
+  background: var(--gold);
+  color: var(--charcoal);
+  border-color: var(--gold);
+}
+
+/* ── Scrolled over LIGHT sections (rooms, about, journal) ──────────────────
+   Warm cream frosted glass — neutral, readable                              */
+#cp12-wrap .cp12-main-nav.scrolled:not(.nav-over-dark) {
+  background: rgba(253, 250, 245, 0.90);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(45, 74, 62, 0.08);
+}
+
+#cp12-wrap .cp12-main-nav.scrolled:not(.nav-over-dark) .nav-logo       { color: var(--pine); }
+#cp12-wrap .cp12-main-nav.scrolled:not(.nav-over-dark) .nav-logo span  { color: var(--earth); }
+#cp12-wrap .cp12-main-nav.scrolled:not(.nav-over-dark) .nav-links a       { color: var(--pine); }
+#cp12-wrap .cp12-main-nav.scrolled:not(.nav-over-dark) .nav-links a:hover { color: var(--terracotta); }
+#cp12-wrap .cp12-main-nav.scrolled:not(.nav-over-dark) a.nav-cta          { background: var(--pine); color: var(--cream); border: 1px solid transparent; }
+#cp12-wrap .cp12-main-nav.scrolled:not(.nav-over-dark) a.nav-cta:hover    { background: var(--terracotta); color: var(--cream); }
+
+/* ── Scrolled over DARK sections (hero, video, explore, book) ──────────────
+   Pine Forest frosted glass — immersive, brand-forward                      */
+#cp12-wrap .cp12-main-nav.scrolled.nav-over-dark {
+  background: rgba(26, 48, 40, 0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(201, 169, 110, 0.18);
+}
+
+#cp12-wrap .cp12-main-nav.scrolled.nav-over-dark .nav-logo       { color: var(--cream); }
+#cp12-wrap .cp12-main-nav.scrolled.nav-over-dark .nav-logo span  { color: var(--gold); }
+#cp12-wrap .cp12-main-nav.scrolled:not(.nav-over-dark) .nav-hamburger { color: var(--pine); }
+#cp12-wrap .cp12-main-nav.scrolled.nav-over-dark .nav-links a       { color: var(--mist); }
+#cp12-wrap .cp12-main-nav.scrolled.nav-over-dark .nav-links a:hover { color: var(--gold); }
+#cp12-wrap .cp12-main-nav.scrolled.nav-over-dark a.nav-cta          { background: var(--gold); color: var(--charcoal); }
+#cp12-wrap .cp12-main-nav.scrolled.nav-over-dark a.nav-cta:hover    { background: var(--terracotta); color: var(--cream); }
+#cp12-wrap .cp12-main-nav.scrolled.nav-over-dark .nav-hamburger     { color: var(--cream); }
+
+
+/* Mobile hamburger */
+#cp12-wrap .nav-hamburger {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  color: var(--pine);
+  line-height: 1;
+}
+
+#cp12-wrap .nav-hamburger svg {
+  display: block;
+}
+
+/* Mobile overlay */
+#cp12-wrap .nav-mobile-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: var(--pine);
+  z-index: 200;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2.5rem;
+}
+
+#cp12-wrap .nav-mobile-overlay.open {
+  display: flex;
+}
+
+#cp12-wrap .nav-mobile-overlay a {
+  font-family: var(--font-serif);
+  font-size: 2.2rem;
+  color: var(--cream);
+  letter-spacing: 0.05em;
+  font-weight: 300;
+  transition: color 0.2s;
+}
+
+#cp12-wrap .nav-mobile-overlay a:hover {
+  color: var(--gold);
+}
+
+#cp12-wrap .nav-mobile-close {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  background: none;
+  border: none;
+  color: var(--cream);
+  font-size: 2rem;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0.5rem;
+}
+
+/* ── 5. Hero section ─────────────────────────────────────── */
+
+#cp12-wrap .hero {
+  min-height: 100vh;
+  margin-top: -1px; /* close hairline gap from #cp12-wrap background bleed above hero */
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  overflow: hidden;
+}
+
+#cp12-wrap .hero-left {
+  background: var(--pine);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 10rem 5rem 6rem; /* 10rem top = 8rem content offset + ~2rem nav height */
+  position: relative;
+}
+
+#cp12-wrap .hero-left::after {
+  content: "";
+  position: absolute;
+  right: -40px;
+  top: 0;
+  bottom: 0;
+  width: 80px;
+  background: var(--pine);
+  clip-path: polygon(0 0, 0% 100%, 100% 50%);
+}
+
+#cp12-wrap .hero-tag {
+  font-size: 0.7rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--mist);
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+#cp12-wrap .hero-tag::before {
+  content: "";
+  display: block;
+  width: 40px;
+  height: 1px;
+  background: var(--mist);
+}
+
+#cp12-wrap .hero-title {
+  font-family: var(--font-serif);
+  font-size: 5.5rem;
+  line-height: 0.9;
+  color: var(--cream);
+  font-weight: 300;
+  margin-bottom: 1.5rem;
+}
+
+#cp12-wrap .hero-title em {
+  font-style: italic;
+  color: var(--gold);
+  display: block;
+}
+
+#cp12-wrap .hero-subtitle {
+  color: var(--mist);
+  font-size: 0.95rem;
+  line-height: 1.8;
+  max-width: 380px;
+  margin-bottom: 3rem;
+}
+
+#cp12-wrap .hero-btns {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+/* Buttons — shared base (CSS-2) */
+#cp12-wrap .btn-primary,
+#cp12-wrap .btn-gold,
+#cp12-wrap .btn-outline,
+#cp12-wrap .btn-ghost {
+  padding: 1rem 2.2rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-weight: 500;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+}
+
+/* Primary / Gold — filled */
+#cp12-wrap .btn-primary,
+#cp12-wrap .btn-gold {
+  background: var(--gold);
+  color: var(--charcoal);
+}
+
+#cp12-wrap .btn-primary:hover,
+#cp12-wrap .btn-gold:hover {
+  background: var(--terracotta);
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+/* Outline — mist border */
+#cp12-wrap .btn-outline {
+  border: 1px solid var(--mist-50);
+  color: var(--mist);
+}
+
+#cp12-wrap .btn-outline:hover {
+  border-color: var(--mist);
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+/* Ghost — gold border */
+#cp12-wrap .btn-ghost {
+  border: 1px solid var(--gold-40);
+  color: var(--gold);
+}
+
+#cp12-wrap .btn-ghost:hover {
+  border-color: var(--gold);
+  background: var(--gold-10);
+}
+
+/* Hero right panel */
+#cp12-wrap .hero-right {
+  position: relative;
+  overflow: hidden;
+  background: var(--cream);
+}
+
+#cp12-wrap .hero-image-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    /* subtle diagonal light shaft */
+    linear-gradient(
+      115deg,
+      transparent 35%,
+      rgba(201, 169, 110, 0.1) 52%,
+      transparent 68%
+    ),
+    /* warm radial glow from upper-left — mimics ambient light */
+    radial-gradient(
+        ellipse at 25% 20%,
+        rgba(93, 139, 122, 0.35) 0%,
+        transparent 55%
+      ),
+    /* deep forest base */
+    linear-gradient(
+        160deg,
+        var(--pine-light) 0%,
+        var(--pine) 42%,
+        var(--pine-dark) 100%
+      );
+}
+
+#cp12-wrap .hero-image-overlay {
+  position: absolute;
+  inset: 0;
+  opacity: 0.06;
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23B8CABD'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+#cp12-wrap .hero-image-content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 3rem;
+}
+
+#cp12-wrap .hero-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: rgba(184, 202, 189, 0.2);
+  margin-top: 2rem;
+}
+
+#cp12-wrap .stat-box {
+  background: rgba(29, 42, 38, 0.9);
+  padding: 1.5rem;
+  text-align: center;
+}
+
+#cp12-wrap .stat-num {
+  font-family: var(--font-serif);
+  font-size: 2.5rem;
+  color: var(--gold);
+  display: block;
+  line-height: 1;
+}
+
+#cp12-wrap .stat-label {
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--mist);
+  display: block;
+  margin-top: 0.4rem;
+}
+
+#cp12-wrap .hero-pine-icon {
+  font-size: 8rem;
+  opacity: 0.15;
+  position: absolute;
+  top: 20%;
+  right: 20%;
+}
+
+/* Play button (hero) */
+#cp12-wrap .play-btn-wrap {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+#cp12-wrap .play-btn {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background: rgba(201, 169, 110, 0.2);
+  border: 2px solid var(--gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+#cp12-wrap .play-btn::after {
+  content: "";
+  border-left: 22px solid var(--gold);
+  border-top: 14px solid transparent;
+  border-bottom: 14px solid transparent;
+  margin-left: 5px;
+}
+
+#cp12-wrap .play-btn:hover {
+  background: rgba(201, 169, 110, 0.35);
+  transform: scale(1.08);
+}
+
+#cp12-wrap .play-label {
+  color: var(--mist);
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+}
+
+/* Scroll hint */
+#cp12-wrap .scroll-hint {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--mist);
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+#cp12-wrap .scroll-line {
+  width: 1px;
+  height: 40px;
+  background: linear-gradient(to bottom, var(--mist), transparent);
+  animation: cp12sp 2s ease-in-out infinite;
+}
+
+@keyframes cp12sp {
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: scaleY(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: scaleY(1);
+  }
+}
+
+/* ── 6. Animations + reveal system ──────────────────────── */
+
+#cp12-wrap .fade-up {
+  animation: cp12fu 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+#cp12-wrap .delay-1 {
+  animation-delay: 0.15s;
+  opacity: 0;
+}
+#cp12-wrap .delay-2 {
+  animation-delay: 0.3s;
+  opacity: 0;
+}
+#cp12-wrap .delay-3 {
+  animation-delay: 0.45s;
+  opacity: 0;
+}
+#cp12-wrap .delay-4 {
+  animation-delay: 0.6s;
+  opacity: 0;
+}
+
+@keyframes cp12fu {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* IntersectionObserver reveal */
+#cp12-wrap .cp12-reveal {
+  opacity: 0;
+  transform: translateY(50px);
+  transition:
+    opacity 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+#cp12-wrap .cp12-reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── A-1: Respect OS reduced-motion preference ───────────── */
+@media (prefers-reduced-motion: reduce) {
+  #cp12-wrap .cp12-reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  #cp12-wrap .cp12-reveal.visible {
+    opacity: 1;
+    transform: none;
+  }
+  #cp12-wrap .fade-up,
+  #cp12-wrap .delay-1,
+  #cp12-wrap .delay-2,
+  #cp12-wrap .delay-3,
+  #cp12-wrap .delay-4 {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+  #cp12-wrap .scroll-line {
+    animation: none;
+    opacity: 0.7;
+  }
+  #cp12-wrap .room-img-bg,
+  #cp12-wrap .travel-card-img-bg {
+    transition: none;
+  }
+  #cp12-wrap .btn-primary:hover,
+  #cp12-wrap .btn-gold:hover,
+  #cp12-wrap .btn-outline:hover,
+  #cp12-wrap .btn-ghost:hover {
+    transform: none;
+  }
+  #cp12-wrap .play-btn:hover {
+    transform: none;
+  }
+  #cp12-wrap .travel-card:hover,
+  #cp12-wrap .blog-card:hover {
+    transform: none;
+  }
+  #cp12-next-btn {
+    animation: none;
+  }
+}
+
+/* ── 7. Utility overrides ────────────────────────────────── */
+
+#cp12-wrap .travel-highlight {
+  color: var(--mist);
+}
+
+#cp12-wrap .section-label--left {
+  justify-content: flex-start;
+  margin-bottom: 1rem;
+}
+
+#cp12-wrap .section-label--gold {
+  color: var(--gold);
+}
+
+#cp12-wrap .about-content > .btn-primary {
+  margin-top: 1rem;
+}
+
+#cp12-wrap .address-text {
+  font-style: normal;
+}
+
+#cp12-wrap .section-label--left::before,
+#cp12-wrap .section-label--left::after {
+  display: none;
+}
+
+#cp12-wrap .section-label--cta {
+  margin-bottom: 1.5rem;
+}
+
+/* ── 8. Responsive breakpoints ───────────────────────────── */
+
+@media (max-width: 900px) {
+  #cp12-wrap .hero {
+    grid-template-columns: 1fr;
+  }
+  #cp12-wrap .hero-right {
+    display: none;
+  }
+  #cp12-wrap .hero-title {
+    font-size: 3.5rem;
+  }
+  #cp12-wrap .rooms-grid,
+  #cp12-wrap .travel-grid,
+  #cp12-wrap .blog-grid {
+    grid-template-columns: 1fr;
+  }
+  #cp12-wrap .footer-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  #cp12-wrap .about-section {
+    grid-template-columns: 1fr;
+  }
+  #cp12-wrap .cp12-main-nav {
+    padding: 1rem 1.5rem;
+  }
+  #cp12-wrap .nav-links {
+    display: none;
+  }
+  #cp12-wrap .nav-hamburger {
+    display: flex;
+    align-items: center;
+  }
+  #cp12-wrap .rooms-header,
+  #cp12-wrap .travel-header {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── R-1: Tablet breakpoint (≤768px) ─────────────────────── */
+
+@media (max-width: 768px) {
+  #cp12-wrap .hero-title {
+    font-size: 3rem;
+  }
+  #cp12-wrap .hero-left {
+    padding: 8rem 2.5rem 4rem;
+  }
+  #cp12-wrap .footer-grid {
+    grid-template-columns: 1fr;
+  }
+  #cp12-wrap .rooms-section,
+  #cp12-wrap .travel-section,
+  #cp12-wrap .blog-section {
+    padding: 4rem 2rem 6rem;
+  }
+  #cp12-wrap .about-section {
+    padding: 4rem 2rem;
+    gap: 2.5rem;
+  }
+  #cp12-wrap .section-heading {
+    font-size: 2.8rem;
+  }
+  #cp12-wrap .rooms-header,
+  #cp12-wrap .travel-header {
+    gap: 2rem;
+  }
+  #cp12-wrap .hero-stats {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  #cp12-wrap .stat-num {
+    font-size: 2rem;
+  }
+}
+
+/* ── Mid-breakpoint (≤640px) ──────────────────────────────── */
+
+@media (max-width: 640px) {
+  #cp12-wrap .room-meta {
+    flex-wrap: wrap;
+    gap: 0.6rem 1rem;
+  }
+  #cp12-wrap .travel-grid {
+    grid-template-columns: 1fr;
+  }
+  #cp12-wrap .blog-grid {
+    grid-template-columns: 1fr;
+  }
+  #cp12-wrap .filter-tabs {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  #cp12-wrap .hero-title {
+    font-size: 2.6rem;
+    line-height: 1;
+  }
+  #cp12-wrap .hero-left {
+    padding: 7rem 1.5rem 3rem;
+  }
+  #cp12-wrap .hero-btns {
+    flex-direction: column;
+  }
+  #cp12-wrap .footer-grid {
+    grid-template-columns: 1fr;
+  }
+  #cp12-wrap .cta-title {
+    font-size: 2.6rem;
+  }
+  #cp12-wrap .about-section {
+    padding: 4rem 1.5rem;
+  }
+  #cp12-wrap .rooms-section,
+  #cp12-wrap .travel-section,
+  #cp12-wrap .blog-section,
+  #cp12-wrap .cta-section {
+    padding: 4rem 1.5rem;
+  }
+  #cp12-wrap .video-container {
+    padding: 0 1.5rem;
+  }
+  #cp12-wrap .video-title {
+    font-size: 2.4rem;
+  }
+  #cp12-wrap .section-heading {
+    font-size: 2.6rem;
+  }
+  #cp12-wrap .cta-btns {
+    flex-direction: column;
+    align-items: center;
+  }
+  #cp12-wrap footer {
+    padding: 3rem 1.5rem 2rem;
+  }
+}
+
+/* ── 9. Video section ────────────────────────────────────── */
+
+#cp12-wrap .video-section {
+  background: linear-gradient(
+    180deg,
+    var(--pine) 0%,
+    var(--charcoal) 240px,
+    var(--charcoal) 100%
+  );
+  padding: 8rem 0;
+  position: relative;
+  overflow: hidden;
+}
+
+#cp12-wrap .video-section::before {
+  content: "CP12";
+  position: absolute;
+  font-family: var(--font-serif);
+  font-size: 20rem;
+  color: rgba(255, 255, 255, 0.03);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  white-space: nowrap;
+  font-weight: 700;
+  user-select: none;
+}
+
+#cp12-wrap .video-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 3rem;
+  position: relative;
+  z-index: 1;
+  text-align: center;
+}
+
+#cp12-wrap .section-label {
+  font-size: 0.7rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+#cp12-wrap .section-label::before,
+#cp12-wrap .section-label::after {
+  content: "";
+  display: block;
+  width: 40px;
+  height: 1px;
+  background: var(--gold);
+  opacity: 0.5;
+}
+
+#cp12-wrap .video-title {
+  font-family: var(--font-serif);
+  font-size: 3.5rem;
+  color: var(--cream);
+  font-weight: 300;
+  margin-bottom: 1rem;
+  line-height: 1.1;
+}
+
+#cp12-wrap .video-title em {
+  font-style: italic;
+  color: var(--gold);
+}
+
+#cp12-wrap .video-desc {
+  color: rgba(184, 202, 189, 0.7);
+  font-size: 0.95rem;
+  line-height: 1.8;
+  max-width: 560px;
+  margin: 0 auto 3rem;
+}
+
+#cp12-wrap .video-frame {
+  aspect-ratio: 16/9;
+  background: linear-gradient(135deg, var(--pine-dark) 0%, var(--pine) 100%);
+  border: 1px solid rgba(201, 169, 110, 0.2);
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+#cp12-wrap .video-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+#cp12-wrap .big-play {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: rgba(201, 169, 110, 0.15);
+  border: 2px solid rgba(201, 169, 110, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
+}
+
+#cp12-wrap .big-play::after {
+  content: "";
+  border-left: 28px solid var(--gold);
+  border-top: 17px solid transparent;
+  border-bottom: 17px solid transparent;
+  margin-left: 6px;
+}
+
+#cp12-wrap .video-frame:hover .big-play {
+  background: rgba(201, 169, 110, 0.3);
+  transform: scale(1.1);
+}
+
+#cp12-wrap .video-tag {
+  font-size: 0.7rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: rgba(201, 169, 110, 0.8);
+  background: rgba(0, 0, 0, 0.4);
+  padding: 0.4rem 1rem;
+  border: 1px solid rgba(201, 169, 110, 0.2);
+}
+
+/* ── 10. Rooms section ───────────────────────────────────── */
+
+#cp12-wrap .rooms-section {
+  padding: 5rem 3rem 8rem; /* reduced top to remove dead-zone; keep generous bottom */
+  background: var(--cream);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Section transition bands removed — sections now use natural body scroll */
+/* (Transition gradient pseudo-elements caused dark bands under body-scroll layout) */
+
+#cp12-wrap .rooms-header {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  max-width: 1200px;
+  margin: 0 auto 5rem;
+  align-items: end;
+  position: relative;
+  z-index: 1;
+}
+
+#cp12-wrap .section-heading {
+  font-family: var(--font-serif);
+  font-size: 3.8rem;
+  font-weight: 300;
+  line-height: 1.05;
+  color: var(--pine);
+}
+
+#cp12-wrap .section-heading em {
+  font-style: italic;
+  color: var(--terracotta);
+}
+
+#cp12-wrap .rooms-intro {
+  font-size: 0.95rem;
+  line-height: 1.9;
+  color: var(--text-warm);
+  opacity: 0.8;
+}
+
+#cp12-wrap .rooms-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2px;
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+#cp12-wrap .room-card {
+  position: relative;
+  background: #fff;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+#cp12-wrap .room-img {
+  aspect-ratio: 4/3;
+  position: relative;
+  overflow: hidden;
+}
+
+#cp12-wrap .room-img-bg {
+  position: absolute;
+  inset: 0;
+  transition: transform 0.6s ease;
+}
+
+#cp12-wrap .room-card:hover .room-img-bg {
+  transform: scale(1.05);
+}
+
+/* ── Room card image layers ──
+   Each uses 3 comma-separated backgrounds:
+   1. Diagonal light shaft (subtle specular highlight)
+   2. Radial atmospheric glow
+   3. Base gradient
+──────────────────────────────────────────────── */
+
+/* r1: Phòng Trạm — deep forest dawn, rattan warmth */
+#cp12-wrap .room-img-bg.r1 {
+  background:
+    linear-gradient(
+      120deg,
+      transparent 38%,
+      rgba(255, 255, 255, 0.06) 54%,
+      transparent 70%
+    ),
+    radial-gradient(
+      ellipse at 50% 110%,
+      rgba(201, 169, 110, 0.22) 0%,
+      transparent 62%
+    ),
+    linear-gradient(
+      160deg,
+      var(--pine-dark) 0%,
+      var(--pine) 48%,
+      var(--pine-light) 100%
+    );
+}
+
+/* r2: Góc Gió — warm terracotta earth, hand-painted walls */
+#cp12-wrap .room-img-bg.r2 {
+  background:
+    linear-gradient(
+      140deg,
+      transparent 30%,
+      rgba(255, 220, 180, 0.08) 50%,
+      transparent 70%
+    ),
+    radial-gradient(
+      ellipse at 30% 0%,
+      rgba(201, 169, 110, 0.25) 0%,
+      transparent 55%
+    ),
+    linear-gradient(
+      155deg,
+      var(--brown-deep) 0%,
+      var(--earth) 40%,
+      var(--terracotta) 80%,
+      var(--terracotta-dark) 100%
+    );
+}
+
+/* r3: Tổ Chim — pine canopy at dawn, teal sky horizon */
+#cp12-wrap .room-img-bg.r3 {
+  background:
+    linear-gradient(
+      110deg,
+      transparent 40%,
+      rgba(255, 255, 255, 0.05) 56%,
+      transparent 72%
+    ),
+    radial-gradient(
+      ellipse at 80% 15%,
+      rgba(93, 139, 122, 0.3) 0%,
+      transparent 50%
+    ),
+    linear-gradient(
+      170deg,
+      var(--pine-dark) 0%,
+      var(--pine-deep) 30%,
+      var(--pine-light) 65%,
+      var(--pine-mid) 100%
+    );
+}
+
+/* r4: Dorm Trạm — cool mountain mist, blue-grey atmosphere */
+#cp12-wrap .room-img-bg.r4 {
+  background:
+    linear-gradient(
+      125deg,
+      transparent 35%,
+      rgba(200, 210, 230, 0.07) 52%,
+      transparent 68%
+    ),
+    radial-gradient(
+      ellipse at 50% 0%,
+      rgba(113, 128, 150, 0.35) 0%,
+      transparent 60%
+    ),
+    linear-gradient(
+      155deg,
+      var(--slate-dark) 0%,
+      var(--slate) 45%,
+      var(--slate-mid) 75%,
+      var(--slate-light) 100%
+    );
+}
+
+#cp12-wrap .room-img-pattern {
+  position: absolute;
+  inset: 0;
+  opacity: 0.15;
+  background-image: radial-gradient(
+    circle at 30% 40%,
+    white 0px,
+    transparent 60%
+  );
+}
+
+#cp12-wrap .room-price-tag {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  background: rgba(253, 250, 245, 0.95);
+  padding: 0.6rem 1rem;
+  text-align: center;
+}
+
+#cp12-wrap .price-vnd {
+  font-family: var(--font-serif);
+  font-size: 1.4rem;
+  color: var(--pine);
+  display: block;
+  line-height: 1;
+  font-weight: 600;
+}
+
+#cp12-wrap .price-label {
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--earth);
+}
+
+#cp12-wrap .featured-badge {
+  position: absolute;
+  top: 1.5rem;
+  left: 1.5rem;
+  background: var(--gold);
+  color: var(--charcoal);
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.7rem;
+  font-weight: 500;
+}
+
+#cp12-wrap .room-body {
+  padding: 2rem;
+}
+
+#cp12-wrap .room-name {
+  font-family: var(--font-serif);
+  font-size: 1.6rem;
+  font-weight: 300;
+  color: var(--pine);
+  margin-bottom: 0.6rem;
+  line-height: 1.2;
+}
+
+#cp12-wrap .room-meta {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 1rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  color: var(--earth);
+}
+
+#cp12-wrap .room-meta span {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+#cp12-wrap .room-desc {
+  font-size: 0.85rem;
+  line-height: 1.7;
+  color: var(--text-warm);
+  opacity: 0.75;
+  margin-bottom: 1.5rem;
+}
+
+#cp12-wrap .amenity-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 1.5rem;
+}
+
+#cp12-wrap .pill {
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.7rem;
+  background: var(--cream);
+  color: var(--pine);
+  border: 1px solid rgba(45, 74, 62, 0.15);
+}
+
+#cp12-wrap .room-link {
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--pine);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: color 0.3s;
+  font-weight: 500;
+}
+
+#cp12-wrap .room-link::after {
+  content: "→";
+  transition: transform 0.3s;
+}
+#cp12-wrap .room-link:hover {
+  color: var(--terracotta);
+}
+#cp12-wrap .room-link:hover::after {
+  transform: translateX(4px);
+}
+
+/* ── 11. Travel / Explore section ───────────────────────── */
+
+#cp12-wrap .travel-section {
+  background: var(--pine);
+  padding: 8rem 3rem 4rem; /* bottom reduced to tighten break with About */
+  position: relative;
+  overflow: hidden;
+}
+
+/* Top gold rule */
+#cp12-wrap .travel-section::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(
+    90deg,
+    var(--gold),
+    var(--terracotta),
+    var(--gold)
+  );
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* Section transition: pine (travel) → warm-white (about)
+   Height kept tight at 140px to minimise dead space */
+#cp12-wrap .travel-section-bottom {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 140px;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    var(--warm-white) 100%
+  );
+  z-index: 0;
+  pointer-events: none;
+}
+
+#cp12-wrap .travel-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+#cp12-wrap .travel-header {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 2rem;
+  align-items: end;
+  margin-bottom: 4rem;
+}
+
+#cp12-wrap .travel-heading {
+  font-family: var(--font-serif);
+  font-size: 3.5rem;
+  font-weight: 300;
+  color: var(--cream);
+  line-height: 1.05;
+}
+
+#cp12-wrap .travel-heading em {
+  font-style: italic;
+  color: var(--gold);
+}
+
+/* Filter tabs */
+#cp12-wrap .filter-tabs {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+#cp12-wrap .tab {
+  padding: 0.5rem 1.2rem;
+  font-size: 0.68rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  border: 1px solid rgba(184, 202, 189, 0.3);
+  color: var(--mist);
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-family: var(--font-sans);
+  min-height: 44px;
+}
+
+#cp12-wrap .tab.active,
+#cp12-wrap .tab:hover {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: var(--charcoal);
+}
+
+/* Travel grid */
+#cp12-wrap .travel-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+#cp12-wrap .travel-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(184, 202, 189, 0.12);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s;
+}
+
+#cp12-wrap .travel-card:hover {
+  background: rgba(255, 255, 255, 0.09);
+  border-color: rgba(201, 169, 110, 0.3);
+  transform: translateY(-2px);
+}
+
+#cp12-wrap .travel-card-img {
+  height: 200px;
+  position: relative;
+  overflow: hidden;
+}
+
+#cp12-wrap .travel-card-img-bg {
+  position: absolute;
+  inset: 0;
+  transition: transform 0.5s ease;
+}
+
+#cp12-wrap .travel-card:hover .travel-card-img-bg {
+  transform: scale(1.05);
+}
+
+/* Travel card images (self-hosted in img/) */
+#cp12-wrap .ti1 {
+  background: url("img/travel-lake-run.jpg") center/cover no-repeat;
+}
+#cp12-wrap .ti2 {
+  background: url("img/travel-flower-garden.jpg") center/cover no-repeat;
+}
+#cp12-wrap .ti3 {
+  background: url("img/travel-langbiang.jpg") center/cover no-repeat;
+}
+#cp12-wrap .ti4 {
+  background: url("img/travel-night-market.jpg") center/cover no-repeat;
+}
+#cp12-wrap .ti5 {
+  background: url("img/travel-hill-loop.jpg") center/cover no-repeat;
+}
+#cp12-wrap .ti6 {
+  background: url("img/travel-zen-monastery.jpg") center/cover no-repeat;
+}
+
+#cp12-wrap .runner-badge {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  background: var(--terracotta);
+  color: #fff;
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 0.25rem 0.6rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+#cp12-wrap .diff-badge {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  background: rgba(0, 0, 0, 0.5);
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 0.25rem 0.6rem;
+}
+
+#cp12-wrap .travel-body {
+  padding: 1.5rem;
+}
+
+#cp12-wrap .travel-cat {
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 0.5rem;
+}
+
+#cp12-wrap .travel-name {
+  font-family: var(--font-serif);
+  font-size: 1.35rem;
+  color: var(--cream);
+  font-weight: 300;
+  margin-bottom: 0.8rem;
+  line-height: 1.25;
+}
+
+#cp12-wrap .travel-meta {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.72rem;
+  color: rgba(184, 202, 189, 0.6);
+  margin-bottom: 1rem;
+  letter-spacing: 0.05em;
+}
+
+#cp12-wrap .travel-highlight {
+  font-size: 0.8rem;
+  line-height: 1.65;
+  color: rgba(184, 202, 189, 0.75);
+  border-left: 2px solid var(--gold);
+  padding-left: 0.8rem;
+  font-style: italic;
+}
+
+/* ── 12. About section ───────────────────────────────────── */
+
+#cp12-wrap .about-section {
+  padding: 5rem 3rem 6rem; /* top trimmed to land cleanly after travel gradient */
+  background: var(--warm-white);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  align-items: center;
+}
+
+#cp12-wrap .about-visual {
+  position: relative;
+  height: 500px;
+}
+
+#cp12-wrap .about-img-main {
+  position: absolute;
+  width: 75%;
+  height: 80%;
+  top: 0;
+  left: 0;
+  background: linear-gradient(
+    135deg,
+    var(--pine-light),
+    var(--pine-mid) 40%,
+    var(--pine)
+  );
+  overflow: hidden;
+}
+
+#cp12-wrap .about-img-accent {
+  position: absolute;
+  width: 50%;
+  height: 50%;
+  bottom: 0;
+  right: 0;
+  background: var(--terracotta);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  padding: 2rem;
+}
+
+#cp12-wrap .about-img-accent .big-num {
+  font-family: var(--font-serif);
+  font-size: 3.5rem;
+  color: #fff;
+  display: block;
+  line-height: 1;
+  font-weight: 600;
+}
+
+#cp12-wrap .about-img-accent .big-label {
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.8);
+  margin-top: 0.4rem;
+}
+
+#cp12-wrap .about-heading {
+  font-family: var(--font-serif);
+  font-size: 3rem;
+  font-weight: 300;
+  color: var(--pine);
+  line-height: 1.15;
+  margin-bottom: 1.5rem;
+}
+
+#cp12-wrap .about-heading em {
+  font-style: italic;
+  color: var(--terracotta);
+}
+
+#cp12-wrap .about-text {
+  font-size: 0.92rem;
+  line-height: 1.9;
+  color: var(--text-warm);
+  opacity: 0.8;
+  margin-bottom: 1rem;
+}
+
+#cp12-wrap .perks {
+  margin: 2rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+#cp12-wrap .perk {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+#cp12-wrap .perk-icon {
+  width: 36px;
+  height: 36px;
+  background: var(--pine);
+  color: var(--gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+#cp12-wrap .perk-text strong {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  color: var(--pine);
+  margin-bottom: 0.2rem;
+}
+
+#cp12-wrap .perk-text p {
+  font-size: 0.8rem;
+  line-height: 1.5;
+  opacity: 0.7;
+}
+
+/* ── 13. Blog / Journal section ─────────────────────────── */
+
+#cp12-wrap .blog-section {
+  background: var(--cream);
+  padding: 8rem 3rem;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Section transition: cream (blog) → charcoal (CTA) — removed; now handled by section bg */
+
+#cp12-wrap .blog-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+#cp12-wrap .blog-header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+#cp12-wrap .blog-heading {
+  font-family: var(--font-serif);
+  font-size: 3rem;
+  color: var(--pine);
+  font-weight: 300;
+  margin-bottom: 1rem;
+}
+
+#cp12-wrap .blog-heading em {
+  font-style: italic;
+  color: var(--terracotta);
+}
+
+#cp12-wrap .blog-subtext {
+  font-size: 0.9rem;
+  opacity: 0.65;
+  max-width: 500px;
+  margin: 0 auto;
+  line-height: 1.7;
+}
+
+#cp12-wrap .blog-grid {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr 1fr;
+  gap: 1.5rem;
+}
+
+#cp12-wrap .blog-card {
+  background: #fff;
+  overflow: hidden;
+  transition: transform 0.3s;
+  position: relative;
+}
+
+#cp12-wrap .blog-card:hover {
+  transform: translateY(-3px);
+}
+
+#cp12-wrap .blog-card-img {
+  aspect-ratio: 16/9;
+  position: relative;
+  overflow: hidden;
+}
+
+#cp12-wrap .blog-card.large .blog-card-img {
+  aspect-ratio: 4/3;
+}
+
+/* ── Blog card image layers ──
+   bi1: forest running trail — pine canopy with sun break
+   bi2: solo warm golden hour — amber earth atmospheric
+   bi3: hidden gems at dusk  — indigo twilight with moonrise
+──────────────────────────────────────────────────────── */
+
+#cp12-wrap .bi1 {
+  background:
+    /* top-right sun break through canopy */
+    radial-gradient(
+      ellipse at 85% 10%,
+      rgba(201, 169, 110, 0.28) 0%,
+      transparent 45%
+    ),
+    /* subtle diagonal shaft */
+    linear-gradient(
+        115deg,
+        transparent 45%,
+        rgba(255, 255, 255, 0.05) 58%,
+        transparent 72%
+      ),
+    /* forest base */
+    linear-gradient(
+        155deg,
+        var(--pine-dark) 0%,
+        var(--pine) 55%,
+        var(--pine-mid) 100%
+      );
+}
+
+#cp12-wrap .bi2 {
+  background:
+    /* golden hour glow from top */
+    radial-gradient(
+      ellipse at 50% 0%,
+      rgba(201, 169, 110, 0.32) 0%,
+      transparent 55%
+    ),
+    /* warm side light */
+    linear-gradient(
+        140deg,
+        transparent 40%,
+        rgba(255, 200, 130, 0.06) 58%,
+        transparent 75%
+      ),
+    /* earth base */
+    linear-gradient(
+        150deg,
+        var(--brown-dark) 0%,
+        var(--earth) 45%,
+        var(--terracotta) 80%,
+        var(--earth-warm) 100%
+      );
+}
+
+#cp12-wrap .bi3 {
+  background:
+    /* moonrise glow at top-centre */
+    radial-gradient(
+      ellipse at 55% 5%,
+      rgba(150, 170, 230, 0.3) 0%,
+      transparent 50%
+    ),
+    /* horizontal twilight band */
+    linear-gradient(180deg, rgba(74, 106, 173, 0.2) 0%, transparent 40%),
+    /* indigo-blue base */
+    linear-gradient(
+        150deg,
+        var(--slate-blue) 0%,
+        var(--blue-deep) 40%,
+        var(--slate-blue-mid) 80%,
+        var(--indigo-muted) 100%
+      );
+}
+
+#cp12-wrap .blog-card-body {
+  padding: 1.5rem;
+}
+
+#cp12-wrap .blog-card-cat {
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--terracotta);
+  margin-bottom: 0.6rem;
+}
+
+#cp12-wrap .blog-card-title {
+  font-family: var(--font-serif);
+  font-size: 1.4rem;
+  color: var(--pine);
+  font-weight: 400;
+  line-height: 1.25;
+  margin-bottom: 0.8rem;
+}
+
+#cp12-wrap .blog-card.large .blog-card-title {
+  font-size: 1.8rem;
+}
+
+#cp12-wrap .blog-card-excerpt {
+  font-size: 0.82rem;
+  line-height: 1.7;
+  opacity: 0.65;
+}
+
+#cp12-wrap .blog-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--pine);
+  margin-top: 1rem;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+#cp12-wrap .blog-link:hover {
+  color: var(--terracotta);
+}
+
+/* ── 14. CTA section ─────────────────────────────────────── */
+
+#cp12-wrap .cta-section {
+  background: var(--charcoal);
+  padding: 8rem 3rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+#cp12-wrap .cta-bg-lines {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    -45deg,
+    transparent,
+    transparent 60px,
+    rgba(201, 169, 110, 0.03) 60px,
+    rgba(201, 169, 110, 0.03) 61px
+  );
+}
+
+#cp12-wrap .cta-content {
+  position: relative;
+  z-index: 1;
+}
+
+#cp12-wrap .cta-title {
+  font-family: var(--font-serif);
+  font-size: 4.5rem;
+  color: var(--cream);
+  font-weight: 300;
+  line-height: 1;
+  margin-bottom: 1.5rem;
+}
+
+#cp12-wrap .cta-title em {
+  font-style: italic;
+  color: var(--gold);
+}
+
+#cp12-wrap .cta-sub {
+  font-size: 0.95rem;
+  color: rgba(184, 202, 189, 0.7);
+  max-width: 500px;
+  margin: 0 auto 3rem;
+  line-height: 1.8;
+}
+
+#cp12-wrap .cta-btns {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+/* ── 15. Footer + social links ───────────────────────────── */
+
+#cp12-wrap footer {
+  background: var(--charcoal-deep);
+  padding: 5rem 3rem 2rem;
+  color: rgba(253, 250, 245, 0.5);
+}
+
+#cp12-wrap .footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 3rem;
+  max-width: 1200px;
+  margin: 0 auto 4rem;
+}
+
+#cp12-wrap .footer-logo {
+  font-family: var(--font-serif);
+  font-size: 2rem;
+  color: var(--cream);
+  font-weight: 300;
+  margin-bottom: 1rem;
+  display: block;
+  letter-spacing: 0.05em;
+}
+
+#cp12-wrap .footer-logo em {
+  font-style: italic;
+  color: var(--gold);
+}
+
+#cp12-wrap .footer-tagline {
+  font-size: 0.82rem;
+  line-height: 1.7;
+  opacity: 0.6;
+  margin-bottom: 1.5rem;
+}
+
+#cp12-wrap .footer-socials {
+  display: flex;
+  gap: 0.8rem;
+  margin-top: 1.5rem;
+  background: transparent; /* prevent Wix embed wrapper inheritance */
+}
+
+#cp12-wrap .social-link {
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
+  background: transparent; /* icons float on footer dark, no box */
+  border: 1px solid rgba(201, 169, 110, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--gold);
+  transition: all 0.3s;
+}
+
+#cp12-wrap .social-link svg {
+  display: block;
+  flex-shrink: 0;
+}
+
+#cp12-wrap .social-link:hover {
+  background: var(--gold);
+  color: var(--charcoal);
+  border-color: var(--gold);
+}
+
+#cp12-wrap .footer-col-title {
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 1.5rem;
+  display: block;
+}
+
+#cp12-wrap .footer-links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+#cp12-wrap .footer-links a {
+  font-size: 0.82rem;
+  opacity: 0.55;
+  transition:
+    opacity 0.3s,
+    color 0.3s;
+  color: var(--cream);
+}
+
+#cp12-wrap .footer-links a:hover {
+  opacity: 1;
+  color: var(--gold);
+}
+
+#cp12-wrap .footer-bottom {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.72rem;
+  opacity: 0.35;
+}
+
+#cp12-wrap .address-text {
+  font-size: 0.8rem;
+  line-height: 1.7;
+  opacity: 0.6;
+}
+
+#cp12-wrap .address-text a {
+  color: var(--gold);
+}
+
+/* ── 16. Modal ───────────────────────────────────────────── */
+
+#cp12-wrap .modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 1000000;
+  background: rgba(26, 26, 23, 0.95);
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+#cp12-wrap .modal.open {
+  display: flex;
+}
+
+#cp12-wrap .modal-inner {
+  max-width: 800px;
+  width: 100%;
+  background: var(--charcoal);
+  border: 1px solid rgba(201, 169, 110, 0.2);
+  padding: 2rem;
+  position: relative;
+}
+
+#cp12-wrap .modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  color: var(--gold);
+  font-size: 1.5rem;
+  cursor: pointer;
+  line-height: 1;
+  font-family: var(--font-sans);
+  min-width: 44px;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#cp12-wrap .modal-video-placeholder {
+  aspect-ratio: 16/9;
+  background: var(--pine);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  color: var(--cream);
+  text-align: center;
+  padding: 2rem;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+#cp12-wrap .modal-note {
+  font-size: 0.75rem;
+  color: var(--mist);
+  letter-spacing: 0.1em;
+  margin-top: 0.5rem;
+}
+
+/* ── 16. Section animation signatures ────────────────────── */
+
+/* Shared entrance keyframes */
+@keyframes cp12SlideLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-48px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@keyframes cp12SlideRight {
+  from {
+    opacity: 0;
+    transform: translateX(48px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@keyframes cp12ScaleUp {
+  from {
+    opacity: 0;
+    transform: scale(0.93) translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+@keyframes cp12FadeScale {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+@keyframes cp12GlowPulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(201, 169, 110, 0.35);
+  }
+  50% {
+    box-shadow: 0 0 0 12px rgba(201, 169, 110, 0);
+  }
+}
+@keyframes cp12BobDown {
+  0%,
+  100% {
+    transform: translateX(-50%) translateY(0);
+  }
+  50% {
+    transform: translateX(-50%) translateY(7px);
+  }
+}
+
+/* Per-section animate classes (added by JS when .cp12-reveal.visible triggers) */
+#cp12-wrap .sect-video .video-title {
+  opacity: 0;
+}
+#cp12-wrap .sect-video.animated .video-title {
+  animation: cp12fu 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.1s forwards;
+}
+#cp12-wrap .sect-video .video-desc {
+  opacity: 0;
+}
+#cp12-wrap .sect-video.animated .video-desc {
+  animation: cp12fu 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.25s forwards;
+}
+#cp12-wrap .sect-video .video-frame {
+  opacity: 0;
+  transform: scale(0.96);
+}
+#cp12-wrap .sect-video.animated .video-frame {
+  animation: cp12FadeScale 1s cubic-bezier(0.22, 1, 0.36, 1) 0.4s forwards;
+}
+
+#cp12-wrap .sect-rooms .rooms-header {
+  opacity: 0;
+}
+#cp12-wrap .sect-rooms.animated .rooms-header {
+  animation: cp12fu 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+#cp12-wrap .sect-rooms .room-card {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: none;
+}
+#cp12-wrap .sect-rooms.animated .room-card:nth-child(1) {
+  animation: cp12ScaleUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.15s forwards;
+}
+#cp12-wrap .sect-rooms.animated .room-card:nth-child(2) {
+  animation: cp12ScaleUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.28s forwards;
+}
+#cp12-wrap .sect-rooms.animated .room-card:nth-child(3) {
+  animation: cp12ScaleUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.41s forwards;
+}
+#cp12-wrap .sect-rooms.animated .room-card:nth-child(4) {
+  animation: cp12ScaleUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.54s forwards;
+}
+
+#cp12-wrap .sect-explore .travel-heading {
+  opacity: 0;
+}
+#cp12-wrap .sect-explore.animated .travel-heading {
+  animation: cp12SlideLeft 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+#cp12-wrap .sect-explore .filter-tabs {
+  opacity: 0;
+}
+#cp12-wrap .sect-explore.animated .filter-tabs {
+  animation: cp12fu 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.3s forwards;
+}
+#cp12-wrap .sect-explore .travel-card {
+  opacity: 0;
+  transform: translateY(32px);
+}
+#cp12-wrap .sect-explore.animated .travel-card:nth-child(1) {
+  animation: cp12fu 0.65s cubic-bezier(0.22, 1, 0.36, 1) 0.12s forwards;
+}
+#cp12-wrap .sect-explore.animated .travel-card:nth-child(2) {
+  animation: cp12fu 0.65s cubic-bezier(0.22, 1, 0.36, 1) 0.22s forwards;
+}
+#cp12-wrap .sect-explore.animated .travel-card:nth-child(3) {
+  animation: cp12fu 0.65s cubic-bezier(0.22, 1, 0.36, 1) 0.32s forwards;
+}
+#cp12-wrap .sect-explore.animated .travel-card:nth-child(4) {
+  animation: cp12fu 0.65s cubic-bezier(0.22, 1, 0.36, 1) 0.42s forwards;
+}
+#cp12-wrap .sect-explore.animated .travel-card:nth-child(5) {
+  animation: cp12fu 0.65s cubic-bezier(0.22, 1, 0.36, 1) 0.52s forwards;
+}
+#cp12-wrap .sect-explore.animated .travel-card:nth-child(6) {
+  animation: cp12fu 0.65s cubic-bezier(0.22, 1, 0.36, 1) 0.62s forwards;
+}
+
+#cp12-wrap .sect-about .about-visual {
+  opacity: 0;
+}
+#cp12-wrap .sect-about.animated .about-visual {
+  animation: cp12SlideLeft 0.85s cubic-bezier(0.22, 1, 0.36, 1) 0.1s forwards;
+}
+#cp12-wrap .sect-about .about-content {
+  opacity: 0;
+}
+#cp12-wrap .sect-about.animated .about-content {
+  animation: cp12SlideRight 0.85s cubic-bezier(0.22, 1, 0.36, 1) 0.2s forwards;
+}
+
+#cp12-wrap .sect-journal .blog-heading {
+  opacity: 0;
+}
+#cp12-wrap .sect-journal.animated .blog-heading {
+  animation: cp12fu 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+#cp12-wrap .sect-journal .blog-card {
+  opacity: 0;
+}
+#cp12-wrap .sect-journal.animated .blog-card.large {
+  animation: cp12ScaleUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.15s forwards;
+}
+#cp12-wrap .sect-journal.animated .blog-card:not(.large):nth-child(2) {
+  animation: cp12fu 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.3s forwards;
+}
+#cp12-wrap .sect-journal.animated .blog-card:not(.large):nth-child(3) {
+  animation: cp12fu 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.44s forwards;
+}
+
+#cp12-wrap .sect-book .cta-title {
+  opacity: 0;
+}
+#cp12-wrap .sect-book.animated .cta-title {
+  animation: cp12fu 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.1s forwards;
+}
+#cp12-wrap .sect-book .btn-primary,
+#cp12-wrap .sect-book .btn-ghost {
+  opacity: 0;
+}
+#cp12-wrap .sect-book.animated .btn-primary {
+  animation: cp12ScaleUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.35s forwards;
+}
+#cp12-wrap .sect-book.animated .btn-ghost {
+  animation: cp12ScaleUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.48s forwards;
+}
+#cp12-wrap .sect-book.animated .btn-primary {
+  animation-name: cp12ScaleUp, cp12GlowPulse;
+  animation-duration: 0.7s, 2.5s;
+  animation-delay: 0.35s, 1.2s;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1), ease-in-out;
+  animation-fill-mode: forwards, none;
+  animation-iteration-count: 1, infinite;
+}
+
+/* ── Section progress dots ─────────────────────────────── */
+
+#cp12-dots {
+  position: fixed;
+  right: 1.25rem;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 9000;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: 0.4rem 0;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+#cp12-dots.visible {
+  opacity: 1;
+}
+
+#cp12-dots .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.35);
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition:
+    background 0.3s,
+    transform 0.3s,
+    box-shadow 0.3s;
+  position: relative;
+}
+
+/* Tooltip */
+#cp12-dots .dot::after {
+  content: attr(data-label);
+  position: absolute;
+  right: calc(100% + 0.75rem);
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(29, 42, 38, 0.9);
+  color: var(--cream);
+  font-size: 0.7rem;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  padding: 0.25rem 0.6rem;
+  border-radius: 4px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s 0.1s;
+}
+
+#cp12-dots .dot:hover::after,
+#cp12-dots .dot:focus-visible::after {
+  opacity: 1;
+}
+
+#cp12-dots .dot:hover,
+#cp12-dots .dot:focus-visible {
+  background: var(--gold);
+  transform: scale(1.25);
+  outline: none;
+}
+
+#cp12-dots .dot[aria-current="true"] {
+  background: var(--gold);
+  transform: scale(1.35);
+  box-shadow: 0 0 0 3px rgba(201, 169, 110, 0.25);
+}
+
+/* Dark sections — dots switch to lighter colour */
+#cp12-dots.on-dark .dot {
+  background: rgba(255, 255, 255, 0.4);
+}
+#cp12-dots.on-dark .dot:hover,
+#cp12-dots.on-dark .dot:focus-visible,
+#cp12-dots.on-dark .dot[aria-current="true"] {
+  background: var(--gold);
+}
+
+/* On cream sections */
+#cp12-dots.on-light .dot {
+  background: rgba(29, 42, 38, 0.25);
+}
+#cp12-dots.on-light .dot:hover,
+#cp12-dots.on-light .dot:focus-visible,
+#cp12-dots.on-light .dot[aria-current="true"] {
+  background: var(--pine);
+}
+
+/* Hide on mobile */
+@media (max-width: 900px) {
+  #cp12-dots {
+    display: none;
+  }
+}
+
+/* ── Next-section floating button ──────────────────────── */
+
+#cp12-next-btn {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(0);
+  z-index: 9000;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(29, 42, 38, 0.75);
+  border: 1px solid rgba(201, 169, 110, 0.4);
+  color: var(--gold);
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity 0.4s ease,
+    background 0.25s,
+    transform 0.25s;
+  animation: cp12BobDown 2.4s ease-in-out infinite;
+  backdrop-filter: blur(6px);
+}
+
+#cp12-next-btn.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+#cp12-next-btn:hover {
+  background: var(--pine);
+  border-color: var(--gold);
+  transform: translateX(-50%) translateY(4px);
+  animation: none;
+}
+
+#cp12-next-btn:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}
+
+@media (max-width: 600px) {
+  #cp12-next-btn {
+    display: none;
+  }
+}
+
+
+/* ── 17. @supports progressive enhancements ─────────────── */
+
+@supports (backdrop-filter: blur(1px)) {
+  /* Scoped to scrolled-over-light state only — dark hero must stay dark */
+  #cp12-wrap .cp12-main-nav.scrolled:not(.nav-over-dark) {
+    background: rgba(253, 250, 245, 0.85);
+    backdrop-filter: blur(12px);
+  }
+
+  #cp12-wrap .stat-box {
+    background: rgba(29, 42, 38, 0.7);
+    backdrop-filter: blur(10px);
+  }
+
+  #cp12-wrap .big-play {
+    backdrop-filter: blur(4px);
+  }
+  #cp12-wrap .diff-badge {
+    backdrop-filter: blur(4px);
+  }
+  #cp12-wrap .room-price-tag {
+    backdrop-filter: blur(8px);
+  }
+}

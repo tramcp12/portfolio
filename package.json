@@ -1,0 +1,13 @@
+{
+  "name": "tram-cp12",
+  "private": true,
+  "description": "Trạm CP12 — Homestay Đà Lạt static website",
+  "scripts": {
+    "validate": "node validate.js",
+    "lint": "html-validate index.html",
+    "check": "npm run validate && npm run lint"
+  },
+  "devDependencies": {
+    "html-validate": "^9.0.0"
+  }
+}
