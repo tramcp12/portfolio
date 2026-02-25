@@ -28,10 +28,6 @@ var t0   = Date.now();
 
 /* ── Helpers ──────────────────────────────────────────────────────────────── */
 
-function readRoot(name) {
-  return fs.readFileSync(path.join(root, name), "utf8");
-}
-
 function readSrc(relPath) {
   return fs.readFileSync(path.join(root, "src", relPath), "utf8");
 }
