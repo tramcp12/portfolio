@@ -1,0 +1,67 @@
+/* ── 16. Modal ────────────────────────────────────────────────
+ * src/layout/modal.css
+ * ──────────────────────────────────────────────────────────── */
+
+#cp12-wrap .modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 1000000;
+  background: rgba(26, 26, 23, 0.95);
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+#cp12-wrap .modal.open {
+  display: flex;
+}
+
+#cp12-wrap .modal-inner {
+  max-width: 800px;
+  width: 100%;
+  background: var(--charcoal);
+  border: 1px solid rgba(201, 169, 110, 0.2);
+  padding: 2rem;
+  position: relative;
+}
+
+#cp12-wrap .modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  color: var(--gold);
+  font-size: 1.5rem;
+  cursor: pointer;
+  line-height: 1;
+  font-family: var(--font-sans);
+  min-width: 44px;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#cp12-wrap .modal-video-placeholder {
+  aspect-ratio: 16/9;
+  background: var(--pine);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  color: var(--cream);
+  text-align: center;
+  padding: 2rem;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+#cp12-wrap .modal-note {
+  font-size: 0.75rem;
+  color: var(--mist);
+  letter-spacing: 0.1em;
+  margin-top: 0.5rem;
+}

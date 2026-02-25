@@ -1,0 +1,28 @@
+/* ── 17. @supports progressive enhancements ──────────────────
+ * src/core/supports.css
+ * Must be the LAST file in concat order so it correctly overrides
+ * earlier rules in browsers that support backdrop-filter.
+ * ──────────────────────────────────────────────────────────── */
+
+@supports (backdrop-filter: blur(1px)) {
+  /* Scoped to scrolled-over-light state only — dark hero must stay dark */
+  #cp12-wrap .cp12-main-nav.scrolled:not(.nav-over-dark) {
+    background: rgba(253, 250, 245, 0.85);
+    backdrop-filter: blur(12px);
+  }
+
+  #cp12-wrap .stat-box {
+    background: rgba(29, 42, 38, 0.7);
+    backdrop-filter: blur(10px);
+  }
+
+  #cp12-wrap .big-play {
+    backdrop-filter: blur(4px);
+  }
+  #cp12-wrap .diff-badge {
+    backdrop-filter: blur(4px);
+  }
+  #cp12-wrap .room-price-tag {
+    backdrop-filter: blur(8px);
+  }
+}

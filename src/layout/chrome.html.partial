@@ -1,0 +1,69 @@
+
+      <!-- Next section floating button -->
+      <button
+        type="button"
+        id="cp12-next-btn"
+        aria-label="Scroll to next section"
+      >
+        &#8595;
+      </button>
+
+      <a href="#cp12-main" class="skip-nav">Skip to content</a>
+
+      <!-- Navigation -->
+      <nav class="cp12-main-nav" aria-label="Main navigation">
+        <a href="#home" class="nav-logo" aria-label="Trạm CP12 — Home"
+          >Trạm <span>CP12</span></a
+        >
+        <ul class="nav-links">
+          <li><a href="#rooms">Rooms</a></li>
+          <li><a href="#explore">Explore</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#journal">Journal</a></li>
+          <li><a href="#book" class="nav-cta">Book a Stay</a></li>
+        </ul>
+        <button
+          type="button"
+          class="nav-hamburger"
+          aria-label="Open navigation menu"
+          aria-expanded="false"
+          aria-controls="cp12MobileNav"
+        >
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            aria-hidden="true"
+          >
+            <line x1="3" y1="6" x2="21" y2="6">
+            <line x1="3" y1="12" x2="21" y2="12">
+            <line x1="3" y1="18" x2="21" y2="18">
+          </svg>
+        </button>
+      </nav>
+
+      <!-- Mobile nav overlay -->
+      <div
+        class="nav-mobile-overlay"
+        id="cp12MobileNav"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Navigation menu"
+      >
+        <button
+          type="button"
+          class="nav-mobile-close"
+          aria-label="Close navigation menu"
+        >
+          &times;
+        </button>
+        <a href="#rooms">Rooms</a>
+        <a href="#explore">Explore</a>
+        <a href="#about">About</a>
+        <a href="#journal">Journal</a>
+        <a href="#book" class="nav-mobile-cta">Book a Stay</a>
+      </div>

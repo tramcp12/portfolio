@@ -1,0 +1,43 @@
+/* ── Section label component ─────────────────────────────────
+ * src/core/section-labels.css
+ * ──────────────────────────────────────────────────────────── */
+
+#cp12-wrap .section-label {
+  font-size: 0.7rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+#cp12-wrap .section-label::before,
+#cp12-wrap .section-label::after {
+  content: "";
+  display: block;
+  width: 40px;
+  height: 1px;
+  background: var(--gold);
+  opacity: 0.5;
+}
+
+#cp12-wrap .section-label--left {
+  justify-content: flex-start;
+  margin-bottom: 1rem;
+}
+
+#cp12-wrap .section-label--left::before,
+#cp12-wrap .section-label--left::after {
+  display: none;
+}
+
+#cp12-wrap .section-label--gold {
+  color: var(--gold);
+}
+
+#cp12-wrap .section-label--cta {
+  margin-bottom: 1.5rem;
+}

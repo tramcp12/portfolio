@@ -1,0 +1,101 @@
+/* ── Section progress dots ───────────────────────────────────
+ * src/layout/dots.css
+ * ──────────────────────────────────────────────────────────── */
+
+#cp12-dots {
+  position: fixed;
+  right: 1.25rem;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 9000;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: 0.4rem 0;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+#cp12-dots.visible {
+  opacity: 1;
+}
+
+#cp12-dots .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.35);
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition:
+    background 0.3s,
+    transform 0.3s,
+    box-shadow 0.3s;
+  position: relative;
+}
+
+/* Tooltip */
+#cp12-dots .dot::after {
+  content: attr(data-label);
+  position: absolute;
+  right: calc(100% + 0.75rem);
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(29, 42, 38, 0.9);
+  color: var(--cream);
+  font-size: 0.7rem;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  padding: 0.25rem 0.6rem;
+  border-radius: 4px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s 0.1s;
+}
+
+#cp12-dots .dot:hover::after,
+#cp12-dots .dot:focus-visible::after {
+  opacity: 1;
+}
+
+#cp12-dots .dot:hover,
+#cp12-dots .dot:focus-visible {
+  background: var(--gold);
+  transform: scale(1.25);
+  outline: none;
+}
+
+#cp12-dots .dot[aria-current="true"] {
+  background: var(--gold);
+  transform: scale(1.35);
+  box-shadow: 0 0 0 3px rgba(201, 169, 110, 0.25);
+}
+
+/* Dark sections — dots switch to lighter colour */
+#cp12-dots.on-dark .dot {
+  background: rgba(255, 255, 255, 0.4);
+}
+#cp12-dots.on-dark .dot:hover,
+#cp12-dots.on-dark .dot:focus-visible,
+#cp12-dots.on-dark .dot[aria-current="true"] {
+  background: var(--gold);
+}
+
+/* On cream sections */
+#cp12-dots.on-light .dot {
+  background: rgba(29, 42, 38, 0.25);
+}
+#cp12-dots.on-light .dot:hover,
+#cp12-dots.on-light .dot:focus-visible,
+#cp12-dots.on-light .dot[aria-current="true"] {
+  background: var(--pine);
+}
+
+/* Hide on mobile */
+@media (max-width: 900px) {
+  #cp12-dots {
+    display: none;
+  }
+}

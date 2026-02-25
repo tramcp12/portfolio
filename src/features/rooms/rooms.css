@@ -1,0 +1,375 @@
+/* ── 10. Rooms section ────────────────────────────────────────
+ * src/features/rooms/rooms.css
+ * ──────────────────────────────────────────────────────────── */
+
+#cp12-wrap .rooms-section {
+  padding: 5rem 3rem 8rem; /* reduced top to remove dead-zone; keep generous bottom */
+  background: var(--cream);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Section transition bands removed — sections now use natural body scroll */
+/* (Transition gradient pseudo-elements caused dark bands under body-scroll layout) */
+
+#cp12-wrap .rooms-header {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  max-width: 1200px;
+  margin: 0 auto 5rem;
+  align-items: end;
+  position: relative;
+  z-index: 1;
+}
+
+#cp12-wrap .section-heading {
+  font-family: var(--font-serif);
+  font-size: 3.8rem;
+  font-weight: 300;
+  line-height: 1.05;
+  color: var(--pine);
+}
+
+#cp12-wrap .section-heading em {
+  font-style: italic;
+  color: var(--terracotta);
+}
+
+#cp12-wrap .rooms-intro {
+  font-size: 0.95rem;
+  line-height: 1.9;
+  color: var(--text-warm);
+  opacity: 0.8;
+}
+
+#cp12-wrap .rooms-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2px;
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+#cp12-wrap .room-card {
+  position: relative;
+  background: var(--warm-white);
+  overflow: hidden;
+  cursor: pointer;
+}
+
+#cp12-wrap .room-img {
+  aspect-ratio: 4/3;
+  position: relative;
+  overflow: hidden;
+}
+
+#cp12-wrap .room-img-bg {
+  position: absolute;
+  inset: 0;
+  transition: transform 0.6s ease;
+}
+
+#cp12-wrap .room-card:hover .room-img-bg {
+  transform: scale(1.05);
+}
+
+/* ── Room card image layers ──
+   Each uses 3 comma-separated backgrounds:
+   1. Diagonal light shaft (subtle specular highlight)
+   2. Radial atmospheric glow
+   3. Base gradient
+──────────────────────────────────────────────── */
+
+/* r1: Phòng Trạm — deep forest dawn, rattan warmth */
+#cp12-wrap .room-img-bg.r1 {
+  background:
+    linear-gradient(
+      120deg,
+      transparent 38%,
+      rgba(255, 255, 255, 0.06) 54%,
+      transparent 70%
+    ),
+    radial-gradient(
+      ellipse at 50% 110%,
+      rgba(201, 169, 110, 0.22) 0%,
+      transparent 62%
+    ),
+    linear-gradient(
+      160deg,
+      var(--pine-dark) 0%,
+      var(--pine) 48%,
+      var(--pine-light) 100%
+    );
+}
+
+/* r2: Góc Gió — warm terracotta earth, hand-painted walls */
+#cp12-wrap .room-img-bg.r2 {
+  background:
+    linear-gradient(
+      140deg,
+      transparent 30%,
+      rgba(255, 220, 180, 0.08) 50%,
+      transparent 70%
+    ),
+    radial-gradient(
+      ellipse at 30% 0%,
+      rgba(201, 169, 110, 0.25) 0%,
+      transparent 55%
+    ),
+    linear-gradient(
+      155deg,
+      var(--brown-deep) 0%,
+      var(--earth) 40%,
+      var(--terracotta) 80%,
+      var(--terracotta-dark) 100%
+    );
+}
+
+/* r3: Tổ Chim — pine canopy at dawn, teal sky horizon */
+#cp12-wrap .room-img-bg.r3 {
+  background:
+    linear-gradient(
+      110deg,
+      transparent 40%,
+      rgba(255, 255, 255, 0.05) 56%,
+      transparent 72%
+    ),
+    radial-gradient(
+      ellipse at 80% 15%,
+      rgba(93, 139, 122, 0.3) 0%,
+      transparent 50%
+    ),
+    linear-gradient(
+      170deg,
+      var(--pine-dark) 0%,
+      var(--pine-deep) 30%,
+      var(--pine-light) 65%,
+      var(--pine-mid) 100%
+    );
+}
+
+/* r4: Dorm Trạm — cool mountain mist, blue-grey atmosphere */
+#cp12-wrap .room-img-bg.r4 {
+  background:
+    linear-gradient(
+      125deg,
+      transparent 35%,
+      rgba(200, 210, 230, 0.07) 52%,
+      transparent 68%
+    ),
+    radial-gradient(
+      ellipse at 50% 0%,
+      rgba(113, 128, 150, 0.35) 0%,
+      transparent 60%
+    ),
+    linear-gradient(
+      155deg,
+      var(--slate-dark) 0%,
+      var(--slate) 45%,
+      var(--slate-mid) 75%,
+      var(--slate-light) 100%
+    );
+}
+
+#cp12-wrap .room-img-pattern {
+  position: absolute;
+  inset: 0;
+  opacity: 0.15;
+  background-image: radial-gradient(
+    circle at 30% 40%,
+    white 0px,
+    transparent 60%
+  );
+}
+
+#cp12-wrap .room-price-tag {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  background: rgba(253, 250, 245, 0.95);
+  padding: 0.6rem 1rem;
+  text-align: center;
+}
+
+#cp12-wrap .price-vnd {
+  font-family: var(--font-serif);
+  font-size: 1.4rem;
+  color: var(--pine);
+  display: block;
+  line-height: 1;
+  font-weight: 600;
+}
+
+#cp12-wrap .price-label {
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--earth);
+}
+
+#cp12-wrap .featured-badge {
+  position: absolute;
+  top: 1.5rem;
+  left: 1.5rem;
+  background: var(--gold);
+  color: var(--charcoal);
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.7rem;
+  font-weight: 500;
+}
+
+#cp12-wrap .room-body {
+  padding: 2rem;
+}
+
+#cp12-wrap .room-name {
+  font-family: var(--font-serif);
+  font-size: 1.6rem;
+  font-weight: 300;
+  color: var(--pine);
+  margin-bottom: 0.6rem;
+  line-height: 1.2;
+}
+
+#cp12-wrap .room-meta {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 1rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  color: var(--earth);
+}
+
+#cp12-wrap .room-meta span {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+#cp12-wrap .room-desc {
+  font-size: 0.85rem;
+  line-height: 1.7;
+  color: var(--text-warm);
+  opacity: 0.75;
+  margin-bottom: 1.5rem;
+}
+
+#cp12-wrap .amenity-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 1.5rem;
+}
+
+#cp12-wrap .pill {
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.7rem;
+  background: var(--cream);
+  color: var(--pine);
+  border: 1px solid rgba(45, 74, 62, 0.15);
+}
+
+#cp12-wrap .room-link {
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--pine);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: color 0.3s;
+  font-weight: 500;
+}
+
+#cp12-wrap .room-link::after {
+  content: "→";
+  transition: transform 0.3s;
+}
+#cp12-wrap .room-link:hover {
+  color: var(--terracotta);
+}
+#cp12-wrap .room-link:hover::after {
+  transform: translateX(4px);
+}
+
+/* ── Rooms section animation signatures ───────────────────── */
+
+#cp12-wrap .sect-rooms .rooms-header {
+  opacity: 0;
+}
+#cp12-wrap .sect-rooms.animated .rooms-header {
+  animation: cp12fu 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+#cp12-wrap .sect-rooms .room-card {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: none;
+}
+#cp12-wrap .sect-rooms.animated .room-card:nth-child(1) {
+  animation: cp12ScaleUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.15s forwards;
+}
+#cp12-wrap .sect-rooms.animated .room-card:nth-child(2) {
+  animation: cp12ScaleUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.28s forwards;
+}
+#cp12-wrap .sect-rooms.animated .room-card:nth-child(3) {
+  animation: cp12ScaleUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.41s forwards;
+}
+#cp12-wrap .sect-rooms.animated .room-card:nth-child(4) {
+  animation: cp12ScaleUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.54s forwards;
+}
+
+/* ── Rooms responsive rules ──────────────────────────────── */
+
+@media (max-width: 900px) {
+  #cp12-wrap .rooms-grid {
+    grid-template-columns: 1fr;
+  }
+  #cp12-wrap .rooms-header {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  #cp12-wrap .rooms-section {
+    padding: 4rem 2rem 6rem;
+  }
+  #cp12-wrap .section-heading {
+    font-size: 2.8rem;
+  }
+  #cp12-wrap .rooms-header {
+    gap: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  #cp12-wrap .rooms-section {
+    padding: 4rem 1.5rem;
+  }
+  #cp12-wrap .rooms-header {
+    gap: 1.5rem;
+  }
+  #cp12-wrap .section-heading {
+    font-size: 2.6rem;
+  }
+}
+
+@media (max-width: 640px) {
+  #cp12-wrap .room-meta {
+    flex-wrap: wrap;
+    gap: 0.6rem 1rem;
+  }
+}
+
+@media (max-width: 430px) {
+  /* Rooms grid: reduce gap at very narrow widths */
+  #cp12-wrap .rooms-grid {
+    gap: 1rem;
+  }
+}

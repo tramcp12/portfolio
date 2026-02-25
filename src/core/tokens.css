@@ -1,0 +1,63 @@
+/* ── 1. Design tokens (CSS custom properties) ──────────────
+ * src/core/tokens.css
+ * Font families declared via --font-serif and --font-sans.
+ * Each font string must appear EXACTLY ONCE (CSS-1 invariant).
+ * ──────────────────────────────────────────────────────────── */
+
+:root {
+  /* Greens */
+  --cream: #f5f0e8;
+  --warm-white: #fdfaf5;
+  --pine: #2d4a3e;
+  --pine-light: #3d6357;
+  --pine-dark: #1a3028;
+  --pine-mid: #5c8b7a;
+  --mist: #b8cabd;
+
+  /* Earths */
+  --earth: #8b6347;
+  --terracotta: #c4724a;
+  --gold: #c9a96e;
+
+  /* Darks */
+  --charcoal: #2a2522;
+  --charcoal-deep: #1a1a17;
+  --slate: #4a5568;
+  --slate-light: #718096;
+  --slate-dark: #2d3748;
+  --text-warm: #3d3530;
+
+  /* Blues */
+  --slate-blue: #2d4a7a;
+  --slate-blue-mid: #4a6aad;
+
+  /* Typography */
+  --font-serif: "Cormorant Garamond", serif;
+  --font-sans: "Be Vietnam Pro", sans-serif;
+
+  /* Semi-transparent alpha variants (CSS-3) */
+  --gold-10: rgba(201, 169, 110, 0.1);
+  --gold-20: rgba(201, 169, 110, 0.2);
+  --gold-35: rgba(201, 169, 110, 0.35);
+  --gold-40: rgba(201, 169, 110, 0.4);
+  --mist-20: rgba(184, 202, 189, 0.2);
+  --mist-50: rgba(184, 202, 189, 0.5);
+  --pine-dark-80: rgba(26, 48, 40, 0.8);
+  --pine-dark-90: rgba(26, 48, 40, 0.9);
+  --pine-dark-92: rgba(26, 48, 40, 0.92);
+  --pine-29: rgba(29, 42, 38, 0.9);
+  --cream-90: rgba(253, 250, 245, 0.9);
+
+  /* Gradient interpolation stops (used in room/blog card backgrounds) */
+  --brown-deep: #6b3a22;
+  --terracotta-dark: #c45a30;
+  --pine-deep: #243d38;
+  --slate-mid: #5a6a84;
+  --brown-dark: #5c3318;
+  --earth-warm: #b86040;
+  --blue-deep: #3a5a9a;
+  --indigo-muted: #3d5490;
+
+  /* Layout */
+  --nav-height: 80px;
+}

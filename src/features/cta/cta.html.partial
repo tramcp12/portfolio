@@ -1,0 +1,28 @@
+      <section
+        class="cta-section sect-book"
+        id="book"
+        aria-labelledby="ctaHeading"
+      >
+        <div class="cta-bg-lines" aria-hidden="true"></div>
+        <div class="cta-content">
+          <div class="section-label section-label--cta" aria-hidden="true">
+            Ready?
+          </div>
+          <h2 class="cta-title" id="ctaHeading">
+            The mountains are<br><em>waiting.</em>
+          </h2>
+          <p class="cta-sub">
+            Whether you're chasing trails, chasing peace, or just chasing a
+            really good cup of cà phê — Trạm CP12 is ready for you. From 180,000
+            VND/night.
+          </p>
+          <div class="cta-btns">
+            <a href="mailto:cp12tramdungchill@gmail.com" class="btn-primary"
+              >Book a Room &rarr;</a
+            >
+            <a href="tel:+84765679228" class="btn-ghost"
+              ><span>Call Us</span></a
+            >
+          </div>
+        </div>
+      </section>

@@ -1,0 +1,46 @@
+/* ── 4b. Navigation — mobile overlay ─────────────────────────
+ * src/layout/nav-mobile.css
+ * ──────────────────────────────────────────────────────────── */
+
+/* Mobile overlay */
+#cp12-wrap .nav-mobile-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: var(--pine);
+  z-index: 200;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2.5rem;
+}
+
+#cp12-wrap .nav-mobile-overlay.open {
+  display: flex;
+}
+
+#cp12-wrap .nav-mobile-overlay a {
+  font-family: var(--font-serif);
+  font-size: 2.2rem;
+  color: var(--cream);
+  letter-spacing: 0.05em;
+  font-weight: 300;
+  transition: color 0.2s;
+}
+
+#cp12-wrap .nav-mobile-overlay a:hover {
+  color: var(--gold);
+}
+
+#cp12-wrap .nav-mobile-close {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  background: none;
+  border: none;
+  color: var(--cream);
+  font-size: 2rem;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0.5rem;
+}

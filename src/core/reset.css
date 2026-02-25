@@ -1,0 +1,25 @@
+/* ── 2. Root wrapper + base resets ──────────────────────────
+ * src/core/reset.css
+ * ──────────────────────────────────────────────────────────── */
+
+#cp12-wrap {
+  position: relative;
+  min-height: 100vh;
+  z-index: 1;
+  background: var(--warm-white);
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  font-family: var(--font-sans);
+  font-weight: 300;
+  color: var(--text-warm);
+}
+
+#cp12-wrap * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+#cp12-wrap a {
+  text-decoration: none;
+}

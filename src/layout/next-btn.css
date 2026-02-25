@@ -1,0 +1,53 @@
+/* ── Next-section floating button ───────────────────────────
+ * src/layout/next-btn.css
+ * ──────────────────────────────────────────────────────────── */
+
+#cp12-next-btn {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(0);
+  z-index: 9000;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(29, 42, 38, 0.75);
+  border: 1px solid rgba(201, 169, 110, 0.4);
+  color: var(--gold);
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity 0.4s ease,
+    background 0.25s,
+    transform 0.25s;
+  animation: cp12BobDown 2.4s ease-in-out infinite;
+  backdrop-filter: blur(6px);
+}
+
+#cp12-next-btn.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+#cp12-next-btn:hover {
+  background: var(--pine);
+  border-color: var(--gold);
+  transform: translateX(-50%) translateY(4px);
+  animation: none;
+}
+
+#cp12-next-btn:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}
+
+@media (max-width: 600px) {
+  #cp12-next-btn {
+    display: none;
+  }
+}

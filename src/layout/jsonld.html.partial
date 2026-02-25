@@ -1,0 +1,47 @@
+
+    <!-- LocalBusiness structured data (schema.org) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LodgingBusiness",
+      "name": "Trạm CP12",
+      "url": "https://tramcp12.github.io/portfolio/",
+      "logo": "https://tramcp12.github.io/portfolio/img/favicon.svg",
+      "image": "https://tramcp12.github.io/portfolio/img/travel-langbiang.jpg",
+      "description": "Trạm CP12 — nhà nghỉ phong cách tại Đà Lạt, Việt Nam. Phòng riêng & dorm giá từ 180K/đêm. Điểm dừng lý tưởng cho runner, khách du lịch solo và người yêu thiên nhiên.",
+      "telephone": "+84765679228",
+      "email": "cp12tramdungchill@gmail.com",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "228/6 Đường Phú Đồng Thiên Vương",
+        "addressLocality": "Đà Lạt",
+        "addressRegion": "Lâm Đồng",
+        "addressCountry": "VN"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": "11.9404",
+        "longitude": "108.4419"
+      },
+      "priceRange": "₫180,000–₫720,000",
+      "currenciesAccepted": "VND",
+      "paymentAccepted": "Cash, Bank Transfer",
+      "checkinTime": "14:00",
+      "checkoutTime": "12:00",
+      "numberOfRooms": 4,
+      "amenityFeature": [
+        {"@type": "LocationFeatureSpecification", "name": "WiFi", "value": true},
+        {"@type": "LocationFeatureSpecification", "name": "Air conditioning", "value": true},
+        {"@type": "LocationFeatureSpecification", "name": "Breakfast", "value": true}
+      ],
+      "sameAs": [
+        "https://www.facebook.com/tramcp12",
+        "https://www.instagram.com/tramcp12",
+        "https://www.youtube.com/@cp12tramdungchill",
+        "https://www.tiktok.com/@tramcp12",
+        "https://maps.app.goo.gl/PCN6DtU5gCf45SzDA"
+      ]
+    }
+    </script>
+  </body>
+</html>

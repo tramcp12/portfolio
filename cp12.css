@@ -1,32 +1,8 @@
-/*
- * ============================================================
- *  Trạm CP12 — Master CSS Source
- *  Compiled for Wix HtmlComponent Full-Page Embed
- *  Last updated: 2026-02-24
- * ============================================================
- *
- *  Section index:
- *    1.  Design tokens (CSS custom properties)
- *    2.  Root wrapper + base resets
- *    3.  Accessibility utilities
- *    4.  Navigation (desktop + mobile overlay)
- *    5.  Hero section
- *    6.  Animations + reveal system
- *    7.  Utility overrides (section-label variants)
- *    8.  Responsive breakpoints (900px, 480px)
- *    9.  Video section
- *   10.  Rooms section
- *   11.  Travel / Explore section
- *   12.  About section
- *   13.  Blog / Journal section
- *   14.  CTA section
- *   15.  Footer + social links
- *   16.  Modal
- *   17.  @supports progressive enhancements
- * ============================================================
- */
-
-/* ── 1. Design tokens ─────────────────────────────────────── */
+/* ── 1. Design tokens (CSS custom properties) ──────────────
+ * src/core/tokens.css
+ * Font families declared via --font-serif and --font-sans.
+ * Each font string must appear EXACTLY ONCE (CSS-1 invariant).
+ * ──────────────────────────────────────────────────────────── */
 
 :root {
   /* Greens */
@@ -86,7 +62,9 @@
   --nav-height: 80px;
 }
 
-/* ── 2. Root wrapper + base resets ───────────────────────── */
+/* ── 2. Root wrapper + base resets ──────────────────────────
+ * src/core/reset.css
+ * ──────────────────────────────────────────────────────────── */
 
 #cp12-wrap {
   position: relative;
@@ -110,7 +88,9 @@
   text-decoration: none;
 }
 
-/* ── 3. Accessibility utilities ──────────────────────────── */
+/* ── 3. Accessibility utilities ──────────────────────────────
+ * src/core/accessibility.css
+ * ──────────────────────────────────────────────────────────── */
 
 #cp12-wrap .sr-only {
   position: absolute;
@@ -168,7 +148,9 @@
   color: var(--gold);
 }
 
-/* ── 4. Navigation ───────────────────────────────────────── */
+/* ── 4. Navigation (desktop) ─────────────────────────────────
+ * src/layout/nav.css
+ * ──────────────────────────────────────────────────────────── */
 
 #cp12-wrap .cp12-main-nav {
   position: fixed;
@@ -349,6 +331,10 @@
   display: block;
 }
 
+/* ── 4b. Navigation — mobile overlay ─────────────────────────
+ * src/layout/nav-mobile.css
+ * ──────────────────────────────────────────────────────────── */
+
 /* Mobile overlay */
 #cp12-wrap .nav-mobile-overlay {
   display: none;
@@ -392,7 +378,434 @@
   padding: 0.5rem;
 }
 
-/* ── 5. Hero section ─────────────────────────────────────── */
+/* ── Section progress dots ───────────────────────────────────
+ * src/layout/dots.css
+ * ──────────────────────────────────────────────────────────── */
+
+#cp12-dots {
+  position: fixed;
+  right: 1.25rem;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 9000;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: 0.4rem 0;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+#cp12-dots.visible {
+  opacity: 1;
+}
+
+#cp12-dots .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.35);
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition:
+    background 0.3s,
+    transform 0.3s,
+    box-shadow 0.3s;
+  position: relative;
+}
+
+/* Tooltip */
+#cp12-dots .dot::after {
+  content: attr(data-label);
+  position: absolute;
+  right: calc(100% + 0.75rem);
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(29, 42, 38, 0.9);
+  color: var(--cream);
+  font-size: 0.7rem;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  padding: 0.25rem 0.6rem;
+  border-radius: 4px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s 0.1s;
+}
+
+#cp12-dots .dot:hover::after,
+#cp12-dots .dot:focus-visible::after {
+  opacity: 1;
+}
+
+#cp12-dots .dot:hover,
+#cp12-dots .dot:focus-visible {
+  background: var(--gold);
+  transform: scale(1.25);
+  outline: none;
+}
+
+#cp12-dots .dot[aria-current="true"] {
+  background: var(--gold);
+  transform: scale(1.35);
+  box-shadow: 0 0 0 3px rgba(201, 169, 110, 0.25);
+}
+
+/* Dark sections — dots switch to lighter colour */
+#cp12-dots.on-dark .dot {
+  background: rgba(255, 255, 255, 0.4);
+}
+#cp12-dots.on-dark .dot:hover,
+#cp12-dots.on-dark .dot:focus-visible,
+#cp12-dots.on-dark .dot[aria-current="true"] {
+  background: var(--gold);
+}
+
+/* On cream sections */
+#cp12-dots.on-light .dot {
+  background: rgba(29, 42, 38, 0.25);
+}
+#cp12-dots.on-light .dot:hover,
+#cp12-dots.on-light .dot:focus-visible,
+#cp12-dots.on-light .dot[aria-current="true"] {
+  background: var(--pine);
+}
+
+/* Hide on mobile */
+@media (max-width: 900px) {
+  #cp12-dots {
+    display: none;
+  }
+}
+
+/* ── Next-section floating button ───────────────────────────
+ * src/layout/next-btn.css
+ * ──────────────────────────────────────────────────────────── */
+
+#cp12-next-btn {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(0);
+  z-index: 9000;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(29, 42, 38, 0.75);
+  border: 1px solid rgba(201, 169, 110, 0.4);
+  color: var(--gold);
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity 0.4s ease,
+    background 0.25s,
+    transform 0.25s;
+  animation: cp12BobDown 2.4s ease-in-out infinite;
+  backdrop-filter: blur(6px);
+}
+
+#cp12-next-btn.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+#cp12-next-btn:hover {
+  background: var(--pine);
+  border-color: var(--gold);
+  transform: translateX(-50%) translateY(4px);
+  animation: none;
+}
+
+#cp12-next-btn:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}
+
+@media (max-width: 600px) {
+  #cp12-next-btn {
+    display: none;
+  }
+}
+
+/* ── Buttons — shared base (CSS-2 invariant) ─────────────────
+ * src/core/buttons.css
+ * The grouped selector satisfies validate.js CSS-2 check.
+ * ──────────────────────────────────────────────────────────── */
+
+/* Shared base (CSS-2) */
+#cp12-wrap .btn-primary,
+#cp12-wrap .btn-gold,
+#cp12-wrap .btn-outline,
+#cp12-wrap .btn-ghost {
+  padding: 1rem 2.2rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-weight: 500;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+}
+
+/* Primary / Gold — filled */
+#cp12-wrap .btn-primary,
+#cp12-wrap .btn-gold {
+  background: var(--gold);
+  color: var(--charcoal);
+}
+
+#cp12-wrap .btn-primary:hover,
+#cp12-wrap .btn-gold:hover {
+  background: var(--terracotta);
+  color: var(--warm-white);
+  transform: translateY(-1px);
+}
+
+/* Outline — mist border */
+#cp12-wrap .btn-outline {
+  border: 1px solid var(--mist-50);
+  color: var(--mist);
+}
+
+#cp12-wrap .btn-outline:hover {
+  border-color: var(--mist);
+  color: var(--warm-white);
+  transform: translateY(-1px);
+}
+
+/* Ghost — gold border */
+#cp12-wrap .btn-ghost {
+  border: 1px solid var(--gold-40);
+  color: var(--gold);
+}
+
+#cp12-wrap .btn-ghost:hover {
+  border-color: var(--gold);
+  background: var(--gold-10);
+}
+
+/* ── Section label component ─────────────────────────────────
+ * src/core/section-labels.css
+ * ──────────────────────────────────────────────────────────── */
+
+#cp12-wrap .section-label {
+  font-size: 0.7rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+#cp12-wrap .section-label::before,
+#cp12-wrap .section-label::after {
+  content: "";
+  display: block;
+  width: 40px;
+  height: 1px;
+  background: var(--gold);
+  opacity: 0.5;
+}
+
+#cp12-wrap .section-label--left {
+  justify-content: flex-start;
+  margin-bottom: 1rem;
+}
+
+#cp12-wrap .section-label--left::before,
+#cp12-wrap .section-label--left::after {
+  display: none;
+}
+
+#cp12-wrap .section-label--gold {
+  color: var(--gold);
+}
+
+#cp12-wrap .section-label--cta {
+  margin-bottom: 1.5rem;
+}
+
+/* ── 6. Animations + reveal system ──────────────────────────
+ * src/core/animations.css
+ * Contains: fade-up, delay utilities, cp12-reveal, reduced-motion guard (A-1),
+ * and all shared @keyframes used by multiple sections.
+ * Note: cp12BobDown keyframe is also used by next-btn; kept here for single
+ * source of truth. Section-specific animation signatures live in each feature.
+ * ──────────────────────────────────────────────────────────── */
+
+#cp12-wrap .fade-up {
+  animation: cp12fu 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+#cp12-wrap .delay-1 {
+  animation-delay: 0.15s;
+  opacity: 0;
+}
+#cp12-wrap .delay-2 {
+  animation-delay: 0.3s;
+  opacity: 0;
+}
+#cp12-wrap .delay-3 {
+  animation-delay: 0.45s;
+  opacity: 0;
+}
+#cp12-wrap .delay-4 {
+  animation-delay: 0.6s;
+  opacity: 0;
+}
+#cp12-wrap .delay-5 {
+  animation-delay: 0.75s;
+  opacity: 0;
+}
+
+@keyframes cp12fu {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Shared entrance keyframes */
+@keyframes cp12SlideLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-48px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@keyframes cp12SlideRight {
+  from {
+    opacity: 0;
+    transform: translateX(48px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@keyframes cp12ScaleUp {
+  from {
+    opacity: 0;
+    transform: scale(0.93) translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+@keyframes cp12FadeScale {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+@keyframes cp12GlowPulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(201, 169, 110, 0.35);
+  }
+  50% {
+    box-shadow: 0 0 0 12px rgba(201, 169, 110, 0);
+  }
+}
+@keyframes cp12BobDown {
+  0%,
+  100% {
+    transform: translateX(-50%) translateY(0);
+  }
+  50% {
+    transform: translateX(-50%) translateY(7px);
+  }
+}
+
+/* IntersectionObserver reveal */
+#cp12-wrap .cp12-reveal {
+  opacity: 0;
+  transform: translateY(50px);
+  transition:
+    opacity 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+#cp12-wrap .cp12-reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── A-1: Respect OS reduced-motion preference ───────────── */
+@media (prefers-reduced-motion: reduce) {
+  #cp12-wrap .cp12-reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  #cp12-wrap .cp12-reveal.visible {
+    opacity: 1;
+    transform: none;
+  }
+  #cp12-wrap .fade-up,
+  #cp12-wrap .delay-1,
+  #cp12-wrap .delay-2,
+  #cp12-wrap .delay-3,
+  #cp12-wrap .delay-4,
+  #cp12-wrap .delay-5 {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+  #cp12-wrap .scroll-line {
+    animation: none;
+    opacity: 0.7;
+  }
+  #cp12-wrap .room-img-bg,
+  #cp12-wrap .travel-card-img-bg {
+    transition: none;
+  }
+  #cp12-wrap .btn-primary:hover,
+  #cp12-wrap .btn-gold:hover,
+  #cp12-wrap .btn-outline:hover,
+  #cp12-wrap .btn-ghost:hover {
+    transform: none;
+  }
+  #cp12-wrap .play-btn:hover {
+    transform: none;
+  }
+  #cp12-wrap .travel-card:hover,
+  #cp12-wrap .blog-card:hover {
+    transform: none;
+  }
+  #cp12-next-btn {
+    animation: none;
+  }
+}
+
+/* ── 5. Hero / Home section ──────────────────────────────────
+ * src/features/home/home.css
+ * Button rules go in src/core/buttons.css — not here.
+ * ──────────────────────────────────────────────────────────── */
 
 #cp12-wrap .hero {
   min-height: 100vh;
@@ -469,60 +882,6 @@
   display: flex;
   gap: 1rem;
   flex-wrap: wrap;
-}
-
-/* Buttons — shared base (CSS-2) */
-#cp12-wrap .btn-primary,
-#cp12-wrap .btn-gold,
-#cp12-wrap .btn-outline,
-#cp12-wrap .btn-ghost {
-  padding: 1rem 2.2rem;
-  font-size: 0.75rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  font-weight: 500;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 44px;
-}
-
-/* Primary / Gold — filled */
-#cp12-wrap .btn-primary,
-#cp12-wrap .btn-gold {
-  background: var(--gold);
-  color: var(--charcoal);
-}
-
-#cp12-wrap .btn-primary:hover,
-#cp12-wrap .btn-gold:hover {
-  background: var(--terracotta);
-  color: #fff;
-  transform: translateY(-1px);
-}
-
-/* Outline — mist border */
-#cp12-wrap .btn-outline {
-  border: 1px solid var(--mist-50);
-  color: var(--mist);
-}
-
-#cp12-wrap .btn-outline:hover {
-  border-color: var(--mist);
-  color: #fff;
-  transform: translateY(-1px);
-}
-
-/* Ghost — gold border */
-#cp12-wrap .btn-ghost {
-  border: 1px solid var(--gold-40);
-  color: var(--gold);
-}
-
-#cp12-wrap .btn-ghost:hover {
-  border-color: var(--gold);
-  background: var(--gold-10);
 }
 
 /* Hero right panel */
@@ -689,132 +1048,69 @@
   }
 }
 
-/* ── 6. Animations + reveal system ──────────────────────── */
+/* ── Hero responsive rules ───────────────────────────────── */
 
-#cp12-wrap .fade-up {
-  animation: cp12fu 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-}
-
-#cp12-wrap .delay-1 {
-  animation-delay: 0.15s;
-  opacity: 0;
-}
-#cp12-wrap .delay-2 {
-  animation-delay: 0.3s;
-  opacity: 0;
-}
-#cp12-wrap .delay-3 {
-  animation-delay: 0.45s;
-  opacity: 0;
-}
-#cp12-wrap .delay-4 {
-  animation-delay: 0.6s;
-  opacity: 0;
-}
-
-@keyframes cp12fu {
-  from {
-    opacity: 0;
-    transform: translateY(40px);
+@media (max-width: 900px) {
+  #cp12-wrap .hero {
+    grid-template-columns: 1fr;
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+  #cp12-wrap .hero-right {
+    display: none;
+  }
+  #cp12-wrap .hero-title {
+    font-size: 3.5rem;
   }
 }
 
-/* IntersectionObserver reveal */
-#cp12-wrap .cp12-reveal {
-  opacity: 0;
-  transform: translateY(50px);
-  transition:
-    opacity 0.75s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-#cp12-wrap .cp12-reveal.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* ── A-1: Respect OS reduced-motion preference ───────────── */
-@media (prefers-reduced-motion: reduce) {
-  #cp12-wrap .cp12-reveal {
-    opacity: 1;
-    transform: none;
-    transition: none;
+@media (max-width: 768px) {
+  #cp12-wrap .hero-title {
+    font-size: 3rem;
   }
-  #cp12-wrap .cp12-reveal.visible {
-    opacity: 1;
-    transform: none;
+  #cp12-wrap .hero-left {
+    padding: 8rem 2.5rem 4rem;
   }
-  #cp12-wrap .fade-up,
-  #cp12-wrap .delay-1,
-  #cp12-wrap .delay-2,
-  #cp12-wrap .delay-3,
-  #cp12-wrap .delay-4 {
-    animation: none;
-    opacity: 1;
-    transform: none;
+  #cp12-wrap .hero-stats {
+    grid-template-columns: repeat(3, 1fr);
   }
-  #cp12-wrap .scroll-line {
-    animation: none;
-    opacity: 0.7;
-  }
-  #cp12-wrap .room-img-bg,
-  #cp12-wrap .travel-card-img-bg {
-    transition: none;
-  }
-  #cp12-wrap .btn-primary:hover,
-  #cp12-wrap .btn-gold:hover,
-  #cp12-wrap .btn-outline:hover,
-  #cp12-wrap .btn-ghost:hover {
-    transform: none;
-  }
-  #cp12-wrap .play-btn:hover {
-    transform: none;
-  }
-  #cp12-wrap .travel-card:hover,
-  #cp12-wrap .blog-card:hover {
-    transform: none;
-  }
-  #cp12-next-btn {
-    animation: none;
+  #cp12-wrap .stat-num {
+    font-size: 2rem;
   }
 }
 
-/* ── 7. Utility overrides ────────────────────────────────── */
-
-#cp12-wrap .travel-highlight {
-  color: var(--mist);
+@media (max-width: 480px) {
+  #cp12-wrap .hero-title {
+    font-size: 2.6rem;
+    line-height: 1;
+  }
+  #cp12-wrap .hero-left {
+    padding: 7rem 1.5rem 3rem;
+  }
+  /* Hide the diagonal clip-path sliver — it overflows at single-column width */
+  #cp12-wrap .hero-left::after {
+    display: none;
+  }
+  #cp12-wrap .hero-btns {
+    flex-direction: column;
+  }
 }
 
-#cp12-wrap .section-label--left {
-  justify-content: flex-start;
-  margin-bottom: 1rem;
+@media (max-width: 430px) {
+  /* Slightly tighter hero text for very narrow screens */
+  #cp12-wrap .hero-title {
+    font-size: 2.2rem;
+  }
+  #cp12-wrap .hero-subtitle {
+    font-size: 0.88rem;
+  }
+  /* stat-num: reduce for very small screens */
+  #cp12-wrap .stat-num {
+    font-size: 1.6rem;
+  }
 }
 
-#cp12-wrap .section-label--gold {
-  color: var(--gold);
-}
-
-#cp12-wrap .about-content > .btn-primary {
-  margin-top: 1rem;
-}
-
-#cp12-wrap .address-text {
-  font-style: normal;
-}
-
-#cp12-wrap .section-label--left::before,
-#cp12-wrap .section-label--left::after {
-  display: none;
-}
-
-#cp12-wrap .section-label--cta {
-  margin-bottom: 1.5rem;
-}
-/* ── 9. Video section ────────────────────────────────────── */
+/* ── 9. Video section ─────────────────────────────────────────
+ * src/features/video/video.css
+ * ──────────────────────────────────────────────────────────── */
 
 #cp12-wrap .video-section {
   background: linear-gradient(
@@ -849,28 +1145,6 @@
   position: relative;
   z-index: 1;
   text-align: center;
-}
-
-#cp12-wrap .section-label {
-  font-size: 0.7rem;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  color: var(--gold);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
-  margin-bottom: 1.5rem;
-}
-
-#cp12-wrap .section-label::before,
-#cp12-wrap .section-label::after {
-  content: "";
-  display: block;
-  width: 40px;
-  height: 1px;
-  background: var(--gold);
-  opacity: 0.5;
 }
 
 #cp12-wrap .video-title {
@@ -949,7 +1223,42 @@
   border: 1px solid rgba(201, 169, 110, 0.2);
 }
 
-/* ── 10. Rooms section ───────────────────────────────────── */
+/* ── Video section animation signatures ───────────────────── */
+
+#cp12-wrap .sect-video .video-title {
+  opacity: 0;
+}
+#cp12-wrap .sect-video.animated .video-title {
+  animation: cp12fu 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.1s forwards;
+}
+#cp12-wrap .sect-video .video-desc {
+  opacity: 0;
+}
+#cp12-wrap .sect-video.animated .video-desc {
+  animation: cp12fu 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.25s forwards;
+}
+#cp12-wrap .sect-video .video-frame {
+  opacity: 0;
+  transform: scale(0.96);
+}
+#cp12-wrap .sect-video.animated .video-frame {
+  animation: cp12FadeScale 1s cubic-bezier(0.22, 1, 0.36, 1) 0.4s forwards;
+}
+
+/* ── Video responsive rules ──────────────────────────────── */
+
+@media (max-width: 480px) {
+  #cp12-wrap .video-container {
+    padding: 0 1.5rem;
+  }
+  #cp12-wrap .video-title {
+    font-size: 2.4rem;
+  }
+}
+
+/* ── 10. Rooms section ────────────────────────────────────────
+ * src/features/rooms/rooms.css
+ * ──────────────────────────────────────────────────────────── */
 
 #cp12-wrap .rooms-section {
   padding: 5rem 3rem 8rem; /* reduced top to remove dead-zone; keep generous bottom */
@@ -1004,7 +1313,7 @@
 
 #cp12-wrap .room-card {
   position: relative;
-  background: #fff;
+  background: var(--warm-white);
   overflow: hidden;
   cursor: pointer;
 }
@@ -1248,7 +1557,84 @@
   transform: translateX(4px);
 }
 
-/* ── 11. Travel / Explore section ───────────────────────── */
+/* ── Rooms section animation signatures ───────────────────── */
+
+#cp12-wrap .sect-rooms .rooms-header {
+  opacity: 0;
+}
+#cp12-wrap .sect-rooms.animated .rooms-header {
+  animation: cp12fu 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+#cp12-wrap .sect-rooms .room-card {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: none;
+}
+#cp12-wrap .sect-rooms.animated .room-card:nth-child(1) {
+  animation: cp12ScaleUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.15s forwards;
+}
+#cp12-wrap .sect-rooms.animated .room-card:nth-child(2) {
+  animation: cp12ScaleUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.28s forwards;
+}
+#cp12-wrap .sect-rooms.animated .room-card:nth-child(3) {
+  animation: cp12ScaleUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.41s forwards;
+}
+#cp12-wrap .sect-rooms.animated .room-card:nth-child(4) {
+  animation: cp12ScaleUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.54s forwards;
+}
+
+/* ── Rooms responsive rules ──────────────────────────────── */
+
+@media (max-width: 900px) {
+  #cp12-wrap .rooms-grid {
+    grid-template-columns: 1fr;
+  }
+  #cp12-wrap .rooms-header {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  #cp12-wrap .rooms-section {
+    padding: 4rem 2rem 6rem;
+  }
+  #cp12-wrap .section-heading {
+    font-size: 2.8rem;
+  }
+  #cp12-wrap .rooms-header {
+    gap: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  #cp12-wrap .rooms-section {
+    padding: 4rem 1.5rem;
+  }
+  #cp12-wrap .rooms-header {
+    gap: 1.5rem;
+  }
+  #cp12-wrap .section-heading {
+    font-size: 2.6rem;
+  }
+}
+
+@media (max-width: 640px) {
+  #cp12-wrap .room-meta {
+    flex-wrap: wrap;
+    gap: 0.6rem 1rem;
+  }
+}
+
+@media (max-width: 430px) {
+  /* Rooms grid: reduce gap at very narrow widths */
+  #cp12-wrap .rooms-grid {
+    gap: 1rem;
+  }
+}
+
+/* ── 11. Travel / Explore section ────────────────────────────
+ * src/features/explore/explore.css
+ * ──────────────────────────────────────────────────────────── */
 
 #cp12-wrap .travel-section {
   background: var(--pine);
@@ -1393,7 +1779,7 @@
   top: 1rem;
   left: 1rem;
   background: var(--terracotta);
-  color: #fff;
+  color: var(--warm-white);
   font-size: 0.6rem;
   letter-spacing: 0.15em;
   text-transform: uppercase;
@@ -1454,7 +1840,126 @@
   font-style: italic;
 }
 
-/* ── 12. About section ───────────────────────────────────── */
+/* ── Explore section animation signatures ─────────────────── */
+
+#cp12-wrap .sect-explore .travel-heading {
+  opacity: 0;
+}
+#cp12-wrap .sect-explore.animated .travel-heading {
+  animation: cp12SlideLeft 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+#cp12-wrap .sect-explore .filter-tabs {
+  opacity: 0;
+}
+#cp12-wrap .sect-explore.animated .filter-tabs {
+  animation: cp12fu 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.3s forwards;
+}
+#cp12-wrap .sect-explore .travel-card {
+  opacity: 0;
+  transform: translateY(32px);
+}
+#cp12-wrap .sect-explore.animated .travel-card:nth-child(1) {
+  animation: cp12fu 0.65s cubic-bezier(0.22, 1, 0.36, 1) 0.12s forwards;
+}
+#cp12-wrap .sect-explore.animated .travel-card:nth-child(2) {
+  animation: cp12fu 0.65s cubic-bezier(0.22, 1, 0.36, 1) 0.22s forwards;
+}
+#cp12-wrap .sect-explore.animated .travel-card:nth-child(3) {
+  animation: cp12fu 0.65s cubic-bezier(0.22, 1, 0.36, 1) 0.32s forwards;
+}
+#cp12-wrap .sect-explore.animated .travel-card:nth-child(4) {
+  animation: cp12fu 0.65s cubic-bezier(0.22, 1, 0.36, 1) 0.42s forwards;
+}
+#cp12-wrap .sect-explore.animated .travel-card:nth-child(5) {
+  animation: cp12fu 0.65s cubic-bezier(0.22, 1, 0.36, 1) 0.52s forwards;
+}
+#cp12-wrap .sect-explore.animated .travel-card:nth-child(6) {
+  animation: cp12fu 0.65s cubic-bezier(0.22, 1, 0.36, 1) 0.62s forwards;
+}
+
+/* ── Explore responsive rules ────────────────────────────── */
+
+@media (max-width: 900px) {
+  #cp12-wrap .travel-grid {
+    grid-template-columns: 1fr;
+  }
+  #cp12-wrap .travel-header {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  #cp12-wrap .travel-section {
+    padding: 4rem 2rem 6rem;
+  }
+  #cp12-wrap .travel-header {
+    gap: 2rem;
+  }
+}
+
+@media (max-width: 640px) {
+  #cp12-wrap .travel-grid {
+    grid-template-columns: 1fr;
+  }
+  #cp12-wrap .filter-tabs {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  #cp12-wrap .travel-section {
+    padding: 4rem 1.5rem;
+  }
+  /* travel-heading was never scaled down — 3.5rem overflows at mobile */
+  #cp12-wrap .travel-heading {
+    font-size: 2.4rem;
+  }
+  /* Stack travel-header vertically so heading and filter tabs don't compete for width */
+  #cp12-wrap .travel-header {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 430px) {
+  /* travel-grid: enforce single-column and prevent any implicit sizing issues */
+  #cp12-wrap .travel-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  /* travel-card: ensure cards don't stack on top of each other */
+  #cp12-wrap .travel-card {
+    position: relative;
+    width: 100%;
+  }
+  /* Reduce travel image height to avoid tall cards on small screens */
+  #cp12-wrap .travel-card-img {
+    height: 160px;
+  }
+  /* Tighten travel heading on very narrow */
+  #cp12-wrap .travel-heading {
+    font-size: 2rem;
+  }
+  /* Ensure travel inner section doesn't overflow */
+  #cp12-wrap .travel-inner {
+    overflow: hidden;
+  }
+  /* filter tabs: stack if needed on very narrow screens */
+  #cp12-wrap .filter-tabs {
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+  #cp12-wrap .tab {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.62rem;
+    min-height: 40px;
+  }
+}
+
+/* ── 12. About section ────────────────────────────────────────
+ * src/features/about/about.css
+ * ──────────────────────────────────────────────────────────── */
 
 #cp12-wrap .about-section {
   padding: 5rem 3rem 6rem; /* top trimmed to land cleanly after travel gradient */
@@ -1505,7 +2010,7 @@
 #cp12-wrap .about-img-accent .big-num {
   font-family: var(--font-serif);
   font-size: 3.5rem;
-  color: #fff;
+  color: var(--warm-white);
   display: block;
   line-height: 1;
   font-weight: 600;
@@ -1581,7 +2086,60 @@
   opacity: 0.7;
 }
 
-/* ── 13. Blog / Journal section ─────────────────────────── */
+#cp12-wrap .about-content > .btn-primary {
+  margin-top: 1rem;
+}
+
+/* ── About section animation signatures ───────────────────── */
+
+#cp12-wrap .sect-about .about-visual {
+  opacity: 0;
+}
+#cp12-wrap .sect-about.animated .about-visual {
+  animation: cp12SlideLeft 0.85s cubic-bezier(0.22, 1, 0.36, 1) 0.1s forwards;
+}
+#cp12-wrap .sect-about .about-content {
+  opacity: 0;
+}
+#cp12-wrap .sect-about.animated .about-content {
+  animation: cp12SlideRight 0.85s cubic-bezier(0.22, 1, 0.36, 1) 0.2s forwards;
+}
+
+/* ── About responsive rules ──────────────────────────────── */
+
+@media (max-width: 900px) {
+  #cp12-wrap .about-section {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  #cp12-wrap .about-section {
+    padding: 4rem 2rem;
+    gap: 2.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  #cp12-wrap .about-section {
+    padding: 4rem 1.5rem;
+  }
+  /* Constrain about-visual height so absolutely-positioned children stay in-bounds */
+  #cp12-wrap .about-visual {
+    height: 320px;
+  }
+}
+
+@media (max-width: 430px) {
+  /* About visual: constrain so absolute children are clipped, not overflowing */
+  #cp12-wrap .about-visual {
+    height: 280px;
+  }
+}
+
+/* ── 13. Blog / Journal section ───────────────────────────────
+ * src/features/journal/journal.css
+ * ──────────────────────────────────────────────────────────── */
 
 #cp12-wrap .blog-section {
   background: var(--cream);
@@ -1632,7 +2190,7 @@
 }
 
 #cp12-wrap .blog-card {
-  background: #fff;
+  background: var(--warm-white);
   overflow: hidden;
   transition: transform 0.3s;
   position: relative;
@@ -1775,7 +2333,63 @@
   color: var(--terracotta);
 }
 
-/* ── 14. CTA section ─────────────────────────────────────── */
+/* ── Journal section animation signatures ─────────────────── */
+
+#cp12-wrap .sect-journal .blog-heading {
+  opacity: 0;
+}
+#cp12-wrap .sect-journal.animated .blog-heading {
+  animation: cp12fu 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+#cp12-wrap .sect-journal .blog-card {
+  opacity: 0;
+}
+#cp12-wrap .sect-journal.animated .blog-card.large {
+  animation: cp12ScaleUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.15s forwards;
+}
+#cp12-wrap .sect-journal.animated .blog-card:not(.large):nth-child(2) {
+  animation: cp12fu 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.3s forwards;
+}
+#cp12-wrap .sect-journal.animated .blog-card:not(.large):nth-child(3) {
+  animation: cp12fu 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.44s forwards;
+}
+
+/* ── Journal responsive rules ────────────────────────────── */
+
+@media (max-width: 900px) {
+  #cp12-wrap .blog-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  #cp12-wrap .blog-section {
+    padding: 4rem 2rem 6rem;
+  }
+}
+
+@media (max-width: 640px) {
+  #cp12-wrap .blog-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  #cp12-wrap .blog-section {
+    padding: 4rem 1.5rem;
+  }
+}
+
+@media (max-width: 430px) {
+  /* blog-card: prevent any width blowout */
+  #cp12-wrap .blog-card {
+    width: 100%;
+  }
+}
+
+/* ── 14. CTA section ──────────────────────────────────────────
+ * src/features/cta/cta.css
+ * ──────────────────────────────────────────────────────────── */
 
 #cp12-wrap .cta-section {
   background: var(--charcoal);
@@ -1831,7 +2445,62 @@
   flex-wrap: wrap;
 }
 
-/* ── 15. Footer + social links ───────────────────────────── */
+#cp12-wrap .address-text {
+  font-style: normal;
+}
+
+/* ── CTA section animation signatures ─────────────────────── */
+
+#cp12-wrap .sect-book .cta-title {
+  opacity: 0;
+}
+#cp12-wrap .sect-book.animated .cta-title {
+  animation: cp12fu 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.1s forwards;
+}
+#cp12-wrap .sect-book .btn-primary,
+#cp12-wrap .sect-book .btn-ghost {
+  opacity: 0;
+}
+#cp12-wrap .sect-book.animated .btn-primary {
+  animation: cp12ScaleUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.35s forwards;
+}
+#cp12-wrap .sect-book.animated .btn-ghost {
+  animation: cp12ScaleUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.48s forwards;
+}
+#cp12-wrap .sect-book.animated .btn-primary {
+  animation-name: cp12ScaleUp, cp12GlowPulse;
+  animation-duration: 0.7s, 2.5s;
+  animation-delay: 0.35s, 1.2s;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1), ease-in-out;
+  animation-fill-mode: forwards, none;
+  animation-iteration-count: 1, infinite;
+}
+
+/* ── CTA responsive rules ────────────────────────────────── */
+
+@media (max-width: 480px) {
+  #cp12-wrap .cta-title {
+    font-size: 2.6rem;
+  }
+  #cp12-wrap .cta-section {
+    padding: 4rem 1.5rem;
+  }
+  #cp12-wrap .cta-btns {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+@media (max-width: 430px) {
+  /* Tighter CTA title */
+  #cp12-wrap .cta-title {
+    font-size: 2.2rem;
+  }
+}
+
+/* ── 15. Footer + social links ───────────────────────────────
+ * src/layout/footer.css
+ * ──────────────────────────────────────────────────────────── */
 
 #cp12-wrap footer {
   background: var(--charcoal-deep);
@@ -1952,7 +2621,37 @@
   color: var(--gold);
 }
 
-/* ── 16. Modal ───────────────────────────────────────────── */
+/* ── Footer responsive rules ─────────────────────────────── */
+
+@media (max-width: 900px) {
+  #cp12-wrap .footer-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  #cp12-wrap .footer-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  #cp12-wrap .footer-grid {
+    grid-template-columns: 1fr;
+  }
+  /* footer-bottom flex row overflows at narrow widths — stack vertically */
+  #cp12-wrap .footer-bottom {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  #cp12-wrap footer {
+    padding: 3rem 1.5rem 2rem;
+  }
+}
+
+/* ── 16. Modal ────────────────────────────────────────────────
+ * src/layout/modal.css
+ * ──────────────────────────────────────────────────────────── */
 
 #cp12-wrap .modal {
   display: none;
@@ -2018,380 +2717,16 @@
   margin-top: 0.5rem;
 }
 
-/* ── 16. Section animation signatures ────────────────────── */
+/* ── R-1: Responsive sentinel — cross-cutting layout rules ───
+ * src/core/responsive-sentinel.css
+ * This file is the R-1 anchor ensuring @media (max-width: 768px) always
+ * exists in the compiled CSS. Feature-specific responsive overrides live at
+ * the bottom of each feature's own CSS file.
+ * ──────────────────────────────────────────────────────────── */
 
-/* Shared entrance keyframes */
-@keyframes cp12SlideLeft {
-  from {
-    opacity: 0;
-    transform: translateX(-48px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-@keyframes cp12SlideRight {
-  from {
-    opacity: 0;
-    transform: translateX(48px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-@keyframes cp12ScaleUp {
-  from {
-    opacity: 0;
-    transform: scale(0.93) translateY(24px);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1) translateY(0);
-  }
-}
-@keyframes cp12FadeScale {
-  from {
-    opacity: 0;
-    transform: scale(0.96);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-@keyframes cp12GlowPulse {
-  0%,
-  100% {
-    box-shadow: 0 0 0 0 rgba(201, 169, 110, 0.35);
-  }
-  50% {
-    box-shadow: 0 0 0 12px rgba(201, 169, 110, 0);
-  }
-}
-@keyframes cp12BobDown {
-  0%,
-  100% {
-    transform: translateX(-50%) translateY(0);
-  }
-  50% {
-    transform: translateX(-50%) translateY(7px);
-  }
-}
-
-/* Per-section animate classes (added by JS when .cp12-reveal.visible triggers) */
-#cp12-wrap .sect-video .video-title {
-  opacity: 0;
-}
-#cp12-wrap .sect-video.animated .video-title {
-  animation: cp12fu 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.1s forwards;
-}
-#cp12-wrap .sect-video .video-desc {
-  opacity: 0;
-}
-#cp12-wrap .sect-video.animated .video-desc {
-  animation: cp12fu 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.25s forwards;
-}
-#cp12-wrap .sect-video .video-frame {
-  opacity: 0;
-  transform: scale(0.96);
-}
-#cp12-wrap .sect-video.animated .video-frame {
-  animation: cp12FadeScale 1s cubic-bezier(0.22, 1, 0.36, 1) 0.4s forwards;
-}
-
-#cp12-wrap .sect-rooms .rooms-header {
-  opacity: 0;
-}
-#cp12-wrap .sect-rooms.animated .rooms-header {
-  animation: cp12fu 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-}
-#cp12-wrap .sect-rooms .room-card {
-  opacity: 0;
-  transform: translateY(40px);
-  transition: none;
-}
-#cp12-wrap .sect-rooms.animated .room-card:nth-child(1) {
-  animation: cp12ScaleUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.15s forwards;
-}
-#cp12-wrap .sect-rooms.animated .room-card:nth-child(2) {
-  animation: cp12ScaleUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.28s forwards;
-}
-#cp12-wrap .sect-rooms.animated .room-card:nth-child(3) {
-  animation: cp12ScaleUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.41s forwards;
-}
-#cp12-wrap .sect-rooms.animated .room-card:nth-child(4) {
-  animation: cp12ScaleUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.54s forwards;
-}
-
-#cp12-wrap .sect-explore .travel-heading {
-  opacity: 0;
-}
-#cp12-wrap .sect-explore.animated .travel-heading {
-  animation: cp12SlideLeft 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-}
-#cp12-wrap .sect-explore .filter-tabs {
-  opacity: 0;
-}
-#cp12-wrap .sect-explore.animated .filter-tabs {
-  animation: cp12fu 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.3s forwards;
-}
-#cp12-wrap .sect-explore .travel-card {
-  opacity: 0;
-  transform: translateY(32px);
-}
-#cp12-wrap .sect-explore.animated .travel-card:nth-child(1) {
-  animation: cp12fu 0.65s cubic-bezier(0.22, 1, 0.36, 1) 0.12s forwards;
-}
-#cp12-wrap .sect-explore.animated .travel-card:nth-child(2) {
-  animation: cp12fu 0.65s cubic-bezier(0.22, 1, 0.36, 1) 0.22s forwards;
-}
-#cp12-wrap .sect-explore.animated .travel-card:nth-child(3) {
-  animation: cp12fu 0.65s cubic-bezier(0.22, 1, 0.36, 1) 0.32s forwards;
-}
-#cp12-wrap .sect-explore.animated .travel-card:nth-child(4) {
-  animation: cp12fu 0.65s cubic-bezier(0.22, 1, 0.36, 1) 0.42s forwards;
-}
-#cp12-wrap .sect-explore.animated .travel-card:nth-child(5) {
-  animation: cp12fu 0.65s cubic-bezier(0.22, 1, 0.36, 1) 0.52s forwards;
-}
-#cp12-wrap .sect-explore.animated .travel-card:nth-child(6) {
-  animation: cp12fu 0.65s cubic-bezier(0.22, 1, 0.36, 1) 0.62s forwards;
-}
-
-#cp12-wrap .sect-about .about-visual {
-  opacity: 0;
-}
-#cp12-wrap .sect-about.animated .about-visual {
-  animation: cp12SlideLeft 0.85s cubic-bezier(0.22, 1, 0.36, 1) 0.1s forwards;
-}
-#cp12-wrap .sect-about .about-content {
-  opacity: 0;
-}
-#cp12-wrap .sect-about.animated .about-content {
-  animation: cp12SlideRight 0.85s cubic-bezier(0.22, 1, 0.36, 1) 0.2s forwards;
-}
-
-#cp12-wrap .sect-journal .blog-heading {
-  opacity: 0;
-}
-#cp12-wrap .sect-journal.animated .blog-heading {
-  animation: cp12fu 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-}
-#cp12-wrap .sect-journal .blog-card {
-  opacity: 0;
-}
-#cp12-wrap .sect-journal.animated .blog-card.large {
-  animation: cp12ScaleUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.15s forwards;
-}
-#cp12-wrap .sect-journal.animated .blog-card:not(.large):nth-child(2) {
-  animation: cp12fu 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.3s forwards;
-}
-#cp12-wrap .sect-journal.animated .blog-card:not(.large):nth-child(3) {
-  animation: cp12fu 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.44s forwards;
-}
-
-#cp12-wrap .sect-book .cta-title {
-  opacity: 0;
-}
-#cp12-wrap .sect-book.animated .cta-title {
-  animation: cp12fu 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.1s forwards;
-}
-#cp12-wrap .sect-book .btn-primary,
-#cp12-wrap .sect-book .btn-ghost {
-  opacity: 0;
-}
-#cp12-wrap .sect-book.animated .btn-primary {
-  animation: cp12ScaleUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.35s forwards;
-}
-#cp12-wrap .sect-book.animated .btn-ghost {
-  animation: cp12ScaleUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.48s forwards;
-}
-#cp12-wrap .sect-book.animated .btn-primary {
-  animation-name: cp12ScaleUp, cp12GlowPulse;
-  animation-duration: 0.7s, 2.5s;
-  animation-delay: 0.35s, 1.2s;
-  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1), ease-in-out;
-  animation-fill-mode: forwards, none;
-  animation-iteration-count: 1, infinite;
-}
-
-/* ── Section progress dots ─────────────────────────────── */
-
-#cp12-dots {
-  position: fixed;
-  right: 1.25rem;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 9000;
-  display: flex;
-  flex-direction: column;
-  gap: 0.6rem;
-  padding: 0.4rem 0;
-  opacity: 0;
-  transition: opacity 0.4s ease;
-}
-
-#cp12-dots.visible {
-  opacity: 1;
-}
-
-#cp12-dots .dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.35);
-  border: none;
-  cursor: pointer;
-  padding: 0;
-  transition:
-    background 0.3s,
-    transform 0.3s,
-    box-shadow 0.3s;
-  position: relative;
-}
-
-/* Tooltip */
-#cp12-dots .dot::after {
-  content: attr(data-label);
-  position: absolute;
-  right: calc(100% + 0.75rem);
-  top: 50%;
-  transform: translateY(-50%);
-  background: rgba(29, 42, 38, 0.9);
-  color: var(--cream);
-  font-size: 0.7rem;
-  letter-spacing: 0.07em;
-  text-transform: uppercase;
-  padding: 0.25rem 0.6rem;
-  border-radius: 4px;
-  white-space: nowrap;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.2s 0.1s;
-}
-
-#cp12-dots .dot:hover::after,
-#cp12-dots .dot:focus-visible::after {
-  opacity: 1;
-}
-
-#cp12-dots .dot:hover,
-#cp12-dots .dot:focus-visible {
-  background: var(--gold);
-  transform: scale(1.25);
-  outline: none;
-}
-
-#cp12-dots .dot[aria-current="true"] {
-  background: var(--gold);
-  transform: scale(1.35);
-  box-shadow: 0 0 0 3px rgba(201, 169, 110, 0.25);
-}
-
-/* Dark sections — dots switch to lighter colour */
-#cp12-dots.on-dark .dot {
-  background: rgba(255, 255, 255, 0.4);
-}
-#cp12-dots.on-dark .dot:hover,
-#cp12-dots.on-dark .dot:focus-visible,
-#cp12-dots.on-dark .dot[aria-current="true"] {
-  background: var(--gold);
-}
-
-/* On cream sections */
-#cp12-dots.on-light .dot {
-  background: rgba(29, 42, 38, 0.25);
-}
-#cp12-dots.on-light .dot:hover,
-#cp12-dots.on-light .dot:focus-visible,
-#cp12-dots.on-light .dot[aria-current="true"] {
-  background: var(--pine);
-}
-
-/* Hide on mobile */
-@media (max-width: 900px) {
-  #cp12-dots {
-    display: none;
-  }
-}
-
-/* ── Next-section floating button ──────────────────────── */
-
-#cp12-next-btn {
-  position: fixed;
-  bottom: 2rem;
-  left: 50%;
-  transform: translateX(-50%) translateY(0);
-  z-index: 9000;
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  background: rgba(29, 42, 38, 0.75);
-  border: 1px solid rgba(201, 169, 110, 0.4);
-  color: var(--gold);
-  font-size: 1.1rem;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  pointer-events: none;
-  transition:
-    opacity 0.4s ease,
-    background 0.25s,
-    transform 0.25s;
-  animation: cp12BobDown 2.4s ease-in-out infinite;
-  backdrop-filter: blur(6px);
-}
-
-#cp12-next-btn.visible {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-#cp12-next-btn:hover {
-  background: var(--pine);
-  border-color: var(--gold);
-  transform: translateX(-50%) translateY(4px);
-  animation: none;
-}
-
-#cp12-next-btn:focus-visible {
-  outline: 2px solid var(--gold);
-  outline-offset: 3px;
-}
-
-@media (max-width: 600px) {
-  #cp12-next-btn {
-    display: none;
-  }
-}
-
-/* ── 8. Responsive breakpoints ───────────────────────────── */
+/* ── Cross-cutting 900px breakpoint ──────────────────────── */
 
 @media (max-width: 900px) {
-  #cp12-wrap .hero {
-    grid-template-columns: 1fr;
-  }
-  #cp12-wrap .hero-right {
-    display: none;
-  }
-  #cp12-wrap .hero-title {
-    font-size: 3.5rem;
-  }
-  #cp12-wrap .rooms-grid,
-  #cp12-wrap .travel-grid,
-  #cp12-wrap .blog-grid {
-    grid-template-columns: 1fr;
-  }
-  #cp12-wrap .footer-grid {
-    grid-template-columns: 1fr 1fr;
-  }
-  #cp12-wrap .about-section {
-    grid-template-columns: 1fr;
-  }
   #cp12-wrap .cp12-main-nav {
     padding: 1rem 1.5rem;
   }
@@ -2402,201 +2737,29 @@
     display: flex;
     align-items: center;
   }
-  #cp12-wrap .rooms-header,
-  #cp12-wrap .travel-header {
-    grid-template-columns: 1fr;
-  }
 }
 
 /* ── R-1: Tablet breakpoint (≤768px) ─────────────────────── */
 
 @media (max-width: 768px) {
-  #cp12-wrap .hero-title {
-    font-size: 3rem;
-  }
-  #cp12-wrap .hero-left {
-    padding: 8rem 2.5rem 4rem;
-  }
-  #cp12-wrap .footer-grid {
-    grid-template-columns: 1fr;
-  }
-  #cp12-wrap .rooms-section,
-  #cp12-wrap .travel-section,
-  #cp12-wrap .blog-section {
-    padding: 4rem 2rem 6rem;
-  }
-  #cp12-wrap .about-section {
-    padding: 4rem 2rem;
-    gap: 2.5rem;
-  }
-  #cp12-wrap .section-heading {
-    font-size: 2.8rem;
-  }
+  /* Cross-cutting layout adjustments at tablet width */
   #cp12-wrap .rooms-header,
   #cp12-wrap .travel-header {
     gap: 2rem;
-  }
-  #cp12-wrap .hero-stats {
-    grid-template-columns: repeat(3, 1fr);
-  }
-  #cp12-wrap .stat-num {
-    font-size: 2rem;
   }
 }
 
 /* ── Mid-breakpoint (≤640px) ──────────────────────────────── */
 
 @media (max-width: 640px) {
-  #cp12-wrap .room-meta {
-    flex-wrap: wrap;
-    gap: 0.6rem 1rem;
-  }
-  #cp12-wrap .travel-grid {
-    grid-template-columns: 1fr;
-  }
-  #cp12-wrap .blog-grid {
-    grid-template-columns: 1fr;
-  }
-  #cp12-wrap .filter-tabs {
-    flex-wrap: wrap;
-    justify-content: center;
-  }
+  /* Cross-cutting adjustments — individual feature rules are in feature files */
 }
 
-@media (max-width: 480px) {
-  #cp12-wrap .hero-title {
-    font-size: 2.6rem;
-    line-height: 1;
-  }
-  #cp12-wrap .hero-left {
-    padding: 7rem 1.5rem 3rem;
-  }
-  /* Hide the diagonal clip-path sliver — it overflows at single-column width */
-  #cp12-wrap .hero-left::after {
-    display: none;
-  }
-  #cp12-wrap .hero-btns {
-    flex-direction: column;
-  }
-  #cp12-wrap .footer-grid {
-    grid-template-columns: 1fr;
-  }
-  #cp12-wrap .cta-title {
-    font-size: 2.6rem;
-  }
-  #cp12-wrap .about-section {
-    padding: 4rem 1.5rem;
-  }
-  /* Constrain about-visual height so absolutely-positioned children stay in-bounds */
-  #cp12-wrap .about-visual {
-    height: 320px;
-  }
-  #cp12-wrap .rooms-section,
-  #cp12-wrap .travel-section,
-  #cp12-wrap .blog-section,
-  #cp12-wrap .cta-section {
-    padding: 4rem 1.5rem;
-  }
-  #cp12-wrap .rooms-header {
-    gap: 1.5rem;
-  }
-  #cp12-wrap .video-container {
-    padding: 0 1.5rem;
-  }
-  #cp12-wrap .video-title {
-    font-size: 2.4rem;
-  }
-  #cp12-wrap .section-heading {
-    font-size: 2.6rem;
-  }
-  /* travel-heading was never scaled down — 3.5rem overflows at mobile */
-  #cp12-wrap .travel-heading {
-    font-size: 2.4rem;
-  }
-  /* Stack travel-header vertically so heading and filter tabs don't compete for width */
-  #cp12-wrap .travel-header {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-  }
-  #cp12-wrap .cta-btns {
-    flex-direction: column;
-    align-items: center;
-  }
-  /* footer-bottom flex row overflows at narrow widths — stack vertically */
-  #cp12-wrap .footer-bottom {
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-  #cp12-wrap footer {
-    padding: 3rem 1.5rem 2rem;
-  }
-}
-
-/* ── Narrow-phone (≤430px — iPhone 14 Pro Max and similar) ── */
-
-@media (max-width: 430px) {
-  /* Slightly tighter hero text for very narrow screens */
-  #cp12-wrap .hero-title {
-    font-size: 2.2rem;
-  }
-  #cp12-wrap .hero-subtitle {
-    font-size: 0.88rem;
-  }
-  /* travel-grid: enforce single-column and prevent any implicit sizing issues */
-  #cp12-wrap .travel-grid {
-    grid-template-columns: 1fr;
-    gap: 1rem;
-  }
-  /* travel-card: ensure cards don't stack on top of each other */
-  #cp12-wrap .travel-card {
-    position: relative;
-    width: 100%;
-  }
-  /* Reduce travel image height to avoid tall cards on small screens */
-  #cp12-wrap .travel-card-img {
-    height: 160px;
-  }
-  /* Tighten travel heading on very narrow */
-  #cp12-wrap .travel-heading {
-    font-size: 2rem;
-  }
-  /* Ensure travel inner section doesn't overflow */
-  #cp12-wrap .travel-inner {
-    overflow: hidden;
-  }
-  /* Rooms grid: reduce gap at very narrow widths */
-  #cp12-wrap .rooms-grid {
-    gap: 1rem;
-  }
-  /* About visual: constrain so absolute children are clipped, not overflowing */
-  #cp12-wrap .about-visual {
-    height: 280px;
-  }
-  /* blog-card: prevent any width blowout */
-  #cp12-wrap .blog-card {
-    width: 100%;
-  }
-  /* Tighter CTA title */
-  #cp12-wrap .cta-title {
-    font-size: 2.2rem;
-  }
-  /* stat-num: reduce for very small screens */
-  #cp12-wrap .stat-num {
-    font-size: 1.6rem;
-  }
-  /* filter tabs: stack if needed on very narrow screens */
-  #cp12-wrap .filter-tabs {
-    flex-wrap: wrap;
-    gap: 0.4rem;
-  }
-  #cp12-wrap .tab {
-    padding: 0.4rem 0.8rem;
-    font-size: 0.62rem;
-    min-height: 40px;
-  }
-}
-
-/* ── 17. @supports progressive enhancements ─────────────── */
+/* ── 17. @supports progressive enhancements ──────────────────
+ * src/core/supports.css
+ * Must be the LAST file in concat order so it correctly overrides
+ * earlier rules in browsers that support backdrop-filter.
+ * ──────────────────────────────────────────────────────────── */
 
 @supports (backdrop-filter: blur(1px)) {
   /* Scoped to scrolled-over-light state only — dark hero must stay dark */

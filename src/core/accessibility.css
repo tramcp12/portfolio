@@ -1,0 +1,59 @@
+/* ── 3. Accessibility utilities ──────────────────────────────
+ * src/core/accessibility.css
+ * ──────────────────────────────────────────────────────────── */
+
+#cp12-wrap .sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+#cp12-wrap .skip-nav {
+  position: absolute;
+  top: -100%;
+  left: 1rem;
+  background: var(--gold);
+  color: var(--charcoal);
+  padding: 0.75rem 1.5rem;
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 500;
+  z-index: 999999;
+  transition: top 0.2s;
+  border: none;
+  cursor: pointer;
+}
+
+#cp12-wrap .skip-nav:focus {
+  top: 1rem;
+}
+
+#cp12-wrap *:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+  border-radius: 1px;
+}
+
+/* :focus fallback for browsers without :focus-visible support */
+#cp12-wrap *:focus:not(:focus-visible) {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}
+
+#cp12-wrap button:focus-visible,
+#cp12-wrap a:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}
+
+/* Mobile nav CTA colour (replaces inline style) */
+#cp12-wrap .nav-mobile-cta {
+  color: var(--gold);
+}

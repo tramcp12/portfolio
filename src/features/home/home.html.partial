@@ -1,0 +1,72 @@
+        <!-- Hero -->
+        <section class="hero sect-home" id="home" aria-labelledby="heroHeading">
+          <div class="hero-left">
+            <p class="hero-tag fade-up">
+              Đà Lạt &middot; Central Highlands &middot; Vietnam
+            </p>
+            <h1 class="hero-title fade-up delay-1" id="heroHeading">
+              Where<br>travelers<em>find home.</em>
+            </h1>
+            <p class="hero-subtitle fade-up delay-2">
+              A welcoming stop in the mist-wrapped mountains of Dalat. For solo
+              wanderers, trail runners, and anyone who believes the best travel
+              stories start with the right place to sleep.
+            </p>
+            <div class="hero-btns fade-up delay-3">
+              <a href="#rooms" class="btn-primary">Explore Rooms</a>
+              <a href="#explore" class="btn-outline">Trail Guide &rarr;</a>
+            </div>
+          </div>
+
+          <div class="hero-right">
+            <div class="hero-image-bg"></div>
+            <div class="hero-image-overlay"></div>
+            <span class="hero-pine-icon" aria-hidden="true">🌲</span>
+            <div class="hero-image-content">
+              <div class="play-btn-wrap">
+                <button
+                  type="button"
+                  class="play-btn"
+                  id="heroPlayBtn"
+                  aria-label="Watch welcome video"
+                ></button>
+                <span class="play-label" aria-hidden="true"
+                  >Watch Welcome Video</span
+                >
+              </div>
+              <section class="hero-stats" aria-label="Quick facts">
+                <div class="stat-box">
+                  <span role="img" class="stat-num" aria-label="4 room types"
+                    >4</span
+                  >
+                  <span class="stat-label" aria-hidden="true">Room Types</span>
+                </div>
+                <div class="stat-box">
+                  <span
+                    role="img"
+                    class="stat-num"
+                    aria-label="6 plus local routes"
+                    >6+</span
+                  >
+                  <span class="stat-label" aria-hidden="true"
+                    >Local Routes</span
+                  >
+                </div>
+                <div class="stat-box">
+                  <span
+                    role="img"
+                    class="stat-num"
+                    aria-label="1500 metres altitude"
+                    >1500m</span
+                  >
+                  <span class="stat-label" aria-hidden="true">Altitude</span>
+                </div>
+              </section>
+            </div>
+          </div>
+
+          <div class="scroll-hint" aria-hidden="true">
+            <div class="scroll-line"></div>
+            Scroll
+          </div>
+        </section>

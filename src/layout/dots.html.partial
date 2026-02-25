@@ -1,0 +1,59 @@
+      <!-- Section progress dots (desktop only) -->
+      <nav id="cp12-dots" aria-label="Page sections">
+        <button
+          type="button"
+          class="dot"
+          data-target="home"
+          data-label="Top"
+          aria-label="Go to top"
+          tabindex="-1"
+        ></button>
+        <button
+          type="button"
+          class="dot"
+          data-target="video"
+          data-label="Film"
+          aria-label="Go to welcome film"
+          tabindex="-1"
+        ></button>
+        <button
+          type="button"
+          class="dot"
+          data-target="rooms"
+          data-label="Rooms"
+          aria-label="Go to rooms"
+          tabindex="-1"
+        ></button>
+        <button
+          type="button"
+          class="dot"
+          data-target="explore"
+          data-label="Explore"
+          aria-label="Go to explore"
+          tabindex="-1"
+        ></button>
+        <button
+          type="button"
+          class="dot"
+          data-target="about"
+          data-label="About"
+          aria-label="Go to about"
+          tabindex="-1"
+        ></button>
+        <button
+          type="button"
+          class="dot"
+          data-target="journal"
+          data-label="Journal"
+          aria-label="Go to journal"
+          tabindex="-1"
+        ></button>
+        <button
+          type="button"
+          class="dot"
+          data-target="book"
+          data-label="Book"
+          aria-label="Go to booking"
+          tabindex="-1"
+        ></button>
+      </nav>

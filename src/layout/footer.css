@@ -1,0 +1,150 @@
+/* ── 15. Footer + social links ───────────────────────────────
+ * src/layout/footer.css
+ * ──────────────────────────────────────────────────────────── */
+
+#cp12-wrap footer {
+  background: var(--charcoal-deep);
+  padding: 5rem 3rem 2rem;
+  color: rgba(253, 250, 245, 0.5);
+}
+
+#cp12-wrap .footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 3rem;
+  max-width: 1200px;
+  margin: 0 auto 4rem;
+}
+
+#cp12-wrap .footer-logo {
+  font-family: var(--font-serif);
+  font-size: 2rem;
+  color: var(--cream);
+  font-weight: 300;
+  margin-bottom: 1rem;
+  display: block;
+  letter-spacing: 0.05em;
+}
+
+#cp12-wrap .footer-logo em {
+  font-style: italic;
+  color: var(--gold);
+}
+
+#cp12-wrap .footer-tagline {
+  font-size: 0.82rem;
+  line-height: 1.7;
+  opacity: 0.6;
+  margin-bottom: 1.5rem;
+}
+
+#cp12-wrap .footer-socials {
+  display: flex;
+  gap: 0.8rem;
+  margin-top: 1.5rem;
+  background: transparent; /* prevent Wix embed wrapper inheritance */
+}
+
+#cp12-wrap .social-link {
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
+  background: transparent; /* icons float on footer dark, no box */
+  border: 1px solid rgba(201, 169, 110, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--gold);
+  transition: all 0.3s;
+}
+
+#cp12-wrap .social-link svg {
+  display: block;
+  flex-shrink: 0;
+}
+
+#cp12-wrap .social-link:hover {
+  background: var(--gold);
+  color: var(--charcoal);
+  border-color: var(--gold);
+}
+
+#cp12-wrap .footer-col-title {
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 1.5rem;
+  display: block;
+}
+
+#cp12-wrap .footer-links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+#cp12-wrap .footer-links a {
+  font-size: 0.82rem;
+  opacity: 0.55;
+  transition:
+    opacity 0.3s,
+    color 0.3s;
+  color: var(--cream);
+}
+
+#cp12-wrap .footer-links a:hover {
+  opacity: 1;
+  color: var(--gold);
+}
+
+#cp12-wrap .footer-bottom {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.72rem;
+  opacity: 0.35;
+}
+
+#cp12-wrap .address-text {
+  font-size: 0.8rem;
+  line-height: 1.7;
+  opacity: 0.6;
+}
+
+#cp12-wrap .address-text a {
+  color: var(--gold);
+}
+
+/* ── Footer responsive rules ─────────────────────────────── */
+
+@media (max-width: 900px) {
+  #cp12-wrap .footer-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  #cp12-wrap .footer-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  #cp12-wrap .footer-grid {
+    grid-template-columns: 1fr;
+  }
+  /* footer-bottom flex row overflows at narrow widths — stack vertically */
+  #cp12-wrap .footer-bottom {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  #cp12-wrap footer {
+    padding: 3rem 1.5rem 2rem;
+  }
+}

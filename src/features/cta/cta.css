@@ -1,0 +1,110 @@
+/* ── 14. CTA section ──────────────────────────────────────────
+ * src/features/cta/cta.css
+ * ──────────────────────────────────────────────────────────── */
+
+#cp12-wrap .cta-section {
+  background: var(--charcoal);
+  padding: 8rem 3rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+#cp12-wrap .cta-bg-lines {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    -45deg,
+    transparent,
+    transparent 60px,
+    rgba(201, 169, 110, 0.03) 60px,
+    rgba(201, 169, 110, 0.03) 61px
+  );
+}
+
+#cp12-wrap .cta-content {
+  position: relative;
+  z-index: 1;
+}
+
+#cp12-wrap .cta-title {
+  font-family: var(--font-serif);
+  font-size: 4.5rem;
+  color: var(--cream);
+  font-weight: 300;
+  line-height: 1;
+  margin-bottom: 1.5rem;
+}
+
+#cp12-wrap .cta-title em {
+  font-style: italic;
+  color: var(--gold);
+}
+
+#cp12-wrap .cta-sub {
+  font-size: 0.95rem;
+  color: rgba(184, 202, 189, 0.7);
+  max-width: 500px;
+  margin: 0 auto 3rem;
+  line-height: 1.8;
+}
+
+#cp12-wrap .cta-btns {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+#cp12-wrap .address-text {
+  font-style: normal;
+}
+
+/* ── CTA section animation signatures ─────────────────────── */
+
+#cp12-wrap .sect-book .cta-title {
+  opacity: 0;
+}
+#cp12-wrap .sect-book.animated .cta-title {
+  animation: cp12fu 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.1s forwards;
+}
+#cp12-wrap .sect-book .btn-primary,
+#cp12-wrap .sect-book .btn-ghost {
+  opacity: 0;
+}
+#cp12-wrap .sect-book.animated .btn-primary {
+  animation: cp12ScaleUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.35s forwards;
+}
+#cp12-wrap .sect-book.animated .btn-ghost {
+  animation: cp12ScaleUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.48s forwards;
+}
+#cp12-wrap .sect-book.animated .btn-primary {
+  animation-name: cp12ScaleUp, cp12GlowPulse;
+  animation-duration: 0.7s, 2.5s;
+  animation-delay: 0.35s, 1.2s;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1), ease-in-out;
+  animation-fill-mode: forwards, none;
+  animation-iteration-count: 1, infinite;
+}
+
+/* ── CTA responsive rules ────────────────────────────────── */
+
+@media (max-width: 480px) {
+  #cp12-wrap .cta-title {
+    font-size: 2.6rem;
+  }
+  #cp12-wrap .cta-section {
+    padding: 4rem 1.5rem;
+  }
+  #cp12-wrap .cta-btns {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+@media (max-width: 430px) {
+  /* Tighter CTA title */
+  #cp12-wrap .cta-title {
+    font-size: 2.2rem;
+  }
+}

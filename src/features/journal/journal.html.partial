@@ -1,0 +1,102 @@
+
+        <!-- Blog / Journal -->
+        <section
+          class="blog-section sect-journal"
+          id="journal"
+          aria-labelledby="journalHeading"
+        >
+          <div class="blog-inner">
+            <div class="blog-header">
+              <div class="section-label" aria-hidden="true">
+                The CP12 Journal
+              </div>
+              <h2 class="blog-heading" id="journalHeading">
+                Stories from <em>the trail.</em>
+              </h2>
+              <p class="blog-subtext">
+                Local insights, runner guides, hidden spots, and honest travel
+                advice — straight from the CP12 team and the people who've
+                stayed with us.
+              </p>
+            </div>
+            <div class="blog-grid">
+              <article class="blog-card large">
+                <div
+                  class="blog-card-img"
+                  role="img"
+                  aria-label="Pine forest trail at dawn"
+                >
+                  <div class="room-img-bg bi1"></div>
+                </div>
+                <div class="blog-card-body">
+                  <p class="blog-card-cat">Running Guide</p>
+                  <h3 class="blog-card-title">
+                    Dalat for Runners: Your Complete Trail Guide from Trạm CP12
+                  </h3>
+                  <p class="blog-card-excerpt">
+                    Dalat is one of Southeast Asia's best-kept secrets for trail
+                    runners. Sitting at 1,500m above sea level with cool
+                    mountain air and pine-forested ridgelines.
+                  </p>
+                  <a href="#" class="blog-link">
+                    Read More
+                    <span class="sr-only">about Dalat trail running guide</span
+                    >&rarr;
+                  </a>
+                </div>
+              </article>
+
+              <article class="blog-card">
+                <div
+                  class="blog-card-img"
+                  role="img"
+                  aria-label="Solo traveler at CP12 common area"
+                >
+                  <div class="room-img-bg bi2"></div>
+                </div>
+                <div class="blog-card-body">
+                  <p class="blog-card-cat">Solo Travel</p>
+                  <h3 class="blog-card-title">
+                    How to Feel at Home at Trạm CP12
+                  </h3>
+                  <p class="blog-card-excerpt">
+                    There's a particular kind of freedom in traveling alone. Our
+                    dorm, morning walks, and weekly Trạm Nights are designed so
+                    connections happen naturally.
+                  </p>
+                  <a href="#" class="blog-link">
+                    Read More
+                    <span class="sr-only">about solo travel at CP12</span>&rarr;
+                  </a>
+                </div>
+              </article>
+
+              <article class="blog-card">
+                <div
+                  class="blog-card-img"
+                  role="img"
+                  aria-label="Hidden café alley in Đà Lạt"
+                >
+                  <div class="room-img-bg bi3"></div>
+                </div>
+                <div class="blog-card-body">
+                  <p class="blog-card-cat">Local Secrets</p>
+                  <h3 class="blog-card-title">
+                    Dalat's Hidden Gems: Beyond the Tourist Trail
+                  </h3>
+                  <p class="blog-card-excerpt">
+                    Skip the brochures. Our team reveals hidden cafés,
+                    backstreet food stalls, and underground arts you won't find
+                    on TripAdvisor.
+                  </p>
+                  <a href="#" class="blog-link">
+                    Read More
+                    <span class="sr-only">about Đà Lạt hidden gems</span>&rarr;
+                  </a>
+                </div>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <!-- CTA -->

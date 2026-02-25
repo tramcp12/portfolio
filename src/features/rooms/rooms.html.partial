@@ -1,0 +1,25 @@
+
+        <!-- Rooms -->
+        <section
+          class="rooms-section sect-rooms"
+          id="rooms"
+          aria-labelledby="roomsHeading"
+        >
+          <div class="rooms-header">
+            <div>
+              <div class="section-label section-label--left">Our Spaces</div>
+              <h2 class="section-heading" id="roomsHeading">
+                A room for every<br><em>kind of traveler.</em>
+              </h2>
+            </div>
+            <p class="rooms-intro">
+              From intimate private rooms to our social dormitory — each space
+              at Trạm CP12 is designed with intention. Natural materials, local
+              craft, and exactly the kind of light that makes you want to stay
+              another night.
+            </p>
+          </div>
+
+          <!-- Rendered at runtime from #rooms-data JSON by cp12.js IIFE 0 -->
+          <div id="rooms-grid" class="rooms-grid"></div>
+        </section>

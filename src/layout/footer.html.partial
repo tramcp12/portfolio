@@ -1,0 +1,201 @@
+
+      <!-- Footer -->
+      <footer aria-label="Site footer">
+        <div class="footer-grid">
+          <!-- Brand column: logo · tagline · address · socials -->
+          <div class="footer-brand">
+            <a href="#home" class="footer-logo">Trạm <em>CP12</em></a>
+            <p class="footer-tagline">
+              A welcoming stop in the mist-wrapped mountains of Đà Lạt — where
+              solo travelers find their people, runners find their trails, and
+              everyone finds a home away from home.
+            </p>
+
+            <address class="address-text">
+              <span aria-hidden="true">📍</span>
+              <a
+                href="https://maps.app.goo.gl/PCN6DtU5gCf45SzDA"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                228/6 Đường Phú Đồng Thiên Vương,<br>
+                Phường 8, Đà Lạt, Lâm Đồng, Việt Nam </a
+              ><br><br>
+              <span aria-hidden="true">📞</span>
+              <a href="tel:+84765679228">+84&nbsp;765&nbsp;679&nbsp;228</a
+              ><br>
+              <span aria-hidden="true">✉</span>
+              <a href="mailto:cp12tramdungchill@gmail.com"
+                >cp12tramdungchill@gmail.com</a
+              >
+            </address>
+
+            <nav class="footer-socials" aria-label="Social links">
+              <a
+                href="https://www.facebook.com/tramcp12"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="social-link"
+                aria-label="CP12 on Facebook"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z">
+                </svg>
+              </a>
+              <a
+                href="https://www.instagram.com/tramcp12"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="social-link"
+                aria-label="CP12 on Instagram"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5">
+                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z">
+                  <line x1="17.5" y1="6.5" x2="17.51" y2="6.5">
+                </svg>
+              </a>
+              <a
+                href="https://www.youtube.com/@cp12tramdungchill"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="social-link"
+                aria-label="CP12 on YouTube"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z">
+                  <polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02">
+                </svg>
+              </a>
+              <a
+                href="https://www.tiktok.com/@tramcp12"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="social-link"
+                aria-label="CP12 on TikTok"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5">
+                </svg>
+              </a>
+              <a
+                href="https://maps.app.goo.gl/PCN6DtU5gCf45SzDA"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="social-link"
+                aria-label="CP12 on Google Maps"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z">
+                  <circle cx="12" cy="10" r="3">
+                </svg>
+              </a>
+            </nav>
+          </div>
+          <!-- /.footer-brand -->
+
+          <!-- Rooms column -->
+          <div class="footer-col">
+            <span class="footer-col-title">Rooms</span>
+            <ul class="footer-links">
+              <li><a href="#rooms">Phòng Trạm — Signature</a></li>
+              <li><a href="#rooms">Góc Gió — Breeze Nook</a></li>
+              <li><a href="#rooms">Tổ Chim — Birdsong Suite</a></li>
+              <li><a href="#rooms">Dorm Trạm — Social</a></li>
+            </ul>
+          </div>
+
+          <!-- Explore column -->
+          <div class="footer-col">
+            <span class="footer-col-title">Explore</span>
+            <ul class="footer-links">
+              <li><a href="#explore">Running Routes</a></li>
+              <li><a href="#explore">Food &amp; Markets</a></li>
+              <li><a href="#explore">Culture &amp; Nature</a></li>
+              <li><a href="#explore">Trail Guide PDF</a></li>
+            </ul>
+          </div>
+
+          <!-- Quick Links column -->
+          <div class="footer-col">
+            <span class="footer-col-title">Quick Links</span>
+            <ul class="footer-links">
+              <li>
+                <a
+                  href="https://maps.app.goo.gl/PCN6DtU5gCf45SzDA"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >View on Google Maps</a
+                >
+              </li>
+              <li><a href="#about">About CP12</a></li>
+              <li><a href="#about">About &amp; House Rules</a></li>
+              <li><a href="#journal">The Journal</a></li>
+              <li><a href="#book">Book a Stay</a></li>
+            </ul>
+          </div>
+        </div>
+        <!-- /.footer-grid -->
+
+        <div class="footer-bottom">
+          <span>© 2026 Trạm CP12 &middot; Đà Lạt, Việt Nam</span>
+          <span>Made with care in the Central Highlands</span>
+        </div>
+      </footer>

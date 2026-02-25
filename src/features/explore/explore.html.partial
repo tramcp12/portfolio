@@ -1,0 +1,207 @@
+
+        <!-- Travel / Explore -->
+        <section
+          class="travel-section sect-explore"
+          id="explore"
+          aria-labelledby="travelHeading"
+        >
+
+          <div class="travel-inner">
+            <div class="travel-header">
+              <div>
+                <div
+                  class="section-label section-label--left section-label--gold"
+                >
+                  Explore Dalat
+                </div>
+                <h2 class="travel-heading" id="travelHeading">
+                  Trails, tastes &amp; <em>hidden gems.</em>
+                </h2>
+              </div>
+              <div>
+                <div
+                  class="filter-tabs"
+                  role="tablist"
+                  aria-label="Filter by category"
+                >
+                  <button
+                    type="button"
+                    class="tab active"
+                    role="tab"
+                    aria-selected="true"
+                    data-filter="all"
+                  >
+                    All
+                  </button>
+                  <button
+                    type="button"
+                    class="tab"
+                    role="tab"
+                    aria-selected="false"
+                    data-filter="running"
+                  >
+                    <span aria-hidden="true">🏃</span> Running
+                  </button>
+                  <button
+                    type="button"
+                    class="tab"
+                    role="tab"
+                    aria-selected="false"
+                    data-filter="food"
+                  >
+                    <span aria-hidden="true">🍜</span> Food
+                  </button>
+                  <button
+                    type="button"
+                    class="tab"
+                    role="tab"
+                    aria-selected="false"
+                    data-filter="nature"
+                  >
+                    <span aria-hidden="true">⛺</span> Nature
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="travel-grid"
+              role="tabpanel"
+              aria-live="polite"
+              aria-label="Travel destinations"
+            >
+              <!-- Card 1: Hồ Xuân Hương Morning Run -->
+              <div class="travel-card" data-category="running">
+                <div class="travel-card-img">
+                  <div class="travel-card-img-bg ti1"></div>
+                  <div class="runner-badge">
+                    <span aria-hidden="true">🏃</span> Runner's Pick
+                  </div>
+                  <div class="diff-badge">Easy</div>
+                </div>
+                <div class="travel-body">
+                  <p class="travel-cat">Running &middot; Lakeside</p>
+                  <h3 class="travel-name">Hồ Xuân Hương Morning Run</h3>
+                  <div class="travel-meta">
+                    <span><span aria-hidden="true">📍</span> 0.8km away</span>
+                    <span><span aria-hidden="true">⏱</span> 45–60 mins</span>
+                  </div>
+                  <p class="travel-highlight">
+                    Arrive before sunrise to see the lake mist — absolutely
+                    magical. Grab bánh mì right after at the stalls on Trần Phú
+                    street.
+                  </p>
+                </div>
+              </div>
+
+              <!-- Card 2: Vườn Hoa — Flower Garden -->
+              <div class="travel-card" data-category="nature">
+                <div class="travel-card-img">
+                  <div class="travel-card-img-bg ti2"></div>
+                  <div class="diff-badge">Easy</div>
+                </div>
+                <div class="travel-body">
+                  <p class="travel-cat">Nature &middot; Photography</p>
+                  <h3 class="travel-name">Vườn Hoa — Flower Garden</h3>
+                  <div class="travel-meta">
+                    <span><span aria-hidden="true">📍</span> 1.2km away</span>
+                    <span><span aria-hidden="true">⏱</span> 1–2 hours</span>
+                  </div>
+                  <p class="travel-highlight">
+                    Mimosa flowers bloom Feb–Mar — perfect if you're visiting
+                    during Tết season. Golden hour photography is incredible
+                    here.
+                  </p>
+                </div>
+              </div>
+
+              <!-- Card 3: Langbiang Mountain Trail -->
+              <div class="travel-card" data-category="running">
+                <div class="travel-card-img">
+                  <div class="travel-card-img-bg ti3"></div>
+                  <div class="runner-badge">
+                    <span aria-hidden="true">🏃</span> Runner's Pick
+                  </div>
+                  <div class="diff-badge">Hard</div>
+                </div>
+                <div class="travel-body">
+                  <p class="travel-cat">Trail Running &middot; Mountain</p>
+                  <h3 class="travel-name">Langbiang Mountain Trail</h3>
+                  <div class="travel-meta">
+                    <span><span aria-hidden="true">📍</span> 12km away</span>
+                    <span><span aria-hidden="true">⏱</span> 3–4 hours</span>
+                  </div>
+                  <p class="travel-highlight">
+                    Hire a CP12 local guide — they know unmarked shortcuts and
+                    the best viewpoint for sunrise photography at 2,169m.
+                  </p>
+                </div>
+              </div>
+
+              <!-- Card 4: Chợ Đêm — Night Market -->
+              <div class="travel-card" data-category="food">
+                <div class="travel-card-img">
+                  <div class="travel-card-img-bg ti4"></div>
+                  <div class="diff-badge">Easy</div>
+                </div>
+                <div class="travel-body">
+                  <p class="travel-cat">Food &amp; Culture</p>
+                  <h3 class="travel-name">Chợ Đêm — Night Market</h3>
+                  <div class="travel-meta">
+                    <span><span aria-hidden="true">📍</span> 0.5km away</span>
+                    <span><span aria-hidden="true">⏱</span> 1–3 hours</span>
+                  </div>
+                  <p class="travel-highlight">
+                    Try the hồng (persimmon) wine and bánh tráng nướng — Dalat
+                    street food staples you won't find anywhere else.
+                  </p>
+                </div>
+              </div>
+
+              <!-- Card 5: Tự Liêm Loop — Hill Intervals -->
+              <div class="travel-card" data-category="running">
+                <div class="travel-card-img">
+                  <div class="travel-card-img-bg ti5"></div>
+                  <div class="runner-badge">
+                    <span aria-hidden="true">🏃</span> Runner's Pick
+                  </div>
+                  <div class="diff-badge">Medium</div>
+                </div>
+                <div class="travel-body">
+                  <p class="travel-cat">Running &middot; Hills</p>
+                  <h3 class="travel-name">Tự Liêm Loop — Hill Intervals</h3>
+                  <div class="travel-meta">
+                    <span><span aria-hidden="true">📍</span> 0.3km away</span>
+                    <span><span aria-hidden="true">⏱</span> 60–80 mins</span>
+                  </div>
+                  <p class="travel-highlight">
+                    Ask your CP12 host for the hand-drawn route map — the
+                    shortcut through the strawberry farms adds 2km of pure joy.
+                  </p>
+                </div>
+              </div>
+
+              <!-- Card 6: Trúc Lâm Zen Monastery -->
+              <div class="travel-card" data-category="nature">
+                <div class="travel-card-img">
+                  <div class="travel-card-img-bg ti6"></div>
+                  <div class="diff-badge">Easy–Med</div>
+                </div>
+                <div class="travel-body">
+                  <p class="travel-cat">Culture &amp; Spirituality</p>
+                  <h3 class="travel-name">Trúc Lâm Zen Monastery</h3>
+                  <div class="travel-meta">
+                    <span><span aria-hidden="true">📍</span> 5km away</span>
+                    <span><span aria-hidden="true">⏱</span> Half day</span>
+                  </div>
+                  <p class="travel-highlight">
+                    The return forest hike is 3km of pine-shaded trail — runners
+                    can jog it back in 20 mins for a beautiful cooldown.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <!-- /.travel-grid -->
+          </div>
+          <!-- /.travel-inner -->
+        </section>

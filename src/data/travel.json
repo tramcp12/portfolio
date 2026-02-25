@@ -1,0 +1,65 @@
+[
+  {
+    "bgClass": "ti1",
+    "category": "running",
+    "badge": "runner",
+    "difficulty": "Easy",
+    "cat": "Running · Lakeside",
+    "name": "Hồ Xuân Hương Morning Run",
+    "distance": "0.8km away",
+    "duration": "45–60 mins",
+    "highlight": "Arrive before sunrise to see the lake mist — absolutely magical. Grab bánh mì right after at the stalls on Trần Phú street."
+  },
+  {
+    "bgClass": "ti2",
+    "category": "nature",
+    "difficulty": "Easy",
+    "cat": "Nature · Photography",
+    "name": "Vườn Hoa — Flower Garden",
+    "distance": "1.2km away",
+    "duration": "1–2 hours",
+    "highlight": "Mimosa flowers bloom Feb–Mar — perfect if you're visiting during Tết season. Golden hour photography is incredible here."
+  },
+  {
+    "bgClass": "ti3",
+    "category": "running",
+    "badge": "runner",
+    "difficulty": "Hard",
+    "cat": "Trail Running · Mountain",
+    "name": "Langbiang Mountain Trail",
+    "distance": "12km away",
+    "duration": "3–4 hours",
+    "highlight": "Hire a CP12 local guide — they know unmarked shortcuts and the best viewpoint for sunrise photography at 2,169m."
+  },
+  {
+    "bgClass": "ti4",
+    "category": "food",
+    "difficulty": "Easy",
+    "cat": "Food & Culture",
+    "name": "Chợ Đêm — Night Market",
+    "distance": "0.5km away",
+    "duration": "1–3 hours",
+    "highlight": "Try the hồng (persimmon) wine and bánh tráng nướng — Dalat street food staples you won't find anywhere else."
+  },
+  {
+    "bgClass": "ti5",
+    "category": "running",
+    "badge": "runner",
+    "difficulty": "Medium",
+    "cat": "Running · Hills",
+    "name": "Tự Liêm Loop — Hill Intervals",
+    "distance": "0.3km away",
+    "duration": "60–80 mins",
+    "highlight": "Ask your CP12 host for the hand-drawn route map — the shortcut through the strawberry farms adds 2km of pure joy."
+  },
+  {
+    "bgClass": "ti6",
+    "category": "nature",
+    "difficulty": "Easy–Med",
+    "cat": "Culture & Spirituality",
+    "name": "Trúc Lâm Zen Monastery",
+    "distance": "5km away",
+    "duration": "Half day",
+    "highlight": "The return forest hike is 3km of pine-shaded trail — runners can jog it back in 20 mins for a beautiful cooldown."
+  }
+]

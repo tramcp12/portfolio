@@ -1,0 +1,305 @@
+/* ── 5. Hero / Home section ──────────────────────────────────
+ * src/features/home/home.css
+ * Button rules go in src/core/buttons.css — not here.
+ * ──────────────────────────────────────────────────────────── */
+
+#cp12-wrap .hero {
+  min-height: 100vh;
+  margin-top: -1px; /* close hairline gap from #cp12-wrap background bleed above hero */
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  overflow: hidden;
+}
+
+#cp12-wrap .hero-left {
+  background: var(--pine);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 10rem 5rem 6rem; /* 10rem top = 8rem content offset + ~2rem nav height */
+  position: relative;
+}
+
+#cp12-wrap .hero-left::after {
+  content: "";
+  position: absolute;
+  right: -40px;
+  top: 0;
+  bottom: 0;
+  width: 80px;
+  background: var(--pine);
+  clip-path: polygon(0 0, 0% 100%, 100% 50%);
+}
+
+#cp12-wrap .hero-tag {
+  font-size: 0.7rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--mist);
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+#cp12-wrap .hero-tag::before {
+  content: "";
+  display: block;
+  width: 40px;
+  height: 1px;
+  background: var(--mist);
+}
+
+#cp12-wrap .hero-title {
+  font-family: var(--font-serif);
+  font-size: 5.5rem;
+  line-height: 0.9;
+  color: var(--cream);
+  font-weight: 300;
+  margin-bottom: 1.5rem;
+}
+
+#cp12-wrap .hero-title em {
+  font-style: italic;
+  color: var(--gold);
+  display: block;
+}
+
+#cp12-wrap .hero-subtitle {
+  color: var(--mist);
+  font-size: 0.95rem;
+  line-height: 1.8;
+  max-width: 380px;
+  margin-bottom: 3rem;
+}
+
+#cp12-wrap .hero-btns {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+/* Hero right panel */
+#cp12-wrap .hero-right {
+  position: relative;
+  overflow: hidden;
+  background: var(--cream);
+}
+
+#cp12-wrap .hero-image-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    /* subtle diagonal light shaft */
+    linear-gradient(
+      115deg,
+      transparent 35%,
+      rgba(201, 169, 110, 0.1) 52%,
+      transparent 68%
+    ),
+    /* warm radial glow from upper-left — mimics ambient light */
+    radial-gradient(
+        ellipse at 25% 20%,
+        rgba(93, 139, 122, 0.35) 0%,
+        transparent 55%
+      ),
+    /* deep forest base */
+    linear-gradient(
+        160deg,
+        var(--pine-light) 0%,
+        var(--pine) 42%,
+        var(--pine-dark) 100%
+      );
+}
+
+#cp12-wrap .hero-image-overlay {
+  position: absolute;
+  inset: 0;
+  opacity: 0.06;
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23B8CABD'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+#cp12-wrap .hero-image-content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 3rem;
+}
+
+#cp12-wrap .hero-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: rgba(184, 202, 189, 0.2);
+  margin-top: 2rem;
+}
+
+#cp12-wrap .stat-box {
+  background: rgba(29, 42, 38, 0.9);
+  padding: 1.5rem;
+  text-align: center;
+}
+
+#cp12-wrap .stat-num {
+  font-family: var(--font-serif);
+  font-size: 2.5rem;
+  color: var(--gold);
+  display: block;
+  line-height: 1;
+}
+
+#cp12-wrap .stat-label {
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--mist);
+  display: block;
+  margin-top: 0.4rem;
+}
+
+#cp12-wrap .hero-pine-icon {
+  font-size: 8rem;
+  opacity: 0.15;
+  position: absolute;
+  top: 20%;
+  right: 20%;
+}
+
+/* Play button (hero) */
+#cp12-wrap .play-btn-wrap {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+#cp12-wrap .play-btn {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background: rgba(201, 169, 110, 0.2);
+  border: 2px solid var(--gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+#cp12-wrap .play-btn::after {
+  content: "";
+  border-left: 22px solid var(--gold);
+  border-top: 14px solid transparent;
+  border-bottom: 14px solid transparent;
+  margin-left: 5px;
+}
+
+#cp12-wrap .play-btn:hover {
+  background: rgba(201, 169, 110, 0.35);
+  transform: scale(1.08);
+}
+
+#cp12-wrap .play-label {
+  color: var(--mist);
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+}
+
+/* Scroll hint */
+#cp12-wrap .scroll-hint {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--mist);
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+#cp12-wrap .scroll-line {
+  width: 1px;
+  height: 40px;
+  background: linear-gradient(to bottom, var(--mist), transparent);
+  animation: cp12sp 2s ease-in-out infinite;
+}
+
+@keyframes cp12sp {
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: scaleY(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: scaleY(1);
+  }
+}
+
+/* ── Hero responsive rules ───────────────────────────────── */
+
+@media (max-width: 900px) {
+  #cp12-wrap .hero {
+    grid-template-columns: 1fr;
+  }
+  #cp12-wrap .hero-right {
+    display: none;
+  }
+  #cp12-wrap .hero-title {
+    font-size: 3.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  #cp12-wrap .hero-title {
+    font-size: 3rem;
+  }
+  #cp12-wrap .hero-left {
+    padding: 8rem 2.5rem 4rem;
+  }
+  #cp12-wrap .hero-stats {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  #cp12-wrap .stat-num {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  #cp12-wrap .hero-title {
+    font-size: 2.6rem;
+    line-height: 1;
+  }
+  #cp12-wrap .hero-left {
+    padding: 7rem 1.5rem 3rem;
+  }
+  /* Hide the diagonal clip-path sliver — it overflows at single-column width */
+  #cp12-wrap .hero-left::after {
+    display: none;
+  }
+  #cp12-wrap .hero-btns {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 430px) {
+  /* Slightly tighter hero text for very narrow screens */
+  #cp12-wrap .hero-title {
+    font-size: 2.2rem;
+  }
+  #cp12-wrap .hero-subtitle {
+    font-size: 0.88rem;
+  }
+  /* stat-num: reduce for very small screens */
+  #cp12-wrap .stat-num {
+    font-size: 1.6rem;
+  }
+}

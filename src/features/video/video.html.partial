@@ -1,0 +1,33 @@
+
+        <!-- Video section -->
+        <section
+          class="video-section sect-video"
+          id="video"
+          aria-labelledby="videoHeading"
+        >
+          <div class="video-container">
+            <p class="section-label" aria-hidden="true">Welcome to CP12</p>
+            <h2 class="video-title" id="videoHeading">
+              Feel it before <em>you arrive.</em>
+            </h2>
+            <p class="video-desc">
+              Three minutes through pine forests, misty mornings, and genuine
+              human warmth. This is what Trạm CP12 feels like — before you even
+              pack your bags.
+            </p>
+            <button
+              type="button"
+              class="video-frame"
+              id="videoFrame"
+              aria-label="Watch the CP12 welcome film, 3 minutes"
+            >
+              <span class="video-overlay" aria-hidden="true">
+                <span class="big-play"></span>
+                <span class="video-tag"
+                  ><span aria-hidden="true">⏱</span> 3 min &middot; Welcome Film
+                  by CP12 Team</span
+                >
+              </span>
+            </button>
+          </div>
+        </section>

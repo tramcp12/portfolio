@@ -1,0 +1,164 @@
+/* ── 6. Animations + reveal system ──────────────────────────
+ * src/core/animations.css
+ * Contains: fade-up, delay utilities, cp12-reveal, reduced-motion guard (A-1),
+ * and all shared @keyframes used by multiple sections.
+ * Note: cp12BobDown keyframe is also used by next-btn; kept here for single
+ * source of truth. Section-specific animation signatures live in each feature.
+ * ──────────────────────────────────────────────────────────── */
+
+#cp12-wrap .fade-up {
+  animation: cp12fu 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+#cp12-wrap .delay-1 {
+  animation-delay: 0.15s;
+  opacity: 0;
+}
+#cp12-wrap .delay-2 {
+  animation-delay: 0.3s;
+  opacity: 0;
+}
+#cp12-wrap .delay-3 {
+  animation-delay: 0.45s;
+  opacity: 0;
+}
+#cp12-wrap .delay-4 {
+  animation-delay: 0.6s;
+  opacity: 0;
+}
+#cp12-wrap .delay-5 {
+  animation-delay: 0.75s;
+  opacity: 0;
+}
+
+@keyframes cp12fu {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Shared entrance keyframes */
+@keyframes cp12SlideLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-48px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@keyframes cp12SlideRight {
+  from {
+    opacity: 0;
+    transform: translateX(48px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@keyframes cp12ScaleUp {
+  from {
+    opacity: 0;
+    transform: scale(0.93) translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+@keyframes cp12FadeScale {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+@keyframes cp12GlowPulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(201, 169, 110, 0.35);
+  }
+  50% {
+    box-shadow: 0 0 0 12px rgba(201, 169, 110, 0);
+  }
+}
+@keyframes cp12BobDown {
+  0%,
+  100% {
+    transform: translateX(-50%) translateY(0);
+  }
+  50% {
+    transform: translateX(-50%) translateY(7px);
+  }
+}
+
+/* IntersectionObserver reveal */
+#cp12-wrap .cp12-reveal {
+  opacity: 0;
+  transform: translateY(50px);
+  transition:
+    opacity 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+#cp12-wrap .cp12-reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── A-1: Respect OS reduced-motion preference ───────────── */
+@media (prefers-reduced-motion: reduce) {
+  #cp12-wrap .cp12-reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  #cp12-wrap .cp12-reveal.visible {
+    opacity: 1;
+    transform: none;
+  }
+  #cp12-wrap .fade-up,
+  #cp12-wrap .delay-1,
+  #cp12-wrap .delay-2,
+  #cp12-wrap .delay-3,
+  #cp12-wrap .delay-4,
+  #cp12-wrap .delay-5 {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+  #cp12-wrap .scroll-line {
+    animation: none;
+    opacity: 0.7;
+  }
+  #cp12-wrap .room-img-bg,
+  #cp12-wrap .travel-card-img-bg {
+    transition: none;
+  }
+  #cp12-wrap .btn-primary:hover,
+  #cp12-wrap .btn-gold:hover,
+  #cp12-wrap .btn-outline:hover,
+  #cp12-wrap .btn-ghost:hover {
+    transform: none;
+  }
+  #cp12-wrap .play-btn:hover {
+    transform: none;
+  }
+  #cp12-wrap .travel-card:hover,
+  #cp12-wrap .blog-card:hover {
+    transform: none;
+  }
+  #cp12-next-btn {
+    animation: none;
+  }
+}

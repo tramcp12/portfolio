@@ -1,0 +1,37 @@
+/* ── R-1: Responsive sentinel — cross-cutting layout rules ───
+ * src/core/responsive-sentinel.css
+ * This file is the R-1 anchor ensuring @media (max-width: 768px) always
+ * exists in the compiled CSS. Feature-specific responsive overrides live at
+ * the bottom of each feature's own CSS file.
+ * ──────────────────────────────────────────────────────────── */
+
+/* ── Cross-cutting 900px breakpoint ──────────────────────── */
+
+@media (max-width: 900px) {
+  #cp12-wrap .cp12-main-nav {
+    padding: 1rem 1.5rem;
+  }
+  #cp12-wrap .nav-links {
+    display: none;
+  }
+  #cp12-wrap .nav-hamburger {
+    display: flex;
+    align-items: center;
+  }
+}
+
+/* ── R-1: Tablet breakpoint (≤768px) ─────────────────────── */
+
+@media (max-width: 768px) {
+  /* Cross-cutting layout adjustments at tablet width */
+  #cp12-wrap .rooms-header,
+  #cp12-wrap .travel-header {
+    gap: 2rem;
+  }
+}
+
+/* ── Mid-breakpoint (≤640px) ──────────────────────────────── */
+
+@media (max-width: 640px) {
+  /* Cross-cutting adjustments — individual feature rules are in feature files */
+}

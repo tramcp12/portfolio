@@ -8,7 +8,7 @@ on:
 
 jobs:
   validate:
-    name: Validate + Lint
+    name: Build + Validate
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -20,10 +20,10 @@ jobs:
           cache: npm
 
       - name: Install dev dependencies
-        run: npm install
+        run: npm ci
 
-      - name: Run architectural invariants
-        run: node validate.js
+      - name: Build and validate
+        run: npm run build
 
-      - name: Lint HTML
-        run: npx html-validate index.html
+      - name: Run test suite
+        run: npm test

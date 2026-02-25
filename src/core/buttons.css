@@ -1,0 +1,58 @@
+/* ── Buttons — shared base (CSS-2 invariant) ─────────────────
+ * src/core/buttons.css
+ * The grouped selector satisfies validate.js CSS-2 check.
+ * ──────────────────────────────────────────────────────────── */
+
+/* Shared base (CSS-2) */
+#cp12-wrap .btn-primary,
+#cp12-wrap .btn-gold,
+#cp12-wrap .btn-outline,
+#cp12-wrap .btn-ghost {
+  padding: 1rem 2.2rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-weight: 500;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+}
+
+/* Primary / Gold — filled */
+#cp12-wrap .btn-primary,
+#cp12-wrap .btn-gold {
+  background: var(--gold);
+  color: var(--charcoal);
+}
+
+#cp12-wrap .btn-primary:hover,
+#cp12-wrap .btn-gold:hover {
+  background: var(--terracotta);
+  color: var(--warm-white);
+  transform: translateY(-1px);
+}
+
+/* Outline — mist border */
+#cp12-wrap .btn-outline {
+  border: 1px solid var(--mist-50);
+  color: var(--mist);
+}
+
+#cp12-wrap .btn-outline:hover {
+  border-color: var(--mist);
+  color: var(--warm-white);
+  transform: translateY(-1px);
+}
+
+/* Ghost — gold border */
+#cp12-wrap .btn-ghost {
+  border: 1px solid var(--gold-40);
+  color: var(--gold);
+}
+
+#cp12-wrap .btn-ghost:hover {
+  border-color: var(--gold);
+  background: var(--gold-10);
+}

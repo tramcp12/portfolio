@@ -1,0 +1,249 @@
+/* ── 13. Blog / Journal section ───────────────────────────────
+ * src/features/journal/journal.css
+ * ──────────────────────────────────────────────────────────── */
+
+#cp12-wrap .blog-section {
+  background: var(--cream);
+  padding: 8rem 3rem;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Section transition: cream (blog) → charcoal (CTA) — removed; now handled by section bg */
+
+#cp12-wrap .blog-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+#cp12-wrap .blog-header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+#cp12-wrap .blog-heading {
+  font-family: var(--font-serif);
+  font-size: 3rem;
+  color: var(--pine);
+  font-weight: 300;
+  margin-bottom: 1rem;
+}
+
+#cp12-wrap .blog-heading em {
+  font-style: italic;
+  color: var(--terracotta);
+}
+
+#cp12-wrap .blog-subtext {
+  font-size: 0.9rem;
+  opacity: 0.65;
+  max-width: 500px;
+  margin: 0 auto;
+  line-height: 1.7;
+}
+
+#cp12-wrap .blog-grid {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr 1fr;
+  gap: 1.5rem;
+}
+
+#cp12-wrap .blog-card {
+  background: var(--warm-white);
+  overflow: hidden;
+  transition: transform 0.3s;
+  position: relative;
+}
+
+#cp12-wrap .blog-card:hover {
+  transform: translateY(-3px);
+}
+
+#cp12-wrap .blog-card-img {
+  aspect-ratio: 16/9;
+  position: relative;
+  overflow: hidden;
+}
+
+#cp12-wrap .blog-card.large .blog-card-img {
+  aspect-ratio: 4/3;
+}
+
+/* ── Blog card image layers ──
+   bi1: forest running trail — pine canopy with sun break
+   bi2: solo warm golden hour — amber earth atmospheric
+   bi3: hidden gems at dusk  — indigo twilight with moonrise
+──────────────────────────────────────────────────────── */
+
+#cp12-wrap .bi1 {
+  background:
+    /* top-right sun break through canopy */
+    radial-gradient(
+      ellipse at 85% 10%,
+      rgba(201, 169, 110, 0.28) 0%,
+      transparent 45%
+    ),
+    /* subtle diagonal shaft */
+    linear-gradient(
+        115deg,
+        transparent 45%,
+        rgba(255, 255, 255, 0.05) 58%,
+        transparent 72%
+      ),
+    /* forest base */
+    linear-gradient(
+        155deg,
+        var(--pine-dark) 0%,
+        var(--pine) 55%,
+        var(--pine-mid) 100%
+      );
+}
+
+#cp12-wrap .bi2 {
+  background:
+    /* golden hour glow from top */
+    radial-gradient(
+      ellipse at 50% 0%,
+      rgba(201, 169, 110, 0.32) 0%,
+      transparent 55%
+    ),
+    /* warm side light */
+    linear-gradient(
+        140deg,
+        transparent 40%,
+        rgba(255, 200, 130, 0.06) 58%,
+        transparent 75%
+      ),
+    /* earth base */
+    linear-gradient(
+        150deg,
+        var(--brown-dark) 0%,
+        var(--earth) 45%,
+        var(--terracotta) 80%,
+        var(--earth-warm) 100%
+      );
+}
+
+#cp12-wrap .bi3 {
+  background:
+    /* moonrise glow at top-centre */
+    radial-gradient(
+      ellipse at 55% 5%,
+      rgba(150, 170, 230, 0.3) 0%,
+      transparent 50%
+    ),
+    /* horizontal twilight band */
+    linear-gradient(180deg, rgba(74, 106, 173, 0.2) 0%, transparent 40%),
+    /* indigo-blue base */
+    linear-gradient(
+        150deg,
+        var(--slate-blue) 0%,
+        var(--blue-deep) 40%,
+        var(--slate-blue-mid) 80%,
+        var(--indigo-muted) 100%
+      );
+}
+
+#cp12-wrap .blog-card-body {
+  padding: 1.5rem;
+}
+
+#cp12-wrap .blog-card-cat {
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--terracotta);
+  margin-bottom: 0.6rem;
+}
+
+#cp12-wrap .blog-card-title {
+  font-family: var(--font-serif);
+  font-size: 1.4rem;
+  color: var(--pine);
+  font-weight: 400;
+  line-height: 1.25;
+  margin-bottom: 0.8rem;
+}
+
+#cp12-wrap .blog-card.large .blog-card-title {
+  font-size: 1.8rem;
+}
+
+#cp12-wrap .blog-card-excerpt {
+  font-size: 0.82rem;
+  line-height: 1.7;
+  opacity: 0.65;
+}
+
+#cp12-wrap .blog-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--pine);
+  margin-top: 1rem;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+#cp12-wrap .blog-link:hover {
+  color: var(--terracotta);
+}
+
+/* ── Journal section animation signatures ─────────────────── */
+
+#cp12-wrap .sect-journal .blog-heading {
+  opacity: 0;
+}
+#cp12-wrap .sect-journal.animated .blog-heading {
+  animation: cp12fu 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+#cp12-wrap .sect-journal .blog-card {
+  opacity: 0;
+}
+#cp12-wrap .sect-journal.animated .blog-card.large {
+  animation: cp12ScaleUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.15s forwards;
+}
+#cp12-wrap .sect-journal.animated .blog-card:not(.large):nth-child(2) {
+  animation: cp12fu 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.3s forwards;
+}
+#cp12-wrap .sect-journal.animated .blog-card:not(.large):nth-child(3) {
+  animation: cp12fu 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.44s forwards;
+}
+
+/* ── Journal responsive rules ────────────────────────────── */
+
+@media (max-width: 900px) {
+  #cp12-wrap .blog-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  #cp12-wrap .blog-section {
+    padding: 4rem 2rem 6rem;
+  }
+}
+
+@media (max-width: 640px) {
+  #cp12-wrap .blog-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  #cp12-wrap .blog-section {
+    padding: 4rem 1.5rem;
+  }
+}
+
+@media (max-width: 430px) {
+  /* blog-card: prevent any width blowout */
+  #cp12-wrap .blog-card {
+    width: 100%;
+  }
+}

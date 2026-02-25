@@ -1,0 +1,68 @@
+
+        <!-- About -->
+        <section id="about" class="sect-about" aria-labelledby="aboutHeading">
+          <div class="about-section">
+            <div class="about-visual cp12-reveal">
+              <div
+                class="about-img-main"
+                role="img"
+                aria-label="CP12 interior ambience"
+              ></div>
+              <div class="about-img-accent">
+                <span class="big-num">1500m</span>
+                <span class="big-label">Above Sea Level</span>
+              </div>
+            </div>
+            <div class="about-content cp12-reveal">
+              <div class="section-label section-label--left" aria-hidden="true">
+                About CP12
+              </div>
+              <h2 class="about-heading" id="aboutHeading">
+                Not just a bed.<br>A <em>base camp.</em>
+              </h2>
+              <p class="about-text">
+                Trạm CP12 was born from a simple frustration: too many Đà Lạt
+                stays felt like transactions. You'd arrive, sleep, leave — and
+                miss the actual city entirely.
+              </p>
+              <p class="about-text">
+                We built something different. A place run by locals, designed
+                for connection, and obsessively curated for solo travelers who
+                want the real Đà Lạt — not the brochure version.
+              </p>
+              <div class="perks">
+                <div class="perk">
+                  <div class="perk-icon" aria-hidden="true">🗺</div>
+                  <div class="perk-text">
+                    <strong>Local expertise, freely shared</strong>
+                    <p>
+                      Hand-drawn route maps, weekly community boards, and hosts
+                      who actually run these trails.
+                    </p>
+                  </div>
+                </div>
+                <div class="perk">
+                  <div class="perk-icon" aria-hidden="true">🏃</div>
+                  <div class="perk-text">
+                    <strong>Built for runners</strong>
+                    <p>
+                      5:30am breakfast, gear drying area, recovery station with
+                      electrolytes and local herbal teas.
+                    </p>
+                  </div>
+                </div>
+                <div class="perk">
+                  <div class="perk-icon" aria-hidden="true">🤝</div>
+                  <div class="perk-text">
+                    <strong>Solo-traveler focused</strong>
+                    <p>
+                      Weekly Trạm Nights, free morning walks Tue &amp; Fri, and
+                      a dorm designed so friendships form naturally.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <a href="#book" class="btn-primary">Book Your Stay &rarr;</a>
+            </div>
+          </div>
+        </section>

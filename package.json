@@ -3,9 +3,12 @@
   "private": true,
   "description": "Trạm CP12 — Homestay Đà Lạt static website",
   "scripts": {
+    "build":    "node build.js",
     "validate": "node validate.js",
-    "lint": "html-validate index.html",
-    "check": "npm run validate && npm run lint"
+    "lint":     "html-validate index.html",
+    "test":     "node test.js",
+    "check":    "npm run validate && npm run lint && npm test",
+    "ci":       "npm run build && npm test"
   },
   "devDependencies": {
     "html-validate": "^9.0.0"

@@ -1,0 +1,29 @@
+
+      <!-- Video modal -->
+      <div
+        class="modal"
+        id="cp12Modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modalTitle"
+      >
+        <div class="modal-inner">
+          <button
+            type="button"
+            class="modal-close"
+            id="cp12ModalClose"
+            aria-label="Close video"
+          >
+            &times;
+          </button>
+          <div class="modal-video-placeholder">
+            <span id="modalTitle"
+              ><span aria-hidden="true">🎥</span> CP12 Welcome Film</span
+            >
+            <p class="modal-note">
+              Video coming soon — follow us on Instagram for behind-the-scenes
+              content while we edit!
+            </p>
+          </div>
+        </div>
+      </div>

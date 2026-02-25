@@ -1,0 +1,54 @@
+[
+  {
+    "bgClass": "r1",
+    "name": "Phòng Trạm — The Signature Room",
+    "price": "580K",
+    "featured": true,
+    "meta": [
+      { "icon": "👤", "text": "2 guests" },
+      { "icon": "📐", "text": "22 m²" },
+      { "icon": "⛺", "text": "Balcony" }
+    ],
+    "desc": "Our flagship room — natural rattan furniture, soft linen bedding, and a private balcony overlooking lush green gardens. Wake up to birdsong, not traffic.",
+    "amenities": ["Private Balcony", "Air Con", "Breakfast", "WiFi"]
+  },
+  {
+    "bgClass": "r2",
+    "name": "Góc Gió — The Breeze Nook",
+    "price": "450K",
+    "featured": false,
+    "meta": [
+      { "icon": "👤", "text": "1 guest" },
+      { "icon": "📐", "text": "16 m²" },
+      { "icon": "🌾", "text": "Fan + AC" }
+    ],
+    "desc": "A cozy private room on the breezy upper floor. Minimalist Vietnamese decor with hand-painted wall murals by local artists. Ideal for writers and dreamers.",
+    "amenities": ["Mountain View", "Reading Nook", "Herb Tea Kit", "WiFi"]
+  },
+  {
+    "bgClass": "r3",
+    "name": "Tổ Chim — The Birdsong Suite",
+    "price": "720K",
+    "featured": true,
+    "meta": [
+      { "icon": "👤", "text": "2 guests" },
+      { "icon": "📐", "text": "30 m²" },
+      { "icon": "☕", "text": "Espresso" }
+    ],
+    "desc": "Our most spacious room with a loft-style sleeping area. Curated local art prints, a proper work desk. Great for longer stays or digital nomads.",
+    "amenities": ["Loft Bed", "Work Desk", "Smart TV", "Breakfast"]
+  },
+  {
+    "bgClass": "r4",
+    "name": "Dorm Trạm — Social Dormitory",
+    "price": "180K",
+    "featured": false,
+    "meta": [
+      { "icon": "👥", "text": "4-bed dorm" },
+      { "icon": "📐", "text": "40 m²" },
+      { "icon": "🔒", "text": "Lockers" }
+    ],
+    "desc": "Meet fellow travelers in our friendly 4-bed dorm. Privacy pods, individual reading lights, USB charging. The social heart of Trạm CP12 — friendships start here.",
+    "amenities": ["Privacy Pods", "USB Charging", "Common Room", "WiFi"]
+  }
+]
