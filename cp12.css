@@ -777,145 +777,6 @@
 #cp12-wrap .section-label--cta {
   margin-bottom: 1.5rem;
 }
-
-/* ── 8. Responsive breakpoints ───────────────────────────── */
-
-@media (max-width: 900px) {
-  #cp12-wrap .hero {
-    grid-template-columns: 1fr;
-  }
-  #cp12-wrap .hero-right {
-    display: none;
-  }
-  #cp12-wrap .hero-title {
-    font-size: 3.5rem;
-  }
-  #cp12-wrap .rooms-grid,
-  #cp12-wrap .travel-grid,
-  #cp12-wrap .blog-grid {
-    grid-template-columns: 1fr;
-  }
-  #cp12-wrap .footer-grid {
-    grid-template-columns: 1fr 1fr;
-  }
-  #cp12-wrap .about-section {
-    grid-template-columns: 1fr;
-  }
-  #cp12-wrap .cp12-main-nav {
-    padding: 1rem 1.5rem;
-  }
-  #cp12-wrap .nav-links {
-    display: none;
-  }
-  #cp12-wrap .nav-hamburger {
-    display: flex;
-    align-items: center;
-  }
-  #cp12-wrap .rooms-header,
-  #cp12-wrap .travel-header {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* ── R-1: Tablet breakpoint (≤768px) ─────────────────────── */
-
-@media (max-width: 768px) {
-  #cp12-wrap .hero-title {
-    font-size: 3rem;
-  }
-  #cp12-wrap .hero-left {
-    padding: 8rem 2.5rem 4rem;
-  }
-  #cp12-wrap .footer-grid {
-    grid-template-columns: 1fr;
-  }
-  #cp12-wrap .rooms-section,
-  #cp12-wrap .travel-section,
-  #cp12-wrap .blog-section {
-    padding: 4rem 2rem 6rem;
-  }
-  #cp12-wrap .about-section {
-    padding: 4rem 2rem;
-    gap: 2.5rem;
-  }
-  #cp12-wrap .section-heading {
-    font-size: 2.8rem;
-  }
-  #cp12-wrap .rooms-header,
-  #cp12-wrap .travel-header {
-    gap: 2rem;
-  }
-  #cp12-wrap .hero-stats {
-    grid-template-columns: repeat(3, 1fr);
-  }
-  #cp12-wrap .stat-num {
-    font-size: 2rem;
-  }
-}
-
-/* ── Mid-breakpoint (≤640px) ──────────────────────────────── */
-
-@media (max-width: 640px) {
-  #cp12-wrap .room-meta {
-    flex-wrap: wrap;
-    gap: 0.6rem 1rem;
-  }
-  #cp12-wrap .travel-grid {
-    grid-template-columns: 1fr;
-  }
-  #cp12-wrap .blog-grid {
-    grid-template-columns: 1fr;
-  }
-  #cp12-wrap .filter-tabs {
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-}
-
-@media (max-width: 480px) {
-  #cp12-wrap .hero-title {
-    font-size: 2.6rem;
-    line-height: 1;
-  }
-  #cp12-wrap .hero-left {
-    padding: 7rem 1.5rem 3rem;
-  }
-  #cp12-wrap .hero-btns {
-    flex-direction: column;
-  }
-  #cp12-wrap .footer-grid {
-    grid-template-columns: 1fr;
-  }
-  #cp12-wrap .cta-title {
-    font-size: 2.6rem;
-  }
-  #cp12-wrap .about-section {
-    padding: 4rem 1.5rem;
-  }
-  #cp12-wrap .rooms-section,
-  #cp12-wrap .travel-section,
-  #cp12-wrap .blog-section,
-  #cp12-wrap .cta-section {
-    padding: 4rem 1.5rem;
-  }
-  #cp12-wrap .video-container {
-    padding: 0 1.5rem;
-  }
-  #cp12-wrap .video-title {
-    font-size: 2.4rem;
-  }
-  #cp12-wrap .section-heading {
-    font-size: 2.6rem;
-  }
-  #cp12-wrap .cta-btns {
-    flex-direction: column;
-    align-items: center;
-  }
-  #cp12-wrap footer {
-    padding: 3rem 1.5rem 2rem;
-  }
-}
-
 /* ── 9. Video section ────────────────────────────────────── */
 
 #cp12-wrap .video-section {
@@ -2485,6 +2346,147 @@
 @media (max-width: 600px) {
   #cp12-next-btn {
     display: none;
+  }
+}
+
+
+
+
+/* ── 8. Responsive breakpoints ───────────────────────────── */
+
+@media (max-width: 900px) {
+  #cp12-wrap .hero {
+    grid-template-columns: 1fr;
+  }
+  #cp12-wrap .hero-right {
+    display: none;
+  }
+  #cp12-wrap .hero-title {
+    font-size: 3.5rem;
+  }
+  #cp12-wrap .rooms-grid,
+  #cp12-wrap .travel-grid,
+  #cp12-wrap .blog-grid {
+    grid-template-columns: 1fr;
+  }
+  #cp12-wrap .footer-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  #cp12-wrap .about-section {
+    grid-template-columns: 1fr;
+  }
+  #cp12-wrap .cp12-main-nav {
+    padding: 1rem 1.5rem;
+  }
+  #cp12-wrap .nav-links {
+    display: none;
+  }
+  #cp12-wrap .nav-hamburger {
+    display: flex;
+    align-items: center;
+  }
+  #cp12-wrap .rooms-header,
+  #cp12-wrap .travel-header {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── R-1: Tablet breakpoint (≤768px) ─────────────────────── */
+
+@media (max-width: 768px) {
+  #cp12-wrap .hero-title {
+    font-size: 3rem;
+  }
+  #cp12-wrap .hero-left {
+    padding: 8rem 2.5rem 4rem;
+  }
+  #cp12-wrap .footer-grid {
+    grid-template-columns: 1fr;
+  }
+  #cp12-wrap .rooms-section,
+  #cp12-wrap .travel-section,
+  #cp12-wrap .blog-section {
+    padding: 4rem 2rem 6rem;
+  }
+  #cp12-wrap .about-section {
+    padding: 4rem 2rem;
+    gap: 2.5rem;
+  }
+  #cp12-wrap .section-heading {
+    font-size: 2.8rem;
+  }
+  #cp12-wrap .rooms-header,
+  #cp12-wrap .travel-header {
+    gap: 2rem;
+  }
+  #cp12-wrap .hero-stats {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  #cp12-wrap .stat-num {
+    font-size: 2rem;
+  }
+}
+
+/* ── Mid-breakpoint (≤640px) ──────────────────────────────── */
+
+@media (max-width: 640px) {
+  #cp12-wrap .room-meta {
+    flex-wrap: wrap;
+    gap: 0.6rem 1rem;
+  }
+  #cp12-wrap .travel-grid {
+    grid-template-columns: 1fr;
+  }
+  #cp12-wrap .blog-grid {
+    grid-template-columns: 1fr;
+  }
+  #cp12-wrap .filter-tabs {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  #cp12-wrap .hero-title {
+    font-size: 2.6rem;
+    line-height: 1;
+  }
+  #cp12-wrap .hero-left {
+    padding: 7rem 1.5rem 3rem;
+  }
+  #cp12-wrap .hero-btns {
+    flex-direction: column;
+  }
+  #cp12-wrap .footer-grid {
+    grid-template-columns: 1fr;
+  }
+  #cp12-wrap .cta-title {
+    font-size: 2.6rem;
+  }
+  #cp12-wrap .about-section {
+    padding: 4rem 1.5rem;
+  }
+  #cp12-wrap .rooms-section,
+  #cp12-wrap .travel-section,
+  #cp12-wrap .blog-section,
+  #cp12-wrap .cta-section {
+    padding: 4rem 1.5rem;
+  }
+  #cp12-wrap .video-container {
+    padding: 0 1.5rem;
+  }
+  #cp12-wrap .video-title {
+    font-size: 2.4rem;
+  }
+  #cp12-wrap .section-heading {
+    font-size: 2.6rem;
+  }
+  #cp12-wrap .cta-btns {
+    flex-direction: column;
+    align-items: center;
+  }
+  #cp12-wrap footer {
+    padding: 3rem 1.5rem 2rem;
   }
 }
 
