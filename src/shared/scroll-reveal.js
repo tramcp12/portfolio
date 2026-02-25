@@ -34,6 +34,10 @@
     window.cp12OpenModal = openModal; // called by heroPlayBtn and videoFrame click handlers
 
     if (modalClose) modalClose.addEventListener("click", closeModal);
+    /* Backdrop click — close if click lands on the overlay, not modal-inner */
+    if (modal) modal.addEventListener("click", function (e) {
+      if (e.target === modal) closeModal();
+    });
     document.addEventListener("keydown", function (e) {
       if (e.key === "Escape" && modal && modal.classList.contains("open"))
         closeModal();

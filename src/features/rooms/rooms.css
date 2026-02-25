@@ -70,6 +70,7 @@
   position: absolute;
   inset: 0;
   transition: transform 0.6s ease;
+  will-change: transform;
 }
 
 #cp12-wrap .room-card:hover .room-img-bg {

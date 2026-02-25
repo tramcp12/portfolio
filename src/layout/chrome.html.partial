@@ -1,4 +1,6 @@
 
+      <a href="#cp12-main" class="skip-nav">Skip to content</a>
+
       <!-- Next section floating button -->
       <button
         type="button"
@@ -7,8 +9,6 @@
       >
         &#8595;
       </button>
-
-      <a href="#cp12-main" class="skip-nav">Skip to content</a>
 
       <!-- Navigation -->
       <nav class="cp12-main-nav" aria-label="Main navigation">
@@ -39,9 +39,9 @@
             stroke-linecap="round"
             aria-hidden="true"
           >
-            <line x1="3" y1="6" x2="21" y2="6">
-            <line x1="3" y1="12" x2="21" y2="12">
-            <line x1="3" y1="18" x2="21" y2="18">
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <line x1="3" y1="12" x2="21" y2="12"/>
+            <line x1="3" y1="18" x2="21" y2="18"/>
           </svg>
         </button>
       </nav>

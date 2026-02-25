@@ -11,13 +11,18 @@
   }
   var grid = document.getElementById("rooms-grid");
   if (!grid || !Array.isArray(rooms)) return;
+  if (rooms.length === 0) {
+    grid.innerHTML = '<p class="rooms-empty">Room details coming soon.</p>';
+    return;
+  }
 
   function escHtml(str) {
     return String(str)
       .replace(/&/g, "&amp;")
       .replace(/</g, "&lt;")
       .replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;");
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#39;");
   }
 
   var html = rooms.map(function (r) {
@@ -152,6 +157,10 @@
     window.cp12OpenModal = openModal; // called by heroPlayBtn and videoFrame click handlers
 
     if (modalClose) modalClose.addEventListener("click", closeModal);
+    /* Backdrop click — close if click lands on the overlay, not modal-inner */
+    if (modal) modal.addEventListener("click", function (e) {
+      if (e.target === modal) closeModal();
+    });
     document.addEventListener("keydown", function (e) {
       if (e.key === "Escape" && modal && modal.classList.contains("open"))
         closeModal();

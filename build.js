@@ -88,7 +88,7 @@ var htmlParts = [
   // Phase 4: rooms data for IIFE 0 — injected before </body> so defer-loaded
   //   cp12.js can find it via document.getElementById("rooms-data")
   '\n    <script id="rooms-data" type="application/json">\n    ' +
-    JSON.stringify(roomsData) +
+    JSON.stringify(roomsData).replace(/<\//g, "<\\/").replace(/<!--/g, "<\\!--") +
     "\n    </script>",
   readSrc("layout/jsonld.html.partial"),
 ];

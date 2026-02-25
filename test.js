@@ -66,6 +66,9 @@ rooms.forEach(function(r, i) {
   });
 });
 ok("rooms.json — at least 1 featured", rooms.filter(function(r){ return r.featured; }).length >= 1);
+rooms.forEach(function(r, i) {
+  ok("rooms[" + i + "].bgClass valid (r1–r4)", /^r[1-4]$/.test(r.bgClass));
+});
 
 // travel.json
 var travel = JSON.parse(fs.readFileSync("src/data/travel.json", "utf8"));

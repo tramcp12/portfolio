@@ -549,7 +549,10 @@
   letter-spacing: 0.2em;
   text-transform: uppercase;
   font-weight: 500;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -1328,6 +1331,7 @@
   position: absolute;
   inset: 0;
   transition: transform 0.6s ease;
+  will-change: transform;
 }
 
 #cp12-wrap .room-card:hover .room-img-bg {
@@ -1705,7 +1709,7 @@
   color: var(--mist);
   background: transparent;
   cursor: pointer;
-  transition: all 0.3s;
+  transition: background-color 0.3s, border-color 0.3s, color 0.3s;
   font-family: var(--font-sans);
   min-height: 44px;
 }
@@ -1729,7 +1733,7 @@
   border: 1px solid rgba(184, 202, 189, 0.12);
   position: relative;
   overflow: hidden;
-  transition: all 0.3s;
+  transition: background-color 0.3s, border-color 0.3s, transform 0.3s;
 }
 
 #cp12-wrap .travel-card:hover {
@@ -1748,6 +1752,7 @@
   position: absolute;
   inset: 0;
   transition: transform 0.5s ease;
+  will-change: transform;
 }
 
 #cp12-wrap .travel-card:hover .travel-card-img-bg {
