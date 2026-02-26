@@ -84,6 +84,7 @@ var htmlParts = [
   readSrc("features/cta/cta.html.partial"),
   readSrc("layout/footer.html.partial"),
   readSrc("layout/modal.html.partial"),
+  readSrc("layout/zalo-cta.html.partial"),
   "    </div>\n    <!-- /#cp12-wrap -->",
   // Phase 4: rooms data for IIFE 0 — injected before </body> so defer-loaded
   //   cp12.js can find it via document.getElementById("rooms-data")
@@ -121,6 +122,7 @@ var cssSources = [
   "features/cta/cta.css",
   "layout/footer.css",
   "layout/modal.css",
+  "layout/zalo-cta.css",
   "core/responsive-sentinel.css",
   "core/supports.css"
 ];

@@ -62,6 +62,12 @@
                   </div>
                 </div>
               </div>
+              <div class="checkin-strip" aria-label="Check-in and check-out times">
+                <span aria-hidden="true">🕑</span>
+                Check-in from <strong>14:00</strong>
+                <span class="strip-divider" aria-hidden="true">&middot;</span>
+                Check-out by <strong>12:00</strong>
+              </div>
               <a href="#book" class="btn-primary">Book Your Stay &rarr;</a>
             </div>
           </div>

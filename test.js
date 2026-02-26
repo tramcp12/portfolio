@@ -18,21 +18,22 @@ function ok(label, cond) {
 /* ── 1. Source file coverage ─────────────────────────────────────────────── */
 console.log("\n\u2500\u2500 Source file coverage");
 var expected = [
-  // CSS source (21 files)
+  // CSS source (22 files)
   "src/core/tokens.css", "src/core/reset.css", "src/core/accessibility.css",
   "src/core/buttons.css", "src/core/section-labels.css", "src/core/animations.css",
   "src/core/responsive-sentinel.css", "src/core/supports.css",
   "src/layout/nav.css", "src/layout/nav-mobile.css", "src/layout/dots.css",
   "src/layout/next-btn.css", "src/layout/footer.css", "src/layout/modal.css",
+  "src/layout/zalo-cta.css",
   "src/features/home/home.css", "src/features/video/video.css",
   "src/features/rooms/rooms.css", "src/features/explore/explore.css",
   "src/features/about/about.css", "src/features/journal/journal.css",
   "src/features/cta/cta.css",
-  // HTML partials (13 files)
+  // HTML partials (14 files)
   "src/shell-head.html",
   "src/layout/chrome.html.partial", "src/layout/dots.html.partial",
   "src/layout/footer.html.partial", "src/layout/modal.html.partial",
-  "src/layout/jsonld.html.partial",
+  "src/layout/zalo-cta.html.partial", "src/layout/jsonld.html.partial",
   "src/features/home/home.html.partial", "src/features/video/video.html.partial",
   "src/features/rooms/rooms.html.partial", "src/features/explore/explore.html.partial",
   "src/features/about/about.html.partial", "src/features/journal/journal.html.partial",

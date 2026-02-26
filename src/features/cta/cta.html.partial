@@ -16,9 +16,39 @@
             really good cup of cà phê — Trạm CP12 is ready for you. From 180,000
             VND/night.
           </p>
+          <div class="booking-steps" aria-label="How to book">
+            <div class="booking-step">
+              <span class="step-num" aria-hidden="true">1</span>
+              <div class="step-text">
+                <strong>Message us</strong>
+                <p>Zalo, email, or phone — we reply within 2 hours</p>
+              </div>
+            </div>
+            <div class="booking-step">
+              <span class="step-num" aria-hidden="true">2</span>
+              <div class="step-text">
+                <strong>Confirm your dates</strong>
+                <p>We hold your room with no deposit required</p>
+              </div>
+            </div>
+            <div class="booking-step">
+              <span class="step-num" aria-hidden="true">3</span>
+              <div class="step-text">
+                <strong>Arrive &amp; check in</strong>
+                <p>From 14:00 &middot; Check-out by 12:00</p>
+              </div>
+            </div>
+          </div>
           <div class="cta-btns">
             <a href="mailto:cp12tramdungchill@gmail.com" class="btn-primary"
               >Book a Room &rarr;</a
+            >
+            <a
+              href="https://zalo.me/84765679228"
+              class="btn-ghost"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Zalo</a
             >
             <a href="tel:+84765679228" class="btn-ghost"
               ><span>Call Us</span></a

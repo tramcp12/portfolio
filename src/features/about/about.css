@@ -127,8 +127,31 @@
   opacity: 0.7;
 }
 
+#cp12-wrap .checkin-strip {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.8rem;
+  color: var(--slate);
+  background: var(--cream);
+  border-left: 3px solid var(--gold);
+  padding: 0.55rem 0.9rem;
+  margin: 0.5rem 0 1.5rem;
+  flex-wrap: wrap;
+}
+
+#cp12-wrap .checkin-strip strong {
+  color: var(--pine);
+  font-weight: 500;
+}
+
+#cp12-wrap .strip-divider {
+  color: var(--mist);
+  margin: 0 0.2rem;
+}
+
 #cp12-wrap .about-content > .btn-primary {
-  margin-top: 1rem;
+  margin-top: 0;
 }
 
 /* ── About section animation signatures ───────────────────── */
