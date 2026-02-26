@@ -121,24 +121,24 @@
   transform: scale(1.05);
 }
 
-/* Travel card images (self-hosted in img/) */
+/* Travel card images (self-hosted in static/img/travel/) */
 #cp12-wrap .ti1 {
-  background: url("img/travel-lake-run.jpg") center/cover no-repeat;
+  background: url("static/img/travel/lake-run.jpg") center/cover no-repeat;
 }
 #cp12-wrap .ti2 {
-  background: url("img/travel-flower-garden.jpg") center/cover no-repeat;
+  background: url("static/img/travel/flower-garden.jpg") center/cover no-repeat;
 }
 #cp12-wrap .ti3 {
-  background: url("img/travel-langbiang.jpg") center/cover no-repeat;
+  background: url("static/img/travel/langbiang.jpg") center/cover no-repeat;
 }
 #cp12-wrap .ti4 {
-  background: url("img/travel-night-market.jpg") center/cover no-repeat;
+  background: url("static/img/travel/night-market.jpg") center/cover no-repeat;
 }
 #cp12-wrap .ti5 {
-  background: url("img/travel-hill-loop.jpg") center/cover no-repeat;
+  background: url("static/img/travel/hill-loop.jpg") center/cover no-repeat;
 }
 #cp12-wrap .ti6 {
-  background: url("img/travel-zen-monastery.jpg") center/cover no-repeat;
+  background: url("static/img/travel/zen-monastery.jpg") center/cover no-repeat;
 }
 
 #cp12-wrap .runner-badge {

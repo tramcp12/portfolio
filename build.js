@@ -20,6 +20,11 @@
  *   src/data/strings.vi.json and strings.en.json injected as
  *   <script id="lang-vi-data"> / <script id="lang-en-data"> for IIFE 0.
  *   IIFE 0 (lang-switcher.js) applies [data-i18n] swaps and re-renders rooms.
+ *
+ * Phase 6 (complete): Static asset migration
+ *   Travel images moved from img/ to static/img/travel/ (renamed, no travel- prefix).
+ *   favicon.svg kept at repo root. Asset path guard validates all static/img/
+ *   url() references in the assembled CSS against real files on disk.
  */
 
 "use strict";
@@ -69,6 +74,27 @@ var roomsData  = JSON.parse(fs.readFileSync(path.join(root, "src", "data", "room
 var stringsVi  = JSON.parse(fs.readFileSync(path.join(root, "src", "data", "strings.vi.json"), "utf8"));
 var stringsEn  = JSON.parse(fs.readFileSync(path.join(root, "src", "data", "strings.en.json"), "utf8"));
 
+/* ── Security: CRIT-1 — validate data-i18n-html values against tag allowlist ─── */
+/* Only <br>, <em>, <strong> are permitted. Any other HTML tag in a translation
+ * string would be an unguarded innerHTML injection vector (stored XSS risk).    */
+var SAFE_I18N_HTML = /^(?:[^<]|<br\s*\/?>|<\/?em>|<\/?strong>)*$/;
+function validateI18nHtmlStrings(filename, strings) {
+  Object.keys(strings).forEach(function (key) {
+    var val = strings[key];
+    if (typeof val === "string" && val.indexOf("<") !== -1) {
+      if (!SAFE_I18N_HTML.test(val)) {
+        throw new Error(
+          "Security guard (CRIT-1): " + filename + "[\"" + key + "\"] contains disallowed HTML tags.\n" +
+          "  Value: " + val + "\n" +
+          "  Only <br>, <em>, <strong> are permitted in i18n strings."
+        );
+      }
+    }
+  });
+}
+validateI18nHtmlStrings("strings.vi.json", stringsVi);
+validateI18nHtmlStrings("strings.en.json", stringsEn);
+
 function injectJson(id, data) {
   return '\n    <script id="' + id + '" type="application/json">\n    ' +
     JSON.stringify(data).replace(/<\//g, "<\\/").replace(/<!--/g, "<\\!--") +
@@ -95,7 +121,6 @@ var htmlParts = [
   readSrc("features/cta/cta.html.partial"),
   readSrc("layout/footer.html.partial"),
   readSrc("layout/modal.html.partial"),
-  readSrc("layout/zalo-cta.html.partial"),
   "    </div>\n    <!-- /#cp12-wrap -->",
   // Phase 4+5: data injected before </body> so defer-loaded cp12.js can find them
   injectJson("lang-vi-data", stringsVi),
@@ -132,7 +157,6 @@ var cssSources = [
   "features/cta/cta.css",
   "layout/footer.css",
   "layout/modal.css",
-  "layout/zalo-cta.css",
   "core/responsive-sentinel.css",
   "core/supports.css"
 ];
@@ -161,6 +185,22 @@ var js = jsSources.map(function(f) { return readSrc(f); }).join("\n\n");
 assertMinSize("index.html", html, 30);
 assertMinSize("cp12.css",   css,  40);
 assertMinSize("cp12.js",    js,   12);
+
+/* ── Phase 6: Asset path guard — validate static/img/ CSS references ─────── */
+/* Every url("static/img/...") in the assembled CSS must point to a file that
+ * actually exists in the repo. Catches broken image references at build time. */
+var assetGuardRe = /url\(["']?(static\/img\/[^"')]+)["']?\)/g;
+var assetMatch;
+while ((assetMatch = assetGuardRe.exec(css)) !== null) {
+  var assetPath = path.join(root, assetMatch[1]);
+  if (!fs.existsSync(assetPath)) {
+    throw new Error(
+      "Phase 6 asset guard: CSS references missing file:\n" +
+      "  url(\"" + assetMatch[1] + "\")\n" +
+      "  Full path: " + assetPath
+    );
+  }
+}
 
 writeRoot("index.html", html);
 writeRoot("cp12.css",   css);

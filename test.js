@@ -24,7 +24,6 @@ var expected = [
   "src/core/responsive-sentinel.css", "src/core/supports.css",
   "src/layout/nav.css", "src/layout/nav-mobile.css", "src/layout/dots.css",
   "src/layout/next-btn.css", "src/layout/footer.css", "src/layout/modal.css",
-  "src/layout/zalo-cta.css",
   "src/features/home/home.css", "src/features/video/video.css",
   "src/features/rooms/rooms.css", "src/features/explore/explore.css",
   "src/features/about/about.css", "src/features/journal/journal.css",
@@ -33,7 +32,7 @@ var expected = [
   "src/shell-head.html",
   "src/layout/chrome.html.partial", "src/layout/dots.html.partial",
   "src/layout/footer.html.partial", "src/layout/modal.html.partial",
-  "src/layout/zalo-cta.html.partial", "src/layout/jsonld.html.partial",
+  "src/layout/jsonld.html.partial",
   "src/features/home/home.html.partial", "src/features/video/video.html.partial",
   "src/features/rooms/rooms.html.partial", "src/features/explore/explore.html.partial",
   "src/features/about/about.html.partial", "src/features/journal/journal.html.partial",
@@ -101,7 +100,7 @@ ok("strings.vi.json — is object",      typeof stringsVi === "object");
 ok("strings.en.json — is object",      typeof stringsEn === "object");
 ["nav.rooms","nav.explore","nav.about","nav.journal","nav.book",
  "hero.tag","hero.title","hero.subtitle","rooms.label","rooms.heading",
- "explore.label","about.label","journal.label","cta.label","zalo.cta"
+ "explore.label","about.label","journal.label","cta.label"
 ].forEach(function(k) {
   ok("strings.vi[" + k + "]", !!stringsVi[k]);
   ok("strings.en[" + k + "]", !!stringsEn[k]);
@@ -215,6 +214,31 @@ ok("scroll-reveal.js — cachedNav",     revealJs.indexOf("var cachedNav = null"
 ok("scroll-reveal.js — focus trap",    revealJs.indexOf("focus trap") !== -1);
 ok("scroll-reveal.js — passive scroll",revealJs.indexOf("passive") !== -1);
 ok("scroll-reveal.js — RAF batching",  revealJs.indexOf("rafPending") !== -1);
+
+/* ── 5. Static asset checks ──────────────────────────────────────────────── */
+console.log("\n\u2500\u2500 Static assets");
+
+var staticImgs = [
+  "static/img/travel/lake-run.jpg",
+  "static/img/travel/flower-garden.jpg",
+  "static/img/travel/langbiang.jpg",
+  "static/img/travel/night-market.jpg",
+  "static/img/travel/hill-loop.jpg",
+  "static/img/travel/zen-monastery.jpg"
+];
+staticImgs.forEach(function(f) {
+  ok(f + " exists", fs.existsSync(path.join(__dirname, f)));
+});
+ok("favicon.svg at root",                  fs.existsSync(path.join(__dirname, "favicon.svg")));
+ok("static/docs/.gitkeep placeholder",     fs.existsSync(path.join(__dirname, "static/docs/.gitkeep")));
+
+// A-2: No legacy img/ URL references in generated CSS
+ok("cp12.css — A-2: no legacy url(img/...) paths", !/url\(["']?img\//.test(css));
+
+// CSS references new static/img/travel/ paths
+ok("cp12.css — url(static/img/travel/lake-run.jpg)",     css.indexOf('url("static/img/travel/lake-run.jpg")')     !== -1);
+ok("cp12.css — url(static/img/travel/langbiang.jpg)",    css.indexOf('url("static/img/travel/langbiang.jpg")')    !== -1);
+ok("cp12.css — url(static/img/travel/night-market.jpg)", css.indexOf('url("static/img/travel/night-market.jpg")') !== -1);
 
 /* ── Report ──────────────────────────────────────────────────────────────── */
 console.log("\n\u2500\u2500 Results");

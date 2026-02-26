@@ -20,22 +20,27 @@
     <meta
       property="og:description"
       content="Where travelers find home. Pine forests, mountain air, and genuine warmth — from 180,000 VND/night in the heart of Đà Lạt.">
-    <meta property="og:locale" content="vi_VN" >
+    <meta property="og:locale" content="en_US" >
+    <meta property="og:locale:alternate" content="vi_VN" >
     <meta property="og:site_name" content="Trạm CP12" >
     <meta property="og:url" content="https://tramcp12.github.io/portfolio/" >
     <meta
       property="og:image"
-      content="https://tramcp12.github.io/portfolio/img/travel-langbiang.jpg">
+      content="https://tramcp12.github.io/portfolio/static/img/travel/langbiang.jpg">
     <meta
       property="og:image:alt"
       content="Langbiang mountain trail — Đà Lạt, Vietnam">
     <meta name="twitter:card" content="summary_large_image" >
     <meta name="twitter:title" content="Trạm CP12 — A Traveler's Base Camp in Đà Lạt" >
     <meta name="twitter:description" content="Where travelers find home. Pine forests, mountain air, and genuine warmth — from 180,000 VND/night in the heart of Đà Lạt." >
-    <meta name="twitter:image" content="https://tramcp12.github.io/portfolio/img/travel-langbiang.jpg" >
+    <meta name="twitter:image" content="https://tramcp12.github.io/portfolio/static/img/travel/langbiang.jpg" >
     <meta name="theme-color" content="#2d4a3e" >
     <link rel="canonical" href="https://tramcp12.github.io/portfolio/" >
-    <link rel="icon" href="img/favicon.svg" type="image/svg+xml" >
+    <!-- hreflang: bilingual SEO — same URL serves both VN and EN via JS i18n -->
+    <link rel="alternate" hreflang="en" href="https://tramcp12.github.io/portfolio/" >
+    <link rel="alternate" hreflang="vi" href="https://tramcp12.github.io/portfolio/" >
+    <link rel="alternate" hreflang="x-default" href="https://tramcp12.github.io/portfolio/" >
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" >
     <link rel="preconnect" href="https://fonts.googleapis.com" >
     <!-- YouTube preconnect for faster modal video load -->
     <link rel="preconnect" href="https://www.youtube.com" >
@@ -63,7 +68,7 @@
         document.documentElement.classList.add("i18n-loading");
         document.documentElement.setAttribute("lang", lang);
         /* Safety fallback: remove loading class after 2 s if cp12.js fails */
-        setTimeout(function () { document.documentElement.classList.remove("i18n-loading"); }, 2000);
+        setTimeout(function () { document.documentElement.classList.remove("i18n-loading"); }, 500);
       }());
     </script>
     <script src="cp12.js" defer></script>

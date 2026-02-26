@@ -161,4 +161,8 @@
   #cp12-next-btn {
     animation: none;
   }
+  /* CRIT-2: Disable smooth scroll for users with vestibular/motion sensitivity (WCAG 2.1 SC 2.3.3) */
+  #cp12-wrap {
+    scroll-behavior: auto;
+  }
 }

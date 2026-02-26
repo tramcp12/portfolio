@@ -47,6 +47,8 @@
       );
       var activeEl = btn.querySelector(".lang-active");
       if (activeEl) activeEl.textContent = lang.toUpperCase();
+      var altEl = btn.querySelector(".lang-alt");
+      if (altEl) altEl.textContent = (lang === "en" ? "VI" : "EN");
     }
 
     /* Re-render room cards with the new language */
@@ -193,8 +195,13 @@
   var wrap = document.getElementById("cp12-wrap");
   var tabs = wrap ? wrap.querySelectorAll(".filter-tabs .tab") : [];
   var cards = wrap ? wrap.querySelectorAll(".travel-card") : [];
+  var grid = wrap ? wrap.querySelector(".travel-grid") : null;
+  var status = document.getElementById("travel-filter-status");
 
-  function filterCards(f) {
+  /* CRIT-3: Initialise tabpanel aria-labelledby to the default active tab */
+  if (grid) grid.setAttribute("aria-labelledby", "tab-all");
+
+  function filterCards(f, activeTabId) {
     var count = 0;
     cards.forEach(function (c) {
       var cat = c.getAttribute("data-category");
@@ -202,13 +209,14 @@
       c.style.display = show ? "" : "none";
       if (show) count++;
     });
-    /* Announce result count to screen readers via aria-live region */
-    var grid = wrap ? wrap.querySelector(".travel-grid") : null;
-    if (grid) {
-      grid.setAttribute(
-        "aria-label",
-        count + " destination" + (count !== 1 ? "s" : "") + " shown",
-      );
+    /* CRIT-3: Keep tabpanel label in sync with the active tab */
+    if (grid && activeTabId) {
+      grid.setAttribute("aria-labelledby", activeTabId);
+    }
+    /* CRIT-3: Announce result count via dedicated status element (not tabpanel) */
+    if (status) {
+      status.textContent =
+        count + " destination" + (count !== 1 ? "s" : "") + " shown";
     }
   }
 
@@ -220,7 +228,7 @@
       });
       this.classList.add("active");
       this.setAttribute("aria-selected", "true");
-      filterCards(this.getAttribute("data-filter"));
+      filterCards(this.getAttribute("data-filter"), this.id);
     });
   });
 })();
@@ -230,6 +238,8 @@
 (function () {
   try {
     var wrap = document.getElementById("cp12-wrap");
+    /* CRIT-2: Cache reduced-motion preference once — used for all scrollTo calls */
+    var prefersReducedMotion = !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
     var modal = document.getElementById("cp12Modal");
     var modalClose = document.getElementById("cp12ModalClose");
     var lastFocus = null;
@@ -297,6 +307,8 @@
     /* ── Mobile nav ── */
     var hamburger = wrap ? wrap.querySelector(".nav-hamburger") : null;
     var mobileNav = document.getElementById("cp12MobileNav");
+    /* CRIT-4: Set aria-hidden on mobile nav at init — mirrors modal pattern (line 10) */
+    if (mobileNav) mobileNav.setAttribute("aria-hidden", "true");
     var mobileClose = mobileNav
       ? mobileNav.querySelector(".nav-mobile-close")
       : null;
@@ -458,7 +470,7 @@
         var navH = (getNav() || {}).offsetHeight || 70;
         window.scrollTo({
           top: el.getBoundingClientRect().top + window.pageYOffset - navH,
-          behavior: "smooth",
+          behavior: prefersReducedMotion ? "auto" : "smooth",
         });
       });
     });
@@ -492,7 +504,7 @@
         if (next)
           window.scrollTo({
             top: next.getBoundingClientRect().top + scrollY - navH,
-            behavior: "smooth",
+            behavior: prefersReducedMotion ? "auto" : "smooth",
           });
       });
     }
@@ -557,7 +569,7 @@
             target.getBoundingClientRect().top +
             window.pageYOffset -
             navH;
-          window.scrollTo({ top: targetTop, behavior: "smooth" });
+          window.scrollTo({ top: targetTop, behavior: prefersReducedMotion ? "auto" : "smooth" });
         }
       });
     });

@@ -56,7 +56,10 @@
   align-items: center;
   justify-content: center;
   color: var(--gold);
-  transition: all 0.3s;
+  transition:
+    background 0.3s,
+    color 0.3s,
+    border-color 0.3s;
 }
 
 #cp12-wrap .social-link svg {

@@ -2,6 +2,8 @@
 (function () {
   try {
     var wrap = document.getElementById("cp12-wrap");
+    /* CRIT-2: Cache reduced-motion preference once — used for all scrollTo calls */
+    var prefersReducedMotion = !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
     var modal = document.getElementById("cp12Modal");
     var modalClose = document.getElementById("cp12ModalClose");
     var lastFocus = null;
@@ -69,6 +71,8 @@
     /* ── Mobile nav ── */
     var hamburger = wrap ? wrap.querySelector(".nav-hamburger") : null;
     var mobileNav = document.getElementById("cp12MobileNav");
+    /* CRIT-4: Set aria-hidden on mobile nav at init — mirrors modal pattern (line 10) */
+    if (mobileNav) mobileNav.setAttribute("aria-hidden", "true");
     var mobileClose = mobileNav
       ? mobileNav.querySelector(".nav-mobile-close")
       : null;
@@ -230,7 +234,7 @@
         var navH = (getNav() || {}).offsetHeight || 70;
         window.scrollTo({
           top: el.getBoundingClientRect().top + window.pageYOffset - navH,
-          behavior: "smooth",
+          behavior: prefersReducedMotion ? "auto" : "smooth",
         });
       });
     });
@@ -264,7 +268,7 @@
         if (next)
           window.scrollTo({
             top: next.getBoundingClientRect().top + scrollY - navH,
-            behavior: "smooth",
+            behavior: prefersReducedMotion ? "auto" : "smooth",
           });
       });
     }
@@ -329,7 +333,7 @@
             target.getBoundingClientRect().top +
             window.pageYOffset -
             navH;
-          window.scrollTo({ top: targetTop, behavior: "smooth" });
+          window.scrollTo({ top: targetTop, behavior: prefersReducedMotion ? "auto" : "smooth" });
         }
       });
     });

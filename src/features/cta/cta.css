@@ -103,6 +103,11 @@
   flex-wrap: wrap;
 }
 
+/* Facebook button icon+text gap */
+#cp12-wrap .btn-ghost--facebook {
+  gap: 0.5rem;
+}
+
 #cp12-wrap .address-text {
   font-style: normal;
 }
@@ -124,9 +129,6 @@
 #cp12-wrap .sect-book .btn-primary,
 #cp12-wrap .sect-book .btn-ghost {
   opacity: 0;
-}
-#cp12-wrap .sect-book.animated .btn-primary {
-  animation: cp12ScaleUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.35s forwards;
 }
 #cp12-wrap .sect-book.animated .btn-ghost {
   animation: cp12ScaleUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.48s forwards;

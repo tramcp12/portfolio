@@ -47,6 +47,8 @@
       );
       var activeEl = btn.querySelector(".lang-active");
       if (activeEl) activeEl.textContent = lang.toUpperCase();
+      var altEl = btn.querySelector(".lang-alt");
+      if (altEl) altEl.textContent = (lang === "en" ? "VI" : "EN");
     }
 
     /* Re-render room cards with the new language */

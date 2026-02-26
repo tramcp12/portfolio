@@ -3,8 +3,13 @@
   var wrap = document.getElementById("cp12-wrap");
   var tabs = wrap ? wrap.querySelectorAll(".filter-tabs .tab") : [];
   var cards = wrap ? wrap.querySelectorAll(".travel-card") : [];
+  var grid = wrap ? wrap.querySelector(".travel-grid") : null;
+  var status = document.getElementById("travel-filter-status");
 
-  function filterCards(f) {
+  /* CRIT-3: Initialise tabpanel aria-labelledby to the default active tab */
+  if (grid) grid.setAttribute("aria-labelledby", "tab-all");
+
+  function filterCards(f, activeTabId) {
     var count = 0;
     cards.forEach(function (c) {
       var cat = c.getAttribute("data-category");
@@ -12,13 +17,14 @@
       c.style.display = show ? "" : "none";
       if (show) count++;
     });
-    /* Announce result count to screen readers via aria-live region */
-    var grid = wrap ? wrap.querySelector(".travel-grid") : null;
-    if (grid) {
-      grid.setAttribute(
-        "aria-label",
-        count + " destination" + (count !== 1 ? "s" : "") + " shown",
-      );
+    /* CRIT-3: Keep tabpanel label in sync with the active tab */
+    if (grid && activeTabId) {
+      grid.setAttribute("aria-labelledby", activeTabId);
+    }
+    /* CRIT-3: Announce result count via dedicated status element (not tabpanel) */
+    if (status) {
+      status.textContent =
+        count + " destination" + (count !== 1 ? "s" : "") + " shown";
     }
   }
 
@@ -30,7 +36,7 @@
       });
       this.classList.add("active");
       this.setAttribute("aria-selected", "true");
-      filterCards(this.getAttribute("data-filter"));
+      filterCards(this.getAttribute("data-filter"), this.id);
     });
   });
 })();

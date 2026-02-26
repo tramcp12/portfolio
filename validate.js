@@ -2,7 +2,7 @@
 /**
  * validate.js — Architectural invariant checker for Trạm CP12
  *
- * Checks 9 invariants across index.html, cp12.css, cp12.js.
+ * Checks 11 invariants across index.html, cp12.css, cp12.js.
  * Exit 0 = all pass. Exit 1 = one or more failures.
  */
 
@@ -61,6 +61,9 @@ check("P-1", "No <img> tags in index.html (all images are CSS backgrounds)", !/<
 
 /* ── H-1: og:image meta tag present in index.html ── */
 check("H-1", "og:image meta tag present in index.html", /property="og:image"/.test(html));
+
+/* ── A-2: No legacy img/ URL references in cp12.css (all images under static/) ── */
+check("A-2", "No legacy url(img/...) references in cp12.css", !/url\(["']?img\//.test(css));
 
 /* ── Output ── */
 console.log("\nTraạm CP12 — Architectural Invariants\n");

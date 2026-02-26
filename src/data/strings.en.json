@@ -1,14 +1,10 @@
 {
   "skip.nav": "Skip to content",
-  "scroll.next": "Scroll to next section",
-
   "nav.rooms": "Rooms",
   "nav.explore": "Explore",
   "nav.about": "About",
   "nav.journal": "Journal",
   "nav.book": "Book a Stay",
-  "nav.openMenu": "Open navigation menu",
-  "nav.closeMenu": "Close navigation menu",
   "nav.lang.label": "Switch to Vietnamese",
 
   "hero.tag": "Đà Lạt · Central Highlands · Vietnam",
@@ -30,11 +26,6 @@
   "rooms.label": "Our Spaces",
   "rooms.heading": "A room for every<br><em>kind of traveler.</em>",
   "rooms.intro": "From intimate private rooms to our social dormitory — each space at Trạm CP12 is designed with intention. Natural materials, local craft, and exactly the kind of light that makes you want to stay another night.",
-  "rooms.bookLink": "Book this room",
-  "rooms.featured": "Featured",
-  "rooms.priceLabel": "VND / night",
-  "rooms.empty": "Room details coming soon.",
-
   "explore.label": "Explore Dalat",
   "explore.heading": "Trails, tastes & <em>hidden gems.</em>",
   "explore.filter.all": "All",
@@ -86,6 +77,7 @@
   "cta.step3.title": "Arrive & check in",
   "cta.step3.desc": "From 14:00 · Check-out by 12:00",
   "cta.bookBtn": "Book a Room →",
+  "cta.facebookBtn": "Facebook",
   "cta.zaloBtn": "Zalo",
   "cta.callBtn": "Call Us",
 
@@ -101,7 +93,5 @@
   "footer.link.houseRules": "About & House Rules",
   "footer.link.journal": "The Journal",
   "footer.link.book": "Book a Stay",
-  "footer.bottom.made": "Made with care in the Central Highlands",
-
-  "zalo.cta": "Chat on Zalo"
+  "footer.bottom.made": "Made with care in the Central Highlands"
 }

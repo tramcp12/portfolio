@@ -27,6 +27,7 @@
                 >
                   <button
                     type="button"
+                    id="tab-all"
                     class="tab active"
                     role="tab"
                     aria-selected="true"
@@ -37,6 +38,7 @@
                   </button>
                   <button
                     type="button"
+                    id="tab-running"
                     class="tab"
                     role="tab"
                     aria-selected="false"
@@ -46,6 +48,7 @@
                   </button>
                   <button
                     type="button"
+                    id="tab-food"
                     class="tab"
                     role="tab"
                     aria-selected="false"
@@ -55,6 +58,7 @@
                   </button>
                   <button
                     type="button"
+                    id="tab-nature"
                     class="tab"
                     role="tab"
                     aria-selected="false"
@@ -66,11 +70,19 @@
               </div>
             </div>
 
+            <!-- CRIT-3: Dedicated status region for filter result count announcements -->
+            <div
+              id="travel-filter-status"
+              class="sr-only"
+              role="status"
+              aria-live="polite"
+              aria-atomic="true"
+            ></div>
             <div
               class="travel-grid"
               role="tabpanel"
-              aria-live="polite"
-              aria-label="Travel destinations"
+              id="travel-tabpanel"
+              aria-labelledby="tab-all"
             >
               <!-- Card 1: Hồ Xuân Hương Morning Run -->
               <div class="travel-card" data-category="running">
