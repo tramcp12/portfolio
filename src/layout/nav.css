@@ -12,14 +12,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  /* Dark-to-transparent gradient ensures cream/mist text is always readable
-     at the top of the page, regardless of the content scrolled behind */
-  background: linear-gradient(
-    to bottom,
-    rgba(26, 48, 40, 0.72) 0%,
-    rgba(26, 48, 40, 0.2) 70%,
-    rgba(26, 48, 40, 0) 100%
-  );
+  /* Base transparency, overridden by .nav-over-dark on load */
+  background: transparent;
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
   border-bottom: 1px solid transparent;
@@ -85,19 +79,7 @@
   color: var(--cream);
 }
 
-/* Hero (not scrolled) state — gold ghost pill; stands out on dark gradient */
-#cp12-wrap .cp12-main-nav:not(.scrolled) a.nav-cta {
-  background: transparent;
-  color: var(--gold);
-  border: 1px solid rgba(201, 169, 110, 0.65);
-  box-shadow: 0 0 0 0 transparent;
-}
 
-#cp12-wrap .cp12-main-nav:not(.scrolled) a.nav-cta:hover {
-  background: var(--gold);
-  color: var(--charcoal);
-  border-color: var(--gold);
-}
 
 /* ── Scrolled over LIGHT sections (rooms, about, journal) ──────────────────
    Warm cream frosted glass — neutral, readable                              */
@@ -130,39 +112,39 @@
   color: var(--cream);
 }
 
-/* ── Scrolled over DARK sections (hero, video, explore, book) ──────────────
+/* ── Over DARK sections (hero, video, explore, book) ──────────────
    Pine Forest frosted glass — immersive, brand-forward                      */
-#cp12-wrap .cp12-main-nav.scrolled.nav-over-dark {
+#cp12-wrap .cp12-main-nav.nav-over-dark {
   background: rgba(26, 48, 40, 0.92);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border-bottom: 1px solid rgba(201, 169, 110, 0.18);
 }
 
-#cp12-wrap .cp12-main-nav.scrolled.nav-over-dark .nav-logo {
+#cp12-wrap .cp12-main-nav.nav-over-dark .nav-logo {
   color: var(--cream);
 }
-#cp12-wrap .cp12-main-nav.scrolled.nav-over-dark .nav-logo span {
+#cp12-wrap .cp12-main-nav.nav-over-dark .nav-logo span {
   color: var(--gold);
 }
 #cp12-wrap .cp12-main-nav.scrolled:not(.nav-over-dark) .nav-hamburger {
   color: var(--pine);
 }
-#cp12-wrap .cp12-main-nav.scrolled.nav-over-dark .nav-links a {
+#cp12-wrap .cp12-main-nav.nav-over-dark .nav-links a {
   color: var(--mist);
 }
-#cp12-wrap .cp12-main-nav.scrolled.nav-over-dark .nav-links a:hover {
+#cp12-wrap .cp12-main-nav.nav-over-dark .nav-links a:hover {
   color: var(--gold);
 }
-#cp12-wrap .cp12-main-nav.scrolled.nav-over-dark a.nav-cta {
+#cp12-wrap .cp12-main-nav.nav-over-dark a.nav-cta {
   background: var(--gold);
   color: var(--charcoal);
 }
-#cp12-wrap .cp12-main-nav.scrolled.nav-over-dark a.nav-cta:hover {
+#cp12-wrap .cp12-main-nav.nav-over-dark a.nav-cta:hover {
   background: var(--terracotta);
   color: var(--cream);
 }
-#cp12-wrap .cp12-main-nav.scrolled.nav-over-dark .nav-hamburger {
+#cp12-wrap .cp12-main-nav.nav-over-dark .nav-hamburger {
   color: var(--cream);
 }
 

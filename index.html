@@ -49,26 +49,31 @@
       rel="preconnect"
       href="https://fonts.gstatic.com"
       crossorigin="anonymous">
-    <!-- Non-render-blocking font load: media="print" trick swaps to "all" after load -->
+    <!-- Non-render-blocking font load: preload trick prevents cached-reload bugs -->
     <link
+      rel="preload"
+      as="style"
       href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,300;0,600;1,300&display=swap"
-      rel="stylesheet"
-      media="print"
-      onload="this.media = 'all'">
+      onload="this.onload=null;this.rel='stylesheet'">
     <noscript>
       <link
         href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,300;0,600;1,300&display=swap"
         rel="stylesheet">
     </noscript>
     <link rel="stylesheet" href="cp12.css" >
-    <!-- i18n: FOUC prevention — runs before first paint, not deferred -->
+    <!-- i18n: FOUC prevention & Scroll Stabilization -->
     <script>
       (function () {
         var lang = (function () { try { return localStorage.getItem("cp12-lang") || "vi"; } catch (e) { return "vi"; } }());
         document.documentElement.classList.add("i18n-loading");
         document.documentElement.setAttribute("lang", lang);
-        /* Safety fallback: remove loading class after 2 s if cp12.js fails */
-        setTimeout(function () { document.documentElement.classList.remove("i18n-loading"); }, 500);
+        /* Safety fallback: remove loading class after 2s if cp12.js fails */
+        setTimeout(function () { document.documentElement.classList.remove("i18n-loading"); }, 2000);
+        
+        /* Prevent incremental scroll drifting on rapid cached reloads */
+        if ("scrollRestoration" in history) {
+          history.scrollRestoration = "manual";
+        }
       }());
     </script>
     <script src="cp12.js" defer></script>
