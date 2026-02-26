@@ -75,5 +75,5 @@
   window.cp12RenderRooms = renderRooms;
 
   /* Initial render using language set by IIFE 0 (lang-switcher runs first) */
-  renderRooms(window.cp12Lang || "en");
+  renderRooms(window.cp12Lang || "vi");
 })();
