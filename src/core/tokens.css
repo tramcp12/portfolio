@@ -6,18 +6,18 @@
 
 :root {
   /* Greens */
-  --cream: #f5f0e8;
-  --warm-white: #fdfaf5;
-  --pine: #2d4a3e;
-  --pine-light: #3d6357;
-  --pine-dark: #1a3028;
-  --pine-mid: #5c8b7a;
-  --mist: #b8cabd;
+  --cream: #f4ecd8;
+  --warm-white: #fcf8ed;
+  --pine: #4a543f;
+  --pine-light: #6e7354;
+  --pine-dark: #313620;
+  --pine-mid: #8c926c;
+  --mist: #d6d2b8;
 
   /* Earths */
   --earth: #8b6347;
   --terracotta: #c4724a;
-  --gold: #c9a96e;
+  --gold: #b3a05b;
 
   /* Darks */
   --charcoal: #2a2522;
