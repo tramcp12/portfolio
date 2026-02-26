@@ -1,7 +1,7 @@
 /* ── 0. Language Switcher ─────────────────────────────────── */
 (function () {
   var STORAGE_KEY = "cp12-lang";
-  var DEFAULT_LANG = "en";
+  var DEFAULT_LANG = "vi";
 
   /* ── Parse string data injected by build.js ── */
   var stringsMap = {};
@@ -161,7 +161,7 @@
   window.cp12RenderRooms = renderRooms;
 
   /* Initial render using language set by IIFE 0 (lang-switcher runs first) */
-  renderRooms(window.cp12Lang || "en");
+  renderRooms(window.cp12Lang || "vi");
 })();
 
 

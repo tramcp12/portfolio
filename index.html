@@ -5,7 +5,7 @@
   GitHub Pages deployment — tramcp12.github.io/portfolio/
   ============================================================
 -->
-<html lang="en">
+<html lang="vi">
   <head>
     <meta charset="UTF-8" >
     <meta name="viewport" content="width=device-width, initial-scale=1.0" >
@@ -64,7 +64,7 @@
     <!-- i18n: FOUC prevention — runs before first paint, not deferred -->
     <script>
       (function () {
-        var lang = (function () { try { return localStorage.getItem("cp12-lang") || "en"; } catch (e) { return "en"; } }());
+        var lang = (function () { try { return localStorage.getItem("cp12-lang") || "vi"; } catch (e) { return "vi"; } }());
         document.documentElement.classList.add("i18n-loading");
         document.documentElement.setAttribute("lang", lang);
         /* Safety fallback: remove loading class after 2 s if cp12.js fails */

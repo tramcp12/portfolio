@@ -1,7 +1,7 @@
 /* ── 0. Language Switcher ─────────────────────────────────── */
 (function () {
   var STORAGE_KEY = "cp12-lang";
-  var DEFAULT_LANG = "en";
+  var DEFAULT_LANG = "vi";
 
   /* ── Parse string data injected by build.js ── */
   var stringsMap = {};
