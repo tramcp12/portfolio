@@ -1,20 +1,20 @@
         <!-- Hero -->
         <section class="hero sect-home" id="home" aria-labelledby="heroHeading">
           <div class="hero-left">
-            <p class="hero-tag fade-up">
+            <p class="hero-tag fade-up" data-i18n="hero.tag">
               Đà Lạt &middot; Central Highlands &middot; Vietnam
             </p>
-            <h1 class="hero-title fade-up delay-1" id="heroHeading">
+            <h1 class="hero-title fade-up delay-1" id="heroHeading" data-i18n-html="hero.title">
               Where<br>travelers<em>find home.</em>
             </h1>
-            <p class="hero-subtitle fade-up delay-2">
+            <p class="hero-subtitle fade-up delay-2" data-i18n="hero.subtitle">
               A welcoming stop in the mist-wrapped mountains of Dalat. For solo
               wanderers, trail runners, and anyone who believes the best travel
               stories start with the right place to sleep.
             </p>
             <div class="hero-btns fade-up delay-3">
-              <a href="#rooms" class="btn-primary">Explore Rooms</a>
-              <a href="#explore" class="btn-outline">Trail Guide &rarr;</a>
+              <a href="#rooms" class="btn-primary" data-i18n="hero.exploreRooms">Explore Rooms</a>
+              <a href="#explore" class="btn-outline" data-i18n="hero.trailGuide">Trail Guide &rarr;</a>
             </div>
           </div>
 
@@ -30,22 +30,22 @@
                   id="heroPlayBtn"
                   aria-label="Watch welcome video"
                 ></button>
-                <span class="play-label" aria-hidden="true"
+                <span class="play-label" aria-hidden="true" data-i18n="hero.watchVideo"
                   >Watch Welcome Video</span
                 >
               </div>
               <section class="hero-stats" aria-label="Quick facts">
                 <div class="stat-box">
                   <span class="stat-num" aria-hidden="true">4</span>
-                  <span class="stat-label">Room Types</span>
+                  <span class="stat-label" data-i18n="hero.stat.roomTypes">Room Types</span>
                 </div>
                 <div class="stat-box">
                   <span class="stat-num" aria-hidden="true">6+</span>
-                  <span class="stat-label">Local Routes</span>
+                  <span class="stat-label" data-i18n="hero.stat.localRoutes">Local Routes</span>
                 </div>
                 <div class="stat-box">
                   <span class="stat-num" aria-hidden="true">1500m</span>
-                  <span class="stat-label">Altitude</span>
+                  <span class="stat-label" data-i18n="hero.stat.altitude">Altitude</span>
                 </div>
               </section>
             </div>
@@ -53,6 +53,7 @@
 
           <div class="scroll-hint" aria-hidden="true">
             <div class="scroll-line"></div>
-            Scroll
+            <span data-i18n="hero.scroll">Scroll</span>
           </div>
         </section>
+

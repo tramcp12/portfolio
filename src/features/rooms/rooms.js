@@ -1,4 +1,4 @@
-/* ── 0. Rooms renderer ───────────────────────────────────── */
+/* ── 1. Rooms renderer ───────────────────────────────────── */
 (function () {
   var dataEl = document.getElementById("rooms-data");
   if (!dataEl) return;
@@ -11,10 +11,6 @@
   }
   var grid = document.getElementById("rooms-grid");
   if (!grid || !Array.isArray(rooms)) return;
-  if (rooms.length === 0) {
-    grid.innerHTML = '<p class="rooms-empty">Room details coming soon.</p>';
-    return;
-  }
 
   function escHtml(str) {
     return String(str)
@@ -25,34 +21,59 @@
       .replace(/'/g, "&#39;");
   }
 
-  var html = rooms.map(function (r) {
-    var featuredBadge = r.featured
-      ? '<span class="featured-badge"><span class="sr-only">Featured room: </span><span aria-hidden="true">⭐</span> Featured</span>'
-      : "";
-    var pills = (r.amenities || []).map(function (a) {
-      return '<span class="pill">' + escHtml(a) + "</span>";
-    }).join("\n                  ");
-    var metaItems = (r.meta || []).map(function (m) {
-      return '<span><span aria-hidden="true">' + escHtml(m.icon) + "</span> " + escHtml(m.text) + "</span>";
-    }).join("\n                  ");
+  function renderRooms(lang) {
+    if (rooms.length === 0) {
+      var emptyMsg = (lang === "vi") ? "Thông tin phòng sẽ sớm cập nhật." : "Room details coming soon.";
+      grid.innerHTML = '<p class="rooms-empty">' + emptyMsg + "</p>";
+      return;
+    }
 
-    return (
-      '<div class="room-card">' +
-      '<div class="room-img">' +
-      '<div class="room-img-bg ' + escHtml(r.bgClass) + '"><div class="room-img-pattern"></div></div>' +
-      '<div class="room-price-tag"><span class="price-vnd">' + escHtml(r.price) + '</span><span class="price-label">VND / night</span></div>' +
-      featuredBadge +
-      "</div>" +
-      '<div class="room-body">' +
-      '<h3 class="room-name">' + escHtml(r.name) + "</h3>" +
-      '<div class="room-meta">' + metaItems + "</div>" +
-      '<p class="room-desc">' + escHtml(r.desc) + "</p>" +
-      '<div class="amenity-pills">' + pills + "</div>" +
-      '<a href="#book" class="room-link">Book this room</a>' +
-      "</div>" +
-      "</div>"
-    );
-  }).join("\n");
+    var isVi = lang === "vi";
+    var bookLinkText = isVi ? "Đặt phòng này" : "Book this room";
+    var featuredText = isVi ? "Nổi Bật" : "Featured";
+    var priceLabelText = isVi ? "VND / đêm" : "VND / night";
 
-  grid.innerHTML = html;
+    var html = rooms.map(function (r) {
+      var featuredBadge = r.featured
+        ? '<span class="featured-badge"><span class="sr-only">Featured room: </span><span aria-hidden="true">⭐</span> ' + featuredText + "</span>"
+        : "";
+
+      var amenities = (isVi && r.amenities_vi) ? r.amenities_vi : (r.amenities || []);
+      var pills = amenities.map(function (a) {
+        return '<span class="pill">' + escHtml(a) + "</span>";
+      }).join("\n                  ");
+
+      var metaList = (isVi && r.meta_vi) ? r.meta_vi : (r.meta || []);
+      var metaItems = metaList.map(function (m) {
+        return '<span><span aria-hidden="true">' + escHtml(m.icon) + "</span> " + escHtml(m.text) + "</span>";
+      }).join("\n                  ");
+
+      var desc = (isVi && r.desc_vi) ? r.desc_vi : r.desc;
+
+      return (
+        '<div class="room-card">' +
+        '<div class="room-img">' +
+        '<div class="room-img-bg ' + escHtml(r.bgClass) + '"><div class="room-img-pattern"></div></div>' +
+        '<div class="room-price-tag"><span class="price-vnd">' + escHtml(r.price) + '</span><span class="price-label">' + priceLabelText + "</span></div>" +
+        featuredBadge +
+        "</div>" +
+        '<div class="room-body">' +
+        '<h3 class="room-name">' + escHtml(r.name) + "</h3>" +
+        '<div class="room-meta">' + metaItems + "</div>" +
+        '<p class="room-desc">' + escHtml(desc) + "</p>" +
+        '<div class="amenity-pills">' + pills + "</div>" +
+        '<a href="#book" class="room-link">' + bookLinkText + "</a>" +
+        "</div>" +
+        "</div>"
+      );
+    }).join("\n");
+
+    grid.innerHTML = html;
+  }
+
+  /* Expose for lang-switcher (IIFE 0) to call on language change */
+  window.cp12RenderRooms = renderRooms;
+
+  /* Initial render using language set by IIFE 0 (lang-switcher runs first) */
+  renderRooms(window.cp12Lang || "en");
 })();

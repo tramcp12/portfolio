@@ -5,7 +5,7 @@
   GitHub Pages deployment — tramcp12.github.io/portfolio/
   ============================================================
 -->
-<html lang="vi">
+<html lang="en">
   <head>
     <meta charset="UTF-8" >
     <meta name="viewport" content="width=device-width, initial-scale=1.0" >
@@ -56,6 +56,16 @@
         rel="stylesheet">
     </noscript>
     <link rel="stylesheet" href="cp12.css" >
+    <!-- i18n: FOUC prevention — runs before first paint, not deferred -->
+    <script>
+      (function () {
+        var lang = (function () { try { return localStorage.getItem("cp12-lang") || "en"; } catch (e) { return "en"; } }());
+        document.documentElement.classList.add("i18n-loading");
+        document.documentElement.setAttribute("lang", lang);
+        /* Safety fallback: remove loading class after 2 s if cp12.js fails */
+        setTimeout(function () { document.documentElement.classList.remove("i18n-loading"); }, 2000);
+      }());
+    </script>
     <script src="cp12.js" defer></script>
   </head>
   <body>
@@ -122,7 +132,7 @@
       </nav>
 
 
-      <a href="#cp12-main" class="skip-nav">Skip to content</a>
+      <a href="#cp12-main" class="skip-nav" data-i18n="skip.nav">Skip to content</a>
 
       <!-- Next section floating button -->
       <button
@@ -139,12 +149,22 @@
           >Trạm <span>CP12</span></a
         >
         <ul class="nav-links">
-          <li><a href="#rooms">Rooms</a></li>
-          <li><a href="#explore">Explore</a></li>
-          <li><a href="#about">About</a></li>
-          <li><a href="#journal">Journal</a></li>
-          <li><a href="#book" class="nav-cta">Book a Stay</a></li>
+          <li><a href="#rooms" data-i18n="nav.rooms">Rooms</a></li>
+          <li><a href="#explore" data-i18n="nav.explore">Explore</a></li>
+          <li><a href="#about" data-i18n="nav.about">About</a></li>
+          <li><a href="#journal" data-i18n="nav.journal">Journal</a></li>
+          <li><a href="#book" class="nav-cta" data-i18n="nav.book">Book a Stay</a></li>
         </ul>
+        <!-- Language toggle -->
+        <button
+          type="button"
+          id="cp12-lang-btn"
+          class="lang-btn"
+          aria-label="Switch to Vietnamese"
+          aria-pressed="false"
+        >
+          <span class="lang-active">EN</span><span class="lang-sep" aria-hidden="true">|</span><span class="lang-alt">VI</span>
+        </button>
         <button
           type="button"
           class="nav-hamburger"
@@ -184,32 +204,33 @@
         >
           &times;
         </button>
-        <a href="#rooms">Rooms</a>
-        <a href="#explore">Explore</a>
-        <a href="#about">About</a>
-        <a href="#journal">Journal</a>
-        <a href="#book" class="nav-mobile-cta">Book a Stay</a>
+        <a href="#rooms" data-i18n="nav.rooms">Rooms</a>
+        <a href="#explore" data-i18n="nav.explore">Explore</a>
+        <a href="#about" data-i18n="nav.about">About</a>
+        <a href="#journal" data-i18n="nav.journal">Journal</a>
+        <a href="#book" class="nav-mobile-cta" data-i18n="nav.book">Book a Stay</a>
       </div>
+
 
 
       <main id="cp12-main">
         <!-- Hero -->
         <section class="hero sect-home" id="home" aria-labelledby="heroHeading">
           <div class="hero-left">
-            <p class="hero-tag fade-up">
+            <p class="hero-tag fade-up" data-i18n="hero.tag">
               Đà Lạt &middot; Central Highlands &middot; Vietnam
             </p>
-            <h1 class="hero-title fade-up delay-1" id="heroHeading">
+            <h1 class="hero-title fade-up delay-1" id="heroHeading" data-i18n-html="hero.title">
               Where<br>travelers<em>find home.</em>
             </h1>
-            <p class="hero-subtitle fade-up delay-2">
+            <p class="hero-subtitle fade-up delay-2" data-i18n="hero.subtitle">
               A welcoming stop in the mist-wrapped mountains of Dalat. For solo
               wanderers, trail runners, and anyone who believes the best travel
               stories start with the right place to sleep.
             </p>
             <div class="hero-btns fade-up delay-3">
-              <a href="#rooms" class="btn-primary">Explore Rooms</a>
-              <a href="#explore" class="btn-outline">Trail Guide &rarr;</a>
+              <a href="#rooms" class="btn-primary" data-i18n="hero.exploreRooms">Explore Rooms</a>
+              <a href="#explore" class="btn-outline" data-i18n="hero.trailGuide">Trail Guide &rarr;</a>
             </div>
           </div>
 
@@ -225,22 +246,22 @@
                   id="heroPlayBtn"
                   aria-label="Watch welcome video"
                 ></button>
-                <span class="play-label" aria-hidden="true"
+                <span class="play-label" aria-hidden="true" data-i18n="hero.watchVideo"
                   >Watch Welcome Video</span
                 >
               </div>
               <section class="hero-stats" aria-label="Quick facts">
                 <div class="stat-box">
                   <span class="stat-num" aria-hidden="true">4</span>
-                  <span class="stat-label">Room Types</span>
+                  <span class="stat-label" data-i18n="hero.stat.roomTypes">Room Types</span>
                 </div>
                 <div class="stat-box">
                   <span class="stat-num" aria-hidden="true">6+</span>
-                  <span class="stat-label">Local Routes</span>
+                  <span class="stat-label" data-i18n="hero.stat.localRoutes">Local Routes</span>
                 </div>
                 <div class="stat-box">
                   <span class="stat-num" aria-hidden="true">1500m</span>
-                  <span class="stat-label">Altitude</span>
+                  <span class="stat-label" data-i18n="hero.stat.altitude">Altitude</span>
                 </div>
               </section>
             </div>
@@ -248,9 +269,10 @@
 
           <div class="scroll-hint" aria-hidden="true">
             <div class="scroll-line"></div>
-            Scroll
+            <span data-i18n="hero.scroll">Scroll</span>
           </div>
         </section>
+
 
 
         <!-- Video section -->
@@ -260,11 +282,11 @@
           aria-labelledby="videoHeading"
         >
           <div class="video-container">
-            <p class="section-label" aria-hidden="true">Welcome to CP12</p>
-            <h2 class="video-title" id="videoHeading">
+            <p class="section-label" aria-hidden="true" data-i18n="video.label">Welcome to CP12</p>
+            <h2 class="video-title" id="videoHeading" data-i18n-html="video.title">
               Feel it before <em>you arrive.</em>
             </h2>
-            <p class="video-desc">
+            <p class="video-desc" data-i18n="video.desc">
               Three minutes through pine forests, misty mornings, and genuine
               human warmth. This is what Trạm CP12 feels like — before you even
               pack your bags.
@@ -278,13 +300,14 @@
               <span class="video-overlay" aria-hidden="true">
                 <span class="big-play"></span>
                 <span class="video-tag"
-                  ><span aria-hidden="true">⏱</span> 3 min &middot; Welcome Film
-                  by CP12 Team</span
+                  ><span aria-hidden="true">⏱</span> <span data-i18n="video.tag">3 min &middot; Welcome Film
+                  by CP12 Team</span></span
                 >
               </span>
             </button>
           </div>
         </section>
+
 
 
         <!-- Rooms -->
@@ -295,12 +318,12 @@
         >
           <div class="rooms-header">
             <div>
-              <div class="section-label section-label--left">Our Spaces</div>
-              <h2 class="section-heading" id="roomsHeading">
+              <div class="section-label section-label--left" data-i18n="rooms.label">Our Spaces</div>
+              <h2 class="section-heading" id="roomsHeading" data-i18n-html="rooms.heading">
                 A room for every<br><em>kind of traveler.</em>
               </h2>
             </div>
-            <p class="rooms-intro">
+            <p class="rooms-intro" data-i18n="rooms.intro">
               From intimate private rooms to our social dormitory — each space
               at Trạm CP12 is designed with intention. Natural materials, local
               craft, and exactly the kind of light that makes you want to stay
@@ -308,9 +331,10 @@
             </p>
           </div>
 
-          <!-- Rendered at runtime from #rooms-data JSON by cp12.js IIFE 0 -->
+          <!-- Rendered at runtime from #rooms-data JSON by cp12.js IIFE 1 -->
           <div id="rooms-grid" class="rooms-grid"></div>
         </section>
+
 
 
         <!-- Travel / Explore -->
@@ -325,10 +349,11 @@
               <div>
                 <div
                   class="section-label section-label--left section-label--gold"
+                  data-i18n="explore.label"
                 >
                   Explore Dalat
                 </div>
-                <h2 class="travel-heading" id="travelHeading">
+                <h2 class="travel-heading" id="travelHeading" data-i18n-html="explore.heading">
                   Trails, tastes &amp; <em>hidden gems.</em>
                 </h2>
               </div>
@@ -344,6 +369,7 @@
                     role="tab"
                     aria-selected="true"
                     data-filter="all"
+                    data-i18n="explore.filter.all"
                   >
                     All
                   </button>
@@ -354,7 +380,7 @@
                     aria-selected="false"
                     data-filter="running"
                   >
-                    <span aria-hidden="true">🏃</span> Running
+                    <span aria-hidden="true">🏃</span> <span data-i18n="explore.filter.running">Running</span>
                   </button>
                   <button
                     type="button"
@@ -363,7 +389,7 @@
                     aria-selected="false"
                     data-filter="food"
                   >
-                    <span aria-hidden="true">🍜</span> Food
+                    <span aria-hidden="true">🍜</span> <span data-i18n="explore.filter.food">Food</span>
                   </button>
                   <button
                     type="button"
@@ -372,7 +398,7 @@
                     aria-selected="false"
                     data-filter="nature"
                   >
-                    <span aria-hidden="true">⛺</span> Nature
+                    <span aria-hidden="true">⛺</span> <span data-i18n="explore.filter.nature">Nature</span>
                   </button>
                 </div>
               </div>
@@ -389,9 +415,9 @@
                 <div class="travel-card-img">
                   <div class="travel-card-img-bg ti1"></div>
                   <div class="runner-badge">
-                    <span aria-hidden="true">🏃</span> Runner's Pick
+                    <span aria-hidden="true">🏃</span> <span data-i18n="explore.runnersPick">Runner's Pick</span>
                   </div>
-                  <div class="diff-badge">Easy</div>
+                  <div class="diff-badge" data-i18n="explore.diff.easy">Easy</div>
                 </div>
                 <div class="travel-body">
                   <p class="travel-cat">Running &middot; Lakeside</p>
@@ -412,7 +438,7 @@
               <div class="travel-card" data-category="nature">
                 <div class="travel-card-img">
                   <div class="travel-card-img-bg ti2"></div>
-                  <div class="diff-badge">Easy</div>
+                  <div class="diff-badge" data-i18n="explore.diff.easy">Easy</div>
                 </div>
                 <div class="travel-body">
                   <p class="travel-cat">Nature &middot; Photography</p>
@@ -434,9 +460,9 @@
                 <div class="travel-card-img">
                   <div class="travel-card-img-bg ti3"></div>
                   <div class="runner-badge">
-                    <span aria-hidden="true">🏃</span> Runner's Pick
+                    <span aria-hidden="true">🏃</span> <span data-i18n="explore.runnersPick">Runner's Pick</span>
                   </div>
-                  <div class="diff-badge">Hard</div>
+                  <div class="diff-badge" data-i18n="explore.diff.hard">Hard</div>
                 </div>
                 <div class="travel-body">
                   <p class="travel-cat">Trail Running &middot; Mountain</p>
@@ -456,7 +482,7 @@
               <div class="travel-card" data-category="food">
                 <div class="travel-card-img">
                   <div class="travel-card-img-bg ti4"></div>
-                  <div class="diff-badge">Easy</div>
+                  <div class="diff-badge" data-i18n="explore.diff.easy">Easy</div>
                 </div>
                 <div class="travel-body">
                   <p class="travel-cat">Food &amp; Culture</p>
@@ -477,9 +503,9 @@
                 <div class="travel-card-img">
                   <div class="travel-card-img-bg ti5"></div>
                   <div class="runner-badge">
-                    <span aria-hidden="true">🏃</span> Runner's Pick
+                    <span aria-hidden="true">🏃</span> <span data-i18n="explore.runnersPick">Runner's Pick</span>
                   </div>
-                  <div class="diff-badge">Medium</div>
+                  <div class="diff-badge" data-i18n="explore.diff.medium">Medium</div>
                 </div>
                 <div class="travel-body">
                   <p class="travel-cat">Running &middot; Hills</p>
@@ -499,7 +525,7 @@
               <div class="travel-card" data-category="nature">
                 <div class="travel-card-img">
                   <div class="travel-card-img-bg ti6"></div>
-                  <div class="diff-badge">Easy–Med</div>
+                  <div class="diff-badge" data-i18n="explore.diff.easyMed">Easy–Med</div>
                 </div>
                 <div class="travel-body">
                   <p class="travel-cat">Culture &amp; Spirituality</p>
@@ -521,6 +547,7 @@
         </section>
 
 
+
         <!-- About -->
         <section id="about" class="sect-about" aria-labelledby="aboutHeading">
           <div class="about-section">
@@ -532,22 +559,22 @@
               ></div>
               <div class="about-img-accent">
                 <span class="big-num">1500m</span>
-                <span class="big-label">Above Sea Level</span>
+                <span class="big-label" data-i18n="about.accentLabel">Above Sea Level</span>
               </div>
             </div>
             <div class="about-content cp12-reveal">
-              <div class="section-label section-label--left" aria-hidden="true">
+              <div class="section-label section-label--left" aria-hidden="true" data-i18n="about.label">
                 About CP12
               </div>
-              <h2 class="about-heading" id="aboutHeading">
+              <h2 class="about-heading" id="aboutHeading" data-i18n-html="about.heading">
                 Not just a bed.<br>A <em>base camp.</em>
               </h2>
-              <p class="about-text">
+              <p class="about-text" data-i18n="about.p1">
                 Trạm CP12 was born from a simple frustration: too many Đà Lạt
                 stays felt like transactions. You'd arrive, sleep, leave — and
                 miss the actual city entirely.
               </p>
-              <p class="about-text">
+              <p class="about-text" data-i18n="about.p2">
                 We built something different. A place run by locals, designed
                 for connection, and obsessively curated for solo travelers who
                 want the real Đà Lạt — not the brochure version.
@@ -556,8 +583,8 @@
                 <div class="perk">
                   <div class="perk-icon" aria-hidden="true">🗺</div>
                   <div class="perk-text">
-                    <strong>Local expertise, freely shared</strong>
-                    <p>
+                    <strong data-i18n="about.perk1.title">Local expertise, freely shared</strong>
+                    <p data-i18n="about.perk1.desc">
                       Hand-drawn route maps, weekly community boards, and hosts
                       who actually run these trails.
                     </p>
@@ -566,8 +593,8 @@
                 <div class="perk">
                   <div class="perk-icon" aria-hidden="true">🏃</div>
                   <div class="perk-text">
-                    <strong>Built for runners</strong>
-                    <p>
+                    <strong data-i18n="about.perk2.title">Built for runners</strong>
+                    <p data-i18n="about.perk2.desc">
                       5:30am breakfast, gear drying area, recovery station with
                       electrolytes and local herbal teas.
                     </p>
@@ -576,8 +603,8 @@
                 <div class="perk">
                   <div class="perk-icon" aria-hidden="true">🤝</div>
                   <div class="perk-text">
-                    <strong>Solo-traveler focused</strong>
-                    <p>
+                    <strong data-i18n="about.perk3.title">Solo-traveler focused</strong>
+                    <p data-i18n="about.perk3.desc">
                       Weekly Trạm Nights, free morning walks Tue &amp; Fri, and
                       a dorm designed so friendships form naturally.
                     </p>
@@ -586,14 +613,15 @@
               </div>
               <div class="checkin-strip" aria-label="Check-in and check-out times">
                 <span aria-hidden="true">🕑</span>
-                Check-in from <strong>14:00</strong>
+                <span data-i18n="about.checkin">Check-in from</span> <strong>14:00</strong>
                 <span class="strip-divider" aria-hidden="true">&middot;</span>
-                Check-out by <strong>12:00</strong>
+                <span data-i18n="about.checkout">Check-out by</span> <strong>12:00</strong>
               </div>
-              <a href="#book" class="btn-primary">Book Your Stay &rarr;</a>
+              <a href="#book" class="btn-primary" data-i18n="about.bookBtn">Book Your Stay &rarr;</a>
             </div>
           </div>
         </section>
+
 
 
         <!-- Blog / Journal -->
@@ -604,13 +632,13 @@
         >
           <div class="blog-inner">
             <div class="blog-header">
-              <div class="section-label" aria-hidden="true">
+              <div class="section-label" aria-hidden="true" data-i18n="journal.label">
                 The CP12 Journal
               </div>
-              <h2 class="blog-heading" id="journalHeading">
+              <h2 class="blog-heading" id="journalHeading" data-i18n-html="journal.heading">
                 Stories from <em>the trail.</em>
               </h2>
-              <p class="blog-subtext">
+              <p class="blog-subtext" data-i18n="journal.subtext">
                 Local insights, runner guides, hidden spots, and honest travel
                 advice — straight from the CP12 team and the people who've
                 stayed with us.
@@ -626,17 +654,17 @@
                   <div class="room-img-bg bi1"></div>
                 </div>
                 <div class="blog-card-body">
-                  <p class="blog-card-cat">Running Guide</p>
-                  <h3 class="blog-card-title">
+                  <p class="blog-card-cat" data-i18n="journal.card1.cat">Running Guide</p>
+                  <h3 class="blog-card-title" data-i18n="journal.card1.title">
                     Dalat for Runners: Your Complete Trail Guide from Trạm CP12
                   </h3>
-                  <p class="blog-card-excerpt">
+                  <p class="blog-card-excerpt" data-i18n="journal.card1.excerpt">
                     Dalat is one of Southeast Asia's best-kept secrets for trail
                     runners. Sitting at 1,500m above sea level with cool
                     mountain air and pine-forested ridgelines.
                   </p>
                   <a href="#" class="blog-link">
-                    Read More
+                    <span data-i18n="journal.readMore">Read More</span>
                     <span class="sr-only">about Dalat trail running guide</span
                     >&rarr;
                   </a>
@@ -652,17 +680,17 @@
                   <div class="room-img-bg bi2"></div>
                 </div>
                 <div class="blog-card-body">
-                  <p class="blog-card-cat">Solo Travel</p>
-                  <h3 class="blog-card-title">
+                  <p class="blog-card-cat" data-i18n="journal.card2.cat">Solo Travel</p>
+                  <h3 class="blog-card-title" data-i18n="journal.card2.title">
                     How to Feel at Home at Trạm CP12
                   </h3>
-                  <p class="blog-card-excerpt">
+                  <p class="blog-card-excerpt" data-i18n="journal.card2.excerpt">
                     There's a particular kind of freedom in traveling alone. Our
                     dorm, morning walks, and weekly Trạm Nights are designed so
                     connections happen naturally.
                   </p>
                   <a href="#" class="blog-link">
-                    Read More
+                    <span data-i18n="journal.readMore">Read More</span>
                     <span class="sr-only">about solo travel at CP12</span>&rarr;
                   </a>
                 </div>
@@ -677,17 +705,17 @@
                   <div class="room-img-bg bi3"></div>
                 </div>
                 <div class="blog-card-body">
-                  <p class="blog-card-cat">Local Secrets</p>
-                  <h3 class="blog-card-title">
+                  <p class="blog-card-cat" data-i18n="journal.card3.cat">Local Secrets</p>
+                  <h3 class="blog-card-title" data-i18n="journal.card3.title">
                     Dalat's Hidden Gems: Beyond the Tourist Trail
                   </h3>
-                  <p class="blog-card-excerpt">
+                  <p class="blog-card-excerpt" data-i18n="journal.card3.excerpt">
                     Skip the brochures. Our team reveals hidden cafés,
                     backstreet food stalls, and underground arts you won't find
                     on TripAdvisor.
                   </p>
                   <a href="#" class="blog-link">
-                    Read More
+                    <span data-i18n="journal.readMore">Read More</span>
                     <span class="sr-only">about Đà Lạt hidden gems</span>&rarr;
                   </a>
                 </div>
@@ -699,6 +727,7 @@
         <!-- CTA -->
 
 
+
       </main>
       <!-- /#cp12-main -->
       <section
@@ -708,13 +737,13 @@
       >
         <div class="cta-bg-lines" aria-hidden="true"></div>
         <div class="cta-content">
-          <div class="section-label section-label--cta" aria-hidden="true">
+          <div class="section-label section-label--cta" aria-hidden="true" data-i18n="cta.label">
             Ready?
           </div>
-          <h2 class="cta-title" id="ctaHeading">
+          <h2 class="cta-title" id="ctaHeading" data-i18n-html="cta.title">
             The mountains are<br><em>waiting.</em>
           </h2>
-          <p class="cta-sub">
+          <p class="cta-sub" data-i18n="cta.sub">
             Whether you're chasing trails, chasing peace, or just chasing a
             really good cup of cà phê — Trạm CP12 is ready for you. From 180,000
             VND/night.
@@ -723,27 +752,27 @@
             <div class="booking-step">
               <span class="step-num" aria-hidden="true">1</span>
               <div class="step-text">
-                <strong>Message us</strong>
-                <p>Zalo, email, or phone — we reply within 2 hours</p>
+                <strong data-i18n="cta.step1.title">Message us</strong>
+                <p data-i18n="cta.step1.desc">Zalo, email, or phone — we reply within 2 hours</p>
               </div>
             </div>
             <div class="booking-step">
               <span class="step-num" aria-hidden="true">2</span>
               <div class="step-text">
-                <strong>Confirm your dates</strong>
-                <p>We hold your room with no deposit required</p>
+                <strong data-i18n="cta.step2.title">Confirm your dates</strong>
+                <p data-i18n="cta.step2.desc">We hold your room with no deposit required</p>
               </div>
             </div>
             <div class="booking-step">
               <span class="step-num" aria-hidden="true">3</span>
               <div class="step-text">
-                <strong>Arrive &amp; check in</strong>
-                <p>From 14:00 &middot; Check-out by 12:00</p>
+                <strong data-i18n="cta.step3.title">Arrive &amp; check in</strong>
+                <p data-i18n="cta.step3.desc">From 14:00 &middot; Check-out by 12:00</p>
               </div>
             </div>
           </div>
           <div class="cta-btns">
-            <a href="mailto:cp12tramdungchill@gmail.com" class="btn-primary"
+            <a href="mailto:cp12tramdungchill@gmail.com" class="btn-primary" data-i18n="cta.bookBtn"
               >Book a Room &rarr;</a
             >
             <a
@@ -751,14 +780,16 @@
               class="btn-ghost"
               target="_blank"
               rel="noopener noreferrer"
+              data-i18n="cta.zaloBtn"
               >Zalo</a
             >
             <a href="tel:+84765679228" class="btn-ghost"
-              ><span>Call Us</span></a
+              ><span data-i18n="cta.callBtn">Call Us</span></a
             >
           </div>
         </div>
       </section>
+
 
 
       <!-- Footer -->
@@ -767,7 +798,7 @@
           <!-- Brand column: logo · tagline · address · socials -->
           <div class="footer-brand">
             <a href="#home" class="footer-logo">Trạm <em>CP12</em></a>
-            <p class="footer-tagline">
+            <p class="footer-tagline" data-i18n="footer.tagline">
               A welcoming stop in the mist-wrapped mountains of Đà Lạt — where
               solo travelers find their people, runners find their trails, and
               everyone finds a home away from home.
@@ -907,7 +938,7 @@
 
           <!-- Rooms column -->
           <div class="footer-col">
-            <span class="footer-col-title">Rooms</span>
+            <span class="footer-col-title" data-i18n="footer.col.rooms">Rooms</span>
             <ul class="footer-links">
               <li><a href="#rooms">Phòng Trạm — Signature</a></li>
               <li><a href="#rooms">Góc Gió — Breeze Nook</a></li>
@@ -918,30 +949,31 @@
 
           <!-- Explore column -->
           <div class="footer-col">
-            <span class="footer-col-title">Explore</span>
+            <span class="footer-col-title" data-i18n="footer.col.explore">Explore</span>
             <ul class="footer-links">
-              <li><a href="#explore">Running Routes</a></li>
-              <li><a href="#explore">Food &amp; Markets</a></li>
-              <li><a href="#explore">Culture &amp; Nature</a></li>
+              <li><a href="#explore" data-i18n="footer.link.runningRoutes">Running Routes</a></li>
+              <li><a href="#explore" data-i18n="footer.link.foodMarkets">Food &amp; Markets</a></li>
+              <li><a href="#explore" data-i18n="footer.link.cultureNature">Culture &amp; Nature</a></li>
             </ul>
           </div>
 
           <!-- Quick Links column -->
           <div class="footer-col">
-            <span class="footer-col-title">Quick Links</span>
+            <span class="footer-col-title" data-i18n="footer.col.links">Quick Links</span>
             <ul class="footer-links">
               <li>
                 <a
                   href="https://maps.app.goo.gl/PCN6DtU5gCf45SzDA"
                   target="_blank"
                   rel="noopener noreferrer"
+                  data-i18n="footer.link.googleMaps"
                   >View on Google Maps</a
                 >
               </li>
-              <li><a href="#about">About CP12</a></li>
-              <li><a href="#about">About &amp; House Rules</a></li>
-              <li><a href="#journal">The Journal</a></li>
-              <li><a href="#book">Book a Stay</a></li>
+              <li><a href="#about" data-i18n="footer.link.aboutCP12">About CP12</a></li>
+              <li><a href="#about" data-i18n="footer.link.houseRules">About &amp; House Rules</a></li>
+              <li><a href="#journal" data-i18n="footer.link.journal">The Journal</a></li>
+              <li><a href="#book" data-i18n="footer.link.book">Book a Stay</a></li>
             </ul>
           </div>
         </div>
@@ -949,7 +981,7 @@
 
         <div class="footer-bottom">
           <span>© 2026 Trạm CP12 &middot; Đà Lạt, Việt Nam</span>
-          <span>Made with care in the Central Highlands</span>
+          <span data-i18n="footer.bottom.made">Made with care in the Central Highlands</span>
         </div>
       </footer>
 
@@ -1002,14 +1034,22 @@
         >
           <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4 12.5H9.5l4.25-5H9V8h6.5l-4.25 5H16v1.5z"/>
         </svg>
-        <span class="zalo-cta-label">Chat on Zalo</span>
+        <span class="zalo-cta-label" data-i18n="zalo.cta">Chat on Zalo</span>
       </a>
 
     </div>
     <!-- /#cp12-wrap -->
 
+    <script id="lang-vi-data" type="application/json">
+    {"skip.nav":"Chuyển đến nội dung","scroll.next":"Cuộn đến phần tiếp theo","nav.rooms":"Phòng","nav.explore":"Khám Phá","nav.about":"Giới Thiệu","nav.journal":"Nhật Ký","nav.book":"Đặt Phòng","nav.openMenu":"Mở menu điều hướng","nav.closeMenu":"Đóng menu điều hướng","nav.lang.label":"Switch to English","hero.tag":"Đà Lạt · Tây Nguyên · Việt Nam","hero.title":"Nơi<br>lữ hành<em>tìm thấy nhà.<\/em>","hero.subtitle":"Điểm dừng chân thân thiện giữa núi rừng mờ sương Đà Lạt. Dành cho người du lịch solo, vận động viên trail và những ai tin rằng câu chuyện du lịch hay nhất bắt đầu từ nơi ngủ nghỉ đúng chỗ.","hero.exploreRooms":"Xem Phòng","hero.trailGuide":"Cẩm Nang Đường Mòn →","hero.watchVideo":"Xem Video Chào Mừng","hero.stat.roomTypes":"Loại Phòng","hero.stat.localRoutes":"Đường Mòn","hero.stat.altitude":"Độ Cao","hero.scroll":"Cuộn","video.label":"Chào Mừng đến CP12","video.title":"Cảm nhận trước <em>khi bạn đến.<\/em>","video.desc":"Ba phút qua những rừng thông, buổi sáng mờ sương và sự ấm áp chân thành. Đây chính là cảm giác của Trạm CP12 — trước khi bạn kịp chuẩn bị hành lý.","video.tag":"3 phút · Phim Chào Mừng bởi Đội CP12","rooms.label":"Không Gian Của Chúng Tôi","rooms.heading":"Một phòng cho mọi<br><em>loại du khách.<\/em>","rooms.intro":"Từ phòng riêng ấm cúng đến phòng dorm sôi động — mỗi không gian tại Trạm CP12 đều được thiết kế có chủ đích. Vật liệu tự nhiên, thủ công địa phương và ánh sáng khiến bạn muốn ở lại thêm một đêm nữa.","rooms.bookLink":"Đặt phòng này","rooms.featured":"Nổi Bật","rooms.priceLabel":"VND / đêm","rooms.empty":"Thông tin phòng sẽ sớm cập nhật.","explore.label":"Khám Phá Đà Lạt","explore.heading":"Đường mòn, ẩm thực & <em>bí ẩn ẩn náu.<\/em>","explore.filter.all":"Tất Cả","explore.filter.running":"Chạy Bộ","explore.filter.food":"Ẩm Thực","explore.filter.nature":"Thiên Nhiên","explore.runnersPick":"Lựa Chọn Runner","explore.diff.easy":"Dễ","explore.diff.medium":"Trung Bình","explore.diff.hard":"Khó","explore.diff.easyMed":"Dễ–TB","about.label":"Về CP12","about.accentLabel":"Trên Mực Nước Biển","about.heading":"Không chỉ là chỗ ngủ.<br>Mà là <em>trạm xuất phát.<\/em>","about.p1":"Trạm CP12 ra đời từ một sự thất vọng đơn giản: quá nhiều chuyến ở Đà Lạt chỉ là giao dịch. Bạn đến, ngủ, rời đi — và bỏ lỡ hoàn toàn thành phố thực sự.","about.p2":"Chúng tôi xây dựng điều gì đó khác biệt. Một nơi do người địa phương vận hành, được thiết kế cho sự kết nối, và được chọn lọc kỹ lưỡng cho du khách solo muốn trải nghiệm Đà Lạt thực sự — không phải phiên bản trên brochure.","about.perk1.title":"Kiến thức địa phương, chia sẻ miễn phí","about.perk1.desc":"Bản đồ đường mòn vẽ tay, bảng thông tin cộng đồng hàng tuần và chủ nhà thực sự chạy những đường mòn đó.","about.perk2.title":"Xây dựng cho runners","about.perk2.desc":"Bữa sáng lúc 5:30, khu sấy đồ, trạm phục hồi với điện giải và trà thảo mộc địa phương.","about.perk3.title":"Tập trung cho du khách solo","about.perk3.desc":"Trạm Nights hàng tuần, đi bộ buổi sáng miễn phí thứ Ba & Sáu, và phòng dorm thiết kế để tình bạn hình thành tự nhiên.","about.checkin":"Nhận phòng từ","about.checkout":"Trả phòng trước","about.bookBtn":"Đặt Phòng Của Bạn →","journal.label":"Nhật Ký CP12","journal.heading":"Những câu chuyện <em>từ đường mòn.<\/em>","journal.subtext":"Hiểu biết địa phương, hướng dẫn chạy bộ, địa điểm ẩn và lời khuyên du lịch thực tế — thẳng từ đội CP12 và những người đã ở cùng chúng tôi.","journal.card1.cat":"Hướng Dẫn Chạy Bộ","journal.card1.title":"Đà Lạt cho Runners: Hướng Dẫn Đường Mòn Hoàn Chỉnh từ Trạm CP12","journal.card1.excerpt":"Đà Lạt là một trong những bí mật được giữ kỹ nhất ở Đông Nam Á dành cho trail runners. Tọa lạc ở độ cao 1.500m với không khí núi mát mẻ và những rừng thông trên sườn núi.","journal.card2.cat":"Du Lịch Solo","journal.card2.title":"Cách Cảm Thấy Như Ở Nhà tại Trạm CP12","journal.card2.excerpt":"Có một loại tự do đặc biệt khi đi du lịch một mình. Phòng dorm, những buổi đi bộ sáng và Trạm Nights hàng tuần của chúng tôi được thiết kế để các mối kết nối hình thành tự nhiên.","journal.card3.cat":"Bí Mật Địa Phương","journal.card3.title":"Những Viên Ngọc Ẩn của Đà Lạt: Vượt Ra Ngoài Đường Mòn Du Lịch","journal.card3.excerpt":"Bỏ qua các brochure. Đội của chúng tôi tiết lộ những quán cà phê ẩn, hàng ăn vỉa hè và nghệ thuật ngầm mà bạn sẽ không tìm thấy trên TripAdvisor.","journal.readMore":"Đọc Thêm","cta.label":"Sẵn Sàng?","cta.title":"Núi non đang<br><em>đợi bạn.<\/em>","cta.sub":"Dù bạn đang theo đuổi đường mòn, tìm kiếm bình yên, hay chỉ muốn một tách cà phê thật ngon — Trạm CP12 luôn sẵn sàng đón bạn. Từ 180.000 VND/đêm.","cta.step1.title":"Nhắn tin cho chúng tôi","cta.step1.desc":"Zalo, email hay điện thoại — chúng tôi phản hồi trong 2 tiếng","cta.step2.title":"Xác nhận ngày của bạn","cta.step2.desc":"Chúng tôi giữ phòng không yêu cầu đặt cọc","cta.step3.title":"Đến & nhận phòng","cta.step3.desc":"Từ 14:00 · Trả phòng trước 12:00","cta.bookBtn":"Đặt Phòng →","cta.zaloBtn":"Zalo","cta.callBtn":"Gọi Chúng Tôi","footer.tagline":"Điểm dừng chân thân thiện giữa núi rừng mờ sương Đà Lạt — nơi du khách solo tìm được người bạn đồng hành, runners tìm được đường mòn và mọi người tìm thấy mái nhà thứ hai.","footer.col.rooms":"Phòng","footer.col.explore":"Khám Phá","footer.col.links":"Liên Kết Nhanh","footer.link.runningRoutes":"Đường Mòn Chạy Bộ","footer.link.foodMarkets":"Ẩm Thực & Chợ","footer.link.cultureNature":"Văn Hóa & Thiên Nhiên","footer.link.googleMaps":"Xem trên Google Maps","footer.link.aboutCP12":"Về CP12","footer.link.houseRules":"Giới Thiệu & Nội Quy","footer.link.journal":"Nhật Ký","footer.link.book":"Đặt Phòng","footer.bottom.made":"Được tạo ra với tình yêu ở Tây Nguyên","zalo.cta":"Chat trên Zalo"}
+    </script>
+
+    <script id="lang-en-data" type="application/json">
+    {"skip.nav":"Skip to content","scroll.next":"Scroll to next section","nav.rooms":"Rooms","nav.explore":"Explore","nav.about":"About","nav.journal":"Journal","nav.book":"Book a Stay","nav.openMenu":"Open navigation menu","nav.closeMenu":"Close navigation menu","nav.lang.label":"Switch to Vietnamese","hero.tag":"Đà Lạt · Central Highlands · Vietnam","hero.title":"Where<br>travelers<em>find home.<\/em>","hero.subtitle":"A welcoming stop in the mist-wrapped mountains of Dalat. For solo wanderers, trail runners, and anyone who believes the best travel stories start with the right place to sleep.","hero.exploreRooms":"Explore Rooms","hero.trailGuide":"Trail Guide →","hero.watchVideo":"Watch Welcome Video","hero.stat.roomTypes":"Room Types","hero.stat.localRoutes":"Local Routes","hero.stat.altitude":"Altitude","hero.scroll":"Scroll","video.label":"Welcome to CP12","video.title":"Feel it before <em>you arrive.<\/em>","video.desc":"Three minutes through pine forests, misty mornings, and genuine human warmth. This is what Trạm CP12 feels like — before you even pack your bags.","video.tag":"3 min · Welcome Film by CP12 Team","rooms.label":"Our Spaces","rooms.heading":"A room for every<br><em>kind of traveler.<\/em>","rooms.intro":"From intimate private rooms to our social dormitory — each space at Trạm CP12 is designed with intention. Natural materials, local craft, and exactly the kind of light that makes you want to stay another night.","rooms.bookLink":"Book this room","rooms.featured":"Featured","rooms.priceLabel":"VND / night","rooms.empty":"Room details coming soon.","explore.label":"Explore Dalat","explore.heading":"Trails, tastes & <em>hidden gems.<\/em>","explore.filter.all":"All","explore.filter.running":"Running","explore.filter.food":"Food","explore.filter.nature":"Nature","explore.runnersPick":"Runner's Pick","explore.diff.easy":"Easy","explore.diff.medium":"Medium","explore.diff.hard":"Hard","explore.diff.easyMed":"Easy–Med","about.label":"About CP12","about.accentLabel":"Above Sea Level","about.heading":"Not just a bed.<br>A <em>base camp.<\/em>","about.p1":"Trạm CP12 was born from a simple frustration: too many Đà Lạt stays felt like transactions. You'd arrive, sleep, leave — and miss the actual city entirely.","about.p2":"We built something different. A place run by locals, designed for connection, and obsessively curated for solo travelers who want the real Đà Lạt — not the brochure version.","about.perk1.title":"Local expertise, freely shared","about.perk1.desc":"Hand-drawn route maps, weekly community boards, and hosts who actually run these trails.","about.perk2.title":"Built for runners","about.perk2.desc":"5:30am breakfast, gear drying area, recovery station with electrolytes and local herbal teas.","about.perk3.title":"Solo-traveler focused","about.perk3.desc":"Weekly Trạm Nights, free morning walks Tue & Fri, and a dorm designed so friendships form naturally.","about.checkin":"Check-in from","about.checkout":"Check-out by","about.bookBtn":"Book Your Stay →","journal.label":"The CP12 Journal","journal.heading":"Stories from <em>the trail.<\/em>","journal.subtext":"Local insights, runner guides, hidden spots, and honest travel advice — straight from the CP12 team and the people who've stayed with us.","journal.card1.cat":"Running Guide","journal.card1.title":"Dalat for Runners: Your Complete Trail Guide from Trạm CP12","journal.card1.excerpt":"Dalat is one of Southeast Asia's best-kept secrets for trail runners. Sitting at 1,500m above sea level with cool mountain air and pine-forested ridgelines.","journal.card2.cat":"Solo Travel","journal.card2.title":"How to Feel at Home at Trạm CP12","journal.card2.excerpt":"There's a particular kind of freedom in traveling alone. Our dorm, morning walks, and weekly Trạm Nights are designed so connections happen naturally.","journal.card3.cat":"Local Secrets","journal.card3.title":"Dalat's Hidden Gems: Beyond the Tourist Trail","journal.card3.excerpt":"Skip the brochures. Our team reveals hidden cafés, backstreet food stalls, and underground arts you won't find on TripAdvisor.","journal.readMore":"Read More","cta.label":"Ready?","cta.title":"The mountains are<br><em>waiting.<\/em>","cta.sub":"Whether you're chasing trails, chasing peace, or just chasing a really good cup of cà phê — Trạm CP12 is ready for you. From 180,000 VND/night.","cta.step1.title":"Message us","cta.step1.desc":"Zalo, email, or phone — we reply within 2 hours","cta.step2.title":"Confirm your dates","cta.step2.desc":"We hold your room with no deposit required","cta.step3.title":"Arrive & check in","cta.step3.desc":"From 14:00 · Check-out by 12:00","cta.bookBtn":"Book a Room →","cta.zaloBtn":"Zalo","cta.callBtn":"Call Us","footer.tagline":"A welcoming stop in the mist-wrapped mountains of Đà Lạt — where solo travelers find their people, runners find their trails, and everyone finds a home away from home.","footer.col.rooms":"Rooms","footer.col.explore":"Explore","footer.col.links":"Quick Links","footer.link.runningRoutes":"Running Routes","footer.link.foodMarkets":"Food & Markets","footer.link.cultureNature":"Culture & Nature","footer.link.googleMaps":"View on Google Maps","footer.link.aboutCP12":"About CP12","footer.link.houseRules":"About & House Rules","footer.link.journal":"The Journal","footer.link.book":"Book a Stay","footer.bottom.made":"Made with care in the Central Highlands","zalo.cta":"Chat on Zalo"}
+    </script>
+
     <script id="rooms-data" type="application/json">
-    [{"bgClass":"r1","name":"Phòng Trạm — The Signature Room","price":"580K","featured":true,"meta":[{"icon":"👤","text":"2 guests"},{"icon":"📐","text":"22 m²"},{"icon":"⛺","text":"Balcony"}],"desc":"Our flagship room — natural rattan furniture, soft linen bedding, and a private balcony overlooking lush green gardens. Wake up to birdsong, not traffic.","amenities":["Private Balcony","Air Con","Breakfast","WiFi"]},{"bgClass":"r2","name":"Góc Gió — The Breeze Nook","price":"450K","featured":false,"meta":[{"icon":"👤","text":"1 guest"},{"icon":"📐","text":"16 m²"},{"icon":"🌾","text":"Fan + AC"}],"desc":"A cozy private room on the breezy upper floor. Minimalist Vietnamese decor with hand-painted wall murals by local artists. Ideal for writers and dreamers.","amenities":["Mountain View","Reading Nook","Herb Tea Kit","WiFi"]},{"bgClass":"r3","name":"Tổ Chim — The Birdsong Suite","price":"720K","featured":true,"meta":[{"icon":"👤","text":"2 guests"},{"icon":"📐","text":"30 m²"},{"icon":"☕","text":"Espresso"}],"desc":"Our most spacious room with a loft-style sleeping area. Curated local art prints, a proper work desk. Great for longer stays or digital nomads.","amenities":["Loft Bed","Work Desk","Smart TV","Breakfast"]},{"bgClass":"r4","name":"Dorm Trạm — Social Dormitory","price":"180K","featured":false,"meta":[{"icon":"👥","text":"4-bed dorm"},{"icon":"📐","text":"40 m²"},{"icon":"🔒","text":"Lockers"}],"desc":"Meet fellow travelers in our friendly 4-bed dorm. Privacy pods, individual reading lights, USB charging. The social heart of Trạm CP12 — friendships start here.","amenities":["Privacy Pods","USB Charging","Common Room","WiFi"]}]
+    [{"bgClass":"r1","name":"Phòng Trạm — The Signature Room","price":"580K","featured":true,"meta":[{"icon":"👤","text":"2 guests"},{"icon":"📐","text":"22 m²"},{"icon":"⛺","text":"Balcony"}],"meta_vi":[{"icon":"👤","text":"2 khách"},{"icon":"📐","text":"22 m²"},{"icon":"⛺","text":"Ban Công"}],"desc":"Our flagship room — natural rattan furniture, soft linen bedding, and a private balcony overlooking lush green gardens. Wake up to birdsong, not traffic.","desc_vi":"Phòng flagship của chúng tôi — nội thất mây tự nhiên, ga trải giường linen mềm mại và ban công riêng nhìn ra khu vườn xanh tươi. Thức dậy cùng tiếng chim hót, không phải tiếng xe cộ.","amenities":["Private Balcony","Air Con","Breakfast","WiFi"],"amenities_vi":["Ban Công Riêng","Điều Hòa","Bữa Sáng","WiFi"]},{"bgClass":"r2","name":"Góc Gió — The Breeze Nook","price":"450K","featured":false,"meta":[{"icon":"👤","text":"1 guest"},{"icon":"📐","text":"16 m²"},{"icon":"🌾","text":"Fan + AC"}],"meta_vi":[{"icon":"👤","text":"1 khách"},{"icon":"📐","text":"16 m²"},{"icon":"🌾","text":"Quạt + ĐH"}],"desc":"A cozy private room on the breezy upper floor. Minimalist Vietnamese decor with hand-painted wall murals by local artists. Ideal for writers and dreamers.","desc_vi":"Phòng riêng ấm cúng trên tầng thượng thoáng mát. Trang trí tối giản phong cách Việt Nam với tranh tường do nghệ sĩ địa phương vẽ tay. Lý tưởng cho những người viết lách và mơ mộng.","amenities":["Mountain View","Reading Nook","Herb Tea Kit","WiFi"],"amenities_vi":["View Núi","Góc Đọc Sách","Bộ Trà Thảo Mộc","WiFi"]},{"bgClass":"r3","name":"Tổ Chim — The Birdsong Suite","price":"720K","featured":true,"meta":[{"icon":"👤","text":"2 guests"},{"icon":"📐","text":"30 m²"},{"icon":"☕","text":"Espresso"}],"meta_vi":[{"icon":"👤","text":"2 khách"},{"icon":"📐","text":"30 m²"},{"icon":"☕","text":"Espresso"}],"desc":"Our most spacious room with a loft-style sleeping area. Curated local art prints, a proper work desk. Great for longer stays or digital nomads.","desc_vi":"Phòng rộng nhất của chúng tôi với khu vực ngủ kiểu gác xép. Tranh nghệ thuật địa phương được chọn lọc kỹ lưỡng, bàn làm việc tiêu chuẩn. Tuyệt vời cho lưu trú dài hạn hoặc digital nomad.","amenities":["Loft Bed","Work Desk","Smart TV","Breakfast"],"amenities_vi":["Giường Gác Lửng","Bàn Làm Việc","Smart TV","Bữa Sáng"]},{"bgClass":"r4","name":"Dorm Trạm — Social Dormitory","price":"180K","featured":false,"meta":[{"icon":"👥","text":"4-bed dorm"},{"icon":"📐","text":"40 m²"},{"icon":"🔒","text":"Lockers"}],"meta_vi":[{"icon":"👥","text":"Dorm 4 giường"},{"icon":"📐","text":"40 m²"},{"icon":"🔒","text":"Tủ Khóa"}],"desc":"Meet fellow travelers in our friendly 4-bed dorm. Privacy pods, individual reading lights, USB charging. The social heart of Trạm CP12 — friendships start here.","desc_vi":"Gặp gỡ du khách đồng hành trong phòng dorm 4 giường thân thiện. Buồng riêng tư, đèn đọc sách cá nhân, sạc USB. Trái tim xã hội của Trạm CP12 — tình bạn bắt đầu từ đây.","amenities":["Privacy Pods","USB Charging","Common Room","WiFi"],"amenities_vi":["Buồng Riêng Tư","Sạc USB","Phòng Chung","WiFi"]}]
     </script>
 
     <!-- LocalBusiness structured data (schema.org) -->

@@ -1,4 +1,88 @@
-/* ── 0. Rooms renderer ───────────────────────────────────── */
+/* ── 0. Language Switcher ─────────────────────────────────── */
+(function () {
+  var STORAGE_KEY = "cp12-lang";
+  var DEFAULT_LANG = "en";
+
+  /* ── Parse string data injected by build.js ── */
+  var stringsMap = {};
+  try {
+    var viEl = document.getElementById("lang-vi-data");
+    var enEl = document.getElementById("lang-en-data");
+    if (viEl) stringsMap["vi"] = JSON.parse(viEl.textContent);
+    if (enEl) stringsMap["en"] = JSON.parse(enEl.textContent);
+  } catch (e) {
+    console.warn("[CP12] Language data parse error:", e);
+  }
+
+  /* ── Apply a language to the page ── */
+  function applyLang(lang) {
+    var strings = stringsMap[lang];
+    if (!strings) return;
+
+    /* data-i18n: replace textContent (no HTML child elements) */
+    var textEls = document.querySelectorAll("[data-i18n]");
+    for (var i = 0; i < textEls.length; i++) {
+      var key = textEls[i].getAttribute("data-i18n");
+      if (strings[key] !== undefined) textEls[i].textContent = strings[key];
+    }
+
+    /* data-i18n-html: replace innerHTML (headings with <br>/<em>) */
+    var htmlEls = document.querySelectorAll("[data-i18n-html]");
+    for (var j = 0; j < htmlEls.length; j++) {
+      var hkey = htmlEls[j].getAttribute("data-i18n-html");
+      if (strings[hkey] !== undefined) htmlEls[j].innerHTML = strings[hkey];
+    }
+
+    /* Update <html lang="…"> */
+    document.documentElement.lang = lang;
+
+    /* Update lang toggle button state */
+    var btn = document.getElementById("cp12-lang-btn");
+    if (btn) {
+      var isEn = lang === "en";
+      btn.setAttribute("aria-pressed", isEn ? "true" : "false");
+      btn.setAttribute(
+        "aria-label",
+        strings["nav.lang.label"] || (isEn ? "Switch to Vietnamese" : "Switch to English"),
+      );
+      var activeEl = btn.querySelector(".lang-active");
+      if (activeEl) activeEl.textContent = lang.toUpperCase();
+    }
+
+    /* Re-render room cards with the new language */
+    if (window.cp12RenderRooms) window.cp12RenderRooms(lang);
+
+    /* Persist preference */
+    try { localStorage.setItem(STORAGE_KEY, lang); } catch (e) {}
+
+    /* Expose globally for other IIFEs */
+    window.cp12Lang = lang;
+  }
+
+  /* ── Expose switch API (called by lang button and external code) ── */
+  window.cp12SwitchLang = function (lang) {
+    applyLang(lang);
+  };
+
+  /* ── Apply initial language + remove FOUC guard class ── */
+  var initialLang = (function () {
+    try { return localStorage.getItem(STORAGE_KEY) || DEFAULT_LANG; } catch (e) { return DEFAULT_LANG; }
+  }());
+  window.cp12Lang = initialLang;
+  applyLang(initialLang);
+  document.documentElement.classList.remove("i18n-loading");
+
+  /* ── Wire lang toggle button click ── */
+  var btn = document.getElementById("cp12-lang-btn");
+  if (btn) {
+    btn.addEventListener("click", function () {
+      applyLang(window.cp12Lang === "en" ? "vi" : "en");
+    });
+  }
+})();
+
+
+/* ── 1. Rooms renderer ───────────────────────────────────── */
 (function () {
   var dataEl = document.getElementById("rooms-data");
   if (!dataEl) return;
@@ -11,10 +95,6 @@
   }
   var grid = document.getElementById("rooms-grid");
   if (!grid || !Array.isArray(rooms)) return;
-  if (rooms.length === 0) {
-    grid.innerHTML = '<p class="rooms-empty">Room details coming soon.</p>';
-    return;
-  }
 
   function escHtml(str) {
     return String(str)
@@ -25,36 +105,61 @@
       .replace(/'/g, "&#39;");
   }
 
-  var html = rooms.map(function (r) {
-    var featuredBadge = r.featured
-      ? '<span class="featured-badge"><span class="sr-only">Featured room: </span><span aria-hidden="true">⭐</span> Featured</span>'
-      : "";
-    var pills = (r.amenities || []).map(function (a) {
-      return '<span class="pill">' + escHtml(a) + "</span>";
-    }).join("\n                  ");
-    var metaItems = (r.meta || []).map(function (m) {
-      return '<span><span aria-hidden="true">' + escHtml(m.icon) + "</span> " + escHtml(m.text) + "</span>";
-    }).join("\n                  ");
+  function renderRooms(lang) {
+    if (rooms.length === 0) {
+      var emptyMsg = (lang === "vi") ? "Thông tin phòng sẽ sớm cập nhật." : "Room details coming soon.";
+      grid.innerHTML = '<p class="rooms-empty">' + emptyMsg + "</p>";
+      return;
+    }
 
-    return (
-      '<div class="room-card">' +
-      '<div class="room-img">' +
-      '<div class="room-img-bg ' + escHtml(r.bgClass) + '"><div class="room-img-pattern"></div></div>' +
-      '<div class="room-price-tag"><span class="price-vnd">' + escHtml(r.price) + '</span><span class="price-label">VND / night</span></div>' +
-      featuredBadge +
-      "</div>" +
-      '<div class="room-body">' +
-      '<h3 class="room-name">' + escHtml(r.name) + "</h3>" +
-      '<div class="room-meta">' + metaItems + "</div>" +
-      '<p class="room-desc">' + escHtml(r.desc) + "</p>" +
-      '<div class="amenity-pills">' + pills + "</div>" +
-      '<a href="#book" class="room-link">Book this room</a>' +
-      "</div>" +
-      "</div>"
-    );
-  }).join("\n");
+    var isVi = lang === "vi";
+    var bookLinkText = isVi ? "Đặt phòng này" : "Book this room";
+    var featuredText = isVi ? "Nổi Bật" : "Featured";
+    var priceLabelText = isVi ? "VND / đêm" : "VND / night";
 
-  grid.innerHTML = html;
+    var html = rooms.map(function (r) {
+      var featuredBadge = r.featured
+        ? '<span class="featured-badge"><span class="sr-only">Featured room: </span><span aria-hidden="true">⭐</span> ' + featuredText + "</span>"
+        : "";
+
+      var amenities = (isVi && r.amenities_vi) ? r.amenities_vi : (r.amenities || []);
+      var pills = amenities.map(function (a) {
+        return '<span class="pill">' + escHtml(a) + "</span>";
+      }).join("\n                  ");
+
+      var metaList = (isVi && r.meta_vi) ? r.meta_vi : (r.meta || []);
+      var metaItems = metaList.map(function (m) {
+        return '<span><span aria-hidden="true">' + escHtml(m.icon) + "</span> " + escHtml(m.text) + "</span>";
+      }).join("\n                  ");
+
+      var desc = (isVi && r.desc_vi) ? r.desc_vi : r.desc;
+
+      return (
+        '<div class="room-card">' +
+        '<div class="room-img">' +
+        '<div class="room-img-bg ' + escHtml(r.bgClass) + '"><div class="room-img-pattern"></div></div>' +
+        '<div class="room-price-tag"><span class="price-vnd">' + escHtml(r.price) + '</span><span class="price-label">' + priceLabelText + "</span></div>" +
+        featuredBadge +
+        "</div>" +
+        '<div class="room-body">' +
+        '<h3 class="room-name">' + escHtml(r.name) + "</h3>" +
+        '<div class="room-meta">' + metaItems + "</div>" +
+        '<p class="room-desc">' + escHtml(desc) + "</p>" +
+        '<div class="amenity-pills">' + pills + "</div>" +
+        '<a href="#book" class="room-link">' + bookLinkText + "</a>" +
+        "</div>" +
+        "</div>"
+      );
+    }).join("\n");
+
+    grid.innerHTML = html;
+  }
+
+  /* Expose for lang-switcher (IIFE 0) to call on language change */
+  window.cp12RenderRooms = renderRooms;
+
+  /* Initial render using language set by IIFE 0 (lang-switcher runs first) */
+  renderRooms(window.cp12Lang || "en");
 })();
 
 

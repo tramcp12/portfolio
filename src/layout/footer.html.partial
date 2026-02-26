@@ -5,7 +5,7 @@
           <!-- Brand column: logo · tagline · address · socials -->
           <div class="footer-brand">
             <a href="#home" class="footer-logo">Trạm <em>CP12</em></a>
-            <p class="footer-tagline">
+            <p class="footer-tagline" data-i18n="footer.tagline">
               A welcoming stop in the mist-wrapped mountains of Đà Lạt — where
               solo travelers find their people, runners find their trails, and
               everyone finds a home away from home.
@@ -145,7 +145,7 @@
 
           <!-- Rooms column -->
           <div class="footer-col">
-            <span class="footer-col-title">Rooms</span>
+            <span class="footer-col-title" data-i18n="footer.col.rooms">Rooms</span>
             <ul class="footer-links">
               <li><a href="#rooms">Phòng Trạm — Signature</a></li>
               <li><a href="#rooms">Góc Gió — Breeze Nook</a></li>
@@ -156,30 +156,31 @@
 
           <!-- Explore column -->
           <div class="footer-col">
-            <span class="footer-col-title">Explore</span>
+            <span class="footer-col-title" data-i18n="footer.col.explore">Explore</span>
             <ul class="footer-links">
-              <li><a href="#explore">Running Routes</a></li>
-              <li><a href="#explore">Food &amp; Markets</a></li>
-              <li><a href="#explore">Culture &amp; Nature</a></li>
+              <li><a href="#explore" data-i18n="footer.link.runningRoutes">Running Routes</a></li>
+              <li><a href="#explore" data-i18n="footer.link.foodMarkets">Food &amp; Markets</a></li>
+              <li><a href="#explore" data-i18n="footer.link.cultureNature">Culture &amp; Nature</a></li>
             </ul>
           </div>
 
           <!-- Quick Links column -->
           <div class="footer-col">
-            <span class="footer-col-title">Quick Links</span>
+            <span class="footer-col-title" data-i18n="footer.col.links">Quick Links</span>
             <ul class="footer-links">
               <li>
                 <a
                   href="https://maps.app.goo.gl/PCN6DtU5gCf45SzDA"
                   target="_blank"
                   rel="noopener noreferrer"
+                  data-i18n="footer.link.googleMaps"
                   >View on Google Maps</a
                 >
               </li>
-              <li><a href="#about">About CP12</a></li>
-              <li><a href="#about">About &amp; House Rules</a></li>
-              <li><a href="#journal">The Journal</a></li>
-              <li><a href="#book">Book a Stay</a></li>
+              <li><a href="#about" data-i18n="footer.link.aboutCP12">About CP12</a></li>
+              <li><a href="#about" data-i18n="footer.link.houseRules">About &amp; House Rules</a></li>
+              <li><a href="#journal" data-i18n="footer.link.journal">The Journal</a></li>
+              <li><a href="#book" data-i18n="footer.link.book">Book a Stay</a></li>
             </ul>
           </div>
         </div>
@@ -187,6 +188,6 @@
 
         <div class="footer-bottom">
           <span>© 2026 Trạm CP12 &middot; Đà Lạt, Việt Nam</span>
-          <span>Made with care in the Central Highlands</span>
+          <span data-i18n="footer.bottom.made">Made with care in the Central Highlands</span>
         </div>
       </footer>

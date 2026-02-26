@@ -57,3 +57,11 @@
 #cp12-wrap .nav-mobile-cta {
   color: var(--gold);
 }
+
+/* ── i18n: FOUC prevention ──────────────────────────────────
+ * Elements with data-i18n are hidden until lang-switcher
+ * (IIFE 0) applies translations and removes i18n-loading.  */
+html.i18n-loading [data-i18n],
+html.i18n-loading [data-i18n-html] {
+  opacity: 0;
+}

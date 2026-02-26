@@ -11,10 +11,11 @@
               <div>
                 <div
                   class="section-label section-label--left section-label--gold"
+                  data-i18n="explore.label"
                 >
                   Explore Dalat
                 </div>
-                <h2 class="travel-heading" id="travelHeading">
+                <h2 class="travel-heading" id="travelHeading" data-i18n-html="explore.heading">
                   Trails, tastes &amp; <em>hidden gems.</em>
                 </h2>
               </div>
@@ -30,6 +31,7 @@
                     role="tab"
                     aria-selected="true"
                     data-filter="all"
+                    data-i18n="explore.filter.all"
                   >
                     All
                   </button>
@@ -40,7 +42,7 @@
                     aria-selected="false"
                     data-filter="running"
                   >
-                    <span aria-hidden="true">🏃</span> Running
+                    <span aria-hidden="true">🏃</span> <span data-i18n="explore.filter.running">Running</span>
                   </button>
                   <button
                     type="button"
@@ -49,7 +51,7 @@
                     aria-selected="false"
                     data-filter="food"
                   >
-                    <span aria-hidden="true">🍜</span> Food
+                    <span aria-hidden="true">🍜</span> <span data-i18n="explore.filter.food">Food</span>
                   </button>
                   <button
                     type="button"
@@ -58,7 +60,7 @@
                     aria-selected="false"
                     data-filter="nature"
                   >
-                    <span aria-hidden="true">⛺</span> Nature
+                    <span aria-hidden="true">⛺</span> <span data-i18n="explore.filter.nature">Nature</span>
                   </button>
                 </div>
               </div>
@@ -75,9 +77,9 @@
                 <div class="travel-card-img">
                   <div class="travel-card-img-bg ti1"></div>
                   <div class="runner-badge">
-                    <span aria-hidden="true">🏃</span> Runner's Pick
+                    <span aria-hidden="true">🏃</span> <span data-i18n="explore.runnersPick">Runner's Pick</span>
                   </div>
-                  <div class="diff-badge">Easy</div>
+                  <div class="diff-badge" data-i18n="explore.diff.easy">Easy</div>
                 </div>
                 <div class="travel-body">
                   <p class="travel-cat">Running &middot; Lakeside</p>
@@ -98,7 +100,7 @@
               <div class="travel-card" data-category="nature">
                 <div class="travel-card-img">
                   <div class="travel-card-img-bg ti2"></div>
-                  <div class="diff-badge">Easy</div>
+                  <div class="diff-badge" data-i18n="explore.diff.easy">Easy</div>
                 </div>
                 <div class="travel-body">
                   <p class="travel-cat">Nature &middot; Photography</p>
@@ -120,9 +122,9 @@
                 <div class="travel-card-img">
                   <div class="travel-card-img-bg ti3"></div>
                   <div class="runner-badge">
-                    <span aria-hidden="true">🏃</span> Runner's Pick
+                    <span aria-hidden="true">🏃</span> <span data-i18n="explore.runnersPick">Runner's Pick</span>
                   </div>
-                  <div class="diff-badge">Hard</div>
+                  <div class="diff-badge" data-i18n="explore.diff.hard">Hard</div>
                 </div>
                 <div class="travel-body">
                   <p class="travel-cat">Trail Running &middot; Mountain</p>
@@ -142,7 +144,7 @@
               <div class="travel-card" data-category="food">
                 <div class="travel-card-img">
                   <div class="travel-card-img-bg ti4"></div>
-                  <div class="diff-badge">Easy</div>
+                  <div class="diff-badge" data-i18n="explore.diff.easy">Easy</div>
                 </div>
                 <div class="travel-body">
                   <p class="travel-cat">Food &amp; Culture</p>
@@ -163,9 +165,9 @@
                 <div class="travel-card-img">
                   <div class="travel-card-img-bg ti5"></div>
                   <div class="runner-badge">
-                    <span aria-hidden="true">🏃</span> Runner's Pick
+                    <span aria-hidden="true">🏃</span> <span data-i18n="explore.runnersPick">Runner's Pick</span>
                   </div>
-                  <div class="diff-badge">Medium</div>
+                  <div class="diff-badge" data-i18n="explore.diff.medium">Medium</div>
                 </div>
                 <div class="travel-body">
                   <p class="travel-cat">Running &middot; Hills</p>
@@ -185,7 +187,7 @@
               <div class="travel-card" data-category="nature">
                 <div class="travel-card-img">
                   <div class="travel-card-img-bg ti6"></div>
-                  <div class="diff-badge">Easy–Med</div>
+                  <div class="diff-badge" data-i18n="explore.diff.easyMed">Easy–Med</div>
                 </div>
                 <div class="travel-body">
                   <p class="travel-cat">Culture &amp; Spirituality</p>
@@ -205,3 +207,4 @@
           </div>
           <!-- /.travel-inner -->
         </section>
+

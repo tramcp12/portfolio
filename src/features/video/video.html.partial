@@ -6,11 +6,11 @@
           aria-labelledby="videoHeading"
         >
           <div class="video-container">
-            <p class="section-label" aria-hidden="true">Welcome to CP12</p>
-            <h2 class="video-title" id="videoHeading">
+            <p class="section-label" aria-hidden="true" data-i18n="video.label">Welcome to CP12</p>
+            <h2 class="video-title" id="videoHeading" data-i18n-html="video.title">
               Feel it before <em>you arrive.</em>
             </h2>
-            <p class="video-desc">
+            <p class="video-desc" data-i18n="video.desc">
               Three minutes through pine forests, misty mornings, and genuine
               human warmth. This is what Trạm CP12 feels like — before you even
               pack your bags.
@@ -24,10 +24,11 @@
               <span class="video-overlay" aria-hidden="true">
                 <span class="big-play"></span>
                 <span class="video-tag"
-                  ><span aria-hidden="true">⏱</span> 3 min &middot; Welcome Film
-                  by CP12 Team</span
+                  ><span aria-hidden="true">⏱</span> <span data-i18n="video.tag">3 min &middot; Welcome Film
+                  by CP12 Team</span></span
                 >
               </span>
             </button>
           </div>
         </section>
+

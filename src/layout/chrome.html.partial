@@ -1,5 +1,5 @@
 
-      <a href="#cp12-main" class="skip-nav">Skip to content</a>
+      <a href="#cp12-main" class="skip-nav" data-i18n="skip.nav">Skip to content</a>
 
       <!-- Next section floating button -->
       <button
@@ -16,12 +16,22 @@
           >Trạm <span>CP12</span></a
         >
         <ul class="nav-links">
-          <li><a href="#rooms">Rooms</a></li>
-          <li><a href="#explore">Explore</a></li>
-          <li><a href="#about">About</a></li>
-          <li><a href="#journal">Journal</a></li>
-          <li><a href="#book" class="nav-cta">Book a Stay</a></li>
+          <li><a href="#rooms" data-i18n="nav.rooms">Rooms</a></li>
+          <li><a href="#explore" data-i18n="nav.explore">Explore</a></li>
+          <li><a href="#about" data-i18n="nav.about">About</a></li>
+          <li><a href="#journal" data-i18n="nav.journal">Journal</a></li>
+          <li><a href="#book" class="nav-cta" data-i18n="nav.book">Book a Stay</a></li>
         </ul>
+        <!-- Language toggle -->
+        <button
+          type="button"
+          id="cp12-lang-btn"
+          class="lang-btn"
+          aria-label="Switch to Vietnamese"
+          aria-pressed="false"
+        >
+          <span class="lang-active">EN</span><span class="lang-sep" aria-hidden="true">|</span><span class="lang-alt">VI</span>
+        </button>
         <button
           type="button"
           class="nav-hamburger"
@@ -61,9 +71,10 @@
         >
           &times;
         </button>
-        <a href="#rooms">Rooms</a>
-        <a href="#explore">Explore</a>
-        <a href="#about">About</a>
-        <a href="#journal">Journal</a>
-        <a href="#book" class="nav-mobile-cta">Book a Stay</a>
+        <a href="#rooms" data-i18n="nav.rooms">Rooms</a>
+        <a href="#explore" data-i18n="nav.explore">Explore</a>
+        <a href="#about" data-i18n="nav.about">About</a>
+        <a href="#journal" data-i18n="nav.journal">Journal</a>
+        <a href="#book" class="nav-mobile-cta" data-i18n="nav.book">Book a Stay</a>
       </div>
+

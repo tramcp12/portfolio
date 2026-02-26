@@ -9,8 +9,15 @@
       { "icon": "📐", "text": "22 m²" },
       { "icon": "⛺", "text": "Balcony" }
     ],
+    "meta_vi": [
+      { "icon": "👤", "text": "2 khách" },
+      { "icon": "📐", "text": "22 m²" },
+      { "icon": "⛺", "text": "Ban Công" }
+    ],
     "desc": "Our flagship room — natural rattan furniture, soft linen bedding, and a private balcony overlooking lush green gardens. Wake up to birdsong, not traffic.",
-    "amenities": ["Private Balcony", "Air Con", "Breakfast", "WiFi"]
+    "desc_vi": "Phòng flagship của chúng tôi — nội thất mây tự nhiên, ga trải giường linen mềm mại và ban công riêng nhìn ra khu vườn xanh tươi. Thức dậy cùng tiếng chim hót, không phải tiếng xe cộ.",
+    "amenities": ["Private Balcony", "Air Con", "Breakfast", "WiFi"],
+    "amenities_vi": ["Ban Công Riêng", "Điều Hòa", "Bữa Sáng", "WiFi"]
   },
   {
     "bgClass": "r2",
@@ -22,8 +29,15 @@
       { "icon": "📐", "text": "16 m²" },
       { "icon": "🌾", "text": "Fan + AC" }
     ],
+    "meta_vi": [
+      { "icon": "👤", "text": "1 khách" },
+      { "icon": "📐", "text": "16 m²" },
+      { "icon": "🌾", "text": "Quạt + ĐH" }
+    ],
     "desc": "A cozy private room on the breezy upper floor. Minimalist Vietnamese decor with hand-painted wall murals by local artists. Ideal for writers and dreamers.",
-    "amenities": ["Mountain View", "Reading Nook", "Herb Tea Kit", "WiFi"]
+    "desc_vi": "Phòng riêng ấm cúng trên tầng thượng thoáng mát. Trang trí tối giản phong cách Việt Nam với tranh tường do nghệ sĩ địa phương vẽ tay. Lý tưởng cho những người viết lách và mơ mộng.",
+    "amenities": ["Mountain View", "Reading Nook", "Herb Tea Kit", "WiFi"],
+    "amenities_vi": ["View Núi", "Góc Đọc Sách", "Bộ Trà Thảo Mộc", "WiFi"]
   },
   {
     "bgClass": "r3",
@@ -35,8 +49,15 @@
       { "icon": "📐", "text": "30 m²" },
       { "icon": "☕", "text": "Espresso" }
     ],
+    "meta_vi": [
+      { "icon": "👤", "text": "2 khách" },
+      { "icon": "📐", "text": "30 m²" },
+      { "icon": "☕", "text": "Espresso" }
+    ],
     "desc": "Our most spacious room with a loft-style sleeping area. Curated local art prints, a proper work desk. Great for longer stays or digital nomads.",
-    "amenities": ["Loft Bed", "Work Desk", "Smart TV", "Breakfast"]
+    "desc_vi": "Phòng rộng nhất của chúng tôi với khu vực ngủ kiểu gác xép. Tranh nghệ thuật địa phương được chọn lọc kỹ lưỡng, bàn làm việc tiêu chuẩn. Tuyệt vời cho lưu trú dài hạn hoặc digital nomad.",
+    "amenities": ["Loft Bed", "Work Desk", "Smart TV", "Breakfast"],
+    "amenities_vi": ["Giường Gác Lửng", "Bàn Làm Việc", "Smart TV", "Bữa Sáng"]
   },
   {
     "bgClass": "r4",
@@ -48,7 +69,14 @@
       { "icon": "📐", "text": "40 m²" },
       { "icon": "🔒", "text": "Lockers" }
     ],
+    "meta_vi": [
+      { "icon": "👥", "text": "Dorm 4 giường" },
+      { "icon": "📐", "text": "40 m²" },
+      { "icon": "🔒", "text": "Tủ Khóa" }
+    ],
     "desc": "Meet fellow travelers in our friendly 4-bed dorm. Privacy pods, individual reading lights, USB charging. The social heart of Trạm CP12 — friendships start here.",
-    "amenities": ["Privacy Pods", "USB Charging", "Common Room", "WiFi"]
+    "desc_vi": "Gặp gỡ du khách đồng hành trong phòng dorm 4 giường thân thiện. Buồng riêng tư, đèn đọc sách cá nhân, sạc USB. Trái tim xã hội của Trạm CP12 — tình bạn bắt đầu từ đây.",
+    "amenities": ["Privacy Pods", "USB Charging", "Common Room", "WiFi"],
+    "amenities_vi": ["Buồng Riêng Tư", "Sạc USB", "Phòng Chung", "WiFi"]
   }
 ]

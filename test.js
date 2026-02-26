@@ -38,11 +38,13 @@ var expected = [
   "src/features/rooms/rooms.html.partial", "src/features/explore/explore.html.partial",
   "src/features/about/about.html.partial", "src/features/journal/journal.html.partial",
   "src/features/cta/cta.html.partial",
-  // JS IIFEs (4 files)
+  // JS IIFEs (5 files)
+  "src/shared/lang-switcher.js",
   "src/features/rooms/rooms.js", "src/features/video/video.js",
   "src/features/explore/explore.js", "src/shared/scroll-reveal.js",
-  // Data (3 files)
-  "src/data/rooms.json", "src/data/travel.json", "src/data/journal.json"
+  // Data (5 files)
+  "src/data/rooms.json", "src/data/travel.json", "src/data/journal.json",
+  "src/data/strings.vi.json", "src/data/strings.en.json"
 ];
 expected.forEach(function(f) {
   ok(f, fs.existsSync(path.join(__dirname, f)));
@@ -56,7 +58,7 @@ var rooms = JSON.parse(fs.readFileSync("src/data/rooms.json", "utf8"));
 ok("rooms.json — is array", Array.isArray(rooms));
 ok("rooms.json — 4 entries", rooms.length === 4);
 rooms.forEach(function(r, i) {
-  ["bgClass","name","price","featured","meta","desc","amenities"].forEach(function(k) {
+  ["bgClass","name","price","featured","meta","desc","amenities","desc_vi","meta_vi","amenities_vi"].forEach(function(k) {
     ok("rooms[" + i + "]." + k + " present", k in r);
   });
   ok("rooms[" + i + "].meta non-empty array",   Array.isArray(r.meta) && r.meta.length > 0);
@@ -92,6 +94,19 @@ ok("journal.json — 3 entries", journal.length === 3);
 });
 ok("journal.json — exactly 1 large card", journal.filter(function(j){ return j.large; }).length === 1);
 
+// strings.vi.json + strings.en.json
+var stringsVi = JSON.parse(fs.readFileSync("src/data/strings.vi.json", "utf8"));
+var stringsEn = JSON.parse(fs.readFileSync("src/data/strings.en.json", "utf8"));
+ok("strings.vi.json — is object",      typeof stringsVi === "object");
+ok("strings.en.json — is object",      typeof stringsEn === "object");
+["nav.rooms","nav.explore","nav.about","nav.journal","nav.book",
+ "hero.tag","hero.title","hero.subtitle","rooms.label","rooms.heading",
+ "explore.label","about.label","journal.label","cta.label","zalo.cta"
+].forEach(function(k) {
+  ok("strings.vi[" + k + "]", !!stringsVi[k]);
+  ok("strings.en[" + k + "]", !!stringsEn[k]);
+});
+
 /* ── 3. Generated output checks ──────────────────────────────────────────── */
 console.log("\n\u2500\u2500 Generated output checks");
 var html = fs.readFileSync("index.html", "utf8");
@@ -101,7 +116,7 @@ var js   = fs.readFileSync("cp12.js",    "utf8");
 // Output sizes
 ok("index.html > 30 KB", Buffer.byteLength(html,"utf8") / 1024 > 30);
 ok("cp12.css   > 40 KB", Buffer.byteLength(css,  "utf8") / 1024 > 40);
-ok("cp12.js    >  8 KB", Buffer.byteLength(js,   "utf8") / 1024 > 8);
+ok("cp12.js    > 12 KB", Buffer.byteLength(js,   "utf8") / 1024 > 12);
 
 // rooms-data injection
 ok("index.html contains #rooms-data script",  html.indexOf('id="rooms-data"') !== -1);
@@ -117,6 +132,25 @@ ok("#rooms-data comes after #cp12-wrap close", function() {
   var dataStart = html.indexOf('id="rooms-data"');
   return wrapClose !== -1 && dataStart !== -1 && dataStart > wrapClose;
 }());
+
+// i18n data injection
+ok("index.html contains #lang-vi-data script", html.indexOf('id="lang-vi-data"') !== -1);
+ok("index.html contains #lang-en-data script", html.indexOf('id="lang-en-data"') !== -1);
+ok("#lang-vi-data is valid JSON object",        function() {
+  var m = html.match(/<script id="lang-vi-data"[^>]*>([\s\S]*?)<\/script>/);
+  if (!m) return false;
+  try { var d = JSON.parse(m[1].trim()); return typeof d === "object" && !!d["nav.rooms"]; }
+  catch(e) { return false; }
+}());
+ok("#lang-en-data is valid JSON object",        function() {
+  var m = html.match(/<script id="lang-en-data"[^>]*>([\s\S]*?)<\/script>/);
+  if (!m) return false;
+  try { var d = JSON.parse(m[1].trim()); return typeof d === "object" && !!d["nav.rooms"]; }
+  catch(e) { return false; }
+}());
+ok("index.html — i18n FOUC inline script",     html.indexOf("i18n-loading") !== -1);
+ok("index.html — data-i18n attributes present",html.indexOf('data-i18n=') !== -1);
+ok("index.html — lang-btn in nav",             html.indexOf('id="cp12-lang-btn"') !== -1);
 
 // HTML structure
 ok("index.html — <main id=\"cp12-main\">",       html.indexOf('<main id="cp12-main">') !== -1);
@@ -141,24 +175,37 @@ ok("cp12.css — dot-nav styles",                  /#cp12-dots/.test(css));
 ok("cp12.css — modal styles",                    /#cp12-wrap \.modal/.test(css));
 
 // JS IIFE structure
-ok("cp12.js — IIFE 0 rooms renderer",            js.indexOf("rooms-data") !== -1);
-ok("cp12.js — IIFE 1 heroPlayBtn",               js.indexOf("heroPlayBtn") !== -1);
-ok("cp12.js — IIFE 2 filter-tabs",               js.indexOf("filter-tabs") !== -1);
-ok("cp12.js — IIFE 3 cp12OpenModal global",      js.indexOf("window.cp12OpenModal") !== -1);
-ok("cp12.js — IIFE 3 IntersectionObserver",      js.indexOf("IntersectionObserver") !== -1);
-ok("cp12.js — IIFE 3 prefers-reduced-motion fallback", js.indexOf("classList.add(\"visible\")") !== -1);
+ok("cp12.js — IIFE 0 lang-switcher",             js.indexOf("window.cp12SwitchLang") !== -1);
+ok("cp12.js — IIFE 0 cp12Lang global",           js.indexOf("window.cp12Lang") !== -1);
+ok("cp12.js — IIFE 0 localStorage",              js.indexOf("localStorage") !== -1);
+ok("cp12.js — IIFE 1 rooms renderer",            js.indexOf("rooms-data") !== -1);
+ok("cp12.js — IIFE 1 cp12RenderRooms global",    js.indexOf("window.cp12RenderRooms") !== -1);
+ok("cp12.js — IIFE 2 heroPlayBtn",               js.indexOf("heroPlayBtn") !== -1);
+ok("cp12.js — IIFE 3 filter-tabs",               js.indexOf("filter-tabs") !== -1);
+ok("cp12.js — IIFE 4 cp12OpenModal global",      js.indexOf("window.cp12OpenModal") !== -1);
+ok("cp12.js — IIFE 4 IntersectionObserver",      js.indexOf("IntersectionObserver") !== -1);
+ok("cp12.js — IIFE 4 prefers-reduced-motion fallback", js.indexOf("classList.add(\"visible\")") !== -1);
 ok("cp12.js — XSS escHtml function",             js.indexOf("function escHtml") !== -1);
 
 /* ── 4. IIFE source file content checks ─────────────────────────────────── */
 console.log("\n\u2500\u2500 IIFE source files");
-var roomsJs   = fs.readFileSync("src/features/rooms/rooms.js",    "utf8");
-var videoJs   = fs.readFileSync("src/features/video/video.js",    "utf8");
-var exploreJs = fs.readFileSync("src/features/explore/explore.js","utf8");
-var revealJs  = fs.readFileSync("src/shared/scroll-reveal.js",    "utf8");
+var switcherJs = fs.readFileSync("src/shared/lang-switcher.js",   "utf8");
+var roomsJs    = fs.readFileSync("src/features/rooms/rooms.js",    "utf8");
+var videoJs    = fs.readFileSync("src/features/video/video.js",    "utf8");
+var exploreJs  = fs.readFileSync("src/features/explore/explore.js","utf8");
+var revealJs   = fs.readFileSync("src/shared/scroll-reveal.js",    "utf8");
 
+ok("lang-switcher.js — self-contained IIFE",  /\(function\s*\(\)/.test(switcherJs));
+ok("lang-switcher.js — window.cp12SwitchLang", switcherJs.indexOf("window.cp12SwitchLang") !== -1);
+ok("lang-switcher.js — window.cp12Lang",       switcherJs.indexOf("window.cp12Lang") !== -1);
+ok("lang-switcher.js — data-i18n query",       switcherJs.indexOf("[data-i18n]") !== -1);
+ok("lang-switcher.js — data-i18n-html query",  switcherJs.indexOf("[data-i18n-html]") !== -1);
+ok("lang-switcher.js — FOUC class remove",     switcherJs.indexOf("i18n-loading") !== -1);
 ok("rooms.js — self-contained IIFE",   /\(function\s*\(\)/.test(roomsJs));
 ok("rooms.js — escHtml guard",         roomsJs.indexOf("escHtml") !== -1);
 ok("rooms.js — XSS &amp; replacement", roomsJs.indexOf("&amp;") !== -1);
+ok("rooms.js — cp12RenderRooms export",roomsJs.indexOf("window.cp12RenderRooms") !== -1);
+ok("rooms.js — lang-aware desc_vi",    roomsJs.indexOf("desc_vi") !== -1);
 ok("video.js — self-contained IIFE",   /\(function\s*\(\)/.test(videoJs));
 ok("video.js — cp12OpenModal guard",   videoJs.indexOf("window.cp12OpenModal") !== -1);
 ok("explore.js — self-contained IIFE", /\(function\s*\(\)/.test(exploreJs));

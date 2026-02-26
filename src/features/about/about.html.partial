@@ -10,22 +10,22 @@
               ></div>
               <div class="about-img-accent">
                 <span class="big-num">1500m</span>
-                <span class="big-label">Above Sea Level</span>
+                <span class="big-label" data-i18n="about.accentLabel">Above Sea Level</span>
               </div>
             </div>
             <div class="about-content cp12-reveal">
-              <div class="section-label section-label--left" aria-hidden="true">
+              <div class="section-label section-label--left" aria-hidden="true" data-i18n="about.label">
                 About CP12
               </div>
-              <h2 class="about-heading" id="aboutHeading">
+              <h2 class="about-heading" id="aboutHeading" data-i18n-html="about.heading">
                 Not just a bed.<br>A <em>base camp.</em>
               </h2>
-              <p class="about-text">
+              <p class="about-text" data-i18n="about.p1">
                 Trạm CP12 was born from a simple frustration: too many Đà Lạt
                 stays felt like transactions. You'd arrive, sleep, leave — and
                 miss the actual city entirely.
               </p>
-              <p class="about-text">
+              <p class="about-text" data-i18n="about.p2">
                 We built something different. A place run by locals, designed
                 for connection, and obsessively curated for solo travelers who
                 want the real Đà Lạt — not the brochure version.
@@ -34,8 +34,8 @@
                 <div class="perk">
                   <div class="perk-icon" aria-hidden="true">🗺</div>
                   <div class="perk-text">
-                    <strong>Local expertise, freely shared</strong>
-                    <p>
+                    <strong data-i18n="about.perk1.title">Local expertise, freely shared</strong>
+                    <p data-i18n="about.perk1.desc">
                       Hand-drawn route maps, weekly community boards, and hosts
                       who actually run these trails.
                     </p>
@@ -44,8 +44,8 @@
                 <div class="perk">
                   <div class="perk-icon" aria-hidden="true">🏃</div>
                   <div class="perk-text">
-                    <strong>Built for runners</strong>
-                    <p>
+                    <strong data-i18n="about.perk2.title">Built for runners</strong>
+                    <p data-i18n="about.perk2.desc">
                       5:30am breakfast, gear drying area, recovery station with
                       electrolytes and local herbal teas.
                     </p>
@@ -54,8 +54,8 @@
                 <div class="perk">
                   <div class="perk-icon" aria-hidden="true">🤝</div>
                   <div class="perk-text">
-                    <strong>Solo-traveler focused</strong>
-                    <p>
+                    <strong data-i18n="about.perk3.title">Solo-traveler focused</strong>
+                    <p data-i18n="about.perk3.desc">
                       Weekly Trạm Nights, free morning walks Tue &amp; Fri, and
                       a dorm designed so friendships form naturally.
                     </p>
@@ -64,11 +64,12 @@
               </div>
               <div class="checkin-strip" aria-label="Check-in and check-out times">
                 <span aria-hidden="true">🕑</span>
-                Check-in from <strong>14:00</strong>
+                <span data-i18n="about.checkin">Check-in from</span> <strong>14:00</strong>
                 <span class="strip-divider" aria-hidden="true">&middot;</span>
-                Check-out by <strong>12:00</strong>
+                <span data-i18n="about.checkout">Check-out by</span> <strong>12:00</strong>
               </div>
-              <a href="#book" class="btn-primary">Book Your Stay &rarr;</a>
+              <a href="#book" class="btn-primary" data-i18n="about.bookBtn">Book Your Stay &rarr;</a>
             </div>
           </div>
         </section>
+

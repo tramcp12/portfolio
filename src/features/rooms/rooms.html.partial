@@ -7,12 +7,12 @@
         >
           <div class="rooms-header">
             <div>
-              <div class="section-label section-label--left">Our Spaces</div>
-              <h2 class="section-heading" id="roomsHeading">
+              <div class="section-label section-label--left" data-i18n="rooms.label">Our Spaces</div>
+              <h2 class="section-heading" id="roomsHeading" data-i18n-html="rooms.heading">
                 A room for every<br><em>kind of traveler.</em>
               </h2>
             </div>
-            <p class="rooms-intro">
+            <p class="rooms-intro" data-i18n="rooms.intro">
               From intimate private rooms to our social dormitory — each space
               at Trạm CP12 is designed with intention. Natural materials, local
               craft, and exactly the kind of light that makes you want to stay
@@ -20,6 +20,7 @@
             </p>
           </div>
 
-          <!-- Rendered at runtime from #rooms-data JSON by cp12.js IIFE 0 -->
+          <!-- Rendered at runtime from #rooms-data JSON by cp12.js IIFE 1 -->
           <div id="rooms-grid" class="rooms-grid"></div>
         </section>
+

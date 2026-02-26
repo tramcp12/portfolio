@@ -9,12 +9,17 @@
  *   HTML assembled from src/ partials in DOM order.
  *
  * Phase 3 (complete): JS split
- *   JS assembled from 4 IIFE source files in DOM order.
+ *   JS assembled from 5 IIFE source files in DOM order.
  *
  * Phase 4 (complete): Data layer
- *   src/data/rooms.json injected as <script id="rooms-data"> for IIFE 0.
+ *   src/data/rooms.json injected as <script id="rooms-data"> for IIFE 1.
  *   src/data/travel.json and src/data/journal.json are reference files
  *   (static HTML partials retained for SEO; no runtime renderers yet).
+ *
+ * Phase 5 (complete): i18n layer
+ *   src/data/strings.vi.json and strings.en.json injected as
+ *   <script id="lang-vi-data"> / <script id="lang-en-data"> for IIFE 0.
+ *   IIFE 0 (lang-switcher.js) applies [data-i18n] swaps and re-renders rooms.
  */
 
 "use strict";
@@ -58,11 +63,17 @@ function run(cmd) {
 
 console.log("\nBuilding Trạm CP12...\n");
 
-/* ── Data ── Phase 4: load src/data/ JSON files ───────────────────────────── */
+/* ── Data ── Phase 4 + 5: load src/data/ JSON files ──────────────────────── */
 
-var roomsData = JSON.parse(
-  fs.readFileSync(path.join(root, "src", "data", "rooms.json"), "utf8")
-);
+var roomsData  = JSON.parse(fs.readFileSync(path.join(root, "src", "data", "rooms.json"),      "utf8"));
+var stringsVi  = JSON.parse(fs.readFileSync(path.join(root, "src", "data", "strings.vi.json"), "utf8"));
+var stringsEn  = JSON.parse(fs.readFileSync(path.join(root, "src", "data", "strings.en.json"), "utf8"));
+
+function injectJson(id, data) {
+  return '\n    <script id="' + id + '" type="application/json">\n    ' +
+    JSON.stringify(data).replace(/<\//g, "<\\/").replace(/<!--/g, "<\\!--") +
+    "\n    </script>";
+}
 
 /* ── HTML ── Phase 2: assemble from src/ partials
  * Order: shell-head → dots → chrome → main-open →
@@ -86,11 +97,10 @@ var htmlParts = [
   readSrc("layout/modal.html.partial"),
   readSrc("layout/zalo-cta.html.partial"),
   "    </div>\n    <!-- /#cp12-wrap -->",
-  // Phase 4: rooms data for IIFE 0 — injected before </body> so defer-loaded
-  //   cp12.js can find it via document.getElementById("rooms-data")
-  '\n    <script id="rooms-data" type="application/json">\n    ' +
-    JSON.stringify(roomsData).replace(/<\//g, "<\\/").replace(/<!--/g, "<\\!--") +
-    "\n    </script>",
+  // Phase 4+5: data injected before </body> so defer-loaded cp12.js can find them
+  injectJson("lang-vi-data", stringsVi),
+  injectJson("lang-en-data", stringsEn),
+  injectJson("rooms-data",   roomsData),
   readSrc("layout/jsonld.html.partial"),
 ];
 var html = htmlParts.join("\n");
@@ -134,10 +144,12 @@ var bvCount = (css.match(/Be Vietnam Pro/g) || []).length;
 if (cgCount !== 1) throw new Error("CSS-1a build guard: Cormorant Garamond appears " + cgCount + " times (expected 1)");
 if (bvCount !== 1) throw new Error("CSS-1b build guard: Be Vietnam Pro appears " + bvCount + " times (expected 1)");
 
-/* ── JS   ── Phase 3: concat from src/ IIFE source files
- * Order: rooms (IIFE 0) → video (IIFE 1) → explore (IIFE 2) → scroll-reveal (IIFE 3)
+/* ── JS   ── Phase 3+5: concat from src/ IIFE source files
+ * Order: lang-switcher (IIFE 0) → rooms (IIFE 1) → video (IIFE 2) →
+ *        explore (IIFE 3) → scroll-reveal (IIFE 4)
  */
 var jsSources = [
+  "shared/lang-switcher.js",
   "features/rooms/rooms.js",
   "features/video/video.js",
   "features/explore/explore.js",
@@ -148,7 +160,7 @@ var js = jsSources.map(function(f) { return readSrc(f); }).join("\n\n");
 /* ── Size guards ── protect against silent empty-file bugs ── */
 assertMinSize("index.html", html, 30);
 assertMinSize("cp12.css",   css,  40);
-assertMinSize("cp12.js",    js,    8);
+assertMinSize("cp12.js",    js,   12);
 
 writeRoot("index.html", html);
 writeRoot("cp12.css",   css);

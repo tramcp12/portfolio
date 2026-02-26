@@ -148,6 +148,14 @@
   color: var(--gold);
 }
 
+/* ── i18n: FOUC prevention ──────────────────────────────────
+ * Elements with data-i18n are hidden until lang-switcher
+ * (IIFE 0) applies translations and removes i18n-loading.  */
+html.i18n-loading [data-i18n],
+html.i18n-loading [data-i18n-html] {
+  opacity: 0;
+}
+
 /* ── 4. Navigation (desktop) ─────────────────────────────────
  * src/layout/nav.css
  * ──────────────────────────────────────────────────────────── */
@@ -314,6 +322,59 @@
 }
 #cp12-wrap .cp12-main-nav.scrolled.nav-over-dark .nav-hamburger {
   color: var(--cream);
+}
+
+/* ── Language toggle button ─────────────────────────────── */
+#cp12-wrap .lang-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+  padding: 0.3rem 0.55rem;
+  border: 1px solid rgba(201, 169, 110, 0.55);
+  border-radius: 0.25rem;
+  background: transparent;
+  color: var(--mist);
+  font-family: var(--font-sans);
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  transition: color 0.3s, border-color 0.3s;
+}
+
+#cp12-wrap .lang-btn:hover {
+  color: var(--gold);
+  border-color: var(--gold);
+}
+
+#cp12-wrap .lang-btn:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+
+#cp12-wrap .lang-btn .lang-active {
+  font-weight: 700;
+  color: var(--gold);
+}
+
+#cp12-wrap .lang-btn .lang-sep {
+  opacity: 0.35;
+  margin: 0 0.1rem;
+}
+
+/* Adapt lang button to nav colorway states */
+#cp12-wrap .cp12-main-nav.scrolled:not(.nav-over-dark) .lang-btn {
+  color: var(--slate);
+  border-color: rgba(45, 74, 62, 0.3);
+}
+
+#cp12-wrap .cp12-main-nav.scrolled:not(.nav-over-dark) .lang-btn:hover {
+  color: var(--pine);
+  border-color: var(--pine);
+}
+
+#cp12-wrap .cp12-main-nav.scrolled:not(.nav-over-dark) .lang-btn .lang-active {
+  color: var(--earth);
 }
 
 /* Mobile hamburger */
