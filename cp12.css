@@ -32,8 +32,8 @@
   --slate-blue-mid: #4a6aad;
 
   /* Typography */
-  --font-serif: "Cormorant Garamond", serif;
-  --font-sans: "Be Vietnam Pro", sans-serif;
+  --font-serif: "Palmore", "Cormorant Garamond", "Times New Roman", serif;
+  --font-sans: "Fz poppin", "Be Vietnam Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 
   /* Semi-transparent alpha variants (CSS-3) */
   --gold-10: rgba(201, 169, 110, 0.1);
