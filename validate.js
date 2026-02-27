@@ -80,6 +80,12 @@ check("I18N-2", "All vi keys present in en (missing: " + (missingInEn.length ? m
 var missingInVi = enKeys.filter(function (k) { return !(k in stringsVi); });
 check("I18N-3", "All en keys present in vi (missing: " + (missingInVi.length ? missingInVi.join(", ") : "none") + ")", missingInVi.length === 0);
 
+/* ── B-1: Room drawer exists in index.html and is placed outside <main> ── */
+var drawerExists = /id="cp12-room-drawer"/.test(html);
+/* Confirm drawer does not appear inside <main>...</main> */
+var drawerInsideMain = /<main[\s\S]*?id="cp12-room-drawer"[\s\S]*?<\/main>/.test(html);
+check("B-1", "cp12-room-drawer exists in index.html and is outside <main>", drawerExists && !drawerInsideMain);
+
 /* ── Output ── */
 console.log("\nTr\u1ea1m CP12 \u2014 Architectural Invariants\n");
 passes.forEach(function (p) { console.log(p); });

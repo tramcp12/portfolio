@@ -328,6 +328,8 @@
         var target = document.getElementById(id);
         if (target) {
           e.preventDefault();
+          /* Close room gallery drawer if open before scrolling (IIFE 2) */
+          if (window.cp12CloseRoomGallery) window.cp12CloseRoomGallery();
           var navH = (getNav() || {}).offsetHeight || 0;
           var targetTop =
             target.getBoundingClientRect().top +

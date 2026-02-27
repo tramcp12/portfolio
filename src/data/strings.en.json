@@ -96,5 +96,11 @@
   "footer.bottom.made": "Made with care in the Central Highlands",
   "modal.title": "CP12 Welcome Film",
   "modal.note": "Video coming soon — follow us on Instagram for behind-the-scenes content while we edit!",
-  "modal.close": "Close video"
+  "modal.close": "Close video",
+  "drawer.bookBtn": "Book This Room",
+  "drawer.close": "Close room gallery",
+  "drawer.prevPhoto": "Previous photo",
+  "drawer.nextPhoto": "Next photo",
+  "drawer.allPhotos": "All photos",
+  "drawer.photoCount": "Photo {n} of {total}"
 }

@@ -4,6 +4,7 @@
     "name": "Phòng Trạm — The Signature Room",
     "price": "580K",
     "featured": true,
+    "photos": [],
     "meta": [
       { "icon": "👤", "text": "2 guests" },
       { "icon": "📐", "text": "22 m²" },
@@ -24,6 +25,7 @@
     "name": "Góc Gió — The Breeze Nook",
     "price": "450K",
     "featured": false,
+    "photos": [],
     "meta": [
       { "icon": "👤", "text": "1 guest" },
       { "icon": "📐", "text": "16 m²" },
@@ -44,6 +46,7 @@
     "name": "Tổ Chim — The Birdsong Suite",
     "price": "720K",
     "featured": true,
+    "photos": [],
     "meta": [
       { "icon": "👤", "text": "2 guests" },
       { "icon": "📐", "text": "30 m²" },
@@ -64,6 +67,7 @@
     "name": "Dorm Trạm — Social Dormitory",
     "price": "180K",
     "featured": false,
+    "photos": [],
     "meta": [
       { "icon": "👥", "text": "4-bed dorm" },
       { "icon": "📐", "text": "40 m²" },

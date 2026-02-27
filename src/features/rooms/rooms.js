@@ -69,6 +69,35 @@
     }).join("\n");
 
     grid.innerHTML = html;
+
+    /* Attach gallery click handlers after each innerHTML write (handlers are destroyed on re-render) */
+    var cards = grid.querySelectorAll(".room-card");
+    for (var ri = 0; ri < cards.length; ri++) {
+      (function (roomIndex) {
+        cards[roomIndex].addEventListener("click", function (e) {
+          /* Don't intercept clicks on the "Book this room" anchor */
+          if (e.target.closest("a")) return;
+          if (window.cp12OpenRoomGallery) {
+            window.cp12OpenRoomGallery(roomIndex, window.cp12Lang || "vi");
+          } else {
+            console.warn("[CP12] cp12OpenRoomGallery not available");
+          }
+        });
+        /* Keyboard activation: Enter/Space on the card itself */
+        cards[roomIndex].setAttribute("tabindex", "0");
+        cards[roomIndex].setAttribute("role", "button");
+        var roomName = rooms[roomIndex] ? rooms[roomIndex].name : "room";
+        cards[roomIndex].setAttribute("aria-label", "View photos for " + roomName);
+        cards[roomIndex].addEventListener("keydown", function (e) {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            if (window.cp12OpenRoomGallery) {
+              window.cp12OpenRoomGallery(roomIndex, window.cp12Lang || "vi");
+            }
+          }
+        });
+      }(ri));
+    }
   }
 
   /* Expose for lang-switcher (IIFE 0) to call on language change */

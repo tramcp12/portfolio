@@ -1,6 +1,7 @@
 node_modules/
 .serena/
 .claude/
+claudedocs/
 .DS_Store
 *.log
 

@@ -101,10 +101,10 @@ function injectJson(id, data) {
     "\n    </script>";
 }
 
-/* ── HTML ── Phase 2: assemble from src/ partials
+/* ── HTML ── Phase 2+7: assemble from src/ partials
  * Order: shell-head → dots → chrome → main-open →
  *   home → video → rooms → explore → about → journal →
- *   main-close → cta → footer → modal → shell-close → jsonld
+ *   main-close → cta → footer → modal → room-drawer → shell-close → jsonld
  */
 var htmlParts = [
   readSrc("shell-head.html"),
@@ -121,6 +121,8 @@ var htmlParts = [
   readSrc("features/cta/cta.html.partial"),
   readSrc("layout/footer.html.partial"),
   readSrc("layout/modal.html.partial"),
+  // Phase 7: room gallery drawer — outside <main>, inside #cp12-wrap (dialog placement per ARIA spec)
+  readSrc("layout/room-drawer.html.partial"),
   "    </div>\n    <!-- /#cp12-wrap -->",
   // Phase 4+5: data injected before </body> so defer-loaded cp12.js can find them
   injectJson("lang-vi-data", stringsVi),
@@ -130,11 +132,11 @@ var htmlParts = [
 ];
 var html = htmlParts.join("\n");
 
-/* ── CSS  ── Phase 1: concat from src/ source files
+/* ── CSS  ── Phase 1+7: concat from src/ source files
  * Cascade order: tokens → reset → accessibility →
  *   nav → nav-mobile → dots → next-btn →
  *   buttons → section-labels → animations →
- *   home → video → rooms → explore → about → journal → cta →
+ *   home → video → rooms → room-gallery → explore → about → journal → cta →
  *   footer → modal → responsive-sentinel → supports
  */
 var cssSources = [
@@ -151,6 +153,7 @@ var cssSources = [
   "features/home/home.css",
   "features/video/video.css",
   "features/rooms/rooms.css",
+  "features/rooms/room-gallery.css",
   "features/explore/explore.css",
   "features/about/about.css",
   "features/journal/journal.css",
@@ -168,13 +171,14 @@ var bvCount = (css.match(/Be Vietnam Pro/g) || []).length;
 if (cgCount !== 1) throw new Error("CSS-1a build guard: Cormorant Garamond appears " + cgCount + " times (expected 1)");
 if (bvCount !== 1) throw new Error("CSS-1b build guard: Be Vietnam Pro appears " + bvCount + " times (expected 1)");
 
-/* ── JS   ── Phase 3+5: concat from src/ IIFE source files
- * Order: lang-switcher (IIFE 0) → rooms (IIFE 1) → video (IIFE 2) →
- *        explore (IIFE 3) → scroll-reveal (IIFE 4)
+/* ── JS   ── Phase 3+5+7: concat from src/ IIFE source files
+ * Order: lang-switcher (IIFE 0) → rooms (IIFE 1) → room-gallery (IIFE 2) →
+ *        video (IIFE 3) → explore (IIFE 4) → scroll-reveal (IIFE 5)
  */
 var jsSources = [
   "shared/lang-switcher.js",
   "features/rooms/rooms.js",
+  "shared/room-gallery.js",
   "features/video/video.js",
   "features/explore/explore.js",
   "shared/scroll-reveal.js"
@@ -201,6 +205,30 @@ while ((assetMatch = assetGuardRe.exec(css)) !== null) {
     );
   }
 }
+
+/* ── Phase 7: Room photo asset guard — validate photos[] paths in rooms.json ─ */
+/* Non-fatal for rooms without photos (photos field absent or empty = gradient-only room).
+ * Only validates paths that are explicitly declared — prevents silent 404s at runtime. */
+roomsData.forEach(function (room, idx) {
+  if (!Array.isArray(room.photos) || room.photos.length === 0) return; /* no photos — skip */
+  room.photos.forEach(function (photo, pi) {
+    if (!photo.src) {
+      throw new Error(
+        "Phase 7 asset guard: rooms[" + idx + "].photos[" + pi + "] missing 'src' field."
+      );
+    }
+    var photoPath = path.join(root, photo.src);
+    if (!fs.existsSync(photoPath)) {
+      throw new Error(
+        "Phase 7 asset guard: Room photo missing on disk:\n" +
+        "  room[" + idx + "] \"" + room.name + "\", photo " + (pi + 1) + "\n" +
+        "  src: \"" + photo.src + "\"\n" +
+        "  Full path: " + photoPath + "\n" +
+        "  Add the image or remove it from rooms.json photos[]."
+      );
+    }
+  });
+});
 
 writeRoot("index.html", html);
 writeRoot("cp12.css",   css);

@@ -61,6 +61,9 @@
     /* Re-render room cards with the new language */
     if (window.cp12RenderRooms) window.cp12RenderRooms(lang);
 
+    /* Refresh room gallery drawer if open (IIFE 2 exposes this) */
+    if (window.cp12RefreshDrawerLang) window.cp12RefreshDrawerLang(lang);
+
     /* Persist preference */
     try { localStorage.setItem(STORAGE_KEY, lang); } catch (e) {}
 

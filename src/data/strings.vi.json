@@ -96,5 +96,11 @@
   "footer.bottom.made": "Được tạo ra với tình yêu ở Tây Nguyên",
   "modal.title": "Phim Chào Đón CP12",
   "modal.note": "Video sắp ra mắt — theo dõi Instagram của chúng tôi để xem hậu trường trong lúc chúng tôi đang chỉnh sửa!",
-  "modal.close": "Đóng video"
+  "modal.close": "Đóng video",
+  "drawer.bookBtn": "Đặt Phòng Này",
+  "drawer.close": "Đóng thư viện ảnh",
+  "drawer.prevPhoto": "Ảnh trước",
+  "drawer.nextPhoto": "Ảnh tiếp theo",
+  "drawer.allPhotos": "Tất cả ảnh",
+  "drawer.photoCount": "Ảnh {n} / {total}"
 }

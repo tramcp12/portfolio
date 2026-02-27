@@ -97,7 +97,7 @@ npm run check     # validate + lint against existing output files only
 
 Or individually:
 ```bash
-node validate.js          # 12 architectural invariant checks
+node validate.js          # 16 architectural invariant checks
 npx html-validate index.html  # HTML spec compliance
 ```
 
@@ -119,6 +119,7 @@ npx html-validate index.html  # HTML spec compliance
 | P-1 | `index.html` | No `<img>` tags — all images are CSS `background` properties |
 | H-1 | `index.html` | `og:image` meta tag present for social sharing |
 | A-2 | `cp12.css` | No legacy `url(img/...)` references — all static assets under `static/img/` |
+| B-1 | `index.html` | `cp12-room-drawer` exists and is placed outside `<main>` |
 
 ### Manual Testing Checklist
 
@@ -163,7 +164,8 @@ src/core/section-labels.css   ← .section-label variants
 src/core/animations.css       ← @keyframes + .cp12-reveal + prefers-reduced-motion (A-1)
 src/features/home/home.css    ← .hero + sect-home animation sigs + hero responsive
 src/features/video/video.css  ← .video-section + sect-video
-src/features/rooms/rooms.css  ← .room-card, r1–r4 gradients + sect-rooms
+src/features/rooms/rooms.css         ← .room-card, r1–r4 gradients + sect-rooms
+src/features/rooms/room-gallery.css  ← #cp12-room-drawer, drawer-inner, gallery stage, thumbs, mobile bottom sheet
 src/features/explore/explore.css ← .travel-card, ti1–ti6 gradients + sect-explore
 src/features/about/about.css  ← .about-section + sect-about
 src/features/journal/journal.css ← .blog-card, bi1–bi3 gradients + sect-journal
@@ -182,17 +184,18 @@ src/core/supports.css         ← @supports backdrop-filter (must be last)
 
 ## JavaScript Architecture
 
-`cp12.js` is **generated** by `build.js` from five IIFE source files in DOM order. Each IIFE uses independent local variables — do not merge them.
+`cp12.js` is **generated** by `build.js` from six IIFE source files in DOM order. Each IIFE uses independent local variables — do not merge them.
 
 | IIFE | Source file | Responsibility |
 |------|-------------|---------------|
-| 0 | `src/shared/lang-switcher.js` | i18n language switcher — reads `#strings-vi` / `#strings-en` JSON, applies `[data-i18n]` attribute swaps, re-renders rooms on language change |
-| 1 | `src/features/rooms/rooms.js` | Rooms renderer — reads `#rooms-data` inline JSON, builds `#rooms-grid` with `escHtml()` XSS guard |
-| 2 | `src/features/video/video.js` | Hero play button + video frame click/keydown handlers |
-| 3 | `src/features/explore/explore.js` | Travel filter tabs (`data-filter`, `aria-selected`, live count) |
-| 4 | `src/shared/scroll-reveal.js` | Modal, mobile nav, IO reveal, scroll RAF, dot nav, anchor scroll |
+| 0 | `src/shared/lang-switcher.js` | i18n language switcher — reads `#lang-vi-data` / `#lang-en-data` JSON, applies `[data-i18n]` attribute swaps, re-renders rooms + refreshes drawer on language change |
+| 1 | `src/features/rooms/rooms.js` | Rooms renderer — reads `#rooms-data` inline JSON, builds `#rooms-grid` with `escHtml()` XSS guard; attaches gallery click handlers after each render |
+| 2 | `src/shared/room-gallery.js` | Room gallery drawer — photo navigation, focus trap (algorithmic, mirrors modal), `cp12OpenRoomGallery` / `cp12CloseRoomGallery` / `cp12RefreshDrawerLang` globals |
+| 3 | `src/features/video/video.js` | Hero play button + video frame click/keydown handlers |
+| 4 | `src/features/explore/explore.js` | Travel filter tabs (`data-filter`, `aria-selected`, live count) |
+| 5 | `src/shared/scroll-reveal.js` | Modal, mobile nav, IO reveal, scroll RAF, dot nav, anchor scroll (closes gallery drawer before scrolling) |
 
-`window.cp12OpenModal` is set in IIFE 4 and called (with guard) from IIFE 2. This is intentional — the guard `if (window.cp12OpenModal)` is defensive coding, kept for robustness.
+`window.cp12OpenModal` is set in IIFE 5 and called (with guard) from IIFE 3. `window.cp12OpenRoomGallery` is set in IIFE 2 and called (with guard) from IIFE 1. Both guards are defensive coding, kept for robustness.
 
 ### Language Switcher (IIFE 0)
 
@@ -404,7 +407,7 @@ Rendered into `<div id="rooms-grid" class="rooms-grid">`. All values are escaped
 
 - **No JS frameworks** — vanilla JS only, no build step
 - **npm is dev-only** — `html-validate` is a dev tool; no runtime npm dependencies
-- **Five IIFEs in `cp12.js`** — keep them separate (variable name collisions if merged; IIFE 0 = lang-switcher, IIFE 1 = rooms renderer, IIFE 2 = hero, IIFE 3 = travel tabs, IIFE 4 = modal/nav/scroll)
+- **Six IIFEs in `cp12.js`** — keep them separate (variable name collisions if merged; IIFE 0 = lang-switcher, IIFE 1 = rooms renderer, IIFE 2 = room-gallery, IIFE 3 = video/hero, IIFE 4 = travel tabs, IIFE 5 = modal/nav/scroll)
 - **Scope all CSS under `#cp12-wrap`** — required for isolation
 - **Use `var` in IIFE-scoped code** — modern browser APIs (`IntersectionObserver`, `classList`, arrow functions) are fine
 - **Images in `static/img/travel/`** — all travel card images are self-hosted under `static/`; CSS references use `url("static/img/travel/...")` relative to repo root; do not reintroduce Wix CDN URLs or legacy `img/` paths
