@@ -6,7 +6,7 @@
   padding: 5rem 3rem 8rem; /* reduced top to remove dead-zone; keep generous bottom */
   background: var(--cream);
   position: relative;
-  overflow: hidden;
+  /* CRIT-2/IMPORTANT-5: overflow:hidden removed — it clips the expansion panel */
 }
 
 /* Section transition bands removed — sections now use natural body scroll */

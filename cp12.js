@@ -61,8 +61,8 @@
     /* Re-render room cards with the new language */
     if (window.cp12RenderRooms) window.cp12RenderRooms(lang);
 
-    /* Refresh room gallery drawer if open (IIFE 2 exposes this) */
-    if (window.cp12RefreshDrawerLang) window.cp12RefreshDrawerLang(lang);
+    /* Refresh room detail panel if open (IIFE 2 exposes this) */
+    if (window.cp12RefreshPanelLang) window.cp12RefreshPanelLang(lang);
 
     /* Persist preference */
     try { localStorage.setItem(STORAGE_KEY, lang); } catch (e) {}
@@ -196,10 +196,10 @@
         cards[roomIndex].addEventListener("click", function (e) {
           /* Don't intercept clicks on the "Book this room" anchor */
           if (e.target.closest("a")) return;
-          if (window.cp12OpenRoomGallery) {
-            window.cp12OpenRoomGallery(roomIndex, window.cp12Lang || "vi");
+          if (window.cp12OpenRoomPanel) {
+            window.cp12OpenRoomPanel(roomIndex, window.cp12Lang || "vi");
           } else {
-            console.warn("[CP12] cp12OpenRoomGallery not available");
+            console.warn("[CP12] cp12OpenRoomPanel not available");
           }
         });
         /* Keyboard activation: Enter/Space on the card itself */
@@ -209,8 +209,8 @@
         cards[roomIndex].addEventListener("keydown", function (e) {
           if (e.key === "Enter" || e.key === " ") {
             e.preventDefault();
-            if (window.cp12OpenRoomGallery) {
-              window.cp12OpenRoomGallery(roomIndex, window.cp12Lang || "vi");
+            if (window.cp12OpenRoomPanel) {
+              window.cp12OpenRoomPanel(roomIndex, window.cp12Lang || "vi");
             }
           }
         });
@@ -226,277 +226,278 @@
 })();
 
 
-/* ── 2. Room Gallery Drawer ───────────────────────────────── */
+/* ── 2. Room detail expansion panel ─────────────────────────── */
 (function () {
+  var panel = document.getElementById("cp12-room-panel");
+  if (!panel) return;
+
+  var panelInner   = panel.querySelector(".panel-inner");
+  var mainImg      = panel.querySelector(".panel-main-img");
+  var mainCaption  = panel.querySelector(".panel-main-caption");
+  var counter      = panel.querySelector(".panel-photo-counter");
+  var thumbsCont   = panel.querySelector(".panel-thumbs");
+  var prevBtn      = panel.querySelector(".panel-prev");
+  var nextBtn      = panel.querySelector(".panel-next");
+  var closeBtn     = panel.querySelector(".panel-close");
+  var bookBtn      = panel.querySelector(".panel-book-btn");
+  var panelName    = panel.querySelector(".panel-room-name");
+  var panelPrice   = panel.querySelector(".panel-room-price");
+  var panelDesc    = panel.querySelector(".panel-room-desc");
+  var panelAmen    = panel.querySelector(".panel-amenities");
+  var panelMeta    = panel.querySelector(".panel-room-meta");
+
+  var rooms = [];
   try {
-    var drawer      = document.getElementById("cp12-room-drawer");
-    var drawerClose = document.getElementById("cp12-drawer-close");
-    var mainImg     = document.getElementById("cp12-drawer-main");
-    var thumbStrip  = document.getElementById("cp12-drawer-thumbs");
-    var counterEl   = drawer ? drawer.querySelector(".drawer-counter")   : null;
-    var nameEl      = drawer ? drawer.querySelector(".drawer-room-name") : null;
-    var metaEl      = drawer ? drawer.querySelector(".drawer-room-meta") : null;
-    var descEl      = drawer ? drawer.querySelector(".drawer-room-desc") : null;
-    var amenEl      = drawer ? drawer.querySelector(".drawer-amenities") : null;
-    var prevBtn     = drawer ? drawer.querySelector(".drawer-nav-prev")  : null;
-    var nextBtn     = drawer ? drawer.querySelector(".drawer-nav-next")  : null;
+    var dataEl = document.getElementById("rooms-data");
+    if (dataEl) rooms = JSON.parse(dataEl.textContent);
+  } catch (e) {}
 
-    /* aria-hidden set via JS, not static HTML (avoids hidden-focusable validator false positive) */
-    if (drawer) drawer.setAttribute("aria-hidden", "true");
+  var currentRoomIndex  = -1;
+  var currentPhotoIndex = 0;
+  var currentPhotos     = [];
+  var currentLang       = "vi";
+  var selectedCardEl    = null;
+  var panelLastFocus    = null;
+  var isOpen            = false;
 
-    /* ── State ── */
-    var currentRoomIndex  = null;
-    var currentPhotoIndex = 0;
-    var currentPhotos     = [];
-    var currentLang       = "vi";
-    var drawerLastFocus   = null;
-
-    /* ── Helpers ── */
-    function escHtml(str) {
-      return String(str)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#39;");
-    }
-
-    /* Local interpolation for photo counter string ({n} / {total}) */
-    function interpolate(template, n, total) {
-      return template.replace("{n}", n).replace("{total}", total);
-    }
-
-    function getRooms() {
-      try {
-        var el = document.getElementById("rooms-data");
-        return el ? JSON.parse(el.textContent) : [];
-      } catch (e) {
-        return [];
-      }
-    }
-
-    function getStrings(lang) {
-      try {
-        var id = lang === "en" ? "lang-en-data" : "lang-vi-data";
-        var el = document.getElementById(id);
-        return el ? JSON.parse(el.textContent) : {};
-      } catch (e) {
-        return {};
-      }
-    }
-
-    /* ── Photo display ── */
-    function showPhoto(index) {
-      if (!currentPhotos.length) return;
-      index = Math.max(0, Math.min(index, currentPhotos.length - 1));
-      currentPhotoIndex = index;
-
-      var photo = currentPhotos[index];
-      if (mainImg) {
-        mainImg.style.backgroundImage = "url(\"" + photo.src + "\")";
-        var altText = (currentLang === "vi" && photo.alt_vi) ? photo.alt_vi : (photo.alt || "");
-        mainImg.setAttribute("aria-label", altText || "Room photo");
-      }
-
-      /* Update counter */
-      if (counterEl) {
-        var strings = getStrings(currentLang);
-        var tmpl = strings["drawer.photoCount"] || ("{n} / {total}");
-        counterEl.textContent = interpolate(tmpl, index + 1, currentPhotos.length);
-      }
-
-      /* Update thumbnails: aria-current="true" on active, remove from others */
-      if (thumbStrip) {
-        var thumbs = thumbStrip.querySelectorAll(".drawer-thumb");
-        for (var i = 0; i < thumbs.length; i++) {
-          if (i === index) {
-            thumbs[i].setAttribute("aria-current", "true");
-            /* Scroll active thumb into view */
-            thumbs[i].scrollIntoView({ block: "nearest", inline: "nearest" });
-          } else {
-            thumbs[i].removeAttribute("aria-current");
-          }
-        }
-      }
-
-      /* Disable prev/next at boundaries */
-      if (prevBtn) {
-        prevBtn.disabled = (index === 0);
-        prevBtn.setAttribute("aria-disabled", index === 0 ? "true" : "false");
-      }
-      if (nextBtn) {
-        nextBtn.disabled = (index === currentPhotos.length - 1);
-        nextBtn.setAttribute("aria-disabled", index === currentPhotos.length - 1 ? "true" : "false");
-      }
-    }
-
-    /* ── Populate drawer with room data ── */
-    function populateDrawer(roomIndex, lang) {
-      var rooms = getRooms();
-      if (!rooms[roomIndex]) return;
-      var room = rooms[roomIndex];
-      var isVi = lang === "vi";
-
-      currentLang       = lang;
-      currentRoomIndex  = roomIndex;
-      currentPhotos     = Array.isArray(room.photos) ? room.photos : [];
-
-      /* Room name — CRIT-2: use name_vi when language is Vietnamese */
-      if (nameEl) {
-        var displayName = (isVi && room.name_vi) ? room.name_vi : (room.name || "");
-        nameEl.textContent = displayName;
-      }
-
-      /* Meta */
-      if (metaEl) {
-        var metaList = (isVi && room.meta_vi) ? room.meta_vi : (room.meta || []);
-        metaEl.innerHTML = metaList.map(function (m) {
-          return '<span><span aria-hidden="true">' + escHtml(m.icon) + "</span> " + escHtml(m.text) + "</span>";
-        }).join("");
-      }
-
-      /* Description */
-      if (descEl) {
-        var desc = (isVi && room.desc_vi) ? room.desc_vi : (room.desc || "");
-        descEl.textContent = desc;
-      }
-
-      /* Amenities */
-      if (amenEl) {
-        var amenities = (isVi && room.amenities_vi) ? room.amenities_vi : (room.amenities || []);
-        amenEl.innerHTML = amenities.map(function (a) {
-          return '<span class="pill">' + escHtml(a) + "</span>";
-        }).join("");
-      }
-
-      /* Rebuild thumbnail strip */
-      if (thumbStrip) {
-        thumbStrip.innerHTML = "";
-        currentPhotos.forEach(function (photo, idx) {
-          var thumb = document.createElement("div");
-          thumb.className = "drawer-thumb";
-          thumb.setAttribute("role", "listitem"); /* required by role=list parent */
-          thumb.style.backgroundImage = "url(\"" + photo.src + "\")";
-          var altTxt = (isVi && photo.alt_vi) ? photo.alt_vi : (photo.alt || "Photo " + (idx + 1));
-          thumb.setAttribute("title", altTxt);
-          thumb.setAttribute("tabindex", "0");
-          /* Closure for index */
-          (function (photoIdx) {
-            thumb.addEventListener("click", function () { showPhoto(photoIdx); });
-            thumb.addEventListener("keydown", function (e) {
-              if (e.key === "Enter" || e.key === " ") { e.preventDefault(); showPhoto(photoIdx); }
-            });
-          }(idx));
-          thumbStrip.appendChild(thumb);
-        });
-      }
-
-      /* Show first photo (also updates counter and aria-current) */
-      showPhoto(0);
-    }
-
-    /* ── Open ── */
-    function openDrawer(roomIndex, lang) {
-      if (!drawer) return;
-      drawerLastFocus = document.activeElement || document.body;
-      currentLang = lang || window.cp12Lang || "vi";
-
-      populateDrawer(roomIndex, currentLang);
-
-      drawer.style.display = "block";
-      requestAnimationFrame(function () {
-        drawer.classList.add("open");
-      });
-      drawer.removeAttribute("aria-hidden");
-      /* Move focus to close button */
-      if (drawerClose) drawerClose.focus();
-      /* Prevent body scroll */
-      document.body.style.overflow = "hidden";
-    }
-
-    /* ── Close ── */
-    function closeDrawer() {
-      if (!drawer) return;
-      drawer.classList.remove("open");
-      drawer.setAttribute("aria-hidden", "true");
-      document.body.style.overflow = "";
-      setTimeout(function () {
-        drawer.style.display = "";
-      }, 350);
-      if (drawerLastFocus) drawerLastFocus.focus();
-    }
-
-    /* ── Refresh language (called by lang-switcher when user toggles language while drawer is open) ── */
-    function refreshDrawerLang(lang) {
-      if (currentRoomIndex === null || !drawer || !drawer.classList.contains("open")) return;
-      populateDrawer(currentRoomIndex, lang);
-    }
-
-    /* ── Expose globals ── */
-    window.cp12OpenRoomGallery    = openDrawer;
-    window.cp12CloseRoomGallery   = closeDrawer;
-    window.cp12RefreshDrawerLang  = refreshDrawerLang;
-
-    if (!drawer) return; /* No drawer element — safe exit */
-
-    /* ── Close button click ── */
-    if (drawerClose) drawerClose.addEventListener("click", closeDrawer);
-
-    /* ── Backdrop click ── */
-    drawer.addEventListener("click", function (e) {
-      if (e.target === drawer) closeDrawer();
-    });
-
-    /* ── Keyboard: Escape + ArrowLeft/Right + focus trap (WCAG 2.1 AA — SC 2.4.3) ── */
-    document.addEventListener("keydown", function (e) {
-      if (!drawer || !drawer.classList.contains("open")) return;
-
-      if (e.key === "Escape") {
-        closeDrawer();
-        return;
-      }
-
-      if (e.key === "ArrowLeft") {
-        e.preventDefault();
-        showPhoto(currentPhotoIndex - 1);
-        return;
-      }
-
-      if (e.key === "ArrowRight") {
-        e.preventDefault();
-        showPhoto(currentPhotoIndex + 1);
-        return;
-      }
-
-      /* Focus trap — algorithmic pattern (mirrors modal in scroll-reveal.js) */
-      if (e.key === "Tab") {
-        var focusable = drawer.querySelectorAll(
-          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-        );
-        if (!focusable.length) return;
-        var first = focusable[0];
-        var last  = focusable[focusable.length - 1];
-        if (e.shiftKey) {
-          if (document.activeElement === first) {
-            e.preventDefault();
-            last.focus();
-          }
-        } else {
-          if (document.activeElement === last) {
-            e.preventDefault();
-            first.focus();
-          }
-        }
-      }
-    });
-
-    /* ── Prev / Next buttons ── */
-    if (prevBtn) prevBtn.addEventListener("click", function () { showPhoto(currentPhotoIndex - 1); });
-    if (nextBtn) nextBtn.addEventListener("click", function () { showPhoto(currentPhotoIndex + 1); });
-
-  } catch (e) {
-    console.warn("[CP12] Room gallery init error:", e);
+  /* Cache parsed i18n strings per language to avoid repeated JSON.parse */
+  var stringsCache = {};
+  function loadStrings(lang) {
+    if (stringsCache[lang]) return stringsCache[lang];
+    var el = document.getElementById("lang-" + lang + "-data");
+    if (!el) return {};
+    try { stringsCache[lang] = JSON.parse(el.textContent); }
+    catch (e) { stringsCache[lang] = {}; }
+    return stringsCache[lang];
   }
+  function getString(key) {
+    var s = loadStrings(currentLang || "vi");
+    return s[key] || key;
+  }
+  function formatPhotoCount(n, total) {
+    return getString("panel.photoCount").replace("{n}", n).replace("{total}", total);
+  }
+
+  function escHtml(str) {
+    return String(str)
+      .replace(/&/g, "&amp;").replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+  }
+
+  /* CRIT-3: set aria-hidden via JS init, not static HTML */
+  panel.setAttribute("aria-hidden", "true");
+  /* IMPORTANT-1: inert blocks tab order when closed */
+  panel.inert = true;
+
+  /* ── Photo display ── */
+  function showPhoto(idx) {
+    if (!currentPhotos.length) return;
+    if (idx < 0) idx = currentPhotos.length - 1;
+    if (idx >= currentPhotos.length) idx = 0;
+    currentPhotoIndex = idx;
+
+    var photo   = currentPhotos[idx];
+    var caption = (currentLang === "vi" && photo.alt_vi) ? photo.alt_vi : (photo.alt || "");
+
+    /* Set via DOM API — no innerHTML url() injection risk */
+    mainImg.style.backgroundImage = "url(" + JSON.stringify(photo.src) + ")";
+    if (mainImg) mainImg.setAttribute("aria-label", caption);
+    if (mainCaption) mainCaption.textContent = caption;
+    if (counter) counter.textContent = formatPhotoCount(idx + 1, currentPhotos.length);
+
+    /* Update thumbnail active states */
+    var thumbs = thumbsCont ? thumbsCont.querySelectorAll(".panel-thumb") : [];
+    for (var i = 0; i < thumbs.length; i++) {
+      thumbs[i].classList.toggle("active", i === idx);
+      thumbs[i].setAttribute("aria-pressed", i === idx ? "true" : "false");
+    }
+  }
+
+  function buildThumbs() {
+    if (!thumbsCont) return;
+    thumbsCont.innerHTML = "";
+    currentPhotos.forEach(function (photo, idx) {
+      var btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "panel-thumb" + (idx === currentPhotoIndex ? " active" : "");
+      /* IMPORTANT-9: aria-label on thumbs — title attribute is unreliable for SRs */
+      var label = (currentLang === "vi" && photo.alt_vi) ? photo.alt_vi : (photo.alt || ("Photo " + (idx + 1)));
+      btn.setAttribute("aria-label", label);
+      btn.setAttribute("aria-pressed", idx === currentPhotoIndex ? "true" : "false");
+      btn.style.backgroundImage = "url(" + JSON.stringify(photo.src) + ")";
+      (function (i) {
+        btn.addEventListener("click", function () { showPhoto(i); });
+      }(idx));
+      thumbsCont.appendChild(btn);
+    });
+  }
+
+  /* ── Populate panel content for a given room + language ── */
+  function populatePanel(roomIndex, lang) {
+    var r = rooms[roomIndex];
+    if (!r) return;
+    currentLang = lang || "vi";
+    /* Invalidate string cache entry on language change (build.js may update strings) */
+    stringsCache = {};
+
+    var isVi     = currentLang === "vi";
+    var name     = (isVi && r.name_vi)     ? r.name_vi     : r.name;
+    var desc     = (isVi && r.desc_vi)     ? r.desc_vi     : r.desc;
+    var amenities= (isVi && r.amenities_vi)? r.amenities_vi: (r.amenities || []);
+    var metaList = (isVi && r.meta_vi)     ? r.meta_vi     : (r.meta || []);
+    var nightLbl = isVi ? "VND / đêm" : "VND / night";
+
+    if (panelName)  panelName.textContent  = name;
+    if (panelPrice) panelPrice.textContent = r.price + " " + nightLbl;
+    if (panelDesc)  panelDesc.textContent  = desc;
+
+    if (panelMeta) {
+      panelMeta.innerHTML = metaList.map(function (m) {
+        return "<span><span aria-hidden=\"true\">" + escHtml(m.icon) + "</span> " + escHtml(m.text) + "</span>";
+      }).join("");
+    }
+    if (panelAmen) {
+      panelAmen.innerHTML = amenities.map(function (a) {
+        return "<span class=\"panel-amenity-chip\">" + escHtml(a) + "</span>";
+      }).join("");
+    }
+
+    /* Photos: real photos array, or fall back to coverPhoto as single entry */
+    currentPhotos = [];
+    if (r.photos && r.photos.length > 0) {
+      currentPhotos = r.photos;
+    } else if (r.coverPhoto) {
+      currentPhotos = [{ src: r.coverPhoto, alt: name, alt_vi: name }];
+    }
+    currentPhotoIndex = 0;
+    buildThumbs();
+    if (currentPhotos.length > 0) showPhoto(0);
+
+    /* i18n button labels */
+    if (bookBtn)  bookBtn.textContent = getString("panel.bookBtn");
+    if (closeBtn) closeBtn.setAttribute("aria-label", getString("panel.close"));
+    if (prevBtn)  prevBtn.setAttribute("aria-label", getString("panel.prevPhoto"));
+    if (nextBtn)  nextBtn.setAttribute("aria-label", getString("panel.nextPhoto"));
+
+    /* CRIT-4: set region aria-label as static string + room name (no aria-labelledby) */
+    panel.setAttribute("aria-label", getString("panel.regionLabel") + " — " + name);
+  }
+
+  /* ── Scroll to panel after transition ends ── */
+  function scrollToPanel() {
+    panel.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  /* ── Open panel ── */
+  function openPanel(roomIndex, lang) {
+    panelLastFocus = document.activeElement;
+    var isSameRoom = (roomIndex === currentRoomIndex && isOpen);
+
+    /* Highlight selected card */
+    if (selectedCardEl) selectedCardEl.classList.remove("room-card--selected");
+    var grid = document.getElementById("rooms-grid");
+    if (grid) {
+      var cards = grid.querySelectorAll(".room-card");
+      if (cards[roomIndex]) {
+        selectedCardEl = cards[roomIndex];
+        selectedCardEl.classList.add("room-card--selected");
+      }
+    }
+    currentRoomIndex = roomIndex;
+    currentLang = lang || "vi";
+
+    if (isSameRoom) {
+      /* Already open on same room — just scroll */
+      scrollToPanel();
+      return;
+    }
+
+    if (isOpen) {
+      /* IMPORTANT-3: cross-room fade — opacity-out, repopulate, opacity-in */
+      panelInner.classList.add("panel-switching");
+      setTimeout(function () {
+        populatePanel(roomIndex, lang);
+        panelInner.classList.remove("panel-switching");
+      }, 200);
+    } else {
+      /* First open */
+      populatePanel(roomIndex, lang);
+      panel.removeAttribute("aria-hidden");
+      panel.inert = false;
+      isOpen = true;
+
+      /* Use rAF to ensure closed state is painted before adding .open */
+      requestAnimationFrame(function () {
+        panel.classList.add("open");
+
+        /* IMPORTANT-2: wait for max-height transition before scrollIntoView */
+        var scrolled = false;
+        function onTransitionEnd(e) {
+          if (e.propertyName !== "max-height") return;
+          if (scrolled) return;
+          scrolled = true;
+          panel.removeEventListener("transitionend", onTransitionEnd);
+          scrollToPanel();
+        }
+        panel.addEventListener("transitionend", onTransitionEnd);
+
+        /* Fallback for prefers-reduced-motion (no transition → transitionend never fires) */
+        setTimeout(function () {
+          if (!scrolled) {
+            scrolled = true;
+            panel.removeEventListener("transitionend", onTransitionEnd);
+            scrollToPanel();
+          }
+        }, 650);
+
+        /* Move focus into panel after it opens */
+        setTimeout(function () {
+          if (closeBtn) closeBtn.focus();
+        }, 100);
+      });
+    }
+  }
+
+  /* ── Close panel ── */
+  function closePanel() {
+    if (!isOpen) return;
+    isOpen = false;
+    panel.classList.remove("open");
+    panel.setAttribute("aria-hidden", "true");
+    panel.inert = true;
+
+    if (selectedCardEl) {
+      selectedCardEl.classList.remove("room-card--selected");
+      selectedCardEl = null;
+    }
+
+    /* Restore focus to the element that triggered the panel */
+    if (panelLastFocus && panelLastFocus.focus) {
+      panelLastFocus.focus();
+    }
+  }
+
+  /* ── Refresh language (called by lang-switcher IIFE 0) ── */
+  function refreshPanelLang(lang) {
+    currentLang = lang;
+    if (isOpen && currentRoomIndex >= 0) {
+      populatePanel(currentRoomIndex, lang);
+    }
+  }
+
+  /* ── Event listeners ── */
+  if (prevBtn)  prevBtn.addEventListener("click", function () { showPhoto(currentPhotoIndex - 1); });
+  if (nextBtn)  nextBtn.addEventListener("click", function () { showPhoto(currentPhotoIndex + 1); });
+  if (closeBtn) closeBtn.addEventListener("click", closePanel);
+
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && isOpen) closePanel();
+  });
+
+  /* ── Expose globals ── */
+  window.cp12OpenRoomPanel   = openPanel;
+  window.cp12CloseRoomPanel  = closePanel;
+  window.cp12RefreshPanelLang = refreshPanelLang;
 })();
 
 
@@ -905,8 +906,8 @@
         var target = document.getElementById(id);
         if (target) {
           e.preventDefault();
-          /* Close room gallery drawer if open before scrolling (IIFE 2) */
-          if (window.cp12CloseRoomGallery) window.cp12CloseRoomGallery();
+          /* Close room detail panel if open before scrolling (IIFE 2) */
+          if (window.cp12CloseRoomPanel) window.cp12CloseRoomPanel();
           var navH = (getNav() || {}).offsetHeight || 0;
           var targetTop =
             target.getBoundingClientRect().top +

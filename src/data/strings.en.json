@@ -102,5 +102,13 @@
   "drawer.prevPhoto": "Previous photo",
   "drawer.nextPhoto": "Next photo",
   "drawer.allPhotos": "All photos",
-  "drawer.photoCount": "Photo {n} of {total}"
+  "drawer.photoCount": "Photo {n} of {total}",
+
+  "panel.close": "Close room details",
+  "panel.prevPhoto": "Previous photo",
+  "panel.nextPhoto": "Next photo",
+  "panel.bookBtn": "Book This Room",
+  "panel.allPhotos": "All photos",
+  "panel.photoCount": "Photo {n} of {total}",
+  "panel.regionLabel": "Room details"
 }

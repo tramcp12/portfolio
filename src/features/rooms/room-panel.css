@@ -1,0 +1,282 @@
+/* ── 11. Room detail expansion panel ──────────────────────────
+ * src/features/rooms/room-panel.css
+ * ──────────────────────────────────────────────────────────── */
+
+/* IMPORTANT-7: All rules scoped under #cp12-wrap */
+
+#cp12-wrap .room-panel {
+  max-height: 0;
+  /* CRIT-2: overflow-y:auto (not hidden→visible toggle — avoids paint artifacts) */
+  overflow-y: auto;
+  /* CRIT-6: 85vh not 700px — prevents clipping on 16-photo rooms on tablet */
+  transition: max-height 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  background: var(--warm-white);
+  max-width: 1200px;
+  margin: 2px auto 0;
+  position: relative;
+}
+
+#cp12-wrap .room-panel.open {
+  max-height: 85vh;
+}
+
+/* IMPORTANT-3: cross-room opacity fade */
+#cp12-wrap .panel-inner {
+  opacity: 1;
+  transition: opacity 0.2s ease;
+  display: grid;
+  grid-template-columns: 55% 1fr;
+  min-height: 480px;
+}
+
+#cp12-wrap .panel-inner.panel-switching {
+  opacity: 0;
+}
+
+/* ── Gallery column (left 55%) ── */
+
+#cp12-wrap .panel-gallery {
+  display: flex;
+  flex-direction: column;
+  background: var(--pine-dark);
+  position: relative;
+}
+
+#cp12-wrap .panel-main-img {
+  flex: 1;
+  background-size: cover;
+  background-position: center;
+  background-color: var(--pine-dark);
+  min-height: 340px;
+}
+
+#cp12-wrap .panel-main-caption {
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.6);
+  padding: 0.5rem 1.5rem;
+  min-height: 1.8rem;
+  letter-spacing: 0.04em;
+  line-height: 1.4;
+}
+
+#cp12-wrap .panel-photo-nav {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.6rem 1.5rem;
+  background: rgba(26, 48, 40, 0.92);
+}
+
+#cp12-wrap .panel-prev,
+#cp12-wrap .panel-next {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: var(--warm-white);
+  width: 2.2rem;
+  height: 2.2rem;
+  cursor: pointer;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+#cp12-wrap .panel-prev:hover,
+#cp12-wrap .panel-next:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.65);
+}
+
+#cp12-wrap .panel-photo-counter {
+  flex: 1;
+  text-align: center;
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+#cp12-wrap .panel-thumbs {
+  display: flex;
+  gap: 2px;
+  padding: 0.5rem 1.5rem 0.75rem;
+  background: rgba(26, 48, 40, 0.92);
+  overflow-x: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+}
+
+#cp12-wrap .panel-thumb {
+  flex: 0 0 3.5rem;
+  height: 2.8rem;
+  background-size: cover;
+  background-position: center;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: border-color 0.2s, opacity 0.2s;
+  opacity: 0.55;
+}
+
+#cp12-wrap .panel-thumb.active,
+#cp12-wrap .panel-thumb:hover {
+  border-color: var(--gold);
+  opacity: 1;
+}
+
+/* ── Content column (right 45%) ── */
+
+#cp12-wrap .panel-content {
+  padding: 2.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  overflow-y: auto;
+}
+
+#cp12-wrap .panel-room-name {
+  font-family: var(--font-serif);
+  font-size: 1.9rem;
+  font-weight: 300;
+  color: var(--pine);
+  line-height: 1.15;
+}
+
+#cp12-wrap .panel-room-price {
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  color: var(--earth);
+  font-weight: 600;
+}
+
+#cp12-wrap .panel-room-meta {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  font-size: 0.75rem;
+  color: var(--slate);
+  letter-spacing: 0.06em;
+}
+
+#cp12-wrap .panel-room-meta span {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+#cp12-wrap .panel-room-desc {
+  font-size: 0.88rem;
+  line-height: 1.8;
+  color: var(--text-warm);
+  opacity: 0.85;
+  flex: 1;
+}
+
+#cp12-wrap .panel-amenities {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+#cp12-wrap .panel-amenity-chip {
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.7rem;
+  background: var(--cream);
+  color: var(--pine);
+  border: 1px solid rgba(45, 74, 62, 0.15);
+}
+
+#cp12-wrap .panel-book-btn {
+  display: inline-block;
+  margin-top: auto;
+  align-self: flex-start;
+  padding: 0.9rem 2rem;
+  background: var(--pine);
+  color: var(--warm-white);
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-weight: 500;
+  transition: background 0.3s;
+}
+
+#cp12-wrap .panel-book-btn:hover {
+  background: var(--pine-light);
+}
+
+/* ── Close button ── */
+
+#cp12-wrap .panel-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: rgba(26, 48, 40, 0.88);
+  border: none;
+  color: var(--warm-white);
+  width: 2.4rem;
+  height: 2.4rem;
+  cursor: pointer;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  transition: background 0.2s;
+}
+
+#cp12-wrap .panel-close:hover {
+  background: rgba(26, 48, 40, 1);
+}
+
+/* ── Selected card outline ── */
+
+#cp12-wrap .room-card--selected {
+  outline: 2px solid var(--gold);
+  outline-offset: -2px;
+}
+
+/* ── IMPORTANT-8: Reduced-motion guard ── */
+
+@media (prefers-reduced-motion: reduce) {
+  #cp12-wrap .room-panel {
+    transition: none;
+  }
+  #cp12-wrap .panel-inner {
+    transition: none;
+  }
+  #cp12-wrap .panel-thumb {
+    transition: none;
+  }
+  #cp12-wrap .panel-prev,
+  #cp12-wrap .panel-next {
+    transition: none;
+  }
+  #cp12-wrap .panel-close {
+    transition: none;
+  }
+  #cp12-wrap .panel-book-btn {
+    transition: none;
+  }
+}
+
+/* ── Mobile: single-column layout ── */
+
+@media (max-width: 768px) {
+  #cp12-wrap .panel-inner {
+    grid-template-columns: 1fr;
+  }
+  #cp12-wrap .panel-main-img {
+    min-height: 240px;
+  }
+  #cp12-wrap .panel-content {
+    padding: 1.5rem;
+  }
+  #cp12-wrap .panel-book-btn {
+    align-self: stretch;
+    text-align: center;
+    position: sticky;
+    bottom: 0;
+  }
+}

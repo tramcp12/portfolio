@@ -102,5 +102,13 @@
   "drawer.prevPhoto": "Ảnh trước",
   "drawer.nextPhoto": "Ảnh tiếp theo",
   "drawer.allPhotos": "Tất cả ảnh",
-  "drawer.photoCount": "Ảnh {n} / {total}"
+  "drawer.photoCount": "Ảnh {n} / {total}",
+
+  "panel.close": "Đóng chi tiết phòng",
+  "panel.prevPhoto": "Ảnh trước",
+  "panel.nextPhoto": "Ảnh tiếp theo",
+  "panel.bookBtn": "Đặt Phòng Này",
+  "panel.allPhotos": "Tất cả ảnh",
+  "panel.photoCount": "Ảnh {n} / {total}",
+  "panel.regionLabel": "Chi tiết phòng"
 }

@@ -104,10 +104,10 @@ function injectJson(id, data) {
     "\n    </script>";
 }
 
-/* ── HTML ── Phase 2+7: assemble from src/ partials
+/* ── HTML ── Phase 2+7+9: assemble from src/ partials
  * Order: shell-head → dots → chrome → main-open →
- *   home → video → rooms → explore → about → journal →
- *   main-close → cta → footer → modal → room-drawer → shell-close → jsonld
+ *   home → video → rooms (includes expansion panel) → explore → about → journal →
+ *   main-close → cta → footer → modal → shell-close → jsonld
  */
 var htmlParts = [
   readSrc("shell-head.html"),
@@ -124,8 +124,7 @@ var htmlParts = [
   readSrc("features/cta/cta.html.partial"),
   readSrc("layout/footer.html.partial"),
   readSrc("layout/modal.html.partial"),
-  // Phase 7: room gallery drawer — outside <main>, inside #cp12-wrap (dialog placement per ARIA spec)
-  readSrc("layout/room-drawer.html.partial"),
+  // Phase 9: room-panel is inside rooms.html.partial (no separate layout partial needed)
   "    </div>\n    <!-- /#cp12-wrap -->",
   // Phase 4+5: data injected before </body> so defer-loaded cp12.js can find them
   injectJson("lang-vi-data", stringsVi),
@@ -135,11 +134,11 @@ var htmlParts = [
 ];
 var html = htmlParts.join("\n");
 
-/* ── CSS  ── Phase 1+7: concat from src/ source files
+/* ── CSS  ── Phase 1+7+9: concat from src/ source files
  * Cascade order: tokens → reset → accessibility →
  *   nav → nav-mobile → dots → next-btn →
  *   buttons → section-labels → animations →
- *   home → video → rooms → room-gallery → explore → about → journal → cta →
+ *   home → video → rooms → room-panel → explore → about → journal → cta →
  *   footer → modal → responsive-sentinel → supports
  */
 var cssSources = [
@@ -156,7 +155,7 @@ var cssSources = [
   "features/home/home.css",
   "features/video/video.css",
   "features/rooms/rooms.css",
-  "features/rooms/room-gallery.css",
+  "features/rooms/room-panel.css",
   "features/explore/explore.css",
   "features/about/about.css",
   "features/journal/journal.css",
@@ -174,14 +173,14 @@ var bvCount = (css.match(/Be Vietnam Pro/g) || []).length;
 if (cgCount !== 1) throw new Error("CSS-1a build guard: Cormorant Garamond appears " + cgCount + " times (expected 1)");
 if (bvCount !== 1) throw new Error("CSS-1b build guard: Be Vietnam Pro appears " + bvCount + " times (expected 1)");
 
-/* ── JS   ── Phase 3+5+7: concat from src/ IIFE source files
- * Order: lang-switcher (IIFE 0) → rooms (IIFE 1) → room-gallery (IIFE 2) →
+/* ── JS   ── Phase 3+5+7+9: concat from src/ IIFE source files
+ * Order: lang-switcher (IIFE 0) → rooms (IIFE 1) → room-panel (IIFE 2) →
  *        video (IIFE 3) → explore (IIFE 4) → scroll-reveal (IIFE 5)
  */
 var jsSources = [
   "shared/lang-switcher.js",
   "features/rooms/rooms.js",
-  "shared/room-gallery.js",
+  "features/rooms/room-panel.js",
   "features/video/video.js",
   "features/explore/explore.js",
   "shared/scroll-reveal.js"

@@ -1313,7 +1313,7 @@ html.i18n-loading [data-i18n-html] {
   padding: 5rem 3rem 8rem; /* reduced top to remove dead-zone; keep generous bottom */
   background: var(--cream);
   position: relative;
-  overflow: hidden;
+  /* CRIT-2/IMPORTANT-5: overflow:hidden removed — it clips the expansion panel */
 }
 
 /* Section transition bands removed — sections now use natural body scroll */
@@ -1696,306 +1696,286 @@ html.i18n-loading [data-i18n-html] {
   }
 }
 
-/* ── 10b. Room Gallery Drawer ─────────────────────────────────
- * src/features/rooms/room-gallery.css
+/* ── 11. Room detail expansion panel ──────────────────────────
+ * src/features/rooms/room-panel.css
  * ──────────────────────────────────────────────────────────── */
 
-/* ── 1. Overlay ─────────────────────────────────────────────── */
-#cp12-wrap #cp12-room-drawer {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.55);
-  z-index: 500000; /* between sidebar (9000) and modal (1000000) */
-  display: none;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
+/* IMPORTANT-7: All rules scoped under #cp12-wrap */
 
-#cp12-wrap #cp12-room-drawer.open {
-  opacity: 1;
-}
-
-/* ── 2. Drawer inner panel (right-side slide-in) ────────────── */
-#cp12-wrap #cp12-room-drawer .drawer-inner {
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  width: 480px;
-  max-width: 100vw;
+#cp12-wrap .room-panel {
+  max-height: 0;
+  /* CRIT-2: overflow-y:auto (not hidden→visible toggle — avoids paint artifacts) */
+  overflow-y: auto;
+  /* CRIT-6: 85vh not 700px — prevents clipping on 16-photo rooms on tablet */
+  transition: max-height 0.6s cubic-bezier(0.22, 1, 0.36, 1);
   background: var(--warm-white);
+  max-width: 1200px;
+  margin: 2px auto 0;
+  position: relative;
+}
+
+#cp12-wrap .room-panel.open {
+  max-height: 85vh;
+}
+
+/* IMPORTANT-3: cross-room opacity fade */
+#cp12-wrap .panel-inner {
+  opacity: 1;
+  transition: opacity 0.2s ease;
+  display: grid;
+  grid-template-columns: 55% 1fr;
+  min-height: 480px;
+}
+
+#cp12-wrap .panel-inner.panel-switching {
+  opacity: 0;
+}
+
+/* ── Gallery column (left 55%) ── */
+
+#cp12-wrap .panel-gallery {
   display: flex;
   flex-direction: column;
-  transform: translateX(100%);
-  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
-  overflow-y: auto;
-  overscroll-behavior: contain; /* prevent background page scroll on mobile */
-  -webkit-overflow-scrolling: touch;
-}
-
-#cp12-wrap #cp12-room-drawer.open .drawer-inner {
-  transform: translateX(0);
-}
-
-/* Drag handle (top of bottom-sheet on mobile; hidden on desktop) */
-#cp12-wrap #cp12-room-drawer .drawer-handle {
-  display: none;
-  width: 40px;
-  height: 4px;
-  background: rgba(45, 74, 62, 0.2);
-  border-radius: 2px;
-  margin: 0.75rem auto 0;
-  flex-shrink: 0;
-}
-
-/* ── 3. Close button ────────────────────────────────────────── */
-#cp12-wrap #cp12-room-drawer .drawer-close {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  width: 44px;
-  height: 44px;
-  min-width: 44px;
-  border: none;
-  background: rgba(45, 74, 62, 0.08);
-  color: var(--pine);
-  cursor: pointer;
-  font-size: 1.1rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background-color 0.2s;
-  z-index: 2;
-}
-
-#cp12-wrap #cp12-room-drawer .drawer-close:hover {
-  background: rgba(45, 74, 62, 0.16);
-}
-
-/* ── 4. Gallery stage ───────────────────────────────────────── */
-#cp12-wrap #cp12-room-drawer .drawer-gallery {
+  background: var(--pine-dark);
   position: relative;
-  width: 100%;
-  aspect-ratio: 16/9;
-  background: var(--pine);
-  flex-shrink: 0;
 }
 
-#cp12-wrap #cp12-room-drawer .drawer-main-img {
-  position: absolute;
-  inset: 0;
+#cp12-wrap .panel-main-img {
+  flex: 1;
   background-size: cover;
   background-position: center;
-  background-repeat: no-repeat;
-  transition: background-image 0.25s ease;
+  background-color: var(--pine-dark);
+  min-height: 340px;
 }
 
-/* ── 5. Gallery navigation buttons ─────────────────────────── */
-#cp12-wrap #cp12-room-drawer .drawer-nav {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 44px;
-  height: 44px;
-  min-width: 44px;
-  border: none;
-  background: rgba(253, 250, 245, 0.85);
-  color: var(--pine);
+#cp12-wrap .panel-main-caption {
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.6);
+  padding: 0.5rem 1.5rem;
+  min-height: 1.8rem;
+  letter-spacing: 0.04em;
+  line-height: 1.4;
+}
+
+#cp12-wrap .panel-photo-nav {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.6rem 1.5rem;
+  background: rgba(26, 48, 40, 0.92);
+}
+
+#cp12-wrap .panel-prev,
+#cp12-wrap .panel-next {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: var(--warm-white);
+  width: 2.2rem;
+  height: 2.2rem;
   cursor: pointer;
-  font-size: 1.5rem;
+  font-size: 1rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background-color 0.2s, opacity 0.2s;
+  transition: background 0.2s, border-color 0.2s;
 }
 
-#cp12-wrap #cp12-room-drawer .drawer-nav-prev {
-  left: 0.75rem;
+#cp12-wrap .panel-prev:hover,
+#cp12-wrap .panel-next:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.65);
 }
 
-#cp12-wrap #cp12-room-drawer .drawer-nav-next {
-  right: 0.75rem;
-}
-
-#cp12-wrap #cp12-room-drawer .drawer-nav:hover {
-  background: var(--warm-white);
-}
-
-#cp12-wrap #cp12-room-drawer .drawer-nav:disabled,
-#cp12-wrap #cp12-room-drawer .drawer-nav[aria-disabled="true"] {
-  opacity: 0.35;
-  cursor: default;
-}
-
-/* Photo counter */
-#cp12-wrap #cp12-room-drawer .drawer-counter {
-  position: absolute;
-  bottom: 0.75rem;
-  left: 50%;
-  transform: translateX(-50%);
-  background: rgba(0, 0, 0, 0.45);
-  color: rgba(255, 255, 255, 0.9);
+#cp12-wrap .panel-photo-counter {
+  flex: 1;
+  text-align: center;
   font-size: 0.7rem;
   letter-spacing: 0.12em;
-  padding: 0.2rem 0.6rem;
-  font-family: var(--font-sans);
-  white-space: nowrap;
+  color: rgba(255, 255, 255, 0.65);
 }
 
-/* ── 6. Thumbnail strip ──────────────────────────────────────── */
-#cp12-wrap #cp12-room-drawer .drawer-thumbs {
+#cp12-wrap .panel-thumbs {
   display: flex;
-  gap: 0.35rem;
-  padding: 0.75rem 1.25rem;
+  gap: 2px;
+  padding: 0.5rem 1.5rem 0.75rem;
+  background: rgba(26, 48, 40, 0.92);
   overflow-x: auto;
-  flex-shrink: 0;
   scrollbar-width: thin;
-  scrollbar-color: var(--mist) transparent;
+  scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
 }
 
-#cp12-wrap #cp12-room-drawer .drawer-thumbs::-webkit-scrollbar {
-  height: 4px;
-}
-
-#cp12-wrap #cp12-room-drawer .drawer-thumbs::-webkit-scrollbar-thumb {
-  background: var(--mist);
-}
-
-#cp12-wrap #cp12-room-drawer .drawer-thumb {
-  width: 64px;
-  height: 48px;
-  flex-shrink: 0;
+#cp12-wrap .panel-thumb {
+  flex: 0 0 3.5rem;
+  height: 2.8rem;
   background-size: cover;
   background-position: center;
-  background-repeat: no-repeat;
-  cursor: pointer;
   border: 2px solid transparent;
+  cursor: pointer;
   transition: border-color 0.2s, opacity 0.2s;
-  opacity: 0.65;
+  opacity: 0.55;
 }
 
-#cp12-wrap #cp12-room-drawer .drawer-thumb:hover {
-  opacity: 0.9;
-}
-
-#cp12-wrap #cp12-room-drawer .drawer-thumb[aria-current="true"] {
+#cp12-wrap .panel-thumb.active,
+#cp12-wrap .panel-thumb:hover {
   border-color: var(--gold);
   opacity: 1;
 }
 
-/* ── 7. Room details ─────────────────────────────────────────── */
-#cp12-wrap #cp12-room-drawer .drawer-details {
-  padding: 1.5rem 1.5rem 0.75rem;
-  flex-grow: 1;
+/* ── Content column (right 45%) ── */
+
+#cp12-wrap .panel-content {
+  padding: 2.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  overflow-y: auto;
 }
 
-#cp12-wrap #cp12-room-drawer .drawer-room-name {
+#cp12-wrap .panel-room-name {
   font-family: var(--font-serif);
-  font-size: 1.5rem;
+  font-size: 1.9rem;
   font-weight: 300;
   color: var(--pine);
-  line-height: 1.2;
-  margin-bottom: 0.6rem;
+  line-height: 1.15;
 }
 
-#cp12-wrap #cp12-room-drawer .drawer-room-meta {
+#cp12-wrap .panel-room-price {
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  color: var(--earth);
+  font-weight: 600;
+}
+
+#cp12-wrap .panel-room-meta {
   display: flex;
-  gap: 1rem;
+  gap: 1.5rem;
   flex-wrap: wrap;
   font-size: 0.75rem;
-  letter-spacing: 0.08em;
-  color: var(--earth);
-  margin-bottom: 0.9rem;
+  color: var(--slate);
+  letter-spacing: 0.06em;
 }
 
-#cp12-wrap #cp12-room-drawer .drawer-room-meta span {
+#cp12-wrap .panel-room-meta span {
   display: flex;
   align-items: center;
   gap: 0.3rem;
 }
 
-#cp12-wrap #cp12-room-drawer .drawer-room-desc {
-  font-size: 0.85rem;
-  line-height: 1.7;
+#cp12-wrap .panel-room-desc {
+  font-size: 0.88rem;
+  line-height: 1.8;
   color: var(--text-warm);
-  opacity: 0.8;
-  margin-bottom: 1rem;
+  opacity: 0.85;
+  flex: 1;
 }
 
-#cp12-wrap #cp12-room-drawer .drawer-amenities {
+#cp12-wrap .panel-amenities {
   display: flex;
   flex-wrap: wrap;
   gap: 0.4rem;
-  margin-bottom: 0.75rem;
 }
 
-/* ── 8. Booking footer ───────────────────────────────────────── */
-#cp12-wrap #cp12-room-drawer .drawer-footer {
-  padding: 1rem 1.5rem 1.5rem;
-  border-top: 1px solid rgba(45, 74, 62, 0.1);
-  flex-shrink: 0;
+#cp12-wrap .panel-amenity-chip {
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.7rem;
+  background: var(--cream);
+  color: var(--pine);
+  border: 1px solid rgba(45, 74, 62, 0.15);
 }
 
-#cp12-wrap #cp12-room-drawer .drawer-book-btn {
-  display: block;
-  width: 100%;
-  text-align: center;
+#cp12-wrap .panel-book-btn {
+  display: inline-block;
+  margin-top: auto;
+  align-self: flex-start;
+  padding: 0.9rem 2rem;
+  background: var(--pine);
+  color: var(--warm-white);
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-weight: 500;
+  transition: background 0.3s;
 }
 
-/* ── 9. Reduced-motion guard ─────────────────────────────────── */
+#cp12-wrap .panel-book-btn:hover {
+  background: var(--pine-light);
+}
+
+/* ── Close button ── */
+
+#cp12-wrap .panel-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: rgba(26, 48, 40, 0.88);
+  border: none;
+  color: var(--warm-white);
+  width: 2.4rem;
+  height: 2.4rem;
+  cursor: pointer;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  transition: background 0.2s;
+}
+
+#cp12-wrap .panel-close:hover {
+  background: rgba(26, 48, 40, 1);
+}
+
+/* ── Selected card outline ── */
+
+#cp12-wrap .room-card--selected {
+  outline: 2px solid var(--gold);
+  outline-offset: -2px;
+}
+
+/* ── IMPORTANT-8: Reduced-motion guard ── */
+
 @media (prefers-reduced-motion: reduce) {
-  #cp12-wrap #cp12-room-drawer {
+  #cp12-wrap .room-panel {
     transition: none;
   }
-  #cp12-wrap #cp12-room-drawer .drawer-inner {
+  #cp12-wrap .panel-inner {
     transition: none;
   }
-  #cp12-wrap #cp12-room-drawer .drawer-main-img {
+  #cp12-wrap .panel-thumb {
+    transition: none;
+  }
+  #cp12-wrap .panel-prev,
+  #cp12-wrap .panel-next {
+    transition: none;
+  }
+  #cp12-wrap .panel-close {
+    transition: none;
+  }
+  #cp12-wrap .panel-book-btn {
     transition: none;
   }
 }
 
-/* ── 10. Mobile: bottom sheet at ≤768px ─────────────────────── */
+/* ── Mobile: single-column layout ── */
+
 @media (max-width: 768px) {
-  #cp12-wrap #cp12-room-drawer .drawer-handle {
-    display: block;
+  #cp12-wrap .panel-inner {
+    grid-template-columns: 1fr;
   }
-
-  #cp12-wrap #cp12-room-drawer .drawer-inner {
-    top: auto;
-    right: 0;
-    left: 0;
+  #cp12-wrap .panel-main-img {
+    min-height: 240px;
+  }
+  #cp12-wrap .panel-content {
+    padding: 1.5rem;
+  }
+  #cp12-wrap .panel-book-btn {
+    align-self: stretch;
+    text-align: center;
+    position: sticky;
     bottom: 0;
-    width: 100%;
-    max-width: 100vw;
-    max-height: 85vh;
-    overflow-y: auto;
-    border-radius: 16px 16px 0 0;
-    transform: translateY(100%);
-    /* Prevent background page scroll when bottom sheet is open */
-    overscroll-behavior: contain;
-  }
-
-  #cp12-wrap #cp12-room-drawer.open .drawer-inner {
-    transform: translateY(0);
-  }
-
-  #cp12-wrap #cp12-room-drawer .drawer-gallery {
-    aspect-ratio: 4/3;
-  }
-}
-
-@media (max-width: 480px) {
-  #cp12-wrap #cp12-room-drawer .drawer-details {
-    padding: 1.25rem 1.25rem 0.5rem;
-  }
-
-  #cp12-wrap #cp12-room-drawer .drawer-footer {
-    padding: 0.75rem 1.25rem 1.25rem;
-  }
-
-  #cp12-wrap #cp12-room-drawer .drawer-room-name {
-    font-size: 1.3rem;
   }
 }
 
