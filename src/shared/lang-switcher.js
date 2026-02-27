@@ -33,6 +33,13 @@
       if (strings[hkey] !== undefined) htmlEls[j].innerHTML = strings[hkey];
     }
 
+    /* data-i18n-aria-label: translate aria-label attribute */
+    var ariaEls = document.querySelectorAll("[data-i18n-aria-label]");
+    for (var k = 0; k < ariaEls.length; k++) {
+      var akey = ariaEls[k].getAttribute("data-i18n-aria-label");
+      if (strings[akey] !== undefined) ariaEls[k].setAttribute("aria-label", strings[akey]);
+    }
+
     /* Update <html lang="…"> */
     document.documentElement.lang = lang;
 

@@ -27,10 +27,10 @@
           type="button"
           id="cp12-lang-btn"
           class="lang-btn"
-          aria-label="Switch to Vietnamese"
+          aria-label="Switch to English"
           aria-pressed="false"
         >
-          <span class="lang-active">EN</span><span class="lang-sep" aria-hidden="true">|</span><span class="lang-alt">VI</span>
+          <span class="lang-active">VI</span><span class="lang-sep" aria-hidden="true">|</span><span class="lang-alt">EN</span>
         </button>
         <button
           type="button"

@@ -846,6 +846,11 @@ html.i18n-loading [data-i18n-html] {
   #cp12-next-btn {
     animation: none;
   }
+  /* Suppress infinite glow pulse on CTA button (WCAG 2.1 SC 2.3.3) */
+  #cp12-wrap .sect-book.animated .btn-primary {
+    animation-name: cp12ScaleUp;
+    animation-iteration-count: 1;
+  }
   /* CRIT-2: Disable smooth scroll for users with vestibular/motion sensitivity (WCAG 2.1 SC 2.3.3) */
   #cp12-wrap {
     scroll-behavior: auto;
@@ -1615,17 +1620,21 @@ html.i18n-loading [data-i18n-html] {
   transform: translateY(40px);
   transition: none;
 }
-#cp12-wrap .sect-rooms.animated .room-card:nth-child(1) {
+/* Scalable stagger: base delay 0.15s + 0.13s per card (works for any card count) */
+#cp12-wrap .sect-rooms.animated .room-card {
   animation: cp12ScaleUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.15s forwards;
 }
 #cp12-wrap .sect-rooms.animated .room-card:nth-child(2) {
-  animation: cp12ScaleUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.28s forwards;
+  animation-delay: 0.28s;
 }
 #cp12-wrap .sect-rooms.animated .room-card:nth-child(3) {
-  animation: cp12ScaleUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.41s forwards;
+  animation-delay: 0.41s;
 }
 #cp12-wrap .sect-rooms.animated .room-card:nth-child(4) {
-  animation: cp12ScaleUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.54s forwards;
+  animation-delay: 0.54s;
+}
+#cp12-wrap .sect-rooms.animated .room-card:nth-child(n+5) {
+  animation-delay: 0.67s;
 }
 
 /* ── Rooms responsive rules ──────────────────────────────── */
@@ -1904,23 +1913,27 @@ html.i18n-loading [data-i18n-html] {
   opacity: 0;
   transform: translateY(32px);
 }
-#cp12-wrap .sect-explore.animated .travel-card:nth-child(1) {
+/* Scalable stagger: base delay 0.12s + 0.10s per card (works for any card count) */
+#cp12-wrap .sect-explore.animated .travel-card {
   animation: cp12fu 0.65s cubic-bezier(0.22, 1, 0.36, 1) 0.12s forwards;
 }
 #cp12-wrap .sect-explore.animated .travel-card:nth-child(2) {
-  animation: cp12fu 0.65s cubic-bezier(0.22, 1, 0.36, 1) 0.22s forwards;
+  animation-delay: 0.22s;
 }
 #cp12-wrap .sect-explore.animated .travel-card:nth-child(3) {
-  animation: cp12fu 0.65s cubic-bezier(0.22, 1, 0.36, 1) 0.32s forwards;
+  animation-delay: 0.32s;
 }
 #cp12-wrap .sect-explore.animated .travel-card:nth-child(4) {
-  animation: cp12fu 0.65s cubic-bezier(0.22, 1, 0.36, 1) 0.42s forwards;
+  animation-delay: 0.42s;
 }
 #cp12-wrap .sect-explore.animated .travel-card:nth-child(5) {
-  animation: cp12fu 0.65s cubic-bezier(0.22, 1, 0.36, 1) 0.52s forwards;
+  animation-delay: 0.52s;
 }
 #cp12-wrap .sect-explore.animated .travel-card:nth-child(6) {
-  animation: cp12fu 0.65s cubic-bezier(0.22, 1, 0.36, 1) 0.62s forwards;
+  animation-delay: 0.62s;
+}
+#cp12-wrap .sect-explore.animated .travel-card:nth-child(n+7) {
+  animation-delay: 0.72s;
 }
 
 /* ── Explore responsive rules ────────────────────────────── */

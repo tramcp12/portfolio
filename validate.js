@@ -2,7 +2,7 @@
 /**
  * validate.js — Architectural invariant checker for Trạm CP12
  *
- * Checks 11 invariants across index.html, cp12.css, cp12.js.
+ * Checks 14 invariants across index.html, cp12.css, cp12.js, and i18n data.
  * Exit 0 = all pass. Exit 1 = one or more failures.
  */
 
@@ -15,6 +15,8 @@ var root = path.dirname(__filename);
 var html = fs.readFileSync(path.join(root, "index.html"), "utf8");
 var css  = fs.readFileSync(path.join(root, "cp12.css"),   "utf8");
 var js   = fs.readFileSync(path.join(root, "cp12.js"),    "utf8");
+var stringsVi = JSON.parse(fs.readFileSync(path.join(root, "src", "data", "strings.vi.json"), "utf8"));
+var stringsEn = JSON.parse(fs.readFileSync(path.join(root, "src", "data", "strings.en.json"), "utf8"));
 
 var failures = [];
 var passes   = [];
@@ -65,8 +67,21 @@ check("H-1", "og:image meta tag present in index.html", /property="og:image"/.te
 /* ── A-2: No legacy img/ URL references in cp12.css (all images under static/) ── */
 check("A-2", "No legacy url(img/...) references in cp12.css", !/url\(["']?img\//.test(css));
 
+/* ── I18N-1: strings.vi.json and strings.en.json have the same key count ── */
+var viKeys = Object.keys(stringsVi);
+var enKeys = Object.keys(stringsEn);
+check("I18N-1", "strings.vi.json and strings.en.json have equal key counts (vi=" + viKeys.length + ", en=" + enKeys.length + ")", viKeys.length === enKeys.length);
+
+/* ── I18N-2: every key in strings.vi.json exists in strings.en.json ── */
+var missingInEn = viKeys.filter(function (k) { return !(k in stringsEn); });
+check("I18N-2", "All vi keys present in en (missing: " + (missingInEn.length ? missingInEn.join(", ") : "none") + ")", missingInEn.length === 0);
+
+/* ── I18N-3: every key in strings.en.json exists in strings.vi.json ── */
+var missingInVi = enKeys.filter(function (k) { return !(k in stringsVi); });
+check("I18N-3", "All en keys present in vi (missing: " + (missingInVi.length ? missingInVi.join(", ") : "none") + ")", missingInVi.length === 0);
+
 /* ── Output ── */
-console.log("\nTraạm CP12 — Architectural Invariants\n");
+console.log("\nTr\u1ea1m CP12 \u2014 Architectural Invariants\n");
 passes.forEach(function (p) { console.log(p); });
 if (failures.length) {
   console.log("");

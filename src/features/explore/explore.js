@@ -1,5 +1,6 @@
 /* ── 2. Travel filter tabs ────────────────────────────────── */
 (function () {
+  try {
   var wrap = document.getElementById("cp12-wrap");
   var tabs = wrap ? wrap.querySelectorAll(".filter-tabs .tab") : [];
   var cards = wrap ? wrap.querySelectorAll(".travel-card") : [];
@@ -23,8 +24,10 @@
     }
     /* CRIT-3: Announce result count via dedicated status element (not tabpanel) */
     if (status) {
-      status.textContent =
-        count + " destination" + (count !== 1 ? "s" : "") + " shown";
+      var isVi = window.cp12Lang === "vi";
+      status.textContent = isVi
+        ? count + " điểm đến được hiển thị"
+        : count + " destination" + (count !== 1 ? "s" : "") + " shown";
     }
   }
 
@@ -39,4 +42,5 @@
       filterCards(this.getAttribute("data-filter"), this.id);
     });
   });
+  } catch (e) { console.warn("[CP12] explore init error:", e); }
 })();
