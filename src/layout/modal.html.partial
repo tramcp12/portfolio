@@ -13,14 +13,15 @@
             class="modal-close"
             id="cp12ModalClose"
             aria-label="Close video"
+            data-i18n-aria-label="modal.close"
           >
             &times;
           </button>
           <div class="modal-video-placeholder">
             <span id="modalTitle"
-              ><span aria-hidden="true">🎥</span> CP12 Welcome Film</span
+              ><span aria-hidden="true">🎥</span> <span data-i18n="modal.title">CP12 Welcome Film</span></span
             >
-            <p class="modal-note">
+            <p class="modal-note" data-i18n="modal.note">
               Video coming soon — follow us on Instagram for behind-the-scenes
               content while we edit!
             </p>

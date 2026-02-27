@@ -33,6 +33,13 @@
       if (strings[hkey] !== undefined) htmlEls[j].innerHTML = strings[hkey];
     }
 
+    /* data-i18n-aria-label: translate aria-label attribute */
+    var ariaEls = document.querySelectorAll("[data-i18n-aria-label]");
+    for (var k = 0; k < ariaEls.length; k++) {
+      var akey = ariaEls[k].getAttribute("data-i18n-aria-label");
+      if (strings[akey] !== undefined) ariaEls[k].setAttribute("aria-label", strings[akey]);
+    }
+
     /* Update <html lang="…"> */
     document.documentElement.lang = lang;
 
@@ -167,31 +174,34 @@
 
 /* ── 1. Hero / Video ──────────────────────────────────────── */
 (function () {
-  var heroPlay = document.getElementById("heroPlayBtn");
-  var videoFrame = document.getElementById("videoFrame");
+  try {
+    var heroPlay = document.getElementById("heroPlayBtn");
+    var videoFrame = document.getElementById("videoFrame");
 
-  if (heroPlay) {
-    heroPlay.addEventListener("click", function () {
-      if (window.cp12OpenModal) window.cp12OpenModal(heroPlay);
-    });
-  }
+    if (heroPlay) {
+      heroPlay.addEventListener("click", function () {
+        if (window.cp12OpenModal) window.cp12OpenModal(heroPlay);
+      });
+    }
 
-  if (videoFrame) {
-    videoFrame.addEventListener("click", function () {
-      if (window.cp12OpenModal) window.cp12OpenModal(videoFrame);
-    });
-    videoFrame.addEventListener("keydown", function (e) {
-      if (e.key === "Enter" || e.key === " ") {
-        e.preventDefault();
+    if (videoFrame) {
+      videoFrame.addEventListener("click", function () {
         if (window.cp12OpenModal) window.cp12OpenModal(videoFrame);
-      }
-    });
-  }
+      });
+      videoFrame.addEventListener("keydown", function (e) {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          if (window.cp12OpenModal) window.cp12OpenModal(videoFrame);
+        }
+      });
+    }
+  } catch (e) { console.warn("[CP12] video init error:", e); }
 })();
 
 
 /* ── 2. Travel filter tabs ────────────────────────────────── */
 (function () {
+  try {
   var wrap = document.getElementById("cp12-wrap");
   var tabs = wrap ? wrap.querySelectorAll(".filter-tabs .tab") : [];
   var cards = wrap ? wrap.querySelectorAll(".travel-card") : [];
@@ -215,8 +225,10 @@
     }
     /* CRIT-3: Announce result count via dedicated status element (not tabpanel) */
     if (status) {
-      status.textContent =
-        count + " destination" + (count !== 1 ? "s" : "") + " shown";
+      var isVi = window.cp12Lang === "vi";
+      status.textContent = isVi
+        ? count + " điểm đến được hiển thị"
+        : count + " destination" + (count !== 1 ? "s" : "") + " shown";
     }
   }
 
@@ -231,6 +243,7 @@
       filterCards(this.getAttribute("data-filter"), this.id);
     });
   });
+  } catch (e) { console.warn("[CP12] explore init error:", e); }
 })();
 
 
