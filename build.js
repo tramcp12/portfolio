@@ -106,8 +106,8 @@ function injectJson(id, data) {
 
 /* ── HTML ── Phase 2+7+9: assemble from src/ partials
  * Order: shell-head → dots → chrome → main-open →
- *   home → video → rooms (includes expansion panel) → explore → about → journal →
- *   main-close → cta → footer → modal → shell-close → jsonld
+ *   home → video → rooms → explore → about → journal →
+ *   main-close → cta → footer → modal → room-modal → shell-close → jsonld
  */
 var htmlParts = [
   readSrc("shell-head.html"),
@@ -124,7 +124,8 @@ var htmlParts = [
   readSrc("features/cta/cta.html.partial"),
   readSrc("layout/footer.html.partial"),
   readSrc("layout/modal.html.partial"),
-  // Phase 9: room-panel is inside rooms.html.partial (no separate layout partial needed)
+  // Phase 9: room detail modal — outside <main>, inside #cp12-wrap (B-1 invariant)
+  readSrc("layout/room-modal.html.partial"),
   "    </div>\n    <!-- /#cp12-wrap -->",
   // Phase 4+5: data injected before </body> so defer-loaded cp12.js can find them
   injectJson("lang-vi-data", stringsVi),
@@ -138,7 +139,7 @@ var html = htmlParts.join("\n");
  * Cascade order: tokens → reset → accessibility →
  *   nav → nav-mobile → dots → next-btn →
  *   buttons → section-labels → animations →
- *   home → video → rooms → room-panel → explore → about → journal → cta →
+ *   home → video → rooms → room-modal → explore → about → journal → cta →
  *   footer → modal → responsive-sentinel → supports
  */
 var cssSources = [
@@ -155,7 +156,7 @@ var cssSources = [
   "features/home/home.css",
   "features/video/video.css",
   "features/rooms/rooms.css",
-  "features/rooms/room-panel.css",
+  "features/rooms/room-modal.css",
   "features/explore/explore.css",
   "features/about/about.css",
   "features/journal/journal.css",
@@ -174,13 +175,13 @@ if (cgCount !== 1) throw new Error("CSS-1a build guard: Cormorant Garamond appea
 if (bvCount !== 1) throw new Error("CSS-1b build guard: Be Vietnam Pro appears " + bvCount + " times (expected 1)");
 
 /* ── JS   ── Phase 3+5+7+9: concat from src/ IIFE source files
- * Order: lang-switcher (IIFE 0) → rooms (IIFE 1) → room-panel (IIFE 2) →
+ * Order: lang-switcher (IIFE 0) → rooms (IIFE 1) → room-modal (IIFE 2) →
  *        video (IIFE 3) → explore (IIFE 4) → scroll-reveal (IIFE 5)
  */
 var jsSources = [
   "shared/lang-switcher.js",
   "features/rooms/rooms.js",
-  "features/rooms/room-panel.js",
+  "features/rooms/room-modal.js",
   "features/video/video.js",
   "features/explore/explore.js",
   "shared/scroll-reveal.js"

@@ -1,76 +1,89 @@
-/* ── 11. Room detail expansion panel ──────────────────────────
- * src/features/rooms/room-panel.css
+/* ── 11. Room detail modal ─────────────────────────────────────
+ * src/features/rooms/room-modal.css
+ * All rules scoped under #cp12-wrap
  * ──────────────────────────────────────────────────────────── */
 
-/* IMPORTANT-7: All rules scoped under #cp12-wrap */
+/* ── Overlay ── */
 
-#cp12-wrap .room-panel {
-  max-height: 0;
-  /* CRIT-2: overflow-y:auto (not hidden→visible toggle — avoids paint artifacts) */
-  overflow-y: auto;
-  /* CRIT-6: 85vh not 700px — prevents clipping on 16-photo rooms on tablet */
-  transition: max-height 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-  background: var(--warm-white);
-  max-width: 1200px;
-  margin: 2px auto 0;
-  position: relative;
+#cp12-wrap .room-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 100000;
+  /* Pine-dark backdrop — brand-consistent, slightly less opaque than video modal */
+  background: rgba(26, 48, 40, 0.88);
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
 }
 
-#cp12-wrap .room-panel.open {
-  max-height: 85vh;
+#cp12-wrap .room-modal.open {
+  display: flex;
 }
 
-/* IMPORTANT-3: cross-room opacity fade */
-#cp12-wrap .panel-inner {
-  opacity: 1;
-  transition: opacity 0.2s ease;
+/* ── Inner container ── */
+
+#cp12-wrap .room-modal-inner {
   display: grid;
   grid-template-columns: 55% 1fr;
-  min-height: 480px;
+  max-width: 960px;
+  max-height: 90vh;
+  width: 100%;
+  background: var(--warm-white);
+  overflow: hidden;
+  position: relative;
+  animation: roomModalIn 0.32s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-#cp12-wrap .panel-inner.panel-switching {
+@keyframes roomModalIn {
+  from { opacity: 0; transform: scale(0.96); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* Cross-room switching: fade content while repopulating */
+#cp12-wrap .room-modal-inner.room-modal-switching {
   opacity: 0;
+  transition: opacity 0.2s ease;
 }
 
 /* ── Gallery column (left 55%) ── */
 
-#cp12-wrap .panel-gallery {
+#cp12-wrap .room-modal-gallery {
   display: flex;
   flex-direction: column;
   background: var(--pine-dark);
-  position: relative;
+  overflow: hidden;
 }
 
-#cp12-wrap .panel-main-img {
+#cp12-wrap .room-modal-main-img {
   flex: 1;
   background-size: cover;
   background-position: center;
   background-color: var(--pine-dark);
-  min-height: 340px;
+  min-height: 320px;
 }
 
-#cp12-wrap .panel-main-caption {
+#cp12-wrap .room-modal-caption {
   font-size: 0.7rem;
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.58);
   padding: 0.5rem 1.5rem;
   min-height: 1.8rem;
   letter-spacing: 0.04em;
   line-height: 1.4;
 }
 
-#cp12-wrap .panel-photo-nav {
+#cp12-wrap .room-modal-photo-nav {
   display: flex;
   align-items: center;
   gap: 1rem;
   padding: 0.6rem 1.5rem;
-  background: rgba(26, 48, 40, 0.92);
+  background: rgba(26, 48, 40, 0.94);
 }
 
-#cp12-wrap .panel-prev,
-#cp12-wrap .panel-next {
+#cp12-wrap .room-modal-prev,
+#cp12-wrap .room-modal-next {
   background: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.28);
   color: var(--warm-white);
   width: 2.2rem;
   height: 2.2rem;
@@ -80,52 +93,55 @@
   align-items: center;
   justify-content: center;
   transition: background 0.2s, border-color 0.2s;
+  /* Minimum touch target 44×44 */
+  min-width: 44px;
+  min-height: 44px;
 }
 
-#cp12-wrap .panel-prev:hover,
-#cp12-wrap .panel-next:hover {
+#cp12-wrap .room-modal-prev:hover,
+#cp12-wrap .room-modal-next:hover {
   background: rgba(255, 255, 255, 0.15);
   border-color: rgba(255, 255, 255, 0.65);
 }
 
-#cp12-wrap .panel-photo-counter {
+#cp12-wrap .room-modal-counter {
   flex: 1;
   text-align: center;
   font-size: 0.7rem;
   letter-spacing: 0.12em;
-  color: rgba(255, 255, 255, 0.65);
+  color: rgba(255, 255, 255, 0.62);
 }
 
-#cp12-wrap .panel-thumbs {
+#cp12-wrap .room-modal-thumbs {
   display: flex;
   gap: 2px;
   padding: 0.5rem 1.5rem 0.75rem;
-  background: rgba(26, 48, 40, 0.92);
+  background: rgba(26, 48, 40, 0.94);
   overflow-x: auto;
   scrollbar-width: thin;
   scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
 }
 
-#cp12-wrap .panel-thumb {
-  flex: 0 0 3.5rem;
+#cp12-wrap .room-modal-thumb {
+  flex: 0 0 3.4rem;
   height: 2.8rem;
   background-size: cover;
   background-position: center;
   border: 2px solid transparent;
   cursor: pointer;
   transition: border-color 0.2s, opacity 0.2s;
-  opacity: 0.55;
+  opacity: 0.52;
 }
 
-#cp12-wrap .panel-thumb.active,
-#cp12-wrap .panel-thumb:hover {
+#cp12-wrap .room-modal-thumb.active,
+#cp12-wrap .room-modal-thumb:hover {
   border-color: var(--gold);
   opacity: 1;
 }
 
 /* ── Content column (right 45%) ── */
 
-#cp12-wrap .panel-content {
+#cp12-wrap .room-modal-content {
   padding: 2.5rem 2rem;
   display: flex;
   flex-direction: column;
@@ -133,7 +149,7 @@
   overflow-y: auto;
 }
 
-#cp12-wrap .panel-room-name {
+#cp12-wrap .room-modal-name {
   font-family: var(--font-serif);
   font-size: 1.9rem;
   font-weight: 300;
@@ -141,14 +157,14 @@
   line-height: 1.15;
 }
 
-#cp12-wrap .panel-room-price {
+#cp12-wrap .room-modal-price {
   font-family: var(--font-serif);
   font-size: 1.25rem;
   color: var(--earth);
   font-weight: 600;
 }
 
-#cp12-wrap .panel-room-meta {
+#cp12-wrap .room-modal-meta {
   display: flex;
   gap: 1.5rem;
   flex-wrap: wrap;
@@ -157,13 +173,13 @@
   letter-spacing: 0.06em;
 }
 
-#cp12-wrap .panel-room-meta span {
+#cp12-wrap .room-modal-meta span {
   display: flex;
   align-items: center;
   gap: 0.3rem;
 }
 
-#cp12-wrap .panel-room-desc {
+#cp12-wrap .room-modal-desc {
   font-size: 0.88rem;
   line-height: 1.8;
   color: var(--text-warm);
@@ -171,13 +187,13 @@
   flex: 1;
 }
 
-#cp12-wrap .panel-amenities {
+#cp12-wrap .room-modal-amenities {
   display: flex;
   flex-wrap: wrap;
   gap: 0.4rem;
 }
 
-#cp12-wrap .panel-amenity-chip {
+#cp12-wrap .room-modal-amenity-chip {
   font-size: 0.65rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -187,7 +203,7 @@
   border: 1px solid rgba(45, 74, 62, 0.15);
 }
 
-#cp12-wrap .panel-book-btn {
+#cp12-wrap .room-modal-book-btn {
   display: inline-block;
   margin-top: auto;
   align-self: flex-start;
@@ -202,21 +218,23 @@
   transition: background 0.3s;
 }
 
-#cp12-wrap .panel-book-btn:hover {
+#cp12-wrap .room-modal-book-btn:hover {
   background: var(--pine-light);
 }
 
 /* ── Close button ── */
 
-#cp12-wrap .panel-close {
+#cp12-wrap .room-modal-close {
   position: absolute;
-  top: 1rem;
-  right: 1rem;
-  background: rgba(26, 48, 40, 0.88);
+  top: 0.75rem;
+  right: 0.75rem;
+  background: rgba(26, 48, 40, 0.85);
   border: none;
   color: var(--warm-white);
   width: 2.4rem;
   height: 2.4rem;
+  min-width: 44px;
+  min-height: 44px;
   cursor: pointer;
   font-size: 1.1rem;
   display: flex;
@@ -226,37 +244,37 @@
   transition: background 0.2s;
 }
 
-#cp12-wrap .panel-close:hover {
+#cp12-wrap .room-modal-close:hover {
   background: rgba(26, 48, 40, 1);
 }
 
-/* ── Selected card outline ── */
+/* ── Selected card outline (visible before modal opens + after close) ── */
 
 #cp12-wrap .room-card--selected {
   outline: 2px solid var(--gold);
   outline-offset: -2px;
 }
 
-/* ── IMPORTANT-8: Reduced-motion guard ── */
+/* ── Reduced-motion guard ── */
 
 @media (prefers-reduced-motion: reduce) {
-  #cp12-wrap .room-panel {
+  #cp12-wrap .room-modal-inner {
+    animation: none;
+  }
+  #cp12-wrap .room-modal-inner.room-modal-switching {
     transition: none;
   }
-  #cp12-wrap .panel-inner {
+  #cp12-wrap .room-modal-thumb {
     transition: none;
   }
-  #cp12-wrap .panel-thumb {
+  #cp12-wrap .room-modal-prev,
+  #cp12-wrap .room-modal-next {
     transition: none;
   }
-  #cp12-wrap .panel-prev,
-  #cp12-wrap .panel-next {
+  #cp12-wrap .room-modal-close {
     transition: none;
   }
-  #cp12-wrap .panel-close {
-    transition: none;
-  }
-  #cp12-wrap .panel-book-btn {
+  #cp12-wrap .room-modal-book-btn {
     transition: none;
   }
 }
@@ -264,19 +282,25 @@
 /* ── Mobile: single-column layout ── */
 
 @media (max-width: 768px) {
-  #cp12-wrap .panel-inner {
+  #cp12-wrap .room-modal {
+    padding: 0;
+    align-items: flex-end;
+  }
+  #cp12-wrap .room-modal-inner {
     grid-template-columns: 1fr;
+    max-width: 100%;
+    max-height: 95vh;
+    width: 100%;
+    border-radius: 0;
   }
-  #cp12-wrap .panel-main-img {
-    min-height: 240px;
+  #cp12-wrap .room-modal-main-img {
+    min-height: 220px;
   }
-  #cp12-wrap .panel-content {
+  #cp12-wrap .room-modal-content {
     padding: 1.5rem;
   }
-  #cp12-wrap .panel-book-btn {
+  #cp12-wrap .room-modal-book-btn {
     align-self: stretch;
     text-align: center;
-    position: sticky;
-    bottom: 0;
   }
 }

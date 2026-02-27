@@ -22,42 +22,5 @@
 
           <!-- Rendered at runtime from #rooms-data JSON by cp12.js IIFE 1 -->
           <div id="rooms-grid" class="rooms-grid"></div>
-
-          <!-- Room detail expansion panel — IIFE 2 (room-panel.js) populates & controls this.
-               aria-hidden and inert are set by JS init (not static HTML — CRIT-3).
-               aria-label set by JS populatePanel (CRIT-4 — no aria-labelledby). -->
-          <div
-            id="cp12-room-panel"
-            class="room-panel"
-            role="region"
-          >
-            <div class="panel-inner">
-              <button type="button" class="panel-close">
-                <span aria-hidden="true">✕</span>
-              </button>
-              <div class="panel-gallery">
-                <div class="panel-main-img" role="img" aria-label=""></div>
-                <p class="panel-main-caption"></p>
-                <div class="panel-photo-nav">
-                  <button type="button" class="panel-prev">
-                    <span aria-hidden="true">←</span>
-                  </button>
-                  <span class="panel-photo-counter" aria-live="polite"></span>
-                  <button type="button" class="panel-next">
-                    <span aria-hidden="true">→</span>
-                  </button>
-                </div>
-                <div class="panel-thumbs"></div>
-              </div>
-              <div class="panel-content">
-                <h3 class="panel-room-name"></h3>
-                <p class="panel-room-price"></p>
-                <div class="panel-room-meta"></div>
-                <p class="panel-room-desc"></p>
-                <div class="panel-amenities"></div>
-                <a href="#book" class="panel-book-btn btn-primary"></a>
-              </div>
-            </div>
-          </div>
         </section>
 

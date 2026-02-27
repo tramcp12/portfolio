@@ -100,10 +100,10 @@
         cards[roomIndex].addEventListener("click", function (e) {
           /* Don't intercept clicks on the "Book this room" anchor */
           if (e.target.closest("a")) return;
-          if (window.cp12OpenRoomPanel) {
-            window.cp12OpenRoomPanel(roomIndex, window.cp12Lang || "vi");
+          if (window.cp12OpenRoomModal) {
+            window.cp12OpenRoomModal(roomIndex, window.cp12Lang || "vi");
           } else {
-            console.warn("[CP12] cp12OpenRoomPanel not available");
+            console.warn("[CP12] room modal not ready");
           }
         });
         /* Keyboard activation: Enter/Space on the card itself */
@@ -113,8 +113,8 @@
         cards[roomIndex].addEventListener("keydown", function (e) {
           if (e.key === "Enter" || e.key === " ") {
             e.preventDefault();
-            if (window.cp12OpenRoomPanel) {
-              window.cp12OpenRoomPanel(roomIndex, window.cp12Lang || "vi");
+            if (window.cp12OpenRoomModal) {
+              window.cp12OpenRoomModal(roomIndex, window.cp12Lang || "vi");
             }
           }
         });

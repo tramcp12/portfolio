@@ -80,11 +80,10 @@ check("I18N-2", "All vi keys present in en (missing: " + (missingInEn.length ? m
 var missingInVi = enKeys.filter(function (k) { return !(k in stringsVi); });
 check("I18N-3", "All en keys present in vi (missing: " + (missingInVi.length ? missingInVi.join(", ") : "none") + ")", missingInVi.length === 0);
 
-/* ── B-1: Room panel exists in index.html and is placed inside #rooms section ── */
-var panelExists = /id="cp12-room-panel"/.test(html);
-/* Confirm panel appears inside <section ... id="rooms" ...> ... </section> */
-var panelInsideRooms = /<section[^>]*id="rooms"[^>]*>[\s\S]*?id="cp12-room-panel"[\s\S]*?<\/section>/.test(html);
-check("B-1", "cp12-room-panel exists in index.html and is inside #rooms section", panelExists && panelInsideRooms);
+/* ── B-1: Room modal exists in index.html and is placed outside <main> ── */
+var roomModalExists     = /id="cp12-room-modal"/.test(html);
+var roomModalInsideMain = /<main[\s\S]*?id="cp12-room-modal"[\s\S]*?<\/main>/.test(html);
+check("B-1", "cp12-room-modal exists in index.html and is outside <main>", roomModalExists && !roomModalInsideMain);
 
 /* ── Output ── */
 console.log("\nTr\u1ea1m CP12 \u2014 Architectural Invariants\n");

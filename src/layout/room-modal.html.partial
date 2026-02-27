@@ -1,0 +1,41 @@
+
+      <!-- Room detail modal — outside <main>, inside #cp12-wrap (B-1 invariant).
+           aria-hidden set by JS init (CRIT-3). aria-label set by JS populateModal (CRIT-4). -->
+      <div
+        id="cp12-room-modal"
+        class="room-modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="cp12-room-modal-title"
+      >
+        <div class="room-modal-inner">
+          <button type="button" class="room-modal-close">
+            <span aria-hidden="true">✕</span>
+          </button>
+
+          <div class="room-modal-gallery">
+            <div class="room-modal-main-img" role="img" aria-label=""></div>
+            <p class="room-modal-caption"></p>
+            <div class="room-modal-photo-nav">
+              <button type="button" class="room-modal-prev">
+                <span aria-hidden="true">←</span>
+              </button>
+              <span class="room-modal-counter" aria-live="polite"></span>
+              <button type="button" class="room-modal-next">
+                <span aria-hidden="true">→</span>
+              </button>
+            </div>
+            <div class="room-modal-thumbs"></div>
+          </div>
+
+          <div class="room-modal-content">
+            <h3 id="cp12-room-modal-title" class="room-modal-name"></h3>
+            <p class="room-modal-price"></p>
+            <div class="room-modal-meta"></div>
+            <p class="room-modal-desc"></p>
+            <div class="room-modal-amenities"></div>
+            <a href="#book" class="room-modal-book-btn btn-primary"></a>
+          </div>
+        </div>
+      </div>
+

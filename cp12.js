@@ -61,8 +61,8 @@
     /* Re-render room cards with the new language */
     if (window.cp12RenderRooms) window.cp12RenderRooms(lang);
 
-    /* Refresh room detail panel if open (IIFE 2 exposes this) */
-    if (window.cp12RefreshPanelLang) window.cp12RefreshPanelLang(lang);
+    /* Refresh room detail modal if open (IIFE 2 exposes this) */
+    if (window.cp12RefreshModalLang) window.cp12RefreshModalLang(lang);
 
     /* Persist preference */
     try { localStorage.setItem(STORAGE_KEY, lang); } catch (e) {}
@@ -196,10 +196,10 @@
         cards[roomIndex].addEventListener("click", function (e) {
           /* Don't intercept clicks on the "Book this room" anchor */
           if (e.target.closest("a")) return;
-          if (window.cp12OpenRoomPanel) {
-            window.cp12OpenRoomPanel(roomIndex, window.cp12Lang || "vi");
+          if (window.cp12OpenRoomModal) {
+            window.cp12OpenRoomModal(roomIndex, window.cp12Lang || "vi");
           } else {
-            console.warn("[CP12] cp12OpenRoomPanel not available");
+            console.warn("[CP12] room modal not ready");
           }
         });
         /* Keyboard activation: Enter/Space on the card itself */
@@ -209,8 +209,8 @@
         cards[roomIndex].addEventListener("keydown", function (e) {
           if (e.key === "Enter" || e.key === " ") {
             e.preventDefault();
-            if (window.cp12OpenRoomPanel) {
-              window.cp12OpenRoomPanel(roomIndex, window.cp12Lang || "vi");
+            if (window.cp12OpenRoomModal) {
+              window.cp12OpenRoomModal(roomIndex, window.cp12Lang || "vi");
             }
           }
         });
@@ -226,25 +226,25 @@
 })();
 
 
-/* ── 2. Room detail expansion panel ─────────────────────────── */
+/* ── 2. Room detail modal ────────────────────────────────────── */
 (function () {
-  var panel = document.getElementById("cp12-room-panel");
-  if (!panel) return;
+  var modal = document.getElementById("cp12-room-modal");
+  if (!modal) return;
 
-  var panelInner   = panel.querySelector(".panel-inner");
-  var mainImg      = panel.querySelector(".panel-main-img");
-  var mainCaption  = panel.querySelector(".panel-main-caption");
-  var counter      = panel.querySelector(".panel-photo-counter");
-  var thumbsCont   = panel.querySelector(".panel-thumbs");
-  var prevBtn      = panel.querySelector(".panel-prev");
-  var nextBtn      = panel.querySelector(".panel-next");
-  var closeBtn     = panel.querySelector(".panel-close");
-  var bookBtn      = panel.querySelector(".panel-book-btn");
-  var panelName    = panel.querySelector(".panel-room-name");
-  var panelPrice   = panel.querySelector(".panel-room-price");
-  var panelDesc    = panel.querySelector(".panel-room-desc");
-  var panelAmen    = panel.querySelector(".panel-amenities");
-  var panelMeta    = panel.querySelector(".panel-room-meta");
+  var modalInner  = modal.querySelector(".room-modal-inner");
+  var mainImg     = modal.querySelector(".room-modal-main-img");
+  var caption     = modal.querySelector(".room-modal-caption");
+  var counter     = modal.querySelector(".room-modal-counter");
+  var thumbsCont  = modal.querySelector(".room-modal-thumbs");
+  var prevBtn     = modal.querySelector(".room-modal-prev");
+  var nextBtn     = modal.querySelector(".room-modal-next");
+  var closeBtn    = modal.querySelector(".room-modal-close");
+  var bookBtn     = modal.querySelector(".room-modal-book-btn");
+  var modalName   = modal.querySelector(".room-modal-name");
+  var modalPrice  = modal.querySelector(".room-modal-price");
+  var modalDesc   = modal.querySelector(".room-modal-desc");
+  var modalAmen   = modal.querySelector(".room-modal-amenities");
+  var modalMeta   = modal.querySelector(".room-modal-meta");
 
   var rooms = [];
   try {
@@ -257,7 +257,8 @@
   var currentPhotos     = [];
   var currentLang       = "vi";
   var selectedCardEl    = null;
-  var panelLastFocus    = null;
+  var lastFocus         = null;
+  var savedScrollY      = 0;
   var isOpen            = false;
 
   /* Cache parsed i18n strings per language to avoid repeated JSON.parse */
@@ -271,8 +272,7 @@
     return stringsCache[lang];
   }
   function getString(key) {
-    var s = loadStrings(currentLang || "vi");
-    return s[key] || key;
+    return loadStrings(currentLang || "vi")[key] || key;
   }
   function formatPhotoCount(n, total) {
     return getString("panel.photoCount").replace("{n}", n).replace("{total}", total);
@@ -284,10 +284,9 @@
       .replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
   }
 
-  /* CRIT-3: set aria-hidden via JS init, not static HTML */
-  panel.setAttribute("aria-hidden", "true");
-  /* IMPORTANT-1: inert blocks tab order when closed */
-  panel.inert = true;
+  /* CRIT-3: set aria-hidden via JS init — display:none alone is sufficient for AT
+   * but we also need aria-hidden so removeAttribute("aria-hidden") signals open state */
+  modal.setAttribute("aria-hidden", "true");
 
   /* ── Photo display ── */
   function showPhoto(idx) {
@@ -296,17 +295,16 @@
     if (idx >= currentPhotos.length) idx = 0;
     currentPhotoIndex = idx;
 
-    var photo   = currentPhotos[idx];
-    var caption = (currentLang === "vi" && photo.alt_vi) ? photo.alt_vi : (photo.alt || "");
+    var photo    = currentPhotos[idx];
+    var altLabel = (currentLang === "vi" && photo.alt_vi) ? photo.alt_vi : (photo.alt || "");
 
-    /* Set via DOM API — no innerHTML url() injection risk */
+    /* Set via DOM API — no innerHTML url() injection */
     mainImg.style.backgroundImage = "url(" + JSON.stringify(photo.src) + ")";
-    if (mainImg) mainImg.setAttribute("aria-label", caption);
-    if (mainCaption) mainCaption.textContent = caption;
+    mainImg.setAttribute("aria-label", altLabel);
+    if (caption) caption.textContent = altLabel;
     if (counter) counter.textContent = formatPhotoCount(idx + 1, currentPhotos.length);
 
-    /* Update thumbnail active states */
-    var thumbs = thumbsCont ? thumbsCont.querySelectorAll(".panel-thumb") : [];
+    var thumbs = thumbsCont ? thumbsCont.querySelectorAll(".room-modal-thumb") : [];
     for (var i = 0; i < thumbs.length; i++) {
       thumbs[i].classList.toggle("active", i === idx);
       thumbs[i].setAttribute("aria-pressed", i === idx ? "true" : "false");
@@ -319,8 +317,8 @@
     currentPhotos.forEach(function (photo, idx) {
       var btn = document.createElement("button");
       btn.type = "button";
-      btn.className = "panel-thumb" + (idx === currentPhotoIndex ? " active" : "");
-      /* IMPORTANT-9: aria-label on thumbs — title attribute is unreliable for SRs */
+      btn.className = "room-modal-thumb" + (idx === currentPhotoIndex ? " active" : "");
+      /* IMPORTANT-9 pattern: aria-label on thumbs, not title */
       var label = (currentLang === "vi" && photo.alt_vi) ? photo.alt_vi : (photo.alt || ("Photo " + (idx + 1)));
       btn.setAttribute("aria-label", label);
       btn.setAttribute("aria-pressed", idx === currentPhotoIndex ? "true" : "false");
@@ -332,13 +330,12 @@
     });
   }
 
-  /* ── Populate panel content for a given room + language ── */
-  function populatePanel(roomIndex, lang) {
+  /* ── Populate modal for a given room + language ── */
+  function populateModal(roomIndex, lang) {
     var r = rooms[roomIndex];
     if (!r) return;
     currentLang = lang || "vi";
-    /* Invalidate string cache entry on language change (build.js may update strings) */
-    stringsCache = {};
+    stringsCache = {}; /* invalidate cache on lang change */
 
     var isVi     = currentLang === "vi";
     var name     = (isVi && r.name_vi)     ? r.name_vi     : r.name;
@@ -347,22 +344,21 @@
     var metaList = (isVi && r.meta_vi)     ? r.meta_vi     : (r.meta || []);
     var nightLbl = isVi ? "VND / đêm" : "VND / night";
 
-    if (panelName)  panelName.textContent  = name;
-    if (panelPrice) panelPrice.textContent = r.price + " " + nightLbl;
-    if (panelDesc)  panelDesc.textContent  = desc;
+    if (modalName)  modalName.textContent  = name;
+    if (modalPrice) modalPrice.textContent = r.price + " " + nightLbl;
+    if (modalDesc)  modalDesc.textContent  = desc;
 
-    if (panelMeta) {
-      panelMeta.innerHTML = metaList.map(function (m) {
+    if (modalMeta) {
+      modalMeta.innerHTML = metaList.map(function (m) {
         return "<span><span aria-hidden=\"true\">" + escHtml(m.icon) + "</span> " + escHtml(m.text) + "</span>";
       }).join("");
     }
-    if (panelAmen) {
-      panelAmen.innerHTML = amenities.map(function (a) {
-        return "<span class=\"panel-amenity-chip\">" + escHtml(a) + "</span>";
+    if (modalAmen) {
+      modalAmen.innerHTML = amenities.map(function (a) {
+        return "<span class=\"room-modal-amenity-chip\">" + escHtml(a) + "</span>";
       }).join("");
     }
 
-    /* Photos: real photos array, or fall back to coverPhoto as single entry */
     currentPhotos = [];
     if (r.photos && r.photos.length > 0) {
       currentPhotos = r.photos;
@@ -373,27 +369,21 @@
     buildThumbs();
     if (currentPhotos.length > 0) showPhoto(0);
 
-    /* i18n button labels */
+    /* i18n labels */
     if (bookBtn)  bookBtn.textContent = getString("panel.bookBtn");
     if (closeBtn) closeBtn.setAttribute("aria-label", getString("panel.close"));
     if (prevBtn)  prevBtn.setAttribute("aria-label", getString("panel.prevPhoto"));
     if (nextBtn)  nextBtn.setAttribute("aria-label", getString("panel.nextPhoto"));
 
-    /* CRIT-4: set region aria-label as static string + room name (no aria-labelledby) */
-    panel.setAttribute("aria-label", getString("panel.regionLabel") + " — " + name);
+    /* Set dialog accessible name (CRIT-4 pattern — static string via JS) */
+    modal.setAttribute("aria-label", getString("panel.regionLabel") + " — " + name);
   }
 
-  /* ── Scroll to panel after transition ends ── */
-  function scrollToPanel() {
-    panel.scrollIntoView({ behavior: "smooth", block: "start" });
-  }
+  /* ── Open modal ── */
+  function openModal(roomIndex, lang) {
+    if (isOpen && roomIndex === currentRoomIndex) return; /* same room, already open */
 
-  /* ── Open panel ── */
-  function openPanel(roomIndex, lang) {
-    panelLastFocus = document.activeElement;
-    var isSameRoom = (roomIndex === currentRoomIndex && isOpen);
-
-    /* Highlight selected card */
+    /* Update selected card highlight */
     if (selectedCardEl) selectedCardEl.classList.remove("room-card--selected");
     var grid = document.getElementById("rooms-grid");
     if (grid) {
@@ -406,98 +396,107 @@
     currentRoomIndex = roomIndex;
     currentLang = lang || "vi";
 
-    if (isSameRoom) {
-      /* Already open on same room — just scroll */
-      scrollToPanel();
+    if (isOpen) {
+      /* Cross-room swap: fade content, repopulate, fade back */
+      modalInner.classList.add("room-modal-switching");
+      setTimeout(function () {
+        populateModal(roomIndex, lang);
+        modalInner.classList.remove("room-modal-switching");
+      }, 200);
       return;
     }
 
-    if (isOpen) {
-      /* IMPORTANT-3: cross-room fade — opacity-out, repopulate, opacity-in */
-      panelInner.classList.add("panel-switching");
-      setTimeout(function () {
-        populatePanel(roomIndex, lang);
-        panelInner.classList.remove("panel-switching");
-      }, 200);
-    } else {
-      /* First open */
-      populatePanel(roomIndex, lang);
-      panel.removeAttribute("aria-hidden");
-      panel.inert = false;
-      isOpen = true;
+    /* First open */
+    lastFocus    = document.activeElement;
+    savedScrollY = window.pageYOffset || window.scrollY;
 
-      /* Use rAF to ensure closed state is painted before adding .open */
-      requestAnimationFrame(function () {
-        panel.classList.add("open");
+    populateModal(roomIndex, lang);
+    modal.removeAttribute("aria-hidden");
+    modal.style.display = "flex";
+    document.body.style.overflow = "hidden";
+    isOpen = true;
 
-        /* IMPORTANT-2: wait for max-height transition before scrollIntoView */
-        var scrolled = false;
-        function onTransitionEnd(e) {
-          if (e.propertyName !== "max-height") return;
-          if (scrolled) return;
-          scrolled = true;
-          panel.removeEventListener("transitionend", onTransitionEnd);
-          scrollToPanel();
-        }
-        panel.addEventListener("transitionend", onTransitionEnd);
+    requestAnimationFrame(function () {
+      modal.classList.add("open");
+    });
 
-        /* Fallback for prefers-reduced-motion (no transition → transitionend never fires) */
-        setTimeout(function () {
-          if (!scrolled) {
-            scrolled = true;
-            panel.removeEventListener("transitionend", onTransitionEnd);
-            scrollToPanel();
-          }
-        }, 650);
-
-        /* Move focus into panel after it opens */
-        setTimeout(function () {
-          if (closeBtn) closeBtn.focus();
-        }, 100);
-      });
-    }
+    setTimeout(function () {
+      if (closeBtn) closeBtn.focus();
+    }, 50);
   }
 
-  /* ── Close panel ── */
-  function closePanel() {
+  /* ── Close modal ── */
+  function closeModal() {
     if (!isOpen) return;
     isOpen = false;
-    panel.classList.remove("open");
-    panel.setAttribute("aria-hidden", "true");
-    panel.inert = true;
+
+    modal.classList.remove("open");
+    modal.setAttribute("aria-hidden", "true");
+    document.body.style.overflow = "";
 
     if (selectedCardEl) {
       selectedCardEl.classList.remove("room-card--selected");
       selectedCardEl = null;
     }
 
-    /* Restore focus to the element that triggered the panel */
-    if (panelLastFocus && panelLastFocus.focus) {
-      panelLastFocus.focus();
-    }
+    setTimeout(function () {
+      modal.style.display = "none";
+      /* Restore scroll position after display:none to avoid layout shift */
+      window.scrollTo({ top: savedScrollY, behavior: "instant" });
+    }, 320);
+
+    if (lastFocus && lastFocus.focus) lastFocus.focus();
   }
 
   /* ── Refresh language (called by lang-switcher IIFE 0) ── */
-  function refreshPanelLang(lang) {
+  function refreshModalLang(lang) {
     currentLang = lang;
     if (isOpen && currentRoomIndex >= 0) {
-      populatePanel(currentRoomIndex, lang);
+      populateModal(currentRoomIndex, lang);
     }
   }
 
-  /* ── Event listeners ── */
-  if (prevBtn)  prevBtn.addEventListener("click", function () { showPhoto(currentPhotoIndex - 1); });
-  if (nextBtn)  nextBtn.addEventListener("click", function () { showPhoto(currentPhotoIndex + 1); });
-  if (closeBtn) closeBtn.addEventListener("click", closePanel);
-
+  /* ── Focus trap (WCAG 2.1 AA SC 2.4.3) ── */
   document.addEventListener("keydown", function (e) {
-    if (e.key === "Escape" && isOpen) closePanel();
+    if (e.key !== "Tab" || !isOpen) return;
+    var focusable = modal.querySelectorAll(
+      "button, [href], input, select, textarea, [tabindex]:not([tabindex=\"-1\"])"
+    );
+    if (!focusable.length) return;
+    var first = focusable[0];
+    var last  = focusable[focusable.length - 1];
+    if (e.shiftKey) {
+      if (document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      }
+    } else {
+      if (document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    }
   });
 
+  /* ── Keyboard: Escape closes modal ── */
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && isOpen) closeModal();
+  });
+
+  /* ── Backdrop click: close if click lands on overlay (not inner) ── */
+  modal.addEventListener("click", function (e) {
+    if (e.target === modal) closeModal();
+  });
+
+  /* ── Photo nav ── */
+  if (prevBtn)  prevBtn.addEventListener("click", function () { showPhoto(currentPhotoIndex - 1); });
+  if (nextBtn)  nextBtn.addEventListener("click", function () { showPhoto(currentPhotoIndex + 1); });
+  if (closeBtn) closeBtn.addEventListener("click", closeModal);
+
   /* ── Expose globals ── */
-  window.cp12OpenRoomPanel   = openPanel;
-  window.cp12CloseRoomPanel  = closePanel;
-  window.cp12RefreshPanelLang = refreshPanelLang;
+  window.cp12OpenRoomModal    = openModal;
+  window.cp12CloseRoomModal   = closeModal;
+  window.cp12RefreshModalLang = refreshModalLang;
 })();
 
 
@@ -906,8 +905,8 @@
         var target = document.getElementById(id);
         if (target) {
           e.preventDefault();
-          /* Close room detail panel if open before scrolling (IIFE 2) */
-          if (window.cp12CloseRoomPanel) window.cp12CloseRoomPanel();
+          /* Close room detail modal if open before scrolling (IIFE 2) */
+          if (window.cp12CloseRoomModal) window.cp12CloseRoomModal();
           var navH = (getNav() || {}).offsetHeight || 0;
           var targetTop =
             target.getBoundingClientRect().top +
