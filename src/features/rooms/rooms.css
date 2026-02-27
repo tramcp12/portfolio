@@ -45,12 +45,23 @@
 
 #cp12-wrap .rooms-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  /* Phase 8: auto-fill for 7 rooms — 3-col on wide, 2-col on medium, 1-col on mobile */
+  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
   gap: 2px;
   max-width: 1200px;
   margin: 0 auto;
   position: relative;
   z-index: 1;
+}
+
+/* Phase 8: lone last card in a 3-col row spans full width — centered, capped at 480px.
+ * Works correctly for N=7 (7th card is alone in row 3).
+ * Edge case N=4: 4th card alone in row 2 → same centering behavior (intentional). */
+#cp12-wrap .rooms-grid .room-card:last-child:nth-child(3n+1) {
+  grid-column: 1 / -1;
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 #cp12-wrap .room-card {
@@ -71,6 +82,11 @@
   inset: 0;
   transition: transform 0.6s ease;
   will-change: transform;
+  /* Phase 8: real photos fill the image area */
+  background-size: cover;
+  background-position: center;
+  /* Phase 8: neutral fallback when neither coverPhoto nor bgClass is present */
+  background-color: var(--pine-dark);
 }
 
 #cp12-wrap .room-card:hover .room-img-bg {
@@ -313,29 +329,23 @@
   transform: translateY(40px);
   transition: none;
 }
-/* Scalable stagger: base delay 0.15s + 0.13s per card (works for any card count) */
+/* Phase 8: explicit stagger for all 7 cards — cleaner cascade than shared nth-child(n+5) */
 #cp12-wrap .sect-rooms.animated .room-card {
   animation: cp12ScaleUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.15s forwards;
 }
-#cp12-wrap .sect-rooms.animated .room-card:nth-child(2) {
-  animation-delay: 0.28s;
-}
-#cp12-wrap .sect-rooms.animated .room-card:nth-child(3) {
-  animation-delay: 0.41s;
-}
-#cp12-wrap .sect-rooms.animated .room-card:nth-child(4) {
-  animation-delay: 0.54s;
-}
-#cp12-wrap .sect-rooms.animated .room-card:nth-child(n+5) {
-  animation-delay: 0.67s;
-}
+#cp12-wrap .sect-rooms.animated .room-card:nth-child(2) { animation-delay: 0.28s; }
+#cp12-wrap .sect-rooms.animated .room-card:nth-child(3) { animation-delay: 0.41s; }
+#cp12-wrap .sect-rooms.animated .room-card:nth-child(4) { animation-delay: 0.54s; }
+#cp12-wrap .sect-rooms.animated .room-card:nth-child(5) { animation-delay: 0.67s; }
+#cp12-wrap .sect-rooms.animated .room-card:nth-child(6) { animation-delay: 0.80s; }
+#cp12-wrap .sect-rooms.animated .room-card:nth-child(7) { animation-delay: 0.93s; }
+#cp12-wrap .sect-rooms.animated .room-card:nth-child(n+8) { animation-delay: 0.93s; }
 
 /* ── Rooms responsive rules ──────────────────────────────── */
 
 @media (max-width: 900px) {
-  #cp12-wrap .rooms-grid {
-    grid-template-columns: 1fr;
-  }
+  /* Phase 8: rooms-grid uses auto-fill — no override needed; it goes 3→2→1 naturally.
+   * rooms-header still collapses from 2-col to 1-col at 900px. */
   #cp12-wrap .rooms-header {
     grid-template-columns: 1fr;
   }

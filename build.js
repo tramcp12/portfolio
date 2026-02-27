@@ -66,6 +66,9 @@ function run(cmd) {
 
 /* ── Assembly ─────────────────────────────────────────────────────────────── */
 
+/* ── Phase 8: --allow-draft flag bypasses empty name/price guard for local editing ── */
+var allowDraft = process.argv.indexOf("--allow-draft") !== -1;
+
 console.log("\nBuilding Trạm CP12...\n");
 
 /* ── Data ── Phase 4 + 5: load src/data/ JSON files ──────────────────────── */
@@ -229,6 +232,45 @@ roomsData.forEach(function (room, idx) {
     }
   });
 });
+
+/* ── Phase 8a: coverPhoto asset guard — validate coverPhoto paths in rooms.json ─ */
+/* Catches broken cover image references at build time. */
+roomsData.forEach(function (room, idx) {
+  if (!room.coverPhoto) return; /* no coverPhoto — gradient fallback, skip */
+  var coverPath = path.join(root, room.coverPhoto);
+  if (!fs.existsSync(coverPath)) {
+    throw new Error(
+      "Phase 8 asset guard: coverPhoto missing for room[" + idx + "] (id: " + (room.id || room.name) + "):\n" +
+      "  coverPhoto: \"" + room.coverPhoto + "\"\n" +
+      "  Full path: " + coverPath + "\n" +
+      "  Add the image or remove coverPhoto from rooms.json."
+    );
+  }
+});
+
+/* ── Phase 8b: Empty name/price guard — CRIT-3 from design review ─────────── */
+/* Prevents deploying rooms with placeholder/empty content. Use --allow-draft
+ * to bypass during local editing. CI never passes --allow-draft.               */
+if (!allowDraft) {
+  roomsData.forEach(function (room, idx) {
+    if (!room.name || !room.price) {
+      throw new Error(
+        "Phase 8 data guard: rooms[" + idx + "] (id: " + (room.id || "?") + ") has empty name or price.\n" +
+        "  Fill in rooms.json before building for production.\n" +
+        "  To bypass during editing, run: node build.js --allow-draft"
+      );
+    }
+  });
+}
+
+/* ── Phase 8c: LCP preload injection — first room cover prefetch ─────────── */
+/* Rooms section is below the fold; this is a scroll-proximity prefetch, not LCP.
+ * No fetchpriority attribute — let the browser schedule it after critical resources. */
+var roomsPreloadTag = "";
+if (roomsData[0] && roomsData[0].coverPhoto) {
+  roomsPreloadTag = '<link rel="preload" as="image" href="' + roomsData[0].coverPhoto + '" >';
+}
+html = html.replace("<!-- @ROOMS_COVER_PRELOAD@ -->", roomsPreloadTag);
 
 writeRoot("index.html", html);
 writeRoot("cp12.css",   css);

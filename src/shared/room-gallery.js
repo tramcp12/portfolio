@@ -113,8 +113,11 @@
       currentRoomIndex  = roomIndex;
       currentPhotos     = Array.isArray(room.photos) ? room.photos : [];
 
-      /* Room name */
-      if (nameEl) nameEl.textContent = escHtml(room.name) ? room.name : "";
+      /* Room name — CRIT-2: use name_vi when language is Vietnamese */
+      if (nameEl) {
+        var displayName = (isVi && room.name_vi) ? room.name_vi : (room.name || "");
+        nameEl.textContent = displayName;
+      }
 
       /* Meta */
       if (metaEl) {
