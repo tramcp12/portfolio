@@ -153,13 +153,13 @@
           <div class="footer-col">
             <span class="footer-col-title" data-i18n="footer.col.rooms">Rooms</span>
             <ul class="footer-links">
-              <li><a href="#rooms">Phòng Đơn Jan 01</a></li>
-              <li><a href="#rooms">Phòng Đôi Feb 02</a></li>
-              <li><a href="#rooms">Phòng Đơn Mar 03</a></li>
-              <li><a href="#rooms">Phòng Đơn Aug 08</a></li>
-              <li><a href="#rooms">Phòng Đơn Sep 09</a></li>
-              <li><a href="#rooms">Phòng Đơn Oct 10</a></li>
-              <li><a href="#rooms">Phòng Đơn Nov 11</a></li>
+              <li><a href="#rooms" data-i18n="footer.room.jan01">Phòng Đơn Jan 01</a></li>
+              <li><a href="#rooms" data-i18n="footer.room.feb02">Phòng Đôi Feb 02</a></li>
+              <li><a href="#rooms" data-i18n="footer.room.mar03">Phòng Đơn Mar 03</a></li>
+              <li><a href="#rooms" data-i18n="footer.room.aug08">Phòng Đơn Aug 08</a></li>
+              <li><a href="#rooms" data-i18n="footer.room.sep09">Phòng Đơn Sep 09</a></li>
+              <li><a href="#rooms" data-i18n="footer.room.oct10">Phòng Đơn Oct 10</a></li>
+              <li><a href="#rooms" data-i18n="footer.room.nov11">Phòng Đơn Nov 11</a></li>
             </ul>
           </div>
 
