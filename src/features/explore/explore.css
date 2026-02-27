@@ -95,7 +95,14 @@
   border: 1px solid rgba(184, 202, 189, 0.12);
   position: relative;
   overflow: hidden;
-  transition: background-color 0.3s, border-color 0.3s, transform 0.3s;
+  /* IMPORTANT-3: opacity added for smooth filter fade (display:none set after transition) */
+  transition: background-color 0.3s, border-color 0.3s, transform 0.3s, opacity 0.22s;
+}
+
+/* IMPORTANT-3: fading-out state — JS sets display:none after FILTER_FADE_MS */
+#cp12-wrap .travel-card.is-filtered {
+  opacity: 0;
+  pointer-events: none;
 }
 
 #cp12-wrap .travel-card:hover {
@@ -225,23 +232,27 @@
   opacity: 0;
   transform: translateY(32px);
 }
-#cp12-wrap .sect-explore.animated .travel-card:nth-child(1) {
+/* Scalable stagger: base delay 0.12s + 0.10s per card (works for any card count) */
+#cp12-wrap .sect-explore.animated .travel-card {
   animation: cp12fu 0.65s cubic-bezier(0.22, 1, 0.36, 1) 0.12s forwards;
 }
 #cp12-wrap .sect-explore.animated .travel-card:nth-child(2) {
-  animation: cp12fu 0.65s cubic-bezier(0.22, 1, 0.36, 1) 0.22s forwards;
+  animation-delay: 0.22s;
 }
 #cp12-wrap .sect-explore.animated .travel-card:nth-child(3) {
-  animation: cp12fu 0.65s cubic-bezier(0.22, 1, 0.36, 1) 0.32s forwards;
+  animation-delay: 0.32s;
 }
 #cp12-wrap .sect-explore.animated .travel-card:nth-child(4) {
-  animation: cp12fu 0.65s cubic-bezier(0.22, 1, 0.36, 1) 0.42s forwards;
+  animation-delay: 0.42s;
 }
 #cp12-wrap .sect-explore.animated .travel-card:nth-child(5) {
-  animation: cp12fu 0.65s cubic-bezier(0.22, 1, 0.36, 1) 0.52s forwards;
+  animation-delay: 0.52s;
 }
 #cp12-wrap .sect-explore.animated .travel-card:nth-child(6) {
-  animation: cp12fu 0.65s cubic-bezier(0.22, 1, 0.36, 1) 0.62s forwards;
+  animation-delay: 0.62s;
+}
+#cp12-wrap .sect-explore.animated .travel-card:nth-child(n+7) {
+  animation-delay: 0.72s;
 }
 
 /* ── Explore responsive rules ────────────────────────────── */

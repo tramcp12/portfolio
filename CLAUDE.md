@@ -24,8 +24,8 @@ portfolio/
 │   ├── layout/                  # Nav, footer, modal, dots — CSS + HTML partials
 │   ├── features/                # One folder per section domain
 │   │   ├── home/   video/   rooms/   explore/   about/   journal/   cta/
-│   ├── shared/                  # scroll-reveal.js (IIFE 3)
-│   └── data/                    # rooms.json · travel.json · journal.json
+│   ├── shared/                  # lang-switcher.js (IIFE 0) · scroll-reveal.js (IIFE 4)
+│   └── data/                    # rooms.json · travel.json · journal.json · strings.vi.json · strings.en.json
 │
 ├── build.js             # Source assembler — run `npm run build`
 │
@@ -36,7 +36,9 @@ portfolio/
 │
 ├── static/              # Static assets (Phase 6)
 │   ├── img/
-│   │   └── travel/      # Self-hosted travel images (6 JPEGs)
+│   │   ├── hero-cover.jpg        # Hero section background image
+│   │   ├── hero-logo.jpg         # Hero section logo/brand image
+│   │   └── travel/               # Self-hosted travel images (6 JPEGs)
 │   │       ├── lake-run.jpg
 │   │       ├── flower-garden.jpg
 │   │       ├── langbiang.jpg     ← og:image / twitter:image / JSON-LD image
@@ -62,7 +64,7 @@ portfolio/
 └── CLAUDE.md            # This file
 ```
 
-> **src/ is in Phase 6 (all splits complete, static asset migration done).** CSS, HTML, JS, and data are assembled from `src/` by `build.js`. Room data lives in `src/data/rooms.json` and is injected by the build as `<script id="rooms-data">` for IIFE 1. Travel and journal data live in `src/data/travel.json` / `src/data/journal.json` as reference files (their static HTML partials are retained for SEO). Travel images live in `static/img/travel/` and are referenced by CSS `url("static/img/travel/...")`. `build.js` Phase 6 guard validates all static/img/ references at build time (A-2 invariant).
+> **src/ is in Phase 6 (all splits complete, static asset migration done).** CSS, HTML, JS, and data are assembled from `src/` by `build.js`. Room data lives in `src/data/rooms.json` and is injected by the build as `<script id="rooms-data">` for IIFE 1. i18n strings live in `src/data/strings.vi.json` / `src/data/strings.en.json` and are injected as inline `<script id="strings-vi">` / `<script id="strings-en">` for IIFE 0. Travel and journal data live in `src/data/travel.json` / `src/data/journal.json` as reference files (their static HTML partials are retained for SEO). Travel images live in `static/img/travel/`; hero images live in `static/img/`. All are referenced by CSS `url("static/img/...")`. `build.js` Phase 6 guard validates all static/img/ references at build time (A-2 invariant).
 
 `cp12.html` is kept in the repo as the original Wix source reference — it is **not** served by GitHub Pages. `index.html` is the standalone deployment version.
 
@@ -95,7 +97,7 @@ npm run check     # validate + lint against existing output files only
 
 Or individually:
 ```bash
-node validate.js          # 11 architectural invariant checks
+node validate.js          # 16 architectural invariant checks
 npx html-validate index.html  # HTML spec compliance
 ```
 
@@ -105,15 +107,19 @@ npx html-validate index.html  # HTML spec compliance
 
 | Check | File | Rule |
 |-------|------|------|
-| CSS-1 | `cp12.css` | Font families appear exactly once (Cormorant Garamond, Be Vietnam Pro) |
+| CSS-1a | `cp12.css` | Cormorant Garamond declared exactly once |
+| CSS-1b | `cp12.css` | Be Vietnam Pro declared exactly once |
 | CSS-2 | `cp12.css` | Shared button base extracted to `.btn-base` or grouped selector |
-| CSS-3 | `cp12.css` | Alpha tokens `--gold-20` and `--pine-dark-90` defined in `:root` |
+| CSS-3a | `cp12.css` | Alpha token `--gold-20` defined in `:root` |
+| CSS-3b | `cp12.css` | Alpha token `--pine-dark-90` defined in `:root` |
 | A-1 | `cp12.css` | `@media (prefers-reduced-motion: reduce)` guard exists |
 | R-1 | `cp12.css` | `@media (max-width: 768px)` tablet breakpoint exists |
 | JS-1 | `cp12.js` | `try { } catch (e) { }` init guard exists |
 | JS-3 | `cp12.js` | `var cachedNav = null` nav caching pattern exists |
 | P-1 | `index.html` | No `<img>` tags — all images are CSS `background` properties |
 | H-1 | `index.html` | `og:image` meta tag present for social sharing |
+| A-2 | `cp12.css` | No legacy `url(img/...)` references — all static assets under `static/img/` |
+| B-1 | `index.html` | `cp12-room-drawer` exists and is placed outside `<main>` |
 
 ### Manual Testing Checklist
 
@@ -158,7 +164,8 @@ src/core/section-labels.css   ← .section-label variants
 src/core/animations.css       ← @keyframes + .cp12-reveal + prefers-reduced-motion (A-1)
 src/features/home/home.css    ← .hero + sect-home animation sigs + hero responsive
 src/features/video/video.css  ← .video-section + sect-video
-src/features/rooms/rooms.css  ← .room-card, r1–r4 gradients + sect-rooms
+src/features/rooms/rooms.css         ← .room-card, r1–r4 gradients + sect-rooms
+src/features/rooms/room-gallery.css  ← #cp12-room-drawer, drawer-inner, gallery stage, thumbs, mobile bottom sheet
 src/features/explore/explore.css ← .travel-card, ti1–ti6 gradients + sect-explore
 src/features/about/about.css  ← .about-section + sect-about
 src/features/journal/journal.css ← .blog-card, bi1–bi3 gradients + sect-journal
@@ -177,20 +184,33 @@ src/core/supports.css         ← @supports backdrop-filter (must be last)
 
 ## JavaScript Architecture
 
-`cp12.js` is **generated** by `build.js` from four IIFE source files in DOM order. Each IIFE uses independent local variables — do not merge them (both IIFE 0 and IIFE 3 declare `var wrap`; merging would create a collision).
+`cp12.js` is **generated** by `build.js` from six IIFE source files in DOM order. Each IIFE uses independent local variables — do not merge them.
 
 | IIFE | Source file | Responsibility |
 |------|-------------|---------------|
-| 0 | `src/features/rooms/rooms.js` | Rooms renderer — reads `#rooms-data` inline JSON, builds `#rooms-grid` with `escHtml()` XSS guard |
-| 1 | `src/features/video/video.js` | Hero play button + video frame click/keydown handlers |
-| 2 | `src/features/explore/explore.js` | Travel filter tabs (`data-filter`, `aria-selected`, live count) |
-| 3 | `src/shared/scroll-reveal.js` | Modal, mobile nav, IO reveal, scroll RAF, dot nav, anchor scroll |
+| 0 | `src/shared/lang-switcher.js` | i18n language switcher — reads `#lang-vi-data` / `#lang-en-data` JSON, applies `[data-i18n]` attribute swaps, re-renders rooms + refreshes drawer on language change |
+| 1 | `src/features/rooms/rooms.js` | Rooms renderer — reads `#rooms-data` inline JSON, builds `#rooms-grid` with `escHtml()` XSS guard; attaches gallery click handlers after each render |
+| 2 | `src/shared/room-gallery.js` | Room gallery drawer — photo navigation, focus trap (algorithmic, mirrors modal), `cp12OpenRoomGallery` / `cp12CloseRoomGallery` / `cp12RefreshDrawerLang` globals |
+| 3 | `src/features/video/video.js` | Hero play button + video frame click/keydown handlers |
+| 4 | `src/features/explore/explore.js` | Travel filter tabs (`data-filter`, `aria-selected`, live count) |
+| 5 | `src/shared/scroll-reveal.js` | Modal, mobile nav, IO reveal, scroll RAF, dot nav, anchor scroll (closes gallery drawer before scrolling) |
 
-`window.cp12OpenModal` is set in IIFE 3 and called (with guard) from IIFE 1. This is intentional — the guard `if (window.cp12OpenModal)` is defensive coding, kept for robustness.
+`window.cp12OpenModal` is set in IIFE 5 and called (with guard) from IIFE 3. `window.cp12OpenRoomGallery` is set in IIFE 2 and called (with guard) from IIFE 1. Both guards are defensive coding, kept for robustness.
 
-### Rooms Renderer (IIFE 0)
+### Language Switcher (IIFE 0)
 
-Room cards are driven by a `<script id="rooms-data" type="application/json">` element in `index.html`. IIFE 0 parses it and renders into `<div id="rooms-grid">`. All output is XSS-safe via `escHtml()`. Do not use raw `innerHTML` with untrusted data in this IIFE.
+i18n strings are injected by `build.js` into `index.html` as:
+```html
+<script id="strings-vi" type="application/json">{…}</script>
+<script id="strings-en" type="application/json">{…}</script>
+```
+IIFE 0 reads the active language from `localStorage` (`cp12-lang`, default `"vi"`), then walks all `[data-i18n]` elements to swap text. A FOUC-prevention inline script in `<head>` pre-sets `lang` attribute and adds `.i18n-loading` before IIFE 0 runs.
+
+**To edit strings**: modify `src/data/strings.vi.json` or `src/data/strings.en.json`, then run `npm run build`.
+
+### Rooms Renderer (IIFE 1)
+
+Room cards are driven by a `<script id="rooms-data" type="application/json">` element in `index.html`. IIFE 1 parses it and renders into `<div id="rooms-grid">`. All output is XSS-safe via `escHtml()`. Do not use raw `innerHTML` with untrusted data in this IIFE.
 
 ---
 
@@ -201,7 +221,7 @@ Seven sections inside `#cp12-wrap`, tracked by dot-nav via `data-section` and JS
 ```
 #home     — Hero (two-column, diagonal clip-path)
 #video    — Welcome film showcase with modal trigger
-#rooms    — 4 room cards in a grid (rendered by IIFE 0 from #rooms-data JSON)
+#rooms    — 4 room cards in a grid (rendered by IIFE 1 from #rooms-data JSON)
 #explore  — Filterable travel guide (Running / Food / Nature)
 #about    — Two-column brand story
 #journal  — Blog / journal cards
@@ -218,6 +238,7 @@ Seven sections inside `#cp12-wrap`, tracked by dot-nav via `data-section` and JS
 | `<link rel="canonical">` | Canonical URL for SEO |
 | `<link rel="preconnect" href="https://www.youtube.com">` | YouTube preconnect (faster modal video) |
 | `theme-color` | Browser chrome tint (`#2d4a3e`) |
+| `hreflang` (vi / en / x-default) | Bilingual SEO — same URL serves both languages via JS i18n |
 
 ### JSON-LD Structured Data
 
@@ -339,19 +360,20 @@ Staggered children use `:nth-child` selectors with increasing `animation-delay`.
 
 | Attribute | Element | Purpose |
 |-----------|---------|---------|
+| `data-i18n` | Any text-bearing element | i18n key — IIFE 0 swaps `textContent` on language change |
 | `data-category` | Travel cards | Shown/hidden by filter tabs |
 | `data-filter` | Filter tab buttons | Active value (`all`, `running`, `food`, `nature`) |
 | `data-label` | Dot nav items | Tooltip text |
 | `data-target` | Dot nav items | Section ID to scroll to |
 | `data-section` | `<section>` elements | Tracked by scroll for dot activation |
 
-### Rooms Data (IIFE 0)
+### Rooms Data (IIFE 1)
 
 Room data lives in **`src/data/rooms.json`** and is injected by `build.js` into `index.html` as:
 ```html
 <script id="rooms-data" type="application/json">[…]</script>
 ```
-The script tag is placed at the bottom of `<body>` (after `#cp12-wrap`, before the JSON-LD block). IIFE 0 reads it at runtime via `document.getElementById("rooms-data")`. Each room object shape:
+The script tag is placed at the bottom of `<body>` (after `#cp12-wrap`, before the JSON-LD block). IIFE 1 reads it at runtime via `document.getElementById("rooms-data")`. Each room object shape:
 ```json
 {
   "bgClass": "r1",
@@ -366,6 +388,8 @@ The script tag is placed at the bottom of `<body>` (after `#cp12-wrap`, before t
 Rendered into `<div id="rooms-grid" class="rooms-grid">`. All values are escaped through `escHtml()` before insertion.
 
 **To edit rooms**: modify `src/data/rooms.json`, then run `npm run build`.
+
+**To edit i18n strings**: modify `src/data/strings.vi.json` or `src/data/strings.en.json`, then run `npm run build`. Strings are validated at build time — only `<br>`, `<em>`, `<strong>` HTML tags are permitted in string values.
 
 ---
 
@@ -383,7 +407,7 @@ Rendered into `<div id="rooms-grid" class="rooms-grid">`. All values are escaped
 
 - **No JS frameworks** — vanilla JS only, no build step
 - **npm is dev-only** — `html-validate` is a dev tool; no runtime npm dependencies
-- **Four IIFEs in `cp12.js`** — keep them separate (variable name collisions if merged; IIFE 0 = rooms renderer, IIFE 1 = hero, IIFE 2 = travel tabs, IIFE 3 = modal/nav/scroll)
+- **Six IIFEs in `cp12.js`** — keep them separate (variable name collisions if merged; IIFE 0 = lang-switcher, IIFE 1 = rooms renderer, IIFE 2 = room-gallery, IIFE 3 = video/hero, IIFE 4 = travel tabs, IIFE 5 = modal/nav/scroll)
 - **Scope all CSS under `#cp12-wrap`** — required for isolation
 - **Use `var` in IIFE-scoped code** — modern browser APIs (`IntersectionObserver`, `classList`, arrow functions) are fine
 - **Images in `static/img/travel/`** — all travel card images are self-hosted under `static/`; CSS references use `url("static/img/travel/...")` relative to repo root; do not reintroduce Wix CDN URLs or legacy `img/` paths
@@ -416,5 +440,6 @@ Facebook · Instagram · YouTube · TikTok · Google Maps
 ### External Assets
 
 - **Fonts:** Google Fonts CDN (Cormorant Garamond, Be Vietnam Pro) — loaded non-blocking via `media="print"` trick
-- **Travel images:** Self-hosted in `img/` directory (6 JPEG files)
+- **Travel images:** Self-hosted in `static/img/travel/` (6 JPEG files)
+- **Hero images:** Self-hosted in `static/img/` (`hero-cover.jpg`, `hero-logo.jpg`)
 - **Room/blog card backgrounds:** Pure CSS gradients — no image files needed

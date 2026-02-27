@@ -33,6 +33,13 @@
       if (strings[hkey] !== undefined) htmlEls[j].innerHTML = strings[hkey];
     }
 
+    /* data-i18n-aria-label: translate aria-label attribute */
+    var ariaEls = document.querySelectorAll("[data-i18n-aria-label]");
+    for (var k = 0; k < ariaEls.length; k++) {
+      var akey = ariaEls[k].getAttribute("data-i18n-aria-label");
+      if (strings[akey] !== undefined) ariaEls[k].setAttribute("aria-label", strings[akey]);
+    }
+
     /* Update <html lang="…"> */
     document.documentElement.lang = lang;
 
@@ -53,6 +60,9 @@
 
     /* Re-render room cards with the new language */
     if (window.cp12RenderRooms) window.cp12RenderRooms(lang);
+
+    /* Refresh room detail modal if open (IIFE 2 exposes this) */
+    if (window.cp12RefreshModalLang) window.cp12RefreshModalLang(lang);
 
     /* Persist preference */
     try { localStorage.setItem(STORAGE_KEY, lang); } catch (e) {}

@@ -41,6 +41,12 @@
     <link rel="alternate" hreflang="vi" href="https://tramcp12.github.io/portfolio/" >
     <link rel="alternate" hreflang="x-default" href="https://tramcp12.github.io/portfolio/" >
     <link rel="icon" href="favicon.svg" type="image/svg+xml" >
+    <!-- Critical image preload: hero-cover is a CSS background — must preload explicitly for LCP -->
+    <link rel="preload" as="image" fetchpriority="high" href="static/img/hero-cover.jpg" >
+    <!-- Phase 8: Scroll-proximity prefetch for first room cover (injected by build.js from rooms[0].coverPhoto) -->
+    <!-- @ROOMS_COVER_PRELOAD@ -->
+    <!-- DNS prefetch for booking channels -->
+    <link rel="dns-prefetch" href="https://zalo.me" >
     <link rel="preconnect" href="https://fonts.googleapis.com" >
     <!-- YouTube preconnect for faster modal video load -->
     <link rel="preconnect" href="https://www.youtube.com" >
@@ -60,6 +66,10 @@
         href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,300;0,600;1,300&display=swap"
         rel="stylesheet">
     </noscript>
+    <!-- Content Security Policy -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https:; frame-src https://www.youtube.com; connect-src 'none';">
     <!-- Main Stylesheet (Cache-busted) -->
     <link rel="stylesheet" href="cp12.css?v=2" >
     <!-- i18n: FOUC prevention & Scroll Stabilization -->

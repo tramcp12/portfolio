@@ -6,7 +6,6 @@
   "nav.journal": "Nhật Ký",
   "nav.book": "Đặt Phòng",
   "nav.lang.label": "Switch to English",
-
   "hero.tag": "Đà Lạt · Tây Nguyên · Việt Nam",
   "hero.title": "Nơi<br>lữ hành<em>tìm thấy nhà.</em>",
   "hero.subtitle": "Điểm dừng chân thân thiện giữa núi rừng mờ sương Đà Lạt. Dành cho người du lịch solo, vận động viên trail và những ai tin rằng câu chuyện du lịch hay nhất bắt đầu từ nơi ngủ nghỉ đúng chỗ.",
@@ -17,12 +16,10 @@
   "hero.stat.localRoutes": "Đường Mòn",
   "hero.stat.altitude": "Độ Cao",
   "hero.scroll": "Cuộn",
-
   "video.label": "Chào Mừng đến CP12",
   "video.title": "Cảm nhận trước <em>khi bạn đến.</em>",
   "video.desc": "Ba phút qua những rừng thông, buổi sáng mờ sương và sự ấm áp chân thành. Đây chính là cảm giác của Trạm CP12 — trước khi bạn kịp chuẩn bị hành lý.",
   "video.tag": "3 phút · Phim Chào Mừng bởi Đội CP12",
-
   "rooms.label": "Không Gian Của Chúng Tôi",
   "rooms.heading": "Một phòng cho mọi<br><em>loại du khách.</em>",
   "rooms.intro": "Từ phòng riêng ấm cúng đến phòng dorm sôi động — mỗi không gian tại Trạm CP12 đều được thiết kế có chủ đích. Vật liệu tự nhiên, thủ công địa phương và ánh sáng khiến bạn muốn ở lại thêm một đêm nữa.",
@@ -37,7 +34,6 @@
   "explore.diff.medium": "Trung Bình",
   "explore.diff.hard": "Khó",
   "explore.diff.easyMed": "Dễ–TB",
-
   "about.label": "Về CP12",
   "about.accentLabel": "Trên Mực Nước Biển",
   "about.heading": "Không chỉ là chỗ ngủ.<br>Mà là <em>trạm xuất phát.</em>",
@@ -52,7 +48,6 @@
   "about.checkin": "Nhận phòng từ",
   "about.checkout": "Trả phòng trước",
   "about.bookBtn": "Đặt Phòng Của Bạn →",
-
   "journal.label": "Nhật Ký CP12",
   "journal.heading": "Những câu chuyện <em>từ đường mòn.</em>",
   "journal.subtext": "Hiểu biết địa phương, hướng dẫn chạy bộ, địa điểm ẩn và lời khuyên du lịch thực tế — thẳng từ đội CP12 và những người đã ở cùng chúng tôi.",
@@ -66,7 +61,6 @@
   "journal.card3.title": "Những Viên Ngọc Ẩn của Đà Lạt: Vượt Ra Ngoài Đường Mòn Du Lịch",
   "journal.card3.excerpt": "Bỏ qua các brochure. Đội của chúng tôi tiết lộ những quán cà phê ẩn, hàng ăn vỉa hè và nghệ thuật ngầm mà bạn sẽ không tìm thấy trên TripAdvisor.",
   "journal.readMore": "Đọc Thêm",
-
   "cta.label": "Sẵn Sàng?",
   "cta.title": "Núi non đang<br><em>đợi bạn.</em>",
   "cta.sub": "Dù bạn đang theo đuổi đường mòn, tìm kiếm bình yên, hay chỉ muốn một tách cà phê thật ngon — Trạm CP12 luôn sẵn sàng đón bạn. Từ 180.000 VND/đêm.",
@@ -80,7 +74,6 @@
   "cta.facebookBtn": "Facebook",
   "cta.zaloBtn": "Zalo",
   "cta.callBtn": "Gọi Chúng Tôi",
-
   "footer.tagline": "Điểm dừng chân thân thiện giữa núi rừng mờ sương Đà Lạt — nơi du khách solo tìm được người bạn đồng hành, runners tìm được đường mòn và mọi người tìm thấy mái nhà thứ hai.",
   "footer.col.rooms": "Phòng",
   "footer.col.explore": "Khám Phá",
@@ -93,5 +86,22 @@
   "footer.link.houseRules": "Giới Thiệu & Nội Quy",
   "footer.link.journal": "Nhật Ký",
   "footer.link.book": "Đặt Phòng",
-  "footer.bottom.made": "Được tạo ra với tình yêu ở Tây Nguyên"
+  "footer.bottom.made": "Được tạo ra với tình yêu ở Tây Nguyên",
+  "modal.title": "Phim Chào Đón CP12",
+  "modal.note": "Video sắp ra mắt — theo dõi Instagram của chúng tôi để xem hậu trường trong lúc chúng tôi đang chỉnh sửa!",
+  "modal.close": "Đóng video",
+  "drawer.bookBtn": "Đặt Phòng Này",
+  "drawer.close": "Đóng thư viện ảnh",
+  "drawer.prevPhoto": "Ảnh trước",
+  "drawer.nextPhoto": "Ảnh tiếp theo",
+  "drawer.allPhotos": "Tất cả ảnh",
+  "drawer.photoCount": "Ảnh {n} / {total}",
+  "panel.close": "Đóng chi tiết phòng",
+  "panel.prevPhoto": "Ảnh trước",
+  "panel.nextPhoto": "Ảnh tiếp theo",
+  "panel.bookBtn": "Đặt Phòng Này",
+  "panel.allPhotos": "Tất cả ảnh",
+  "panel.photoCount": "Ảnh {n} / {total}",
+  "panel.regionLabel": "Chi tiết phòng",
+  "rooms.viewPhotos": "Xem ảnh phòng"
 }

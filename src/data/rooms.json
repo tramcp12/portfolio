@@ -1,82 +1,472 @@
 [
   {
-    "bgClass": "r1",
-    "name": "Phòng Trạm — The Signature Room",
-    "price": "580K",
+    "id": "jan-01",
+    "coverPhoto": "static/img/rooms/catalog/jan-01.jpg",
+    "name": "Room Jan 01",
+    "name_vi": "Phòng Đơn Jan 01",
+    "price": "585K",
     "featured": true,
+    "desc": "A cozy private room with a balcony overlooking Đà Lạt's misty hillsides. Cabin-style furnishings, private bathroom, and the kind of quiet that helps you sleep well.",
+    "desc_vi": "Phòng riêng ấm cúng với ban công nhìn ra những sườn đồi sương mờ Đà Lạt. Nội thất ca-ban mộc mạc, toilet riêng và sự yên tĩnh giúp bạn ngủ ngon.",
     "meta": [
-      { "icon": "👤", "text": "2 guests" },
-      { "icon": "📐", "text": "22 m²" },
-      { "icon": "⛺", "text": "Balcony" }
+      { "icon": "👥", "text": "2 guests" }
     ],
     "meta_vi": [
-      { "icon": "👤", "text": "2 khách" },
-      { "icon": "📐", "text": "22 m²" },
-      { "icon": "⛺", "text": "Ban Công" }
+      { "icon": "👥", "text": "2 khách" }
     ],
-    "desc": "Our flagship room — natural rattan furniture, soft linen bedding, and a private balcony overlooking lush green gardens. Wake up to birdsong, not traffic.",
-    "desc_vi": "Phòng flagship của chúng tôi — nội thất mây tự nhiên, ga trải giường linen mềm mại và ban công riêng nhìn ra khu vườn xanh tươi. Thức dậy cùng tiếng chim hót, không phải tiếng xe cộ.",
-    "amenities": ["Private Balcony", "Air Con", "Breakfast", "WiFi"],
-    "amenities_vi": ["Ban Công Riêng", "Điều Hòa", "Bữa Sáng", "WiFi"]
+    "amenities": ["WiFi", "Balcony", "Private Bathroom", "Shared Kitchen", "BBQ Area", "Parking"],
+    "amenities_vi": ["WiFi", "Ban công", "Toilet riêng", "Bếp chung", "Bãi nướng", "Bãi xe"],
+    "photos": [
+      {
+        "src": "static/img/rooms/details/jan-01/1-bed-view-1.jpg",
+        "alt": "Bed View, Photo 1",
+        "alt_vi": "Giường ngủ, Ảnh 1"
+      },
+      {
+        "src": "static/img/rooms/details/jan-01/1-bed-view-2.jpg",
+        "alt": "Bed View, Photo 2",
+        "alt_vi": "Giường ngủ, Ảnh 2"
+      },
+      {
+        "src": "static/img/rooms/details/jan-01/1-bed-view-3.jpg",
+        "alt": "Bed View, Photo 3",
+        "alt_vi": "Giường ngủ, Ảnh 3"
+      },
+      {
+        "src": "static/img/rooms/details/jan-01/balcony-door.jpg",
+        "alt": "Balcony Door",
+        "alt_vi": "Cửa ban công"
+      },
+      {
+        "src": "static/img/rooms/details/jan-01/door.jpg",
+        "alt": "Room Door",
+        "alt_vi": "Cửa phòng"
+      },
+      {
+        "src": "static/img/rooms/details/jan-01/toilet-1.jpg",
+        "alt": "Bathroom, Photo 1",
+        "alt_vi": "Phòng tắm, Ảnh 1"
+      },
+      {
+        "src": "static/img/rooms/details/jan-01/toilet-2.jpg",
+        "alt": "Bathroom, Photo 2",
+        "alt_vi": "Phòng tắm, Ảnh 2"
+      },
+      {
+        "src": "static/img/rooms/details/jan-01/window.jpg",
+        "alt": "Window View",
+        "alt_vi": "Cửa sổ"
+      }
+    ]
   },
   {
-    "bgClass": "r2",
-    "name": "Góc Gió — The Breeze Nook",
+    "id": "feb-02",
+    "coverPhoto": "static/img/rooms/catalog/feb-02.jpg",
+    "name": "Room Feb 02",
+    "name_vi": "Phòng Đôi Feb 02",
+    "price": "850K",
+    "featured": false,
+    "desc": "A spacious twin room with two beds and a private balcony — ideal for friends traveling together. Ample space to unwind after a day on the trails.",
+    "desc_vi": "Phòng đôi rộng rãi với hai giường và ban công riêng — lý tưởng cho bạn bè cùng du lịch. Không gian thoải mái để thư giãn sau một ngày trên những con đường mòn.",
+    "meta": [
+      { "icon": "👥", "text": "4 guests" }
+    ],
+    "meta_vi": [
+      { "icon": "👥", "text": "4 khách" }
+    ],
+    "amenities": ["WiFi", "Balcony", "Private Bathroom", "2 Beds", "Shared Kitchen", "BBQ Area", "Parking"],
+    "amenities_vi": ["WiFi", "Ban công", "Toilet riêng", "2 giường", "Bếp chung", "Bãi nướng", "Bãi xe"],
+    "photos": [
+      {
+        "src": "static/img/rooms/details/feb-02/2-beds-view-1.jpg",
+        "alt": "Twin Beds, Photo 1",
+        "alt_vi": "Hai giường, Ảnh 1"
+      },
+      {
+        "src": "static/img/rooms/details/feb-02/2-beds-view-2.jpg",
+        "alt": "Twin Beds, Photo 2",
+        "alt_vi": "Hai giường, Ảnh 2"
+      },
+      {
+        "src": "static/img/rooms/details/feb-02/2-beds-view-3.jpg",
+        "alt": "Twin Beds, Photo 3",
+        "alt_vi": "Hai giường, Ảnh 3"
+      },
+      {
+        "src": "static/img/rooms/details/feb-02/balcony-door.jpg",
+        "alt": "Balcony Door",
+        "alt_vi": "Cửa ban công"
+      },
+      {
+        "src": "static/img/rooms/details/feb-02/decord-1.jpg",
+        "alt": "Room Décor, Photo 1",
+        "alt_vi": "Trang trí phòng, Ảnh 1"
+      },
+      {
+        "src": "static/img/rooms/details/feb-02/decord-2.jpg",
+        "alt": "Room Décor, Photo 2",
+        "alt_vi": "Trang trí phòng, Ảnh 2"
+      },
+      {
+        "src": "static/img/rooms/details/feb-02/decord-3.jpg",
+        "alt": "Room Décor, Photo 3",
+        "alt_vi": "Trang trí phòng, Ảnh 3"
+      },
+      {
+        "src": "static/img/rooms/details/feb-02/door.jpg",
+        "alt": "Room Door",
+        "alt_vi": "Cửa phòng"
+      },
+      {
+        "src": "static/img/rooms/details/feb-02/toilet-1.jpg",
+        "alt": "Bathroom",
+        "alt_vi": "Phòng tắm"
+      },
+      {
+        "src": "static/img/rooms/details/feb-02/window.jpg",
+        "alt": "Window View",
+        "alt_vi": "Cửa sổ"
+      }
+    ]
+  },
+  {
+    "id": "mar-03",
+    "coverPhoto": "static/img/rooms/catalog/mar-03.jpg",
+    "name": "Room Mar 3",
+    "name_vi": "Phòng Đơn Mar 3",
+    "price": "585K",
+    "featured": false,
+    "desc": "Bright and airy with a private balcony offering city views. Cabin décor, private bathroom, and natural highland light — a great base for exploring Đà Lạt.",
+    "desc_vi": "Sáng và thoáng với ban công riêng nhìn ra thành phố. Nội thất ca-ban, toilet riêng và ánh sáng cao nguyên tự nhiên — điểm xuất phát tốt để khám phá Đà Lạt.",
+    "meta": [
+      { "icon": "👥", "text": "2 guests" }
+    ],
+    "meta_vi": [
+      { "icon": "👥", "text": "2 khách" }
+    ],
+    "amenities": ["WiFi", "Balcony", "Private Bathroom", "Shared Kitchen", "BBQ Area", "Parking"],
+    "amenities_vi": ["WiFi", "Ban công", "Toilet riêng", "Bếp chung", "Bãi nướng", "Bãi xe"],
+    "photos": [
+      {
+        "src": "static/img/rooms/details/mar-03/1-bed-view-1.jpg",
+        "alt": "Bed View, Photo 1",
+        "alt_vi": "Giường ngủ, Ảnh 1"
+      },
+      {
+        "src": "static/img/rooms/details/mar-03/1-bed-view-2.jpg",
+        "alt": "Bed View, Photo 2",
+        "alt_vi": "Giường ngủ, Ảnh 2"
+      },
+      {
+        "src": "static/img/rooms/details/mar-03/1-bed-view-3.jpg",
+        "alt": "Bed View, Photo 3",
+        "alt_vi": "Giường ngủ, Ảnh 3"
+      },
+      {
+        "src": "static/img/rooms/details/mar-03/balcony-door.jpg",
+        "alt": "Balcony Door",
+        "alt_vi": "Cửa ban công"
+      },
+      {
+        "src": "static/img/rooms/details/mar-03/decord.jpg",
+        "alt": "Room Décor",
+        "alt_vi": "Trang trí phòng"
+      },
+      {
+        "src": "static/img/rooms/details/mar-03/toilet-1.jpg",
+        "alt": "Bathroom, Photo 1",
+        "alt_vi": "Phòng tắm, Ảnh 1"
+      },
+      {
+        "src": "static/img/rooms/details/mar-03/toilet-2.jpg",
+        "alt": "Bathroom, Photo 2",
+        "alt_vi": "Phòng tắm, Ảnh 2"
+      },
+      {
+        "src": "static/img/rooms/details/mar-03/window-view.jpg",
+        "alt": "Window View",
+        "alt_vi": "Tầm nhìn từ cửa sổ"
+      }
+    ]
+  },
+  {
+    "id": "aug-08",
+    "coverPhoto": "static/img/rooms/catalog/aug-08.jpg",
+    "name": "Room Aug 8",
+    "name_vi": "Phòng Đơn Aug 8",
+    "price": "585K",
+    "featured": false,
+    "desc": "A single room with a distinctive arched window and generous ceiling height. Spacious, modern, and filled with natural light — one of CP12's most characterful rooms.",
+    "desc_vi": "Phòng đơn với cửa sổ vòm đặc biệt và trần cao rộng rãi. Không gian thoáng đãng, hiện đại, tràn ngập ánh sáng tự nhiên — một trong những phòng có cá tính nhất tại CP12.",
+    "meta": [
+      { "icon": "👥", "text": "2 guests" }
+    ],
+    "meta_vi": [
+      { "icon": "👥", "text": "2 khách" }
+    ],
+    "amenities": ["WiFi", "Balcony", "Private Bathroom", "Shared Kitchen", "BBQ Area", "Parking"],
+    "amenities_vi": ["WiFi", "Ban công", "Toilet riêng", "Bếp chung", "Bãi nướng", "Bãi xe"],
+    "photos": [
+      {
+        "src": "static/img/rooms/details/aug-08/1-bed-view-1.jpg",
+        "alt": "Bed View, Photo 1",
+        "alt_vi": "Giường ngủ, Ảnh 1"
+      },
+      {
+        "src": "static/img/rooms/details/aug-08/1-bed-view-2.jpg",
+        "alt": "Bed View, Photo 2",
+        "alt_vi": "Giường ngủ, Ảnh 2"
+      },
+      {
+        "src": "static/img/rooms/details/aug-08/1-bed-view-3.jpg",
+        "alt": "Bed View, Photo 3",
+        "alt_vi": "Giường ngủ, Ảnh 3"
+      },
+      {
+        "src": "static/img/rooms/details/aug-08/1-bed-view-4.jpg",
+        "alt": "Bed View, Photo 4",
+        "alt_vi": "Giường ngủ, Ảnh 4"
+      },
+      {
+        "src": "static/img/rooms/details/aug-08/balcony-door.jpg",
+        "alt": "Balcony Door",
+        "alt_vi": "Cửa ban công"
+      },
+      {
+        "src": "static/img/rooms/details/aug-08/decord-1.jpg",
+        "alt": "Room Décor, Photo 1",
+        "alt_vi": "Trang trí phòng, Ảnh 1"
+      },
+      {
+        "src": "static/img/rooms/details/aug-08/decord-2.jpg",
+        "alt": "Room Décor, Photo 2",
+        "alt_vi": "Trang trí phòng, Ảnh 2"
+      },
+      {
+        "src": "static/img/rooms/details/aug-08/door.jpg",
+        "alt": "Room Door",
+        "alt_vi": "Cửa phòng"
+      },
+      {
+        "src": "static/img/rooms/details/aug-08/lock-key-door.jpg",
+        "alt": "Door Lock",
+        "alt_vi": "Khóa cửa"
+      },
+      {
+        "src": "static/img/rooms/details/aug-08/toilet-1.jpg",
+        "alt": "Bathroom, Photo 1",
+        "alt_vi": "Phòng tắm, Ảnh 1"
+      },
+      {
+        "src": "static/img/rooms/details/aug-08/toilet-2.jpg",
+        "alt": "Bathroom, Photo 2",
+        "alt_vi": "Phòng tắm, Ảnh 2"
+      },
+      {
+        "src": "static/img/rooms/details/aug-08/window.jpg",
+        "alt": "Arched Window",
+        "alt_vi": "Cửa sổ vòm"
+      }
+    ]
+  },
+  {
+    "id": "sep-09",
+    "coverPhoto": "static/img/rooms/catalog/sep-09.jpg",
+    "name": "Room Sep 9",
+    "name_vi": "Phòng Đơn Sep 9",
+    "price": "540K",
+    "featured": false,
+    "desc": "A well-lit single room with generous natural light and a modern feel. Private bathroom and all the essentials — solid comfort at a great price.",
+    "desc_vi": "Phòng đơn nhiều nắng với ánh sáng tự nhiên dồi dào và phong cách hiện đại. Toilet riêng và đầy đủ tiện nghi — sự thoải mái đáng tin cậy ở mức giá tốt.",
+    "meta": [
+      { "icon": "👥", "text": "2 guests" }
+    ],
+    "meta_vi": [
+      { "icon": "👥", "text": "2 khách" }
+    ],
+    "amenities": ["WiFi", "Private Bathroom", "Shared Kitchen", "BBQ Area", "Parking"],
+    "amenities_vi": ["WiFi", "Toilet riêng", "Bếp chung", "Bãi nướng", "Bãi xe"],
+    "photos": [
+      {
+        "src": "static/img/rooms/details/sep-09/1-bed-view-1.jpg",
+        "alt": "Bed View, Photo 1",
+        "alt_vi": "Giường ngủ, Ảnh 1"
+      },
+      {
+        "src": "static/img/rooms/details/sep-09/1-bed-view-2.jpg",
+        "alt": "Bed View, Photo 2",
+        "alt_vi": "Giường ngủ, Ảnh 2"
+      },
+      {
+        "src": "static/img/rooms/details/sep-09/1-bed-view-3.jpg",
+        "alt": "Bed View, Photo 3",
+        "alt_vi": "Giường ngủ, Ảnh 3"
+      },
+      {
+        "src": "static/img/rooms/details/sep-09/1-bed-view-4.jpg",
+        "alt": "Bed View, Photo 4",
+        "alt_vi": "Giường ngủ, Ảnh 4"
+      },
+      {
+        "src": "static/img/rooms/details/sep-09/1-bed-view-5.jpg",
+        "alt": "Bed View, Photo 5",
+        "alt_vi": "Giường ngủ, Ảnh 5"
+      },
+      {
+        "src": "static/img/rooms/details/sep-09/1-bed-view-6.jpg",
+        "alt": "Bed View, Photo 6",
+        "alt_vi": "Giường ngủ, Ảnh 6"
+      },
+      {
+        "src": "static/img/rooms/details/sep-09/decord-1.jpg",
+        "alt": "Room Décor, Photo 1",
+        "alt_vi": "Trang trí phòng, Ảnh 1"
+      },
+      {
+        "src": "static/img/rooms/details/sep-09/decord-2.jpg",
+        "alt": "Room Décor, Photo 2",
+        "alt_vi": "Trang trí phòng, Ảnh 2"
+      },
+      {
+        "src": "static/img/rooms/details/sep-09/decord-3.jpg",
+        "alt": "Room Décor, Photo 3",
+        "alt_vi": "Trang trí phòng, Ảnh 3"
+      },
+      {
+        "src": "static/img/rooms/details/sep-09/door.jpg",
+        "alt": "Room Door",
+        "alt_vi": "Cửa phòng"
+      },
+      {
+        "src": "static/img/rooms/details/sep-09/lock-key-door.jpg",
+        "alt": "Door Lock",
+        "alt_vi": "Khóa cửa"
+      },
+      {
+        "src": "static/img/rooms/details/sep-09/toilet-1.jpg",
+        "alt": "Bathroom, Photo 1",
+        "alt_vi": "Phòng tắm, Ảnh 1"
+      },
+      {
+        "src": "static/img/rooms/details/sep-09/toilet-2.jpg",
+        "alt": "Bathroom, Photo 2",
+        "alt_vi": "Phòng tắm, Ảnh 2"
+      },
+      {
+        "src": "static/img/rooms/details/sep-09/toilet-3.jpg",
+        "alt": "Bathroom, Photo 3",
+        "alt_vi": "Phòng tắm, Ảnh 3"
+      },
+      {
+        "src": "static/img/rooms/details/sep-09/window-1.jpg",
+        "alt": "Window, Photo 1",
+        "alt_vi": "Cửa sổ, Ảnh 1"
+      },
+      {
+        "src": "static/img/rooms/details/sep-09/window-2.jpg",
+        "alt": "Window, Photo 2",
+        "alt_vi": "Cửa sổ, Ảnh 2"
+      }
+    ]
+  },
+  {
+    "id": "oct-10",
+    "coverPhoto": "static/img/rooms/catalog/oct-10.jpg",
+    "name": "Room Oct 10",
+    "name_vi": "Phòng Đơn Oct 10",
+    "price": "540K",
+    "featured": false,
+    "desc": "A clean and practical single room with modern lines and a private bathroom. Compact and comfortable — a popular pick for solo travelers.",
+    "desc_vi": "Phòng đơn sạch sẽ và thực dụng với đường nét hiện đại và toilet riêng. Gọn gàng và thoải mái — lựa chọn phổ biến của khách du lịch solo.",
+    "meta": [
+      { "icon": "👥", "text": "2 guests" }
+    ],
+    "meta_vi": [
+      { "icon": "👥", "text": "2 khách" }
+    ],
+    "amenities": ["WiFi", "Private Bathroom", "Shared Kitchen", "BBQ Area", "Parking"],
+    "amenities_vi": ["WiFi", "Toilet riêng", "Bếp chung", "Bãi nướng", "Bãi xe"],
+    "photos": [
+      {
+        "src": "static/img/rooms/details/oct-10/1-bed-view-1.jpg",
+        "alt": "Bed View, Photo 1",
+        "alt_vi": "Giường ngủ, Ảnh 1"
+      },
+      {
+        "src": "static/img/rooms/details/oct-10/1-bed-view-2.jpg",
+        "alt": "Bed View, Photo 2",
+        "alt_vi": "Giường ngủ, Ảnh 2"
+      },
+      {
+        "src": "static/img/rooms/details/oct-10/decord-1.jpg",
+        "alt": "Room Décor, Photo 1",
+        "alt_vi": "Trang trí phòng, Ảnh 1"
+      },
+      {
+        "src": "static/img/rooms/details/oct-10/decord-2.jpg",
+        "alt": "Room Décor, Photo 2",
+        "alt_vi": "Trang trí phòng, Ảnh 2"
+      },
+      {
+        "src": "static/img/rooms/details/oct-10/decord-3.jpg",
+        "alt": "Room Décor, Photo 3",
+        "alt_vi": "Trang trí phòng, Ảnh 3"
+      },
+      {
+        "src": "static/img/rooms/details/oct-10/toilet-1.jpg",
+        "alt": "Bathroom, Photo 1",
+        "alt_vi": "Phòng tắm, Ảnh 1"
+      },
+      {
+        "src": "static/img/rooms/details/oct-10/toilet-2.jpg",
+        "alt": "Bathroom, Photo 2",
+        "alt_vi": "Phòng tắm, Ảnh 2"
+      }
+    ]
+  },
+  {
+    "id": "nov-11",
+    "coverPhoto": "static/img/rooms/catalog/nov-11.jpg",
+    "name": "Room Nov 11",
+    "name_vi": "Phòng Đơn Nov 11",
     "price": "450K",
     "featured": false,
+    "desc": "Our most affordable room — cozy, minimally furnished, with a shared bathroom. Everything you need for a comfortable night at the best price in the house.",
+    "desc_vi": "Phòng giá tốt nhất của chúng tôi — ấm cúng, nội thất tối giản, với toilet dùng chung. Mọi thứ bạn cần cho một đêm thoải mái với mức giá tốt nhất nhà.",
     "meta": [
-      { "icon": "👤", "text": "1 guest" },
-      { "icon": "📐", "text": "16 m²" },
-      { "icon": "🌾", "text": "Fan + AC" }
+      { "icon": "👥", "text": "2 guests" }
     ],
     "meta_vi": [
-      { "icon": "👤", "text": "1 khách" },
-      { "icon": "📐", "text": "16 m²" },
-      { "icon": "🌾", "text": "Quạt + ĐH" }
+      { "icon": "👥", "text": "2 khách" }
     ],
-    "desc": "A cozy private room on the breezy upper floor. Minimalist Vietnamese decor with hand-painted wall murals by local artists. Ideal for writers and dreamers.",
-    "desc_vi": "Phòng riêng ấm cúng trên tầng thượng thoáng mát. Trang trí tối giản phong cách Việt Nam với tranh tường do nghệ sĩ địa phương vẽ tay. Lý tưởng cho những người viết lách và mơ mộng.",
-    "amenities": ["Mountain View", "Reading Nook", "Herb Tea Kit", "WiFi"],
-    "amenities_vi": ["View Núi", "Góc Đọc Sách", "Bộ Trà Thảo Mộc", "WiFi"]
-  },
-  {
-    "bgClass": "r3",
-    "name": "Tổ Chim — The Birdsong Suite",
-    "price": "720K",
-    "featured": true,
-    "meta": [
-      { "icon": "👤", "text": "2 guests" },
-      { "icon": "📐", "text": "30 m²" },
-      { "icon": "☕", "text": "Espresso" }
-    ],
-    "meta_vi": [
-      { "icon": "👤", "text": "2 khách" },
-      { "icon": "📐", "text": "30 m²" },
-      { "icon": "☕", "text": "Espresso" }
-    ],
-    "desc": "Our most spacious room with a loft-style sleeping area. Curated local art prints, a proper work desk. Great for longer stays or digital nomads.",
-    "desc_vi": "Phòng rộng nhất của chúng tôi với khu vực ngủ kiểu gác xép. Tranh nghệ thuật địa phương được chọn lọc kỹ lưỡng, bàn làm việc tiêu chuẩn. Tuyệt vời cho lưu trú dài hạn hoặc digital nomad.",
-    "amenities": ["Loft Bed", "Work Desk", "Smart TV", "Breakfast"],
-    "amenities_vi": ["Giường Gác Lửng", "Bàn Làm Việc", "Smart TV", "Bữa Sáng"]
-  },
-  {
-    "bgClass": "r4",
-    "name": "Dorm Trạm — Social Dormitory",
-    "price": "180K",
-    "featured": false,
-    "meta": [
-      { "icon": "👥", "text": "4-bed dorm" },
-      { "icon": "📐", "text": "40 m²" },
-      { "icon": "🔒", "text": "Lockers" }
-    ],
-    "meta_vi": [
-      { "icon": "👥", "text": "Dorm 4 giường" },
-      { "icon": "📐", "text": "40 m²" },
-      { "icon": "🔒", "text": "Tủ Khóa" }
-    ],
-    "desc": "Meet fellow travelers in our friendly 4-bed dorm. Privacy pods, individual reading lights, USB charging. The social heart of Trạm CP12 — friendships start here.",
-    "desc_vi": "Gặp gỡ du khách đồng hành trong phòng dorm 4 giường thân thiện. Buồng riêng tư, đèn đọc sách cá nhân, sạc USB. Trái tim xã hội của Trạm CP12 — tình bạn bắt đầu từ đây.",
-    "amenities": ["Privacy Pods", "USB Charging", "Common Room", "WiFi"],
-    "amenities_vi": ["Buồng Riêng Tư", "Sạc USB", "Phòng Chung", "WiFi"]
+    "amenities": ["WiFi", "Shared Bathroom", "Shared Kitchen", "BBQ Area", "Parking"],
+    "amenities_vi": ["WiFi", "Toilet chung", "Bếp chung", "Bãi nướng", "Bãi xe"],
+    "photos": [
+      {
+        "src": "static/img/rooms/details/nov-11/1-bed-view-1.jpg",
+        "alt": "Bed View, Photo 1",
+        "alt_vi": "Giường ngủ, Ảnh 1"
+      },
+      {
+        "src": "static/img/rooms/details/nov-11/1-bed-view-2.jpg",
+        "alt": "Bed View, Photo 2",
+        "alt_vi": "Giường ngủ, Ảnh 2"
+      },
+      {
+        "src": "static/img/rooms/details/nov-11/1-bed-view-3.jpg",
+        "alt": "Bed View, Photo 3",
+        "alt_vi": "Giường ngủ, Ảnh 3"
+      },
+      {
+        "src": "static/img/rooms/details/nov-11/1-bed-view-4.jpg",
+        "alt": "Bed View, Photo 4",
+        "alt_vi": "Giường ngủ, Ảnh 4"
+      },
+      {
+        "src": "static/img/rooms/details/nov-11/window.jpg",
+        "alt": "Window",
+        "alt_vi": "Cửa sổ"
+      }
+    ]
   }
 ]

@@ -66,6 +66,9 @@ function run(cmd) {
 
 /* ── Assembly ─────────────────────────────────────────────────────────────── */
 
+/* ── Phase 8: --allow-draft flag bypasses empty name/price guard for local editing ── */
+var allowDraft = process.argv.indexOf("--allow-draft") !== -1;
+
 console.log("\nBuilding Trạm CP12...\n");
 
 /* ── Data ── Phase 4 + 5: load src/data/ JSON files ──────────────────────── */
@@ -101,10 +104,10 @@ function injectJson(id, data) {
     "\n    </script>";
 }
 
-/* ── HTML ── Phase 2: assemble from src/ partials
+/* ── HTML ── Phase 2+7+9: assemble from src/ partials
  * Order: shell-head → dots → chrome → main-open →
  *   home → video → rooms → explore → about → journal →
- *   main-close → cta → footer → modal → shell-close → jsonld
+ *   main-close → cta → footer → modal → room-modal → shell-close → jsonld
  */
 var htmlParts = [
   readSrc("shell-head.html"),
@@ -121,6 +124,8 @@ var htmlParts = [
   readSrc("features/cta/cta.html.partial"),
   readSrc("layout/footer.html.partial"),
   readSrc("layout/modal.html.partial"),
+  // Phase 9: room detail modal — outside <main>, inside #cp12-wrap (B-1 invariant)
+  readSrc("layout/room-modal.html.partial"),
   "    </div>\n    <!-- /#cp12-wrap -->",
   // Phase 4+5: data injected before </body> so defer-loaded cp12.js can find them
   injectJson("lang-vi-data", stringsVi),
@@ -130,11 +135,11 @@ var htmlParts = [
 ];
 var html = htmlParts.join("\n");
 
-/* ── CSS  ── Phase 1: concat from src/ source files
+/* ── CSS  ── Phase 1+7+9: concat from src/ source files
  * Cascade order: tokens → reset → accessibility →
  *   nav → nav-mobile → dots → next-btn →
  *   buttons → section-labels → animations →
- *   home → video → rooms → explore → about → journal → cta →
+ *   home → video → rooms → room-modal → explore → about → journal → cta →
  *   footer → modal → responsive-sentinel → supports
  */
 var cssSources = [
@@ -151,6 +156,7 @@ var cssSources = [
   "features/home/home.css",
   "features/video/video.css",
   "features/rooms/rooms.css",
+  "features/rooms/room-modal.css",
   "features/explore/explore.css",
   "features/about/about.css",
   "features/journal/journal.css",
@@ -168,13 +174,14 @@ var bvCount = (css.match(/Be Vietnam Pro/g) || []).length;
 if (cgCount !== 1) throw new Error("CSS-1a build guard: Cormorant Garamond appears " + cgCount + " times (expected 1)");
 if (bvCount !== 1) throw new Error("CSS-1b build guard: Be Vietnam Pro appears " + bvCount + " times (expected 1)");
 
-/* ── JS   ── Phase 3+5: concat from src/ IIFE source files
- * Order: lang-switcher (IIFE 0) → rooms (IIFE 1) → video (IIFE 2) →
- *        explore (IIFE 3) → scroll-reveal (IIFE 4)
+/* ── JS   ── Phase 3+5+7+9: concat from src/ IIFE source files
+ * Order: lang-switcher (IIFE 0) → rooms (IIFE 1) → room-modal (IIFE 2) →
+ *        video (IIFE 3) → explore (IIFE 4) → scroll-reveal (IIFE 5)
  */
 var jsSources = [
   "shared/lang-switcher.js",
   "features/rooms/rooms.js",
+  "features/rooms/room-modal.js",
   "features/video/video.js",
   "features/explore/explore.js",
   "shared/scroll-reveal.js"
@@ -201,6 +208,69 @@ while ((assetMatch = assetGuardRe.exec(css)) !== null) {
     );
   }
 }
+
+/* ── Phase 7: Room photo asset guard — validate photos[] paths in rooms.json ─ */
+/* Non-fatal for rooms without photos (photos field absent or empty = gradient-only room).
+ * Only validates paths that are explicitly declared — prevents silent 404s at runtime. */
+roomsData.forEach(function (room, idx) {
+  if (!Array.isArray(room.photos) || room.photos.length === 0) return; /* no photos — skip */
+  room.photos.forEach(function (photo, pi) {
+    if (!photo.src) {
+      throw new Error(
+        "Phase 7 asset guard: rooms[" + idx + "].photos[" + pi + "] missing 'src' field."
+      );
+    }
+    var photoPath = path.join(root, photo.src);
+    if (!fs.existsSync(photoPath)) {
+      throw new Error(
+        "Phase 7 asset guard: Room photo missing on disk:\n" +
+        "  room[" + idx + "] \"" + room.name + "\", photo " + (pi + 1) + "\n" +
+        "  src: \"" + photo.src + "\"\n" +
+        "  Full path: " + photoPath + "\n" +
+        "  Add the image or remove it from rooms.json photos[]."
+      );
+    }
+  });
+});
+
+/* ── Phase 8a: coverPhoto asset guard — validate coverPhoto paths in rooms.json ─ */
+/* Catches broken cover image references at build time. */
+roomsData.forEach(function (room, idx) {
+  if (!room.coverPhoto) return; /* no coverPhoto — gradient fallback, skip */
+  var coverPath = path.join(root, room.coverPhoto);
+  if (!fs.existsSync(coverPath)) {
+    throw new Error(
+      "Phase 8 asset guard: coverPhoto missing for room[" + idx + "] (id: " + (room.id || room.name) + "):\n" +
+      "  coverPhoto: \"" + room.coverPhoto + "\"\n" +
+      "  Full path: " + coverPath + "\n" +
+      "  Add the image or remove coverPhoto from rooms.json."
+    );
+  }
+});
+
+/* ── Phase 8b: Empty name/price guard — CRIT-3 from design review ─────────── */
+/* Prevents deploying rooms with placeholder/empty content. Use --allow-draft
+ * to bypass during local editing. CI never passes --allow-draft.               */
+if (!allowDraft) {
+  roomsData.forEach(function (room, idx) {
+    if (!room.name || !room.price) {
+      throw new Error(
+        "Phase 8 data guard: rooms[" + idx + "] (id: " + (room.id || "?") + ") has empty name or price.\n" +
+        "  Fill in rooms.json before building for production.\n" +
+        "  To bypass during editing, run: node build.js --allow-draft"
+      );
+    }
+  });
+}
+
+/* ── Phase 8c: LCP preload injection — first room cover prefetch ─────────── */
+/* Rooms section is below the fold; this is a scroll-proximity prefetch, not LCP.
+ * No fetchpriority attribute — let the browser schedule it after critical resources. */
+var roomsPreloadTag = "";
+if (roomsData[0] && roomsData[0].coverPhoto) {
+  roomsPreloadTag = '<link rel="preload" as="image" href="' + roomsData[0].coverPhoto + '" >';
+}
+html = html.replace("<!-- @ROOMS_COVER_PRELOAD@ -->", roomsPreloadTag);
 
 writeRoot("index.html", html);
 writeRoot("cp12.css",   css);

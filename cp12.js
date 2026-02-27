@@ -33,6 +33,13 @@
       if (strings[hkey] !== undefined) htmlEls[j].innerHTML = strings[hkey];
     }
 
+    /* data-i18n-aria-label: translate aria-label attribute */
+    var ariaEls = document.querySelectorAll("[data-i18n-aria-label]");
+    for (var k = 0; k < ariaEls.length; k++) {
+      var akey = ariaEls[k].getAttribute("data-i18n-aria-label");
+      if (strings[akey] !== undefined) ariaEls[k].setAttribute("aria-label", strings[akey]);
+    }
+
     /* Update <html lang="…"> */
     document.documentElement.lang = lang;
 
@@ -53,6 +60,9 @@
 
     /* Re-render room cards with the new language */
     if (window.cp12RenderRooms) window.cp12RenderRooms(lang);
+
+    /* Refresh room detail modal if open (IIFE 2 exposes this) */
+    if (window.cp12RefreshModalLang) window.cp12RefreshModalLang(lang);
 
     /* Persist preference */
     try { localStorage.setItem(STORAGE_KEY, lang); } catch (e) {}
@@ -107,6 +117,13 @@
       .replace(/'/g, "&#39;");
   }
 
+  /* CRIT-2: read i18n strings from injected data element (one parse per render call) */
+  function getRoomStrings(lang) {
+    var el = document.getElementById("lang-" + lang + "-data");
+    if (!el) return {};
+    try { return JSON.parse(el.textContent); } catch (e) { return {}; }
+  }
+
   function renderRooms(lang) {
     if (rooms.length === 0) {
       var emptyMsg = (lang === "vi") ? "Thông tin phòng sẽ sớm cập nhật." : "Room details coming soon.";
@@ -118,8 +135,13 @@
     var bookLinkText = isVi ? "Đặt phòng này" : "Book this room";
     var featuredText = isVi ? "Nổi Bật" : "Featured";
     var priceLabelText = isVi ? "VND / đêm" : "VND / night";
+    var roomStrings = getRoomStrings(lang);
+    var viewPhotosPrefix = roomStrings["rooms.viewPhotos"] || (isVi ? "Xem ảnh phòng" : "View photos for");
 
     var html = rooms.map(function (r) {
+      /* CRIT-1: use name_vi when language is Vietnamese */
+      var name = (isVi && r.name_vi) ? r.name_vi : r.name;
+
       var featuredBadge = r.featured
         ? '<span class="featured-badge"><span class="sr-only">Featured room: </span><span aria-hidden="true">⭐</span> ' + featuredText + "</span>"
         : "";
@@ -136,15 +158,23 @@
 
       var desc = (isVi && r.desc_vi) ? r.desc_vi : r.desc;
 
+      /* Phase 8: coverPhoto via data-cover attribute (set via DOM API after innerHTML to avoid
+       * the HTML-entity-decode → CSS-parser attack chain in url('..') context).
+       * bgClass gradient is the fallback when no coverPhoto is present. */
+      var hasCover    = !!r.coverPhoto;
+      var bgClassAttr = (!hasCover && r.bgClass) ? (" " + escHtml(r.bgClass)) : "";
+      var dataCover   = hasCover ? ' data-cover="' + escHtml(r.coverPhoto) + '"' : "";
+      var patternEl   = hasCover ? "" : '<div class="room-img-pattern"></div>';
+
       return (
         '<div class="room-card">' +
         '<div class="room-img">' +
-        '<div class="room-img-bg ' + escHtml(r.bgClass) + '"><div class="room-img-pattern"></div></div>' +
+        '<div class="room-img-bg' + bgClassAttr + '"' + dataCover + '>' + patternEl + '</div>' +
         '<div class="room-price-tag"><span class="price-vnd">' + escHtml(r.price) + '</span><span class="price-label">' + priceLabelText + "</span></div>" +
         featuredBadge +
         "</div>" +
         '<div class="room-body">' +
-        '<h3 class="room-name">' + escHtml(r.name) + "</h3>" +
+        '<h3 class="room-name">' + escHtml(name) + "</h3>" +
         '<div class="room-meta">' + metaItems + "</div>" +
         '<p class="room-desc">' + escHtml(desc) + "</p>" +
         '<div class="amenity-pills">' + pills + "</div>" +
@@ -155,6 +185,46 @@
     }).join("\n");
 
     grid.innerHTML = html;
+
+    /* Phase 8: Apply coverPhoto backgrounds via DOM API (immune to HTML-entity-decode
+     * attack chain; matches thumb pattern already used in room-gallery.js) */
+    var bgDivs = grid.querySelectorAll(".room-img-bg[data-cover]");
+    for (var bi = 0; bi < bgDivs.length; bi++) {
+      bgDivs[bi].style.backgroundImage = "url(" + JSON.stringify(bgDivs[bi].dataset.cover) + ")";
+      bgDivs[bi].removeAttribute("data-cover");
+    }
+
+    /* Attach gallery click handlers after each innerHTML write (handlers are destroyed on re-render) */
+    var cards = grid.querySelectorAll(".room-card");
+    for (var ri = 0; ri < cards.length; ri++) {
+      (function (roomIndex) {
+        var cardLang = window.cp12Lang || "vi";
+        var r = rooms[roomIndex];
+        var roomName = r ? ((cardLang === "vi" && r.name_vi) ? r.name_vi : r.name) : "room";
+
+        cards[roomIndex].addEventListener("click", function (e) {
+          /* Don't intercept clicks on the "Book this room" anchor */
+          if (e.target.closest("a")) return;
+          if (window.cp12OpenRoomModal) {
+            window.cp12OpenRoomModal(roomIndex, window.cp12Lang || "vi");
+          } else {
+            console.warn("[CP12] room modal not ready");
+          }
+        });
+        /* Keyboard activation: Enter/Space on the card itself */
+        cards[roomIndex].setAttribute("tabindex", "0");
+        cards[roomIndex].setAttribute("role", "button");
+        cards[roomIndex].setAttribute("aria-label", viewPhotosPrefix + " " + roomName);
+        cards[roomIndex].addEventListener("keydown", function (e) {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            if (window.cp12OpenRoomModal) {
+              window.cp12OpenRoomModal(roomIndex, window.cp12Lang || "vi");
+            }
+          }
+        });
+      }(ri));
+    }
   }
 
   /* Expose for lang-switcher (IIFE 0) to call on language change */
@@ -165,38 +235,323 @@
 })();
 
 
+/* ── 2. Room detail modal ────────────────────────────────────── */
+(function () {
+  var modal = document.getElementById("cp12-room-modal");
+  if (!modal) return;
+
+  var modalInner  = modal.querySelector(".room-modal-inner");
+  var mainImg     = modal.querySelector(".room-modal-main-img");
+  var caption     = modal.querySelector(".room-modal-caption");
+  var counter     = modal.querySelector(".room-modal-counter");
+  var thumbsCont  = modal.querySelector(".room-modal-thumbs");
+  var prevBtn     = modal.querySelector(".room-modal-prev");
+  var nextBtn     = modal.querySelector(".room-modal-next");
+  var closeBtn    = modal.querySelector(".room-modal-close");
+  var bookBtn     = modal.querySelector(".room-modal-book-btn");
+  var modalName   = modal.querySelector(".room-modal-name");
+  var modalPrice  = modal.querySelector(".room-modal-price");
+  var modalDesc   = modal.querySelector(".room-modal-desc");
+  var modalAmen   = modal.querySelector(".room-modal-amenities");
+  var modalMeta   = modal.querySelector(".room-modal-meta");
+
+  var rooms = [];
+  try {
+    var dataEl = document.getElementById("rooms-data");
+    if (dataEl) rooms = JSON.parse(dataEl.textContent);
+  } catch (e) {}
+
+  var currentRoomIndex  = -1;
+  var currentPhotoIndex = 0;
+  var currentPhotos     = [];
+  var currentLang       = "vi";
+  var selectedCardEl    = null;
+  var lastFocus         = null;
+  var savedScrollY      = 0;
+  var isOpen            = false;
+
+  /* Cache parsed i18n strings per language to avoid repeated JSON.parse */
+  var stringsCache = {};
+  function loadStrings(lang) {
+    if (stringsCache[lang]) return stringsCache[lang];
+    var el = document.getElementById("lang-" + lang + "-data");
+    if (!el) return {};
+    try { stringsCache[lang] = JSON.parse(el.textContent); }
+    catch (e) { stringsCache[lang] = {}; }
+    return stringsCache[lang];
+  }
+  function getString(key) {
+    return loadStrings(currentLang || "vi")[key] || key;
+  }
+  function formatPhotoCount(n, total) {
+    return getString("panel.photoCount").replace("{n}", n).replace("{total}", total);
+  }
+
+  function escHtml(str) {
+    return String(str)
+      .replace(/&/g, "&amp;").replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+  }
+
+  /* CRIT-3: set aria-hidden via JS init — display:none alone is sufficient for AT
+   * but we also need aria-hidden so removeAttribute("aria-hidden") signals open state */
+  modal.setAttribute("aria-hidden", "true");
+
+  /* ── Photo display ── */
+  function showPhoto(idx) {
+    if (!currentPhotos.length) return;
+    if (idx < 0) idx = currentPhotos.length - 1;
+    if (idx >= currentPhotos.length) idx = 0;
+    currentPhotoIndex = idx;
+
+    var photo    = currentPhotos[idx];
+    var altLabel = (currentLang === "vi" && photo.alt_vi) ? photo.alt_vi : (photo.alt || "");
+
+    /* Set via DOM API — no innerHTML url() injection */
+    mainImg.style.backgroundImage = "url(" + JSON.stringify(photo.src) + ")";
+    mainImg.setAttribute("aria-label", altLabel);
+    if (caption) caption.textContent = altLabel;
+    if (counter) counter.textContent = formatPhotoCount(idx + 1, currentPhotos.length);
+
+    var thumbs = thumbsCont ? thumbsCont.querySelectorAll(".room-modal-thumb") : [];
+    for (var i = 0; i < thumbs.length; i++) {
+      thumbs[i].classList.toggle("active", i === idx);
+      thumbs[i].setAttribute("aria-pressed", i === idx ? "true" : "false");
+    }
+  }
+
+  function buildThumbs() {
+    if (!thumbsCont) return;
+    thumbsCont.innerHTML = "";
+    currentPhotos.forEach(function (photo, idx) {
+      var btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "room-modal-thumb" + (idx === currentPhotoIndex ? " active" : "");
+      /* IMPORTANT-9 pattern: aria-label on thumbs, not title */
+      var label = (currentLang === "vi" && photo.alt_vi) ? photo.alt_vi : (photo.alt || ("Photo " + (idx + 1)));
+      btn.setAttribute("aria-label", label);
+      btn.setAttribute("aria-pressed", idx === currentPhotoIndex ? "true" : "false");
+      btn.style.backgroundImage = "url(" + JSON.stringify(photo.src) + ")";
+      (function (i) {
+        btn.addEventListener("click", function () { showPhoto(i); });
+      }(idx));
+      thumbsCont.appendChild(btn);
+    });
+  }
+
+  /* ── Populate modal for a given room + language ── */
+  function populateModal(roomIndex, lang) {
+    var r = rooms[roomIndex];
+    if (!r) return;
+    currentLang = lang || "vi";
+    stringsCache = {}; /* invalidate cache on lang change */
+
+    var isVi     = currentLang === "vi";
+    var name     = (isVi && r.name_vi)     ? r.name_vi     : r.name;
+    var desc     = (isVi && r.desc_vi)     ? r.desc_vi     : r.desc;
+    var amenities= (isVi && r.amenities_vi)? r.amenities_vi: (r.amenities || []);
+    var metaList = (isVi && r.meta_vi)     ? r.meta_vi     : (r.meta || []);
+    var nightLbl = isVi ? "VND / đêm" : "VND / night";
+
+    if (modalName)  modalName.textContent  = name;
+    if (modalPrice) modalPrice.textContent = r.price + " " + nightLbl;
+    if (modalDesc)  modalDesc.textContent  = desc;
+
+    if (modalMeta) {
+      modalMeta.innerHTML = metaList.map(function (m) {
+        return "<span><span aria-hidden=\"true\">" + escHtml(m.icon) + "</span> " + escHtml(m.text) + "</span>";
+      }).join("");
+    }
+    if (modalAmen) {
+      modalAmen.innerHTML = amenities.map(function (a) {
+        return "<span class=\"room-modal-amenity-chip\">" + escHtml(a) + "</span>";
+      }).join("");
+    }
+
+    currentPhotos = [];
+    if (r.photos && r.photos.length > 0) {
+      currentPhotos = r.photos;
+    } else if (r.coverPhoto) {
+      currentPhotos = [{ src: r.coverPhoto, alt: name, alt_vi: name }];
+    }
+    currentPhotoIndex = 0;
+    buildThumbs();
+    if (currentPhotos.length > 0) showPhoto(0);
+
+    /* i18n labels */
+    if (bookBtn)  bookBtn.textContent = getString("panel.bookBtn");
+    if (closeBtn) closeBtn.setAttribute("aria-label", getString("panel.close"));
+    if (prevBtn)  prevBtn.setAttribute("aria-label", getString("panel.prevPhoto"));
+    if (nextBtn)  nextBtn.setAttribute("aria-label", getString("panel.nextPhoto"));
+
+    /* Set dialog accessible name (CRIT-4 pattern — static string via JS) */
+    modal.setAttribute("aria-label", getString("panel.regionLabel") + " — " + name);
+  }
+
+  /* ── Open modal ── */
+  function openModal(roomIndex, lang) {
+    if (isOpen && roomIndex === currentRoomIndex) return; /* same room, already open */
+
+    /* Update selected card highlight */
+    if (selectedCardEl) selectedCardEl.classList.remove("room-card--selected");
+    var grid = document.getElementById("rooms-grid");
+    if (grid) {
+      var cards = grid.querySelectorAll(".room-card");
+      if (cards[roomIndex]) {
+        selectedCardEl = cards[roomIndex];
+        selectedCardEl.classList.add("room-card--selected");
+      }
+    }
+    currentRoomIndex = roomIndex;
+    currentLang = lang || "vi";
+
+    if (isOpen) {
+      /* Cross-room swap: fade content, repopulate, fade back */
+      modalInner.classList.add("room-modal-switching");
+      setTimeout(function () {
+        populateModal(roomIndex, lang);
+        modalInner.classList.remove("room-modal-switching");
+      }, 200);
+      return;
+    }
+
+    /* First open */
+    lastFocus    = document.activeElement;
+    savedScrollY = window.pageYOffset || window.scrollY;
+
+    populateModal(roomIndex, lang);
+    modal.removeAttribute("aria-hidden");
+    modal.style.display = "flex";
+    document.body.style.overflow = "hidden";
+    isOpen = true;
+
+    requestAnimationFrame(function () {
+      modal.classList.add("open");
+    });
+
+    setTimeout(function () {
+      if (closeBtn) closeBtn.focus();
+    }, 50);
+  }
+
+  /* ── Close modal ── */
+  function closeModal() {
+    if (!isOpen) return;
+    isOpen = false;
+
+    modal.classList.remove("open");
+    modal.setAttribute("aria-hidden", "true");
+    document.body.style.overflow = "";
+
+    if (selectedCardEl) {
+      selectedCardEl.classList.remove("room-card--selected");
+      selectedCardEl = null;
+    }
+
+    /* IMPORTANT-2: capture and clear lastFocus before async timeout to
+     * prevent race condition where scrollTo triggers layout shift and
+     * moves focus before restoration completes */
+    var focusTarget = lastFocus;
+    lastFocus = null;
+
+    setTimeout(function () {
+      modal.style.display = "none";
+      /* Restore scroll position after display:none to avoid layout shift */
+      window.scrollTo({ top: savedScrollY, behavior: "instant" });
+      /* Focus restored after scroll to prevent scroll-to clobbering focus */
+      if (focusTarget && focusTarget.focus) focusTarget.focus();
+    }, 320);
+  }
+
+  /* ── Refresh language (called by lang-switcher IIFE 0) ── */
+  function refreshModalLang(lang) {
+    currentLang = lang;
+    if (isOpen && currentRoomIndex >= 0) {
+      populateModal(currentRoomIndex, lang);
+    }
+  }
+
+  /* ── Focus trap (WCAG 2.1 AA SC 2.4.3) ── */
+  document.addEventListener("keydown", function (e) {
+    if (e.key !== "Tab" || !isOpen) return;
+    var focusable = modal.querySelectorAll(
+      "button, [href], input, select, textarea, [tabindex]:not([tabindex=\"-1\"])"
+    );
+    if (!focusable.length) return;
+    var first = focusable[0];
+    var last  = focusable[focusable.length - 1];
+    if (e.shiftKey) {
+      if (document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      }
+    } else {
+      if (document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    }
+  });
+
+  /* ── Keyboard: Escape closes modal ── */
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && isOpen) closeModal();
+  });
+
+  /* ── Backdrop click: close if click lands on overlay (not inner) ── */
+  modal.addEventListener("click", function (e) {
+    if (e.target === modal) closeModal();
+  });
+
+  /* ── Photo nav ── */
+  if (prevBtn)  prevBtn.addEventListener("click", function () { showPhoto(currentPhotoIndex - 1); });
+  if (nextBtn)  nextBtn.addEventListener("click", function () { showPhoto(currentPhotoIndex + 1); });
+  if (closeBtn) closeBtn.addEventListener("click", closeModal);
+
+  /* ── Expose globals ── */
+  window.cp12OpenRoomModal    = openModal;
+  window.cp12CloseRoomModal   = closeModal;
+  window.cp12RefreshModalLang = refreshModalLang;
+})();
+
+
 /* ── 1. Hero / Video ──────────────────────────────────────── */
 (function () {
-  var heroPlay = document.getElementById("heroPlayBtn");
-  var videoFrame = document.getElementById("videoFrame");
+  try {
+    var heroPlay = document.getElementById("heroPlayBtn");
+    var videoFrame = document.getElementById("videoFrame");
 
-  if (heroPlay) {
-    heroPlay.addEventListener("click", function () {
-      if (window.cp12OpenModal) window.cp12OpenModal(heroPlay);
-    });
-  }
+    if (heroPlay) {
+      heroPlay.addEventListener("click", function () {
+        if (window.cp12OpenModal) window.cp12OpenModal(heroPlay);
+      });
+    }
 
-  if (videoFrame) {
-    videoFrame.addEventListener("click", function () {
-      if (window.cp12OpenModal) window.cp12OpenModal(videoFrame);
-    });
-    videoFrame.addEventListener("keydown", function (e) {
-      if (e.key === "Enter" || e.key === " ") {
-        e.preventDefault();
+    if (videoFrame) {
+      videoFrame.addEventListener("click", function () {
         if (window.cp12OpenModal) window.cp12OpenModal(videoFrame);
-      }
-    });
-  }
+      });
+      videoFrame.addEventListener("keydown", function (e) {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          if (window.cp12OpenModal) window.cp12OpenModal(videoFrame);
+        }
+      });
+    }
+  } catch (e) { console.warn("[CP12] video init error:", e); }
 })();
 
 
 /* ── 2. Travel filter tabs ────────────────────────────────── */
 (function () {
+  try {
   var wrap = document.getElementById("cp12-wrap");
-  var tabs = wrap ? wrap.querySelectorAll(".filter-tabs .tab") : [];
-  var cards = wrap ? wrap.querySelectorAll(".travel-card") : [];
+  var tabs = wrap ? Array.from(wrap.querySelectorAll(".filter-tabs .tab")) : [];
+  var cards = wrap ? Array.from(wrap.querySelectorAll(".travel-card")) : [];
   var grid = wrap ? wrap.querySelector(".travel-grid") : null;
   var status = document.getElementById("travel-filter-status");
+  /* IMPORTANT-3: duration must match CSS opacity transition on .travel-card */
+  var FILTER_FADE_MS = 220;
 
   /* CRIT-3: Initialise tabpanel aria-labelledby to the default active tab */
   if (grid) grid.setAttribute("aria-labelledby", "tab-all");
@@ -206,8 +561,24 @@
     cards.forEach(function (c) {
       var cat = c.getAttribute("data-category");
       var show = f === "all" || cat === f;
-      c.style.display = show ? "" : "none";
-      if (show) count++;
+      if (show) {
+        count++;
+        /* IMPORTANT-3: show first, then fade in via rAF (allows CSS transition) */
+        c.style.display = "";
+        requestAnimationFrame(function () {
+          c.classList.remove("is-filtered");
+        });
+      } else {
+        /* IMPORTANT-3: fade out, then hide after transition completes */
+        c.classList.add("is-filtered");
+        (function (card) {
+          setTimeout(function () {
+            if (card.classList.contains("is-filtered")) {
+              card.style.display = "none";
+            }
+          }, FILTER_FADE_MS);
+        }(c));
+      }
     });
     /* CRIT-3: Keep tabpanel label in sync with the active tab */
     if (grid && activeTabId) {
@@ -215,22 +586,53 @@
     }
     /* CRIT-3: Announce result count via dedicated status element (not tabpanel) */
     if (status) {
-      status.textContent =
-        count + " destination" + (count !== 1 ? "s" : "") + " shown";
+      var isVi = window.cp12Lang === "vi";
+      status.textContent = isVi
+        ? count + " điểm đến được hiển thị"
+        : count + " destination" + (count !== 1 ? "s" : "") + " shown";
     }
   }
 
-  tabs.forEach(function (tab) {
+  function activateTab(tab) {
+    tabs.forEach(function (t) {
+      t.classList.remove("active");
+      t.setAttribute("aria-selected", "false");
+      t.setAttribute("tabindex", "-1");
+    });
+    tab.classList.add("active");
+    tab.setAttribute("aria-selected", "true");
+    tab.setAttribute("tabindex", "0");
+    filterCards(tab.getAttribute("data-filter"), tab.id);
+  }
+
+  tabs.forEach(function (tab, tabIndex) {
     tab.addEventListener("click", function () {
-      tabs.forEach(function (t) {
-        t.classList.remove("active");
-        t.setAttribute("aria-selected", "false");
-      });
-      this.classList.add("active");
-      this.setAttribute("aria-selected", "true");
-      filterCards(this.getAttribute("data-filter"), this.id);
+      activateTab(tab);
+    });
+
+    /* REC-1: Arrow key navigation for filter tabs (ARIA tabs pattern) */
+    tab.addEventListener("keydown", function (e) {
+      var idx = -1;
+      if (e.key === "ArrowRight" || e.key === "ArrowDown") {
+        e.preventDefault();
+        idx = (tabIndex + 1) % tabs.length;
+      } else if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
+        e.preventDefault();
+        idx = (tabIndex - 1 + tabs.length) % tabs.length;
+      } else if (e.key === "Home") {
+        e.preventDefault();
+        idx = 0;
+      } else if (e.key === "End") {
+        e.preventDefault();
+        idx = tabs.length - 1;
+      }
+      if (idx >= 0) {
+        tabs[idx].focus();
+        activateTab(tabs[idx]);
+      }
     });
   });
+  } catch (e) { console.warn("[CP12] explore init error:", e); }
 })();
 
 
@@ -564,6 +966,8 @@
         var target = document.getElementById(id);
         if (target) {
           e.preventDefault();
+          /* Close room detail modal if open before scrolling (IIFE 2) */
+          if (window.cp12CloseRoomModal) window.cp12CloseRoomModal();
           var navH = (getNav() || {}).offsetHeight || 0;
           var targetTop =
             target.getBoundingClientRect().top +

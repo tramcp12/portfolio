@@ -328,6 +328,8 @@
         var target = document.getElementById(id);
         if (target) {
           e.preventDefault();
+          /* Close room detail modal if open before scrolling (IIFE 2) */
+          if (window.cp12CloseRoomModal) window.cp12CloseRoomModal();
           var navH = (getNav() || {}).offsetHeight || 0;
           var targetTop =
             target.getBoundingClientRect().top +

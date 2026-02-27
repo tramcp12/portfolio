@@ -21,6 +21,13 @@
       .replace(/'/g, "&#39;");
   }
 
+  /* CRIT-2: read i18n strings from injected data element (one parse per render call) */
+  function getRoomStrings(lang) {
+    var el = document.getElementById("lang-" + lang + "-data");
+    if (!el) return {};
+    try { return JSON.parse(el.textContent); } catch (e) { return {}; }
+  }
+
   function renderRooms(lang) {
     if (rooms.length === 0) {
       var emptyMsg = (lang === "vi") ? "Thông tin phòng sẽ sớm cập nhật." : "Room details coming soon.";
@@ -32,8 +39,13 @@
     var bookLinkText = isVi ? "Đặt phòng này" : "Book this room";
     var featuredText = isVi ? "Nổi Bật" : "Featured";
     var priceLabelText = isVi ? "VND / đêm" : "VND / night";
+    var roomStrings = getRoomStrings(lang);
+    var viewPhotosPrefix = roomStrings["rooms.viewPhotos"] || (isVi ? "Xem ảnh phòng" : "View photos for");
 
     var html = rooms.map(function (r) {
+      /* CRIT-1: use name_vi when language is Vietnamese */
+      var name = (isVi && r.name_vi) ? r.name_vi : r.name;
+
       var featuredBadge = r.featured
         ? '<span class="featured-badge"><span class="sr-only">Featured room: </span><span aria-hidden="true">⭐</span> ' + featuredText + "</span>"
         : "";
@@ -50,15 +62,23 @@
 
       var desc = (isVi && r.desc_vi) ? r.desc_vi : r.desc;
 
+      /* Phase 8: coverPhoto via data-cover attribute (set via DOM API after innerHTML to avoid
+       * the HTML-entity-decode → CSS-parser attack chain in url('..') context).
+       * bgClass gradient is the fallback when no coverPhoto is present. */
+      var hasCover    = !!r.coverPhoto;
+      var bgClassAttr = (!hasCover && r.bgClass) ? (" " + escHtml(r.bgClass)) : "";
+      var dataCover   = hasCover ? ' data-cover="' + escHtml(r.coverPhoto) + '"' : "";
+      var patternEl   = hasCover ? "" : '<div class="room-img-pattern"></div>';
+
       return (
         '<div class="room-card">' +
         '<div class="room-img">' +
-        '<div class="room-img-bg ' + escHtml(r.bgClass) + '"><div class="room-img-pattern"></div></div>' +
+        '<div class="room-img-bg' + bgClassAttr + '"' + dataCover + '>' + patternEl + '</div>' +
         '<div class="room-price-tag"><span class="price-vnd">' + escHtml(r.price) + '</span><span class="price-label">' + priceLabelText + "</span></div>" +
         featuredBadge +
         "</div>" +
         '<div class="room-body">' +
-        '<h3 class="room-name">' + escHtml(r.name) + "</h3>" +
+        '<h3 class="room-name">' + escHtml(name) + "</h3>" +
         '<div class="room-meta">' + metaItems + "</div>" +
         '<p class="room-desc">' + escHtml(desc) + "</p>" +
         '<div class="amenity-pills">' + pills + "</div>" +
@@ -69,6 +89,46 @@
     }).join("\n");
 
     grid.innerHTML = html;
+
+    /* Phase 8: Apply coverPhoto backgrounds via DOM API (immune to HTML-entity-decode
+     * attack chain; matches thumb pattern already used in room-gallery.js) */
+    var bgDivs = grid.querySelectorAll(".room-img-bg[data-cover]");
+    for (var bi = 0; bi < bgDivs.length; bi++) {
+      bgDivs[bi].style.backgroundImage = "url(" + JSON.stringify(bgDivs[bi].dataset.cover) + ")";
+      bgDivs[bi].removeAttribute("data-cover");
+    }
+
+    /* Attach gallery click handlers after each innerHTML write (handlers are destroyed on re-render) */
+    var cards = grid.querySelectorAll(".room-card");
+    for (var ri = 0; ri < cards.length; ri++) {
+      (function (roomIndex) {
+        var cardLang = window.cp12Lang || "vi";
+        var r = rooms[roomIndex];
+        var roomName = r ? ((cardLang === "vi" && r.name_vi) ? r.name_vi : r.name) : "room";
+
+        cards[roomIndex].addEventListener("click", function (e) {
+          /* Don't intercept clicks on the "Book this room" anchor */
+          if (e.target.closest("a")) return;
+          if (window.cp12OpenRoomModal) {
+            window.cp12OpenRoomModal(roomIndex, window.cp12Lang || "vi");
+          } else {
+            console.warn("[CP12] room modal not ready");
+          }
+        });
+        /* Keyboard activation: Enter/Space on the card itself */
+        cards[roomIndex].setAttribute("tabindex", "0");
+        cards[roomIndex].setAttribute("role", "button");
+        cards[roomIndex].setAttribute("aria-label", viewPhotosPrefix + " " + roomName);
+        cards[roomIndex].addEventListener("keydown", function (e) {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            if (window.cp12OpenRoomModal) {
+              window.cp12OpenRoomModal(roomIndex, window.cp12Lang || "vi");
+            }
+          }
+        });
+      }(ri));
+    }
   }
 
   /* Expose for lang-switcher (IIFE 0) to call on language change */

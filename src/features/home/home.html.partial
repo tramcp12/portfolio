@@ -36,16 +36,19 @@
               </div>
               <section class="hero-stats" aria-label="Quick facts">
                 <div class="stat-box">
-                  <span class="stat-num" aria-hidden="true">4</span>
-                  <span class="stat-label" data-i18n="hero.stat.roomTypes">Room Types</span>
+                  <span class="stat-num" aria-hidden="true">7</span>
+                  <span class="stat-label" aria-hidden="true" data-i18n="hero.stat.roomTypes">Room Types</span>
+                  <span class="sr-only">7 <span data-i18n="hero.stat.roomTypes">Room Types</span></span>
                 </div>
                 <div class="stat-box">
                   <span class="stat-num" aria-hidden="true">6+</span>
-                  <span class="stat-label" data-i18n="hero.stat.localRoutes">Local Routes</span>
+                  <span class="stat-label" aria-hidden="true" data-i18n="hero.stat.localRoutes">Local Routes</span>
+                  <span class="sr-only">6+ <span data-i18n="hero.stat.localRoutes">Local Routes</span></span>
                 </div>
                 <div class="stat-box">
                   <span class="stat-num" aria-hidden="true">1500m</span>
-                  <span class="stat-label" data-i18n="hero.stat.altitude">Altitude</span>
+                  <span class="stat-label" aria-hidden="true" data-i18n="hero.stat.altitude">Altitude</span>
+                  <span class="sr-only">1500m <span data-i18n="hero.stat.altitude">Altitude</span></span>
                 </div>
               </section>
             </div>
