@@ -6,7 +6,6 @@
   "nav.journal": "Journal",
   "nav.book": "Book a Stay",
   "nav.lang.label": "Switch to Vietnamese",
-
   "hero.tag": "Đà Lạt · Central Highlands · Vietnam",
   "hero.title": "Where<br>travelers<em>find home.</em>",
   "hero.subtitle": "A welcoming stop in the mist-wrapped mountains of Dalat. For solo wanderers, trail runners, and anyone who believes the best travel stories start with the right place to sleep.",
@@ -17,12 +16,10 @@
   "hero.stat.localRoutes": "Local Routes",
   "hero.stat.altitude": "Altitude",
   "hero.scroll": "Scroll",
-
   "video.label": "Welcome to CP12",
   "video.title": "Feel it before <em>you arrive.</em>",
   "video.desc": "Three minutes through pine forests, misty mornings, and genuine human warmth. This is what Trạm CP12 feels like — before you even pack your bags.",
   "video.tag": "3 min · Welcome Film by CP12 Team",
-
   "rooms.label": "Our Spaces",
   "rooms.heading": "A room for every<br><em>kind of traveler.</em>",
   "rooms.intro": "From intimate private rooms to our social dormitory — each space at Trạm CP12 is designed with intention. Natural materials, local craft, and exactly the kind of light that makes you want to stay another night.",
@@ -37,7 +34,6 @@
   "explore.diff.medium": "Medium",
   "explore.diff.hard": "Hard",
   "explore.diff.easyMed": "Easy–Med",
-
   "about.label": "About CP12",
   "about.accentLabel": "Above Sea Level",
   "about.heading": "Not just a bed.<br>A <em>base camp.</em>",
@@ -52,7 +48,6 @@
   "about.checkin": "Check-in from",
   "about.checkout": "Check-out by",
   "about.bookBtn": "Book Your Stay →",
-
   "journal.label": "The CP12 Journal",
   "journal.heading": "Stories from <em>the trail.</em>",
   "journal.subtext": "Local insights, runner guides, hidden spots, and honest travel advice — straight from the CP12 team and the people who've stayed with us.",
@@ -66,21 +61,19 @@
   "journal.card3.title": "Dalat's Hidden Gems: Beyond the Tourist Trail",
   "journal.card3.excerpt": "Skip the brochures. Our team reveals hidden cafés, backstreet food stalls, and underground arts you won't find on TripAdvisor.",
   "journal.readMore": "Read More",
-
   "cta.label": "Ready?",
   "cta.title": "The mountains are<br><em>waiting.</em>",
   "cta.sub": "Whether you're chasing trails, chasing peace, or just chasing a really good cup of cà phê — Trạm CP12 is ready for you. From 180,000 VND/night.",
   "cta.step1.title": "Message us",
   "cta.step1.desc": "Facebook, Zalo, email, or phone — we reply within 2 hours",
   "cta.step2.title": "Confirm your dates",
-  "cta.step2.desc": "We hold your room with no deposit required",
+  "cta.step2.desc": "We hold your room with deposit required",
   "cta.step3.title": "Arrive & check in",
   "cta.step3.desc": "From 14:00 · Check-out by 12:00",
   "cta.bookBtn": "Book a Room →",
   "cta.facebookBtn": "Facebook",
   "cta.zaloBtn": "Zalo",
   "cta.callBtn": "Call Us",
-
   "footer.tagline": "A welcoming stop in the mist-wrapped mountains of Đà Lạt — where solo travelers find their people, runners find their trails, and everyone finds a home away from home.",
   "footer.col.rooms": "Rooms",
   "footer.col.explore": "Explore",
@@ -103,12 +96,12 @@
   "drawer.nextPhoto": "Next photo",
   "drawer.allPhotos": "All photos",
   "drawer.photoCount": "Photo {n} of {total}",
-
   "panel.close": "Close room details",
   "panel.prevPhoto": "Previous photo",
   "panel.nextPhoto": "Next photo",
   "panel.bookBtn": "Book This Room",
   "panel.allPhotos": "All photos",
   "panel.photoCount": "Photo {n} of {total}",
-  "panel.regionLabel": "Room details"
+  "panel.regionLabel": "Room details",
+  "rooms.viewPhotos": "View photos for"
 }

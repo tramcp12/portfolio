@@ -117,6 +117,13 @@
       .replace(/'/g, "&#39;");
   }
 
+  /* CRIT-2: read i18n strings from injected data element (one parse per render call) */
+  function getRoomStrings(lang) {
+    var el = document.getElementById("lang-" + lang + "-data");
+    if (!el) return {};
+    try { return JSON.parse(el.textContent); } catch (e) { return {}; }
+  }
+
   function renderRooms(lang) {
     if (rooms.length === 0) {
       var emptyMsg = (lang === "vi") ? "Thông tin phòng sẽ sớm cập nhật." : "Room details coming soon.";
@@ -128,6 +135,8 @@
     var bookLinkText = isVi ? "Đặt phòng này" : "Book this room";
     var featuredText = isVi ? "Nổi Bật" : "Featured";
     var priceLabelText = isVi ? "VND / đêm" : "VND / night";
+    var roomStrings = getRoomStrings(lang);
+    var viewPhotosPrefix = roomStrings["rooms.viewPhotos"] || (isVi ? "Xem ảnh phòng" : "View photos for");
 
     var html = rooms.map(function (r) {
       /* CRIT-1: use name_vi when language is Vietnamese */
@@ -205,7 +214,7 @@
         /* Keyboard activation: Enter/Space on the card itself */
         cards[roomIndex].setAttribute("tabindex", "0");
         cards[roomIndex].setAttribute("role", "button");
-        cards[roomIndex].setAttribute("aria-label", "View photos for " + roomName);
+        cards[roomIndex].setAttribute("aria-label", viewPhotosPrefix + " " + roomName);
         cards[roomIndex].addEventListener("keydown", function (e) {
           if (e.key === "Enter" || e.key === " ") {
             e.preventDefault();
@@ -439,13 +448,19 @@
       selectedCardEl = null;
     }
 
+    /* IMPORTANT-2: capture and clear lastFocus before async timeout to
+     * prevent race condition where scrollTo triggers layout shift and
+     * moves focus before restoration completes */
+    var focusTarget = lastFocus;
+    lastFocus = null;
+
     setTimeout(function () {
       modal.style.display = "none";
       /* Restore scroll position after display:none to avoid layout shift */
       window.scrollTo({ top: savedScrollY, behavior: "instant" });
+      /* Focus restored after scroll to prevent scroll-to clobbering focus */
+      if (focusTarget && focusTarget.focus) focusTarget.focus();
     }, 320);
-
-    if (lastFocus && lastFocus.focus) lastFocus.focus();
   }
 
   /* ── Refresh language (called by lang-switcher IIFE 0) ── */
@@ -531,10 +546,12 @@
 (function () {
   try {
   var wrap = document.getElementById("cp12-wrap");
-  var tabs = wrap ? wrap.querySelectorAll(".filter-tabs .tab") : [];
-  var cards = wrap ? wrap.querySelectorAll(".travel-card") : [];
+  var tabs = wrap ? Array.from(wrap.querySelectorAll(".filter-tabs .tab")) : [];
+  var cards = wrap ? Array.from(wrap.querySelectorAll(".travel-card")) : [];
   var grid = wrap ? wrap.querySelector(".travel-grid") : null;
   var status = document.getElementById("travel-filter-status");
+  /* IMPORTANT-3: duration must match CSS opacity transition on .travel-card */
+  var FILTER_FADE_MS = 220;
 
   /* CRIT-3: Initialise tabpanel aria-labelledby to the default active tab */
   if (grid) grid.setAttribute("aria-labelledby", "tab-all");
@@ -544,8 +561,24 @@
     cards.forEach(function (c) {
       var cat = c.getAttribute("data-category");
       var show = f === "all" || cat === f;
-      c.style.display = show ? "" : "none";
-      if (show) count++;
+      if (show) {
+        count++;
+        /* IMPORTANT-3: show first, then fade in via rAF (allows CSS transition) */
+        c.style.display = "";
+        requestAnimationFrame(function () {
+          c.classList.remove("is-filtered");
+        });
+      } else {
+        /* IMPORTANT-3: fade out, then hide after transition completes */
+        c.classList.add("is-filtered");
+        (function (card) {
+          setTimeout(function () {
+            if (card.classList.contains("is-filtered")) {
+              card.style.display = "none";
+            }
+          }, FILTER_FADE_MS);
+        }(c));
+      }
     });
     /* CRIT-3: Keep tabpanel label in sync with the active tab */
     if (grid && activeTabId) {
@@ -560,15 +593,43 @@
     }
   }
 
-  tabs.forEach(function (tab) {
+  function activateTab(tab) {
+    tabs.forEach(function (t) {
+      t.classList.remove("active");
+      t.setAttribute("aria-selected", "false");
+      t.setAttribute("tabindex", "-1");
+    });
+    tab.classList.add("active");
+    tab.setAttribute("aria-selected", "true");
+    tab.setAttribute("tabindex", "0");
+    filterCards(tab.getAttribute("data-filter"), tab.id);
+  }
+
+  tabs.forEach(function (tab, tabIndex) {
     tab.addEventListener("click", function () {
-      tabs.forEach(function (t) {
-        t.classList.remove("active");
-        t.setAttribute("aria-selected", "false");
-      });
-      this.classList.add("active");
-      this.setAttribute("aria-selected", "true");
-      filterCards(this.getAttribute("data-filter"), this.id);
+      activateTab(tab);
+    });
+
+    /* REC-1: Arrow key navigation for filter tabs (ARIA tabs pattern) */
+    tab.addEventListener("keydown", function (e) {
+      var idx = -1;
+      if (e.key === "ArrowRight" || e.key === "ArrowDown") {
+        e.preventDefault();
+        idx = (tabIndex + 1) % tabs.length;
+      } else if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
+        e.preventDefault();
+        idx = (tabIndex - 1 + tabs.length) % tabs.length;
+      } else if (e.key === "Home") {
+        e.preventDefault();
+        idx = 0;
+      } else if (e.key === "End") {
+        e.preventDefault();
+        idx = tabs.length - 1;
+      }
+      if (idx >= 0) {
+        tabs[idx].focus();
+        activateTab(tabs[idx]);
+      }
     });
   });
   } catch (e) { console.warn("[CP12] explore init error:", e); }

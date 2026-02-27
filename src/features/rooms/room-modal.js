@@ -211,13 +211,19 @@
       selectedCardEl = null;
     }
 
+    /* IMPORTANT-2: capture and clear lastFocus before async timeout to
+     * prevent race condition where scrollTo triggers layout shift and
+     * moves focus before restoration completes */
+    var focusTarget = lastFocus;
+    lastFocus = null;
+
     setTimeout(function () {
       modal.style.display = "none";
       /* Restore scroll position after display:none to avoid layout shift */
       window.scrollTo({ top: savedScrollY, behavior: "instant" });
+      /* Focus restored after scroll to prevent scroll-to clobbering focus */
+      if (focusTarget && focusTarget.focus) focusTarget.focus();
     }, 320);
-
-    if (lastFocus && lastFocus.focus) lastFocus.focus();
   }
 
   /* ── Refresh language (called by lang-switcher IIFE 0) ── */

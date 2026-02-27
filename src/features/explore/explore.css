@@ -95,7 +95,14 @@
   border: 1px solid rgba(184, 202, 189, 0.12);
   position: relative;
   overflow: hidden;
-  transition: background-color 0.3s, border-color 0.3s, transform 0.3s;
+  /* IMPORTANT-3: opacity added for smooth filter fade (display:none set after transition) */
+  transition: background-color 0.3s, border-color 0.3s, transform 0.3s, opacity 0.22s;
+}
+
+/* IMPORTANT-3: fading-out state — JS sets display:none after FILTER_FADE_MS */
+#cp12-wrap .travel-card.is-filtered {
+  opacity: 0;
+  pointer-events: none;
 }
 
 #cp12-wrap .travel-card:hover {

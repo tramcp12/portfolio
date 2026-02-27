@@ -1,12 +1,11 @@
 
       <!-- Room detail modal — outside <main>, inside #cp12-wrap (B-1 invariant).
-           aria-hidden set by JS init (CRIT-3). aria-label set by JS populateModal (CRIT-4). -->
+           aria-hidden set by JS init. aria-label set dynamically by JS populateModal. -->
       <div
         id="cp12-room-modal"
         class="room-modal"
         role="dialog"
         aria-modal="true"
-        aria-labelledby="cp12-room-modal-title"
       >
         <div class="room-modal-inner">
           <button type="button" class="room-modal-close">

@@ -15,10 +15,14 @@
   align-items: center;
   justify-content: center;
   padding: 1.5rem;
+  /* CRIT-1: backdrop fade — opacity starts at 0, transitions to 1 on .open */
+  opacity: 0;
+  transition: opacity 0.28s ease;
 }
 
 #cp12-wrap .room-modal.open {
   display: flex;
+  opacity: 1;
 }
 
 /* ── Inner container ── */
@@ -258,6 +262,9 @@
 /* ── Reduced-motion guard ── */
 
 @media (prefers-reduced-motion: reduce) {
+  #cp12-wrap .room-modal {
+    transition: none;
+  }
   #cp12-wrap .room-modal-inner {
     animation: none;
   }
@@ -292,6 +299,8 @@
     max-height: 95vh;
     width: 100%;
     border-radius: 0;
+    /* CRIT-4: avoid content being hidden behind iOS home indicator */
+    padding-bottom: env(safe-area-inset-bottom, 0px);
   }
   #cp12-wrap .room-modal-main-img {
     min-height: 220px;

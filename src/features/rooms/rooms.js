@@ -21,6 +21,13 @@
       .replace(/'/g, "&#39;");
   }
 
+  /* CRIT-2: read i18n strings from injected data element (one parse per render call) */
+  function getRoomStrings(lang) {
+    var el = document.getElementById("lang-" + lang + "-data");
+    if (!el) return {};
+    try { return JSON.parse(el.textContent); } catch (e) { return {}; }
+  }
+
   function renderRooms(lang) {
     if (rooms.length === 0) {
       var emptyMsg = (lang === "vi") ? "Thông tin phòng sẽ sớm cập nhật." : "Room details coming soon.";
@@ -32,6 +39,8 @@
     var bookLinkText = isVi ? "Đặt phòng này" : "Book this room";
     var featuredText = isVi ? "Nổi Bật" : "Featured";
     var priceLabelText = isVi ? "VND / đêm" : "VND / night";
+    var roomStrings = getRoomStrings(lang);
+    var viewPhotosPrefix = roomStrings["rooms.viewPhotos"] || (isVi ? "Xem ảnh phòng" : "View photos for");
 
     var html = rooms.map(function (r) {
       /* CRIT-1: use name_vi when language is Vietnamese */
@@ -109,7 +118,7 @@
         /* Keyboard activation: Enter/Space on the card itself */
         cards[roomIndex].setAttribute("tabindex", "0");
         cards[roomIndex].setAttribute("role", "button");
-        cards[roomIndex].setAttribute("aria-label", "View photos for " + roomName);
+        cards[roomIndex].setAttribute("aria-label", viewPhotosPrefix + " " + roomName);
         cards[roomIndex].addEventListener("keydown", function (e) {
           if (e.key === "Enter" || e.key === " ") {
             e.preventDefault();

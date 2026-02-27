@@ -35,11 +35,11 @@
   --font-serif: "Palmore", "Cormorant Garamond", "Times New Roman", serif;
   --font-sans: "Fz poppin", "Be Vietnam Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 
-  /* Semi-transparent alpha variants (CSS-3) */
-  --gold-10: rgba(201, 169, 110, 0.1);
-  --gold-20: rgba(201, 169, 110, 0.2);
-  --gold-35: rgba(201, 169, 110, 0.35);
-  --gold-40: rgba(201, 169, 110, 0.4);
+  /* Semi-transparent alpha variants (CSS-3) — derived from --gold: #b3a05b = rgb(179,160,91) */
+  --gold-10: rgba(179, 160, 91, 0.1);
+  --gold-20: rgba(179, 160, 91, 0.2);
+  --gold-35: rgba(179, 160, 91, 0.35);
+  --gold-40: rgba(179, 160, 91, 0.4);
   --mist-20: rgba(184, 202, 189, 0.2);
   --mist-50: rgba(184, 202, 189, 0.5);
   --pine-dark-80: rgba(26, 48, 40, 0.8);
@@ -1713,10 +1713,14 @@ html.i18n-loading [data-i18n-html] {
   align-items: center;
   justify-content: center;
   padding: 1.5rem;
+  /* CRIT-1: backdrop fade — opacity starts at 0, transitions to 1 on .open */
+  opacity: 0;
+  transition: opacity 0.28s ease;
 }
 
 #cp12-wrap .room-modal.open {
   display: flex;
+  opacity: 1;
 }
 
 /* ── Inner container ── */
@@ -1956,6 +1960,9 @@ html.i18n-loading [data-i18n-html] {
 /* ── Reduced-motion guard ── */
 
 @media (prefers-reduced-motion: reduce) {
+  #cp12-wrap .room-modal {
+    transition: none;
+  }
   #cp12-wrap .room-modal-inner {
     animation: none;
   }
@@ -1990,6 +1997,8 @@ html.i18n-loading [data-i18n-html] {
     max-height: 95vh;
     width: 100%;
     border-radius: 0;
+    /* CRIT-4: avoid content being hidden behind iOS home indicator */
+    padding-bottom: env(safe-area-inset-bottom, 0px);
   }
   #cp12-wrap .room-modal-main-img {
     min-height: 220px;
@@ -2100,7 +2109,14 @@ html.i18n-loading [data-i18n-html] {
   border: 1px solid rgba(184, 202, 189, 0.12);
   position: relative;
   overflow: hidden;
-  transition: background-color 0.3s, border-color 0.3s, transform 0.3s;
+  /* IMPORTANT-3: opacity added for smooth filter fade (display:none set after transition) */
+  transition: background-color 0.3s, border-color 0.3s, transform 0.3s, opacity 0.22s;
+}
+
+/* IMPORTANT-3: fading-out state — JS sets display:none after FILTER_FADE_MS */
+#cp12-wrap .travel-card.is-filtered {
+  opacity: 0;
+  pointer-events: none;
 }
 
 #cp12-wrap .travel-card:hover {
