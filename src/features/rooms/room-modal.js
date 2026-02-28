@@ -50,11 +50,7 @@
     return getString("panel.photoCount").replace("{n}", n).replace("{total}", total);
   }
 
-  function escHtml(str) {
-    return String(str)
-      .replace(/&/g, "&amp;").replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
-  }
+  var escHtml = window.cp12Esc;
 
   /* CRIT-3: set aria-hidden via JS init — display:none alone is sufficient for AT
    * but we also need aria-hidden so removeAttribute("aria-hidden") signals open state */
@@ -107,7 +103,6 @@
     var r = rooms[roomIndex];
     if (!r) return;
     currentLang = lang || "vi";
-    stringsCache = {}; /* invalidate cache on lang change */
 
     var isVi     = currentLang === "vi";
     var name     = (isVi && r.name_vi)     ? r.name_vi     : r.name;

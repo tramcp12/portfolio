@@ -91,6 +91,16 @@
   applyLang(initialLang);
   document.documentElement.classList.remove("i18n-loading");
 
+  /* ── Shared HTML escape utility — exposed for IIFEs 1 & 2 ── */
+  window.cp12Esc = function (str) {
+    return String(str)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#39;");
+  };
+
   /* ── Wire lang toggle button clicks — nav + mobile overlay ── */
   var allLangBtns = [
     document.getElementById("cp12-lang-btn"),
@@ -119,20 +129,16 @@
   var grid = document.getElementById("rooms-grid");
   if (!grid || !Array.isArray(rooms)) return;
 
-  function escHtml(str) {
-    return String(str)
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;")
-      .replace(/'/g, "&#39;");
-  }
+  var escHtml = window.cp12Esc;
 
-  /* CRIT-2: read i18n strings from injected data element (one parse per render call) */
+  /* Read i18n strings from injected data element — cached per language for the page lifetime */
+  var roomStringsCache = {};
   function getRoomStrings(lang) {
+    if (roomStringsCache[lang]) return roomStringsCache[lang];
     var el = document.getElementById("lang-" + lang + "-data");
     if (!el) return {};
-    try { return JSON.parse(el.textContent); } catch (e) { return {}; }
+    try { roomStringsCache[lang] = JSON.parse(el.textContent); } catch (e) { roomStringsCache[lang] = {}; }
+    return roomStringsCache[lang];
   }
 
   function renderRooms(lang) {
@@ -291,11 +297,7 @@
     return getString("panel.photoCount").replace("{n}", n).replace("{total}", total);
   }
 
-  function escHtml(str) {
-    return String(str)
-      .replace(/&/g, "&amp;").replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
-  }
+  var escHtml = window.cp12Esc;
 
   /* CRIT-3: set aria-hidden via JS init — display:none alone is sufficient for AT
    * but we also need aria-hidden so removeAttribute("aria-hidden") signals open state */
@@ -348,7 +350,6 @@
     var r = rooms[roomIndex];
     if (!r) return;
     currentLang = lang || "vi";
-    stringsCache = {}; /* invalidate cache on lang change */
 
     var isVi     = currentLang === "vi";
     var name     = (isVi && r.name_vi)     ? r.name_vi     : r.name;
@@ -730,9 +731,11 @@
       ? mobileNav.querySelector(".nav-mobile-close")
       : null;
     var mobileLinks = mobileNav ? mobileNav.querySelectorAll("a") : [];
+    var mobileNavLastFocus = null;
 
     if (hamburger && mobileNav) {
       hamburger.addEventListener("click", function () {
+        mobileNavLastFocus = document.activeElement;
         mobileNav.classList.add("open");
         hamburger.setAttribute("aria-expanded", "true");
         mobileNav.removeAttribute("aria-hidden");
@@ -743,7 +746,11 @@
         mobileNav.classList.remove("open");
         hamburger.setAttribute("aria-expanded", "false");
         mobileNav.setAttribute("aria-hidden", "true");
-        hamburger.focus();
+        if (mobileNavLastFocus && mobileNavLastFocus.focus) {
+          mobileNavLastFocus.focus();
+        } else {
+          hamburger.focus();
+        }
       }
 
       if (mobileClose) mobileClose.addEventListener("click", closeMob);

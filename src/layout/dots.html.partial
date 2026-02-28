@@ -1,11 +1,12 @@
       <!-- Section progress dots (desktop only) -->
-      <nav id="cp12-dots" aria-label="Page sections">
+      <nav id="cp12-dots" aria-label="Page sections" data-i18n-aria-label="nav.dots">
         <button
           type="button"
           class="dot"
           data-target="home"
           data-label="Top"
           aria-label="Go to top"
+          data-i18n-aria-label="nav.dot.home"
           tabindex="-1"
         ></button>
         <button
@@ -14,6 +15,7 @@
           data-target="video"
           data-label="Film"
           aria-label="Go to welcome film"
+          data-i18n-aria-label="nav.dot.video"
           tabindex="-1"
         ></button>
         <button
@@ -22,6 +24,7 @@
           data-target="rooms"
           data-label="Rooms"
           aria-label="Go to rooms"
+          data-i18n-aria-label="nav.dot.rooms"
           tabindex="-1"
         ></button>
         <button
@@ -30,6 +33,7 @@
           data-target="explore"
           data-label="Explore"
           aria-label="Go to explore"
+          data-i18n-aria-label="nav.dot.explore"
           tabindex="-1"
         ></button>
         <button
@@ -38,6 +42,7 @@
           data-target="about"
           data-label="About"
           aria-label="Go to about"
+          data-i18n-aria-label="nav.dot.about"
           tabindex="-1"
         ></button>
         <button
@@ -46,6 +51,7 @@
           data-target="journal"
           data-label="Journal"
           aria-label="Go to journal"
+          data-i18n-aria-label="nav.dot.journal"
           tabindex="-1"
         ></button>
         <button
@@ -54,6 +60,7 @@
           data-target="book"
           data-label="Book"
           aria-label="Go to booking"
+          data-i18n-aria-label="nav.dot.book"
           tabindex="-1"
         ></button>
       </nav>

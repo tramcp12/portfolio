@@ -3,7 +3,7 @@
  * ──────────────────────────────────────────────────────────── */
 
 #cp12-wrap .modal {
-  display: none;
+  display: flex;
   position: fixed;
   inset: 0;
   z-index: 1000000;
@@ -11,10 +11,15 @@
   align-items: center;
   justify-content: center;
   padding: 2rem;
+  /* Fade transition — visibility keeps it out of tab order when hidden */
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.28s ease, visibility 0.28s ease;
 }
 
 #cp12-wrap .modal.open {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
 }
 
 #cp12-wrap .modal-inner {

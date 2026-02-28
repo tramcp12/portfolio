@@ -755,6 +755,33 @@ html.i18n-loading [data-i18n-html] {
   margin-bottom: 1.5rem;
 }
 
+/* ── Section heading (used across rooms, about, journal) ── */
+
+#cp12-wrap .section-heading {
+  font-family: var(--font-serif);
+  font-size: 3.8rem;
+  font-weight: 300;
+  line-height: 1.05;
+  color: var(--pine);
+}
+
+#cp12-wrap .section-heading em {
+  font-style: italic;
+  color: var(--terracotta);
+}
+
+@media (max-width: 768px) {
+  #cp12-wrap .section-heading {
+    font-size: 2.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  #cp12-wrap .section-heading {
+    font-size: 2.6rem;
+  }
+}
+
 /* ── 6. Animations + reveal system ──────────────────────────
  * src/core/animations.css
  * Contains: fade-up, delay utilities, cp12-reveal, reduced-motion guard (A-1),
@@ -1491,19 +1518,6 @@ html.i18n-loading [data-i18n-html] {
   z-index: 1;
 }
 
-#cp12-wrap .section-heading {
-  font-family: var(--font-serif);
-  font-size: 3.8rem;
-  font-weight: 300;
-  line-height: 1.05;
-  color: var(--pine);
-}
-
-#cp12-wrap .section-heading em {
-  font-style: italic;
-  color: var(--terracotta);
-}
-
 #cp12-wrap .rooms-intro {
   font-size: 0.95rem;
   line-height: 1.9;
@@ -1815,9 +1829,6 @@ html.i18n-loading [data-i18n-html] {
   #cp12-wrap .rooms-section {
     padding: 4rem 2rem 6rem;
   }
-  #cp12-wrap .section-heading {
-    font-size: 2.8rem;
-  }
   #cp12-wrap .rooms-header {
     gap: 2rem;
   }
@@ -1829,9 +1840,6 @@ html.i18n-loading [data-i18n-html] {
   }
   #cp12-wrap .rooms-header {
     gap: 1.5rem;
-  }
-  #cp12-wrap .section-heading {
-    font-size: 2.6rem;
   }
 }
 
@@ -2523,9 +2531,12 @@ html.i18n-loading [data-i18n-html] {
  * src/features/about/about.css
  * ──────────────────────────────────────────────────────────── */
 
+#cp12-wrap .sect-about {
+  background: var(--warm-white);
+}
+
 #cp12-wrap .about-section {
   padding: 5rem 3rem 6rem; /* top trimmed to land cleanly after travel gradient */
-  background: var(--warm-white);
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 6rem;
@@ -3389,7 +3400,7 @@ html.i18n-loading [data-i18n-html] {
  * ──────────────────────────────────────────────────────────── */
 
 #cp12-wrap .modal {
-  display: none;
+  display: flex;
   position: fixed;
   inset: 0;
   z-index: 1000000;
@@ -3397,10 +3408,15 @@ html.i18n-loading [data-i18n-html] {
   align-items: center;
   justify-content: center;
   padding: 2rem;
+  /* Fade transition — visibility keeps it out of tab order when hidden */
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.28s ease, visibility 0.28s ease;
 }
 
 #cp12-wrap .modal.open {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
 }
 
 #cp12-wrap .modal-inner {

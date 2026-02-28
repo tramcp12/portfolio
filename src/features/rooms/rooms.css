@@ -23,19 +23,6 @@
   z-index: 1;
 }
 
-#cp12-wrap .section-heading {
-  font-family: var(--font-serif);
-  font-size: 3.8rem;
-  font-weight: 300;
-  line-height: 1.05;
-  color: var(--pine);
-}
-
-#cp12-wrap .section-heading em {
-  font-style: italic;
-  color: var(--terracotta);
-}
-
 #cp12-wrap .rooms-intro {
   font-size: 0.95rem;
   line-height: 1.9;
@@ -347,9 +334,6 @@
   #cp12-wrap .rooms-section {
     padding: 4rem 2rem 6rem;
   }
-  #cp12-wrap .section-heading {
-    font-size: 2.8rem;
-  }
   #cp12-wrap .rooms-header {
     gap: 2rem;
   }
@@ -361,9 +345,6 @@
   }
   #cp12-wrap .rooms-header {
     gap: 1.5rem;
-  }
-  #cp12-wrap .section-heading {
-    font-size: 2.6rem;
   }
 }
 

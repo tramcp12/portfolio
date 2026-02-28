@@ -188,7 +188,7 @@ ok("cp12.js — IIFE 3 filter-tabs",               js.indexOf("filter-tabs") !==
 ok("cp12.js — IIFE 4 cp12OpenModal global",      js.indexOf("window.cp12OpenModal") !== -1);
 ok("cp12.js — IIFE 4 IntersectionObserver",      js.indexOf("IntersectionObserver") !== -1);
 ok("cp12.js — IIFE 4 prefers-reduced-motion fallback", js.indexOf("classList.add(\"visible\")") !== -1);
-ok("cp12.js — XSS escHtml function",             js.indexOf("function escHtml") !== -1);
+ok("cp12.js — XSS cp12Esc shared utility",        js.indexOf("window.cp12Esc") !== -1);
 ok("cp12.js — IIFE 6 cp12ObserveLazy global",   js.indexOf("window.cp12ObserveLazy") !== -1);
 ok("cp12.js — IIFE 6 lazy shimmer cp12-loaded", js.indexOf("cp12-loaded") !== -1);
 
@@ -208,7 +208,7 @@ ok("lang-switcher.js — data-i18n-html query",  switcherJs.indexOf("[data-i18n-
 ok("lang-switcher.js — FOUC class remove",     switcherJs.indexOf("i18n-loading") !== -1);
 ok("rooms.js — self-contained IIFE",   /\(function\s*\(\)/.test(roomsJs));
 ok("rooms.js — escHtml guard",         roomsJs.indexOf("escHtml") !== -1);
-ok("rooms.js — XSS &amp; replacement", roomsJs.indexOf("&amp;") !== -1);
+ok("lang-switcher.js — XSS &amp; replacement", switcherJs.indexOf("&amp;") !== -1);
 ok("rooms.js — cp12RenderRooms export",roomsJs.indexOf("window.cp12RenderRooms") !== -1);
 ok("rooms.js — lang-aware desc_vi",    roomsJs.indexOf("desc_vi") !== -1);
 ok("video.js — self-contained IIFE",   /\(function\s*\(\)/.test(videoJs));

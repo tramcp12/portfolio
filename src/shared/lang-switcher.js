@@ -91,6 +91,16 @@
   applyLang(initialLang);
   document.documentElement.classList.remove("i18n-loading");
 
+  /* ── Shared HTML escape utility — exposed for IIFEs 1 & 2 ── */
+  window.cp12Esc = function (str) {
+    return String(str)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#39;");
+  };
+
   /* ── Wire lang toggle button clicks — nav + mobile overlay ── */
   var allLangBtns = [
     document.getElementById("cp12-lang-btn"),

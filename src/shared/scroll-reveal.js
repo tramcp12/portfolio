@@ -77,9 +77,11 @@
       ? mobileNav.querySelector(".nav-mobile-close")
       : null;
     var mobileLinks = mobileNav ? mobileNav.querySelectorAll("a") : [];
+    var mobileNavLastFocus = null;
 
     if (hamburger && mobileNav) {
       hamburger.addEventListener("click", function () {
+        mobileNavLastFocus = document.activeElement;
         mobileNav.classList.add("open");
         hamburger.setAttribute("aria-expanded", "true");
         mobileNav.removeAttribute("aria-hidden");
@@ -90,7 +92,11 @@
         mobileNav.classList.remove("open");
         hamburger.setAttribute("aria-expanded", "false");
         mobileNav.setAttribute("aria-hidden", "true");
-        hamburger.focus();
+        if (mobileNavLastFocus && mobileNavLastFocus.focus) {
+          mobileNavLastFocus.focus();
+        } else {
+          hamburger.focus();
+        }
       }
 
       if (mobileClose) mobileClose.addEventListener("click", closeMob);

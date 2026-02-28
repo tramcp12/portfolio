@@ -12,20 +12,16 @@
   var grid = document.getElementById("rooms-grid");
   if (!grid || !Array.isArray(rooms)) return;
 
-  function escHtml(str) {
-    return String(str)
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;")
-      .replace(/'/g, "&#39;");
-  }
+  var escHtml = window.cp12Esc;
 
-  /* CRIT-2: read i18n strings from injected data element (one parse per render call) */
+  /* Read i18n strings from injected data element — cached per language for the page lifetime */
+  var roomStringsCache = {};
   function getRoomStrings(lang) {
+    if (roomStringsCache[lang]) return roomStringsCache[lang];
     var el = document.getElementById("lang-" + lang + "-data");
     if (!el) return {};
-    try { return JSON.parse(el.textContent); } catch (e) { return {}; }
+    try { roomStringsCache[lang] = JSON.parse(el.textContent); } catch (e) { roomStringsCache[lang] = {}; }
+    return roomStringsCache[lang];
   }
 
   function renderRooms(lang) {

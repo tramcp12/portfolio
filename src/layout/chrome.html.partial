@@ -6,6 +6,7 @@
         type="button"
         id="cp12-next-btn"
         aria-label="Scroll to next section"
+        data-i18n-aria-label="nav.nextSection"
       >
         &#8595;
       </button>
@@ -38,6 +39,7 @@
           aria-label="Open navigation menu"
           aria-expanded="false"
           aria-controls="cp12MobileNav"
+          data-i18n-aria-label="nav.openMenu"
         >
           <svg
             width="24"
@@ -68,6 +70,7 @@
           type="button"
           class="nav-mobile-close"
           aria-label="Close navigation menu"
+          data-i18n-aria-label="nav.closeMenu"
         >
           &times;
         </button>

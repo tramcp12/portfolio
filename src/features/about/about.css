@@ -2,9 +2,12 @@
  * src/features/about/about.css
  * ──────────────────────────────────────────────────────────── */
 
+#cp12-wrap .sect-about {
+  background: var(--warm-white);
+}
+
 #cp12-wrap .about-section {
   padding: 5rem 3rem 6rem; /* top trimmed to land cleanly after travel gradient */
-  background: var(--warm-white);
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 6rem;

@@ -41,3 +41,30 @@
 #cp12-wrap .section-label--cta {
   margin-bottom: 1.5rem;
 }
+
+/* ── Section heading (used across rooms, about, journal) ── */
+
+#cp12-wrap .section-heading {
+  font-family: var(--font-serif);
+  font-size: 3.8rem;
+  font-weight: 300;
+  line-height: 1.05;
+  color: var(--pine);
+}
+
+#cp12-wrap .section-heading em {
+  font-style: italic;
+  color: var(--terracotta);
+}
+
+@media (max-width: 768px) {
+  #cp12-wrap .section-heading {
+    font-size: 2.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  #cp12-wrap .section-heading {
+    font-size: 2.6rem;
+  }
+}
