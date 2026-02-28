@@ -384,6 +384,13 @@ html.i18n-loading [data-i18n-html] {
 
 /* ── Nav responsive rules ────────────────────────────────── */
 
+/* Hide desktop lang button when hamburger appears — moved into mobile overlay */
+@media (max-width: 900px) {
+  #cp12-wrap .cp12-main-nav .lang-btn {
+    display: none;
+  }
+}
+
 @media (max-width: 480px) {
   #cp12-wrap .cp12-main-nav {
     padding: 0.75rem 1rem;
@@ -404,7 +411,7 @@ html.i18n-loading [data-i18n-html] {
   position: fixed;
   inset: 0;
   background: var(--pine);
-  z-index: 200;
+  z-index: 1001; /* Must exceed nav bar z-index (1000) so overlay renders above hamburger */
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -449,6 +456,29 @@ html.i18n-loading [data-i18n-html] {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+/* ── Mobile overlay — lang switcher ─────────────────────── */
+
+#cp12-wrap .nav-mobile-divider {
+  width: 2.5rem;
+  border: none;
+  border-top: 1px solid rgba(245, 240, 232, 0.15);
+  margin: 0;
+}
+
+#cp12-wrap .nav-mobile-overlay .lang-btn {
+  color: var(--mist);
+  border-color: rgba(245, 240, 232, 0.25);
+}
+
+#cp12-wrap .nav-mobile-overlay .lang-btn:hover {
+  color: var(--gold);
+  border-color: var(--gold);
+}
+
+#cp12-wrap .nav-mobile-overlay .lang-btn .lang-active {
+  color: var(--gold);
 }
 
 /* ── Mobile overlay responsive ───────────────────────────── */

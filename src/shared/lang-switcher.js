@@ -43,25 +43,27 @@
     /* Update <html lang="…"> */
     document.documentElement.lang = lang;
 
-    /* Update lang toggle button state */
-    var btn = document.getElementById("cp12-lang-btn");
-    if (btn) {
-      var isEn = lang === "en";
+    /* Update lang toggle button state — sync both nav and mobile overlay buttons */
+    var langBtns = [
+      document.getElementById("cp12-lang-btn"),
+      document.getElementById("cp12-lang-btn-mobile")
+    ];
+    var isEn = lang === "en";
+    var langLabel = strings["nav.lang.label"] || (isEn ? "Switch to Vietnamese" : "Switch to English");
+    langBtns.forEach(function(btn) {
+      if (!btn) return;
       btn.setAttribute("aria-pressed", isEn ? "true" : "false");
-      btn.setAttribute(
-        "aria-label",
-        strings["nav.lang.label"] || (isEn ? "Switch to Vietnamese" : "Switch to English"),
-      );
+      btn.setAttribute("aria-label", langLabel);
       var viEl = btn.querySelector(".lang-vi");
       var enEl = btn.querySelector(".lang-en");
       if (lang === "vi") {
-        if(viEl) viEl.classList.add("lang-active");
-        if(enEl) enEl.classList.remove("lang-active");
+        if (viEl) viEl.classList.add("lang-active");
+        if (enEl) enEl.classList.remove("lang-active");
       } else {
-        if(viEl) viEl.classList.remove("lang-active");
-        if(enEl) enEl.classList.add("lang-active");
+        if (viEl) viEl.classList.remove("lang-active");
+        if (enEl) enEl.classList.add("lang-active");
       }
-    }
+    });
 
     /* Re-render room cards with the new language */
     if (window.cp12RenderRooms) window.cp12RenderRooms(lang);
@@ -89,11 +91,15 @@
   applyLang(initialLang);
   document.documentElement.classList.remove("i18n-loading");
 
-  /* ── Wire lang toggle button click ── */
-  var btn = document.getElementById("cp12-lang-btn");
-  if (btn) {
+  /* ── Wire lang toggle button clicks — nav + mobile overlay ── */
+  var allLangBtns = [
+    document.getElementById("cp12-lang-btn"),
+    document.getElementById("cp12-lang-btn-mobile")
+  ];
+  allLangBtns.forEach(function(btn) {
+    if (!btn) return;
     btn.addEventListener("click", function () {
       applyLang(window.cp12Lang === "en" ? "vi" : "en");
     });
-  }
+  });
 })();
