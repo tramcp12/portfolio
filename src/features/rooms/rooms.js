@@ -62,18 +62,18 @@
 
       var desc = (isVi && r.desc_vi) ? r.desc_vi : r.desc;
 
-      /* Phase 8: coverPhoto via data-cover attribute (set via DOM API after innerHTML to avoid
-       * the HTML-entity-decode → CSS-parser attack chain in url('..') context).
-       * bgClass gradient is the fallback when no coverPhoto is present. */
+      /* Phase 10: coverPhoto via data-bg attribute — deferred to IIFE 6 (lazy-loader.js).
+       * bgClass gradient is the fallback when no coverPhoto is present.
+       * cp12-lazy class adds shimmer placeholder while image loads. */
       var hasCover    = !!r.coverPhoto;
-      var bgClassAttr = (!hasCover && r.bgClass) ? (" " + escHtml(r.bgClass)) : "";
-      var dataCover   = hasCover ? ' data-cover="' + escHtml(r.coverPhoto) + '"' : "";
+      var bgClassAttr = hasCover ? " cp12-lazy" : (r.bgClass ? (" " + escHtml(r.bgClass)) : "");
+      var dataBg      = hasCover ? ' data-bg="' + escHtml(r.coverPhoto) + '"' : "";
       var patternEl   = hasCover ? "" : '<div class="room-img-pattern"></div>';
 
       return (
         '<div class="room-card">' +
         '<div class="room-img">' +
-        '<div class="room-img-bg' + bgClassAttr + '"' + dataCover + '>' + patternEl + '</div>' +
+        '<div class="room-img-bg' + bgClassAttr + '"' + dataBg + '>' + patternEl + '</div>' +
         '<div class="room-price-tag"><span class="price-vnd">' + escHtml(r.price) + '</span><span class="price-label">' + priceLabelText + "</span></div>" +
         featuredBadge +
         "</div>" +
@@ -90,13 +90,9 @@
 
     grid.innerHTML = html;
 
-    /* Phase 8: Apply coverPhoto backgrounds via DOM API (immune to HTML-entity-decode
-     * attack chain; matches thumb pattern already used in room-gallery.js) */
-    var bgDivs = grid.querySelectorAll(".room-img-bg[data-cover]");
-    for (var bi = 0; bi < bgDivs.length; bi++) {
-      bgDivs[bi].style.backgroundImage = "url(" + JSON.stringify(bgDivs[bi].dataset.cover) + ")";
-      bgDivs[bi].removeAttribute("data-cover");
-    }
+    /* Phase 10: Notify IIFE 6 (lazy-loader.js) of newly rendered [data-bg] elements.
+     * cp12ObserveLazy is defined by the time language switches trigger re-render. */
+    if (window.cp12ObserveLazy) window.cp12ObserveLazy(grid);
 
     /* Attach gallery click handlers after each innerHTML write (handlers are destroyed on re-render) */
     var cards = grid.querySelectorAll(".room-card");

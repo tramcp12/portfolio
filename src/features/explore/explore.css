@@ -128,25 +128,9 @@
   transform: scale(1.05);
 }
 
-/* Travel card images (self-hosted in static/img/travel/) */
-#cp12-wrap .ti1 {
-  background: url("static/img/travel/lake-run.jpg") center/cover no-repeat;
-}
-#cp12-wrap .ti2 {
-  background: url("static/img/travel/flower-garden.jpg") center/cover no-repeat;
-}
-#cp12-wrap .ti3 {
-  background: url("static/img/travel/langbiang.jpg") center/cover no-repeat;
-}
-#cp12-wrap .ti4 {
-  background: url("static/img/travel/night-market.jpg") center/cover no-repeat;
-}
-#cp12-wrap .ti5 {
-  background: url("static/img/travel/hill-loop.jpg") center/cover no-repeat;
-}
-#cp12-wrap .ti6 {
-  background: url("static/img/travel/zen-monastery.jpg") center/cover no-repeat;
-}
+/* Travel card images: backgrounds applied lazily by lazy-loader.js (IIFE 6).
+ * Images are referenced via data-bg attributes in explore.html.partial.
+ * .ti1–.ti6 classes retained for any per-card overrides if needed. */
 
 #cp12-wrap .runner-badge {
   position: absolute;

@@ -21,6 +21,7 @@ var expected = [
   // CSS source (22 files)
   "src/core/tokens.css", "src/core/reset.css", "src/core/accessibility.css",
   "src/core/buttons.css", "src/core/section-labels.css", "src/core/animations.css",
+  "src/shared/lazy-loader.css",
   "src/core/responsive-sentinel.css", "src/core/supports.css",
   "src/layout/nav.css", "src/layout/nav-mobile.css", "src/layout/dots.css",
   "src/layout/next-btn.css", "src/layout/footer.css", "src/layout/modal.css",
@@ -37,10 +38,11 @@ var expected = [
   "src/features/rooms/rooms.html.partial", "src/features/explore/explore.html.partial",
   "src/features/about/about.html.partial", "src/features/journal/journal.html.partial",
   "src/features/cta/cta.html.partial",
-  // JS IIFEs (5 files)
+  // JS IIFEs (6 files)
   "src/shared/lang-switcher.js",
   "src/features/rooms/rooms.js", "src/features/video/video.js",
   "src/features/explore/explore.js", "src/shared/scroll-reveal.js",
+  "src/shared/lazy-loader.js",
   // Data (5 files)
   "src/data/rooms.json", "src/data/travel.json", "src/data/journal.json",
   "src/data/strings.vi.json", "src/data/strings.en.json"
@@ -187,6 +189,8 @@ ok("cp12.js — IIFE 4 cp12OpenModal global",      js.indexOf("window.cp12OpenMo
 ok("cp12.js — IIFE 4 IntersectionObserver",      js.indexOf("IntersectionObserver") !== -1);
 ok("cp12.js — IIFE 4 prefers-reduced-motion fallback", js.indexOf("classList.add(\"visible\")") !== -1);
 ok("cp12.js — XSS escHtml function",             js.indexOf("function escHtml") !== -1);
+ok("cp12.js — IIFE 6 cp12ObserveLazy global",   js.indexOf("window.cp12ObserveLazy") !== -1);
+ok("cp12.js — IIFE 6 lazy shimmer cp12-loaded", js.indexOf("cp12-loaded") !== -1);
 
 /* ── 4. IIFE source file content checks ─────────────────────────────────── */
 console.log("\n\u2500\u2500 IIFE source files");
@@ -216,6 +220,12 @@ ok("scroll-reveal.js — cachedNav",     revealJs.indexOf("var cachedNav = null"
 ok("scroll-reveal.js — focus trap",    revealJs.indexOf("focus trap") !== -1);
 ok("scroll-reveal.js — passive scroll",revealJs.indexOf("passive") !== -1);
 ok("scroll-reveal.js — RAF batching",  revealJs.indexOf("rafPending") !== -1);
+var lazyLoaderJs = fs.readFileSync("src/shared/lazy-loader.js", "utf8");
+ok("lazy-loader.js — self-contained IIFE",      /\(function\s*\(\)/.test(lazyLoaderJs));
+ok("lazy-loader.js — IntersectionObserver",     lazyLoaderJs.indexOf("IntersectionObserver") !== -1);
+ok("lazy-loader.js — cp12ObserveLazy export",   lazyLoaderJs.indexOf("window.cp12ObserveLazy") !== -1);
+ok("lazy-loader.js — JSON.stringify XSS guard", lazyLoaderJs.indexOf("JSON.stringify") !== -1);
+ok("lazy-loader.js — try/catch fallback",       /try\s*\{/.test(lazyLoaderJs) && /catch\s*\(e\)/.test(lazyLoaderJs));
 
 /* ── 5. Static asset checks ──────────────────────────────────────────────── */
 console.log("\n\u2500\u2500 Static assets");
@@ -237,10 +247,13 @@ ok("static/docs/.gitkeep placeholder",     fs.existsSync(path.join(__dirname, "s
 // A-2: No legacy img/ URL references in generated CSS
 ok("cp12.css — A-2: no legacy url(img/...) paths", !/url\(["']?img\//.test(css));
 
-// CSS references new static/img/travel/ paths
-ok("cp12.css — url(static/img/travel/lake-run.jpg)",     css.indexOf('url("static/img/travel/lake-run.jpg")')     !== -1);
-ok("cp12.css — url(static/img/travel/langbiang.jpg)",    css.indexOf('url("static/img/travel/langbiang.jpg")')    !== -1);
-ok("cp12.css — url(static/img/travel/night-market.jpg)", css.indexOf('url("static/img/travel/night-market.jpg")') !== -1);
+// Phase 10: Travel images moved from CSS url() to HTML data-bg (lazy-loaded by IIFE 6)
+ok("index.html — data-bg static/img/travel/lake-run.jpg",      html.indexOf('data-bg="static/img/travel/lake-run.jpg"')      !== -1);
+ok("index.html — data-bg static/img/travel/flower-garden.jpg", html.indexOf('data-bg="static/img/travel/flower-garden.jpg"') !== -1);
+ok("index.html — data-bg static/img/travel/langbiang.jpg",     html.indexOf('data-bg="static/img/travel/langbiang.jpg"')     !== -1);
+ok("index.html — data-bg static/img/travel/night-market.jpg",  html.indexOf('data-bg="static/img/travel/night-market.jpg"')  !== -1);
+ok("index.html — data-bg static/img/travel/hill-loop.jpg",     html.indexOf('data-bg="static/img/travel/hill-loop.jpg"')     !== -1);
+ok("index.html — data-bg static/img/travel/zen-monastery.jpg", html.indexOf('data-bg="static/img/travel/zen-monastery.jpg"') !== -1);
 
 /* ── Report ──────────────────────────────────────────────────────────────── */
 console.log("\n\u2500\u2500 Results");

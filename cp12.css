@@ -857,6 +857,58 @@ html.i18n-loading [data-i18n-html] {
   }
 }
 
+/* ── Lazy image loader — placeholder + shimmer ────────────────
+ * src/shared/lazy-loader.css
+ * Inserted after core/animations.css in build.js cssSources.
+ *
+ * .cp12-lazy         = element whose background-image is deferred
+ * .cp12-lazy::before = animated shimmer while loading
+ * .cp12-loaded       = added by lazy-loader.js once image is applied
+ * ──────────────────────────────────────────────────────────── */
+
+/* Placeholder state: solid colour while image defers */
+#cp12-wrap .cp12-lazy {
+  background: var(--pine-dark);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Shimmer sweep on top of placeholder */
+#cp12-wrap .cp12-lazy::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.05) 50%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: cp12Shimmer 1.4s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Remove shimmer once image has loaded */
+#cp12-wrap .cp12-lazy.cp12-loaded::before {
+  display: none;
+}
+
+/* Shimmer keyframe */
+@keyframes cp12Shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position:  200% 0; }
+}
+
+/* Respect reduced-motion preference */
+@media (prefers-reduced-motion: reduce) {
+  #cp12-wrap .cp12-lazy::before {
+    animation: none;
+    display: none;
+  }
+}
+
 /* ── 5. Hero / Home section ──────────────────────────────────
  * src/features/home/home.css
  * Button rules go in src/core/buttons.css — not here.
@@ -2142,25 +2194,9 @@ html.i18n-loading [data-i18n-html] {
   transform: scale(1.05);
 }
 
-/* Travel card images (self-hosted in static/img/travel/) */
-#cp12-wrap .ti1 {
-  background: url("static/img/travel/lake-run.jpg") center/cover no-repeat;
-}
-#cp12-wrap .ti2 {
-  background: url("static/img/travel/flower-garden.jpg") center/cover no-repeat;
-}
-#cp12-wrap .ti3 {
-  background: url("static/img/travel/langbiang.jpg") center/cover no-repeat;
-}
-#cp12-wrap .ti4 {
-  background: url("static/img/travel/night-market.jpg") center/cover no-repeat;
-}
-#cp12-wrap .ti5 {
-  background: url("static/img/travel/hill-loop.jpg") center/cover no-repeat;
-}
-#cp12-wrap .ti6 {
-  background: url("static/img/travel/zen-monastery.jpg") center/cover no-repeat;
-}
+/* Travel card images: backgrounds applied lazily by lazy-loader.js (IIFE 6).
+ * Images are referenced via data-bg attributes in explore.html.partial.
+ * .ti1–.ti6 classes retained for any per-card overrides if needed. */
 
 #cp12-wrap .runner-badge {
   position: absolute;

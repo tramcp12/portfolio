@@ -87,7 +87,7 @@
               <!-- Card 1: Hồ Xuân Hương -->
               <div class="travel-card" data-category="running">
                 <div class="travel-card-img">
-                  <div class="travel-card-img-bg ti1"></div>
+                  <div class="travel-card-img-bg cp12-lazy" data-bg="static/img/travel/lake-run.jpg"></div>
                   <div class="runner-badge">
                     <span aria-hidden="true">🏃</span> <span data-i18n="explore.runnersPick">Runner's Pick</span>
                   </div>
@@ -111,7 +111,7 @@
               <!-- Card 2: Vườn Hoa Thành Phố Đà Lạt -->
               <div class="travel-card" data-category="nature">
                 <div class="travel-card-img">
-                  <div class="travel-card-img-bg ti2"></div>
+                  <div class="travel-card-img-bg cp12-lazy" data-bg="static/img/travel/flower-garden.jpg"></div>
                   <div class="diff-badge" data-i18n="explore.diff.easy">Easy</div>
                 </div>
                 <div class="travel-body">
@@ -132,7 +132,7 @@
               <!-- Card 3: Đỉnh núi Langbiang -->
               <div class="travel-card" data-category="nature">
                 <div class="travel-card-img">
-                  <div class="travel-card-img-bg ti3"></div>
+                  <div class="travel-card-img-bg cp12-lazy" data-bg="static/img/travel/langbiang.jpg"></div>
                   <div class="diff-badge" data-i18n="explore.diff.hard">Hard</div>
                 </div>
                 <div class="travel-body">
@@ -153,7 +153,7 @@
               <!-- Card 4: Chợ đêm thành phố Đà Lạt -->
               <div class="travel-card" data-category="food">
                 <div class="travel-card-img">
-                  <div class="travel-card-img-bg ti4"></div>
+                  <div class="travel-card-img-bg cp12-lazy" data-bg="static/img/travel/night-market.jpg"></div>
                   <div class="diff-badge" data-i18n="explore.diff.easy">Easy</div>
                 </div>
                 <div class="travel-body">
@@ -174,7 +174,7 @@
               <!-- Card 5: Đồi chè Cầu Đất Đà Lạt -->
               <div class="travel-card" data-category="nature">
                 <div class="travel-card-img">
-                  <div class="travel-card-img-bg ti5"></div>
+                  <div class="travel-card-img-bg cp12-lazy" data-bg="static/img/travel/hill-loop.jpg"></div>
                   <div class="diff-badge" data-i18n="explore.diff.easy">Easy</div>
                 </div>
                 <div class="travel-body">
@@ -195,7 +195,7 @@
               <!-- Card 6: Thiền viện Trúc Lâm Đà Lạt -->
               <div class="travel-card" data-category="nature">
                 <div class="travel-card-img">
-                  <div class="travel-card-img-bg ti6"></div>
+                  <div class="travel-card-img-bg cp12-lazy" data-bg="static/img/travel/zen-monastery.jpg"></div>
                   <div class="diff-badge" data-i18n="explore.diff.easyMed">Easy–Med</div>
                 </div>
                 <div class="travel-body">

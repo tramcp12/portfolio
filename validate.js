@@ -85,6 +85,9 @@ var roomModalExists     = /id="cp12-room-modal"/.test(html);
 var roomModalInsideMain = /<main[\s\S]*?id="cp12-room-modal"[\s\S]*?<\/main>/.test(html);
 check("B-1", "cp12-room-modal exists in index.html and is outside <main>", roomModalExists && !roomModalInsideMain);
 
+/* ── L-1: Lazy loader active — at least one data-bg attribute in index.html ── */
+check("L-1", "At least one [data-bg] element in index.html (lazy-loader.js active)", /data-bg="static\/img\//.test(html));
+
 /* ── Output ── */
 console.log("\nTr\u1ea1m CP12 \u2014 Architectural Invariants\n");
 passes.forEach(function (p) { console.log(p); });

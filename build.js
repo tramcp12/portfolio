@@ -138,7 +138,7 @@ var html = htmlParts.join("\n");
 /* ── CSS  ── Phase 1+7+9: concat from src/ source files
  * Cascade order: tokens → reset → accessibility →
  *   nav → nav-mobile → dots → next-btn →
- *   buttons → section-labels → animations →
+ *   buttons → section-labels → animations → lazy-loader →
  *   home → video → rooms → room-modal → explore → about → journal → cta →
  *   footer → modal → responsive-sentinel → supports
  */
@@ -153,6 +153,7 @@ var cssSources = [
   "core/buttons.css",
   "core/section-labels.css",
   "core/animations.css",
+  "shared/lazy-loader.css",
   "features/home/home.css",
   "features/video/video.css",
   "features/rooms/rooms.css",
@@ -174,9 +175,10 @@ var bvCount = (css.match(/Be Vietnam Pro/g) || []).length;
 if (cgCount !== 1) throw new Error("CSS-1a build guard: Cormorant Garamond appears " + cgCount + " times (expected 1)");
 if (bvCount !== 1) throw new Error("CSS-1b build guard: Be Vietnam Pro appears " + bvCount + " times (expected 1)");
 
-/* ── JS   ── Phase 3+5+7+9: concat from src/ IIFE source files
+/* ── JS   ── Phase 3+5+7+9+10: concat from src/ IIFE source files
  * Order: lang-switcher (IIFE 0) → rooms (IIFE 1) → room-modal (IIFE 2) →
- *        video (IIFE 3) → explore (IIFE 4) → scroll-reveal (IIFE 5)
+ *        video (IIFE 3) → explore (IIFE 4) → scroll-reveal (IIFE 5) →
+ *        lazy-loader (IIFE 6, must be last — observes [data-bg] after all render)
  */
 var jsSources = [
   "shared/lang-switcher.js",
@@ -184,7 +186,8 @@ var jsSources = [
   "features/rooms/room-modal.js",
   "features/video/video.js",
   "features/explore/explore.js",
-  "shared/scroll-reveal.js"
+  "shared/scroll-reveal.js",
+  "shared/lazy-loader.js"
 ];
 var js = jsSources.map(function(f) { return readSrc(f); }).join("\n\n");
 
@@ -247,6 +250,22 @@ roomsData.forEach(function (room, idx) {
     );
   }
 });
+
+/* ── Phase 10: data-bg HTML asset guard — validate lazy-loaded image paths ── */
+/* Every data-bg="static/img/..." attribute in assembled HTML must point to a
+ * file that exists on disk. Mirrors the Phase 6 CSS url() guard.             */
+var dataBgRe = /data-bg="(static\/img\/[^"]+)"/g;
+var dataBgMatch;
+while ((dataBgMatch = dataBgRe.exec(html)) !== null) {
+  var dataBgPath = path.join(root, dataBgMatch[1]);
+  if (!fs.existsSync(dataBgPath)) {
+    throw new Error(
+      "Phase 10 data-bg guard: HTML references missing file:\n" +
+      "  data-bg=\"" + dataBgMatch[1] + "\"\n" +
+      "  Full path: " + dataBgPath
+    );
+  }
+}
 
 /* ── Phase 8b: Empty name/price guard — CRIT-3 from design review ─────────── */
 /* Prevents deploying rooms with placeholder/empty content. Use --allow-draft
