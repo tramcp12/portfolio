@@ -5,7 +5,7 @@
     "badge": "runner",
     "difficulty": "Easy",
     "cat": "Running · Lakeside",
-    "name": "Hồ Xuân Hương Morning Run",
+    "name": "Hồ Xuân Hương",
     "distance": "0.8km away",
     "duration": "45–60 mins",
     "highlight": "6km paved loop at 1,480m — the lakeside mist at 6am is worth every early alarm. Fully runnable on road shoes, mostly flat. Cooldown bánh mì at the Trần Phú stalls right after."
@@ -15,18 +15,18 @@
     "category": "nature",
     "difficulty": "Easy",
     "cat": "Nature · Photography",
-    "name": "Vườn Hoa — Flower Garden",
-    "distance": "1.2km away",
+    "name": "Vườn Hoa Thành Phố Đà Lạt",
+    "distance": "2km away",
     "duration": "1–2 hours",
-    "highlight": "Mimosa blooms (Feb–Mar) turn the gardens gold and purple — great warm-up walk before hitting the hill loops. Bring a camera: golden hour light here is exceptional."
+    "highlight": "The city's iconic flower park overlooking Xuan Huong Lake. Features hundreds of flower species including hydrangeas, orchids, and roses perfectly curated."
   },
   {
     "bgClass": "ti3",
-    "category": "running",
-    "badge": "runner",
+    "category": "nature",
+    "badge": "",
     "difficulty": "Hard",
     "cat": "Trail Running · Mountain",
-    "name": "Langbiang Mountain Trail",
+    "name": "Đỉnh núi Langbiang",
     "distance": "12km away",
     "duration": "3–4 hours",
     "highlight": "860m vert in 8km — the toughest line in the CP12 trail guide. Pick up the GPX at reception. The plateau at 2,167m runs faster than it looks from below."
@@ -36,28 +36,28 @@
     "category": "food",
     "difficulty": "Easy",
     "cat": "Food & Culture",
-    "name": "Chợ Đêm — Night Market",
+    "name": "Chợ đêm thành phố Đà Lạt",
     "distance": "0.5km away",
     "duration": "1–3 hours",
-    "highlight": "Post-run recovery done right: hồng (persimmon) wine for antioxidants, bánh tráng nướng for the carbs. Walk via the back lanes — skip the tourist main strip."
+    "highlight": "Post-run recovery done right: warm soy milk, bánh tráng nướng, and fresh local strawberries. Walk through the bustling stalls to soak in the evening atmosphere."
   },
   {
     "bgClass": "ti5",
-    "category": "running",
-    "badge": "runner",
-    "difficulty": "Medium",
-    "cat": "Running · Hills",
-    "name": "Phú Đổng Loop — Hill Reps",
-    "distance": "0.3km away",
-    "duration": "60–80 mins",
-    "highlight": "Our doorstep hill reps: 8× up Phú Đổng street gains 120m in 600m. Grab the hand-drawn map at reception — the shortcut through the strawberry farms adds a 2km single-track stretch."
+    "category": "nature",
+    "badge": "",
+    "difficulty": "Easy",
+    "cat": "Nature · Photography",
+    "name": "Đồi chè Cầu Đất Đà Lạt",
+    "distance": "25km away",
+    "duration": "Half day",
+    "highlight": "A century-old tea plantation at 1,650m. Perfect for early morning cloud 'hunting' and strolling through the endless curved rows of green tea bushes."
   },
   {
     "bgClass": "ti6",
     "category": "nature",
     "difficulty": "Easy–Med",
     "cat": "Culture & Spirituality",
-    "name": "Trúc Lâm Zen Monastery",
+    "name": "Thiền viện Trúc Lâm Đà Lạt",
     "distance": "5km away",
     "duration": "Half day",
     "highlight": "Take the cable car up; earn the 4km pine-trail descent back to town. Fully runnable with switchbacks — time it early morning before tour groups hit the trail."

@@ -165,7 +165,7 @@ src/core/animations.css       ← @keyframes + .cp12-reveal + prefers-reduced-mo
 src/features/home/home.css    ← .hero + sect-home animation sigs + hero responsive
 src/features/video/video.css  ← .video-section + sect-video
 src/features/rooms/rooms.css         ← .room-card, r1–r4 gradients + sect-rooms
-src/features/rooms/room-gallery.css  ← #cp12-room-drawer, drawer-inner, gallery stage, thumbs, mobile bottom sheet
+src/features/rooms/room-modal.css    ← #cp12-room-modal, modal-inner, gallery stage, thumbs, mobile safe-area
 src/features/explore/explore.css ← .travel-card, ti1–ti6 gradients + sect-explore
 src/features/about/about.css  ← .about-section + sect-about
 src/features/journal/journal.css ← .blog-card, bi1–bi3 gradients + sect-journal
@@ -188,14 +188,14 @@ src/core/supports.css         ← @supports backdrop-filter (must be last)
 
 | IIFE | Source file | Responsibility |
 |------|-------------|---------------|
-| 0 | `src/shared/lang-switcher.js` | i18n language switcher — reads `#lang-vi-data` / `#lang-en-data` JSON, applies `[data-i18n]` attribute swaps, re-renders rooms + refreshes drawer on language change |
-| 1 | `src/features/rooms/rooms.js` | Rooms renderer — reads `#rooms-data` inline JSON, builds `#rooms-grid` with `escHtml()` XSS guard; attaches gallery click handlers after each render |
-| 2 | `src/shared/room-gallery.js` | Room gallery drawer — photo navigation, focus trap (algorithmic, mirrors modal), `cp12OpenRoomGallery` / `cp12CloseRoomGallery` / `cp12RefreshDrawerLang` globals |
+| 0 | `src/shared/lang-switcher.js` | i18n language switcher — reads `#lang-vi-data` / `#lang-en-data` JSON, applies `[data-i18n]` attribute swaps, re-renders rooms + refreshes modal on language change |
+| 1 | `src/features/rooms/rooms.js` | Rooms renderer — reads `#rooms-data` inline JSON, builds `#rooms-grid` with `escHtml()` XSS guard; attaches photo-modal click handlers after each render |
+| 2 | `src/features/rooms/room-modal.js` | Room detail modal — photo navigation, focus trap, `cp12OpenRoomModal` / `cp12CloseRoomModal` / `cp12RefreshModalLang` globals |
 | 3 | `src/features/video/video.js` | Hero play button + video frame click/keydown handlers |
 | 4 | `src/features/explore/explore.js` | Travel filter tabs (`data-filter`, `aria-selected`, live count) |
-| 5 | `src/shared/scroll-reveal.js` | Modal, mobile nav, IO reveal, scroll RAF, dot nav, anchor scroll (closes gallery drawer before scrolling) |
+| 5 | `src/shared/scroll-reveal.js` | Welcome modal, mobile nav, IO reveal, scroll RAF, dot nav, anchor scroll |
 
-`window.cp12OpenModal` is set in IIFE 5 and called (with guard) from IIFE 3. `window.cp12OpenRoomGallery` is set in IIFE 2 and called (with guard) from IIFE 1. Both guards are defensive coding, kept for robustness.
+`window.cp12OpenModal` is set in IIFE 5 and called (with guard) from IIFE 3. `window.cp12OpenRoomModal` is set in IIFE 2 and called (with guard) from IIFE 1. Both guards are defensive coding, kept for robustness.
 
 ### Language Switcher (IIFE 0)
 
