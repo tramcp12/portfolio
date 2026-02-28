@@ -174,6 +174,8 @@
 @media (max-width: 900px) {
   #cp12-wrap .about-section {
     grid-template-columns: 1fr;
+    /* Reduce the very large 6rem gap — it's only needed for side-by-side layout */
+    gap: 3rem;
   }
 }
 
@@ -181,6 +183,10 @@
   #cp12-wrap .about-section {
     padding: 4rem 2rem;
     gap: 2.5rem;
+  }
+  /* Scale down heading to match other sections at tablet */
+  #cp12-wrap .about-heading {
+    font-size: 2.4rem;
   }
 }
 
@@ -192,11 +198,23 @@
   #cp12-wrap .about-visual {
     height: 320px;
   }
+  #cp12-wrap .about-heading {
+    font-size: 2.2rem;
+  }
+  /* Perk icon size reduced to save space */
+  #cp12-wrap .perk-icon {
+    width: 32px;
+    height: 32px;
+    font-size: 0.9rem;
+  }
 }
 
 @media (max-width: 430px) {
   /* About visual: constrain so absolute children are clipped, not overflowing */
   #cp12-wrap .about-visual {
     height: 280px;
+  }
+  #cp12-wrap .about-heading {
+    font-size: 2rem;
   }
 }

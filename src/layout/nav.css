@@ -164,6 +164,9 @@
   letter-spacing: 0.1em;
   cursor: pointer;
   transition: color 0.3s, border-color 0.3s;
+  /* WCAG 2.5.5: minimum touch target height */
+  min-height: 44px;
+  justify-content: center;
 }
 
 #cp12-wrap .lang-btn:hover {
@@ -210,8 +213,25 @@
   padding: 0.5rem;
   color: var(--pine);
   line-height: 1;
+  /* WCAG 2.5.5: minimum 44×44px touch target */
+  min-width: 44px;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
 }
 
 #cp12-wrap .nav-hamburger svg {
   display: block;
+}
+
+/* ── Nav responsive rules ────────────────────────────────── */
+
+@media (max-width: 480px) {
+  #cp12-wrap .cp12-main-nav {
+    padding: 0.75rem 1rem;
+  }
+  /* Tighten nav-logo size on very small screens */
+  #cp12-wrap .nav-logo {
+    font-size: 1.2rem;
+  }
 }

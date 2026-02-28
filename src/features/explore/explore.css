@@ -315,6 +315,7 @@
   #cp12-wrap .tab {
     padding: 0.4rem 0.8rem;
     font-size: 0.62rem;
-    min-height: 40px;
+    /* WCAG 2.5.5: maintain minimum 44px touch target even on very narrow screens */
+    min-height: 44px;
   }
 }

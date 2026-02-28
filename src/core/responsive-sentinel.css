@@ -28,10 +28,30 @@
   #cp12-wrap .travel-header {
     gap: 2rem;
   }
+
+  /* Cross-cutting section padding reduction — sections that don't define their own */
+  #cp12-wrap .blog-section,
+  #cp12-wrap .cta-section {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
 }
 
 /* ── Mid-breakpoint (≤640px) ──────────────────────────────── */
 
 @media (max-width: 640px) {
   /* Cross-cutting adjustments — individual feature rules are in feature files */
+}
+
+/* ── Mobile breakpoint (≤480px) ──────────────────────────── */
+
+@media (max-width: 480px) {
+  /* Cross-cutting: full-width buttons when stacked on narrow screens */
+  #cp12-wrap .hero-btns .btn-primary,
+  #cp12-wrap .hero-btns .btn-outline,
+  #cp12-wrap .cta-btns .btn-primary,
+  #cp12-wrap .cta-btns .btn-ghost {
+    width: 100%;
+    max-width: 320px;
+  }
 }

@@ -26,6 +26,10 @@
   letter-spacing: 0.05em;
   font-weight: 300;
   transition: color 0.2s;
+  /* WCAG 2.5.5: min touch target for mobile nav links */
+  min-height: 44px;
+  display: flex;
+  align-items: center;
 }
 
 #cp12-wrap .nav-mobile-overlay a:hover {
@@ -43,4 +47,22 @@
   cursor: pointer;
   line-height: 1;
   padding: 0.5rem;
+  /* WCAG 2.5.5: minimum 44×44px touch target */
+  min-width: 44px;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── Mobile overlay responsive ───────────────────────────── */
+
+@media (max-width: 480px) {
+  /* Tighten font size slightly for very narrow screens */
+  #cp12-wrap .nav-mobile-overlay a {
+    font-size: 1.8rem;
+  }
+  #cp12-wrap .nav-mobile-overlay {
+    gap: 1.8rem;
+  }
 }

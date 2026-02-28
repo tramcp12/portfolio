@@ -144,6 +144,16 @@
 
 /* ── CTA responsive rules ────────────────────────────────── */
 
+@media (max-width: 768px) {
+  #cp12-wrap .cta-section {
+    padding: 5rem 2rem;
+  }
+  /* Scale down large CTA title at tablet — 4.5rem is very large for 768px */
+  #cp12-wrap .cta-title {
+    font-size: 3.2rem;
+  }
+}
+
 @media (max-width: 600px) {
   #cp12-wrap .booking-steps {
     grid-template-columns: 1fr;
@@ -167,6 +177,9 @@
   #cp12-wrap .cta-btns {
     flex-direction: column;
     align-items: center;
+  }
+  #cp12-wrap .cta-sub {
+    font-size: 0.88rem;
   }
 }
 

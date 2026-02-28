@@ -65,3 +65,31 @@
   letter-spacing: 0.1em;
   margin-top: 0.5rem;
 }
+
+/* ── Video modal responsive rules ────────────────────────── */
+
+@media (max-width: 768px) {
+  #cp12-wrap .modal {
+    padding: 1rem;
+  }
+  #cp12-wrap .modal-inner {
+    padding: 1.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  #cp12-wrap .modal {
+    padding: 0;
+    align-items: flex-end;
+  }
+  #cp12-wrap .modal-inner {
+    /* Full-width bottom sheet on small screens */
+    max-width: 100%;
+    padding: 1rem;
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  #cp12-wrap .modal-video-placeholder {
+    font-size: 1.2rem;
+    padding: 1.5rem;
+  }
+}

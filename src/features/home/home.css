@@ -247,6 +247,14 @@
   #cp12-wrap .hero-title {
     font-size: 3.5rem;
   }
+  /* Reduce left padding on hero-left at tablet to match smaller viewport */
+  #cp12-wrap .hero-left {
+    padding: 6rem 3rem 4rem;
+  }
+  /* scroll-hint is over hero-left in single-col — hide to avoid overlap */
+  #cp12-wrap .scroll-hint {
+    display: none;
+  }
 }
 
 @media (max-width: 768px) {

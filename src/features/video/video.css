@@ -140,11 +140,40 @@
 
 /* ── Video responsive rules ──────────────────────────────── */
 
+@media (max-width: 768px) {
+  #cp12-wrap .video-section {
+    padding: 5rem 0;
+  }
+  #cp12-wrap .video-container {
+    padding: 0 2rem;
+  }
+  #cp12-wrap .video-title {
+    font-size: 2.8rem;
+  }
+  #cp12-wrap .video-desc {
+    font-size: 0.88rem;
+  }
+}
+
 @media (max-width: 480px) {
+  #cp12-wrap .video-section {
+    padding: 4rem 0;
+  }
   #cp12-wrap .video-container {
     padding: 0 1.5rem;
   }
   #cp12-wrap .video-title {
-    font-size: 2.4rem;
+    font-size: 2.2rem;
+  }
+  /* Scale down the big play button slightly so it doesn't dominate small screens */
+  #cp12-wrap .big-play {
+    width: 72px;
+    height: 72px;
+  }
+}
+
+@media (max-width: 430px) {
+  #cp12-wrap .video-title {
+    font-size: 2rem;
   }
 }
