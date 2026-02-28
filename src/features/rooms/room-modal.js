@@ -256,9 +256,20 @@
     }
   });
 
-  /* ── Keyboard: Escape closes modal ── */
+  /* ── Keyboard: Escape closes modal, Arrows navigate photos ── */
   document.addEventListener("keydown", function (e) {
-    if (e.key === "Escape" && isOpen) closeModal();
+    if (!isOpen) return;
+    if (e.key === "Escape") closeModal();
+    if (e.key === "ArrowLeft" && prevBtn) {
+      showPhoto(currentPhotoIndex - 1);
+      prevBtn.classList.add("btn-active");
+      setTimeout(function() { prevBtn.classList.remove("btn-active"); }, 150);
+    }
+    if (e.key === "ArrowRight" && nextBtn) {
+      showPhoto(currentPhotoIndex + 1);
+      nextBtn.classList.add("btn-active");
+      setTimeout(function() { nextBtn.classList.remove("btn-active"); }, 150);
+    }
   });
 
   /* ── Backdrop click: close if click lands on overlay (not inner) ── */
