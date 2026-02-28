@@ -52,10 +52,15 @@
         "aria-label",
         strings["nav.lang.label"] || (isEn ? "Switch to Vietnamese" : "Switch to English"),
       );
-      var activeEl = btn.querySelector(".lang-active");
-      if (activeEl) activeEl.textContent = lang.toUpperCase();
-      var altEl = btn.querySelector(".lang-alt");
-      if (altEl) altEl.textContent = (lang === "en" ? "VI" : "EN");
+      var viEl = btn.querySelector(".lang-vi");
+      var enEl = btn.querySelector(".lang-en");
+      if (lang === "vi") {
+        if(viEl) viEl.classList.add("lang-active");
+        if(enEl) enEl.classList.remove("lang-active");
+      } else {
+        if(viEl) viEl.classList.remove("lang-active");
+        if(enEl) enEl.classList.add("lang-active");
+      }
     }
 
     /* Re-render room cards with the new language */

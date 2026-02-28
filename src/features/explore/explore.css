@@ -120,6 +120,8 @@
 #cp12-wrap .travel-card-img-bg {
   position: absolute;
   inset: 0;
+  background-size: cover;
+  background-position: center;
   transition: transform 0.5s ease;
   will-change: transform;
 }

@@ -30,7 +30,7 @@
           aria-label="Switch to English"
           aria-pressed="false"
         >
-          <span class="lang-active">VI</span><span class="lang-sep" aria-hidden="true">|</span><span class="lang-alt">EN</span>
+          <span class="lang-vi lang-active">VI</span><span class="lang-sep" aria-hidden="true">|</span><span class="lang-en">EN</span>
         </button>
         <button
           type="button"

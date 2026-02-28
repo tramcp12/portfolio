@@ -168,7 +168,7 @@
             }
           });
         },
-        { threshold: 0.18 },
+        { threshold: 0, rootMargin: "-10% 0px" },
       );
       sections.forEach(function (s) {
         sio.observe(s);

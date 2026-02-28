@@ -1484,7 +1484,7 @@ html.i18n-loading [data-i18n-html] {
 #cp12-wrap .rooms-grid {
   display: grid;
   /* Phase 8: auto-fill for 7 rooms — 3-col on wide, 2-col on medium, 1-col on mobile */
-  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 360px), 1fr));
   gap: 2px;
   max-width: 1200px;
   margin: 0 auto;
@@ -1495,7 +1495,7 @@ html.i18n-loading [data-i18n-html] {
 /* Phase 8: lone last card in a 3-col row spans full width — centered, capped at 480px.
  * Works correctly for N=7 (7th card is alone in row 3).
  * Edge case N=4: 4th card alone in row 2 → same centering behavior (intentional). */
-#cp12-wrap .rooms-grid .room-card:last-child:nth-child(3n+1) {
+#cp12-wrap .rooms-grid .room-card:last-child:nth-child(3n + 1) {
   grid-column: 1 / -1;
   max-width: 480px;
   margin-left: auto;
@@ -1529,6 +1529,13 @@ html.i18n-loading [data-i18n-html] {
 
 #cp12-wrap .room-card:hover .room-img-bg {
   transform: scale(1.05);
+}
+
+#cp12-wrap .room-img-bg-asset {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 /* ── Room card image layers ──
@@ -1762,22 +1769,8 @@ html.i18n-loading [data-i18n-html] {
 #cp12-wrap .sect-rooms.animated .rooms-header {
   animation: cp12fu 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
-#cp12-wrap .sect-rooms .room-card {
-  opacity: 0;
-  transform: translateY(40px);
-  transition: none;
-}
-/* Phase 8: explicit stagger for all 7 cards — cleaner cascade than shared nth-child(n+5) */
-#cp12-wrap .sect-rooms.animated .room-card {
-  animation: cp12ScaleUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.15s forwards;
-}
-#cp12-wrap .sect-rooms.animated .room-card:nth-child(2) { animation-delay: 0.28s; }
-#cp12-wrap .sect-rooms.animated .room-card:nth-child(3) { animation-delay: 0.41s; }
-#cp12-wrap .sect-rooms.animated .room-card:nth-child(4) { animation-delay: 0.54s; }
-#cp12-wrap .sect-rooms.animated .room-card:nth-child(5) { animation-delay: 0.67s; }
-#cp12-wrap .sect-rooms.animated .room-card:nth-child(6) { animation-delay: 0.80s; }
-#cp12-wrap .sect-rooms.animated .room-card:nth-child(7) { animation-delay: 0.93s; }
-#cp12-wrap .sect-rooms.animated .room-card:nth-child(n+8) { animation-delay: 0.93s; }
+/* Note: Room cards no longer use entrance animations to prevent 
+ * "blank beige viewport" issues when scrolling too fast on mobile. */
 
 /* ── Rooms responsive rules ──────────────────────────────── */
 
@@ -2286,6 +2279,8 @@ html.i18n-loading [data-i18n-html] {
 #cp12-wrap .travel-card-img-bg {
   position: absolute;
   inset: 0;
+  background-size: cover;
+  background-position: center;
   transition: transform 0.5s ease;
   will-change: transform;
 }

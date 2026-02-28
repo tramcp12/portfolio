@@ -52,10 +52,15 @@
         "aria-label",
         strings["nav.lang.label"] || (isEn ? "Switch to Vietnamese" : "Switch to English"),
       );
-      var activeEl = btn.querySelector(".lang-active");
-      if (activeEl) activeEl.textContent = lang.toUpperCase();
-      var altEl = btn.querySelector(".lang-alt");
-      if (altEl) altEl.textContent = (lang === "en" ? "VI" : "EN");
+      var viEl = btn.querySelector(".lang-vi");
+      var enEl = btn.querySelector(".lang-en");
+      if (lang === "vi") {
+        if(viEl) viEl.classList.add("lang-active");
+        if(enEl) enEl.classList.remove("lang-active");
+      } else {
+        if(viEl) viEl.classList.remove("lang-active");
+        if(enEl) enEl.classList.add("lang-active");
+      }
     }
 
     /* Re-render room cards with the new language */
@@ -158,18 +163,15 @@
 
       var desc = (isVi && r.desc_vi) ? r.desc_vi : r.desc;
 
-      /* Phase 10: coverPhoto via data-bg attribute — deferred to IIFE 6 (lazy-loader.js).
-       * bgClass gradient is the fallback when no coverPhoto is present.
-       * cp12-lazy class adds shimmer placeholder while image loads. */
+      /* Phase 10 update: Native lazy loading instead of intersection observer data-bg */
       var hasCover    = !!r.coverPhoto;
-      var bgClassAttr = hasCover ? " cp12-lazy" : (r.bgClass ? (" " + escHtml(r.bgClass)) : "");
-      var dataBg      = hasCover ? ' data-bg="' + escHtml(r.coverPhoto) + '"' : "";
-      var patternEl   = hasCover ? "" : '<div class="room-img-pattern"></div>';
+      var bgClassAttr = hasCover ? "" : (r.bgClass ? (" " + escHtml(r.bgClass)) : "");
+      var imgOrPattern = hasCover ? '<img class="room-img-bg-asset" src="' + escHtml(r.coverPhoto) + '" alt="' + escHtml(name) + '" loading="lazy" />' : '<div class="room-img-pattern"></div>';
 
       return (
         '<div class="room-card">' +
         '<div class="room-img">' +
-        '<div class="room-img-bg' + bgClassAttr + '"' + dataBg + '>' + patternEl + '</div>' +
+        '<div class="room-img-bg' + bgClassAttr + '">' + imgOrPattern + '</div>' +
         '<div class="room-price-tag"><span class="price-vnd">' + escHtml(r.price) + '</span><span class="price-label">' + priceLabelText + "</span></div>" +
         featuredBadge +
         "</div>" +
@@ -802,7 +804,7 @@
             }
           });
         },
-        { threshold: 0.18 },
+        { threshold: 0, rootMargin: "-10% 0px" },
       );
       sections.forEach(function (s) {
         sio.observe(s);
