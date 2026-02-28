@@ -312,8 +312,7 @@ html.i18n-loading [data-i18n-html] {
   align-items: center;
   gap: 0.2rem;
   padding: 0.3rem 0.55rem;
-  border: 1px solid rgba(201, 169, 110, 0.55);
-  border-radius: 0.25rem;
+  border: none;
   background: transparent;
   color: var(--mist);
   font-family: var(--font-sans);
@@ -321,7 +320,7 @@ html.i18n-loading [data-i18n-html] {
   font-weight: 500;
   letter-spacing: 0.1em;
   cursor: pointer;
-  transition: color 0.3s, border-color 0.3s;
+  transition: color 0.3s;
   /* WCAG 2.5.5: minimum touch target height */
   min-height: 44px;
   justify-content: center;
@@ -329,7 +328,6 @@ html.i18n-loading [data-i18n-html] {
 
 #cp12-wrap .lang-btn:hover {
   color: var(--gold);
-  border-color: var(--gold);
 }
 
 #cp12-wrap .lang-btn:focus-visible {
@@ -350,12 +348,10 @@ html.i18n-loading [data-i18n-html] {
 /* Adapt lang button to nav colorway states */
 #cp12-wrap .cp12-main-nav.scrolled:not(.nav-over-dark) .lang-btn {
   color: var(--slate);
-  border-color: rgba(45, 74, 62, 0.3);
 }
 
 #cp12-wrap .cp12-main-nav.scrolled:not(.nav-over-dark) .lang-btn:hover {
   color: var(--pine);
-  border-color: var(--pine);
 }
 
 #cp12-wrap .cp12-main-nav.scrolled:not(.nav-over-dark) .lang-btn .lang-active {
@@ -469,12 +465,10 @@ html.i18n-loading [data-i18n-html] {
 
 #cp12-wrap .nav-mobile-overlay .lang-btn {
   color: var(--mist);
-  border-color: rgba(245, 240, 232, 0.25);
 }
 
 #cp12-wrap .nav-mobile-overlay .lang-btn:hover {
   color: var(--gold);
-  border-color: var(--gold);
 }
 
 #cp12-wrap .nav-mobile-overlay .lang-btn .lang-active {
