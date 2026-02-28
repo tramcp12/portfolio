@@ -1483,8 +1483,8 @@ html.i18n-loading [data-i18n-html] {
 
 #cp12-wrap .rooms-grid {
   display: grid;
-  /* Phase 8: auto-fill for 7 rooms — 3-col on wide, 2-col on medium, 1-col on mobile */
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 360px), 1fr));
+  /* Phase 11: auto-fill for large catalog cards — 2-col on desktop, 1-col on mobile */
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 480px), 1fr));
   gap: 2px;
   max-width: 1200px;
   margin: 0 auto;
@@ -1492,12 +1492,11 @@ html.i18n-loading [data-i18n-html] {
   z-index: 1;
 }
 
-/* Phase 8: lone last card in a 3-col row spans full width — centered, capped at 480px.
- * Works correctly for N=7 (7th card is alone in row 3).
- * Edge case N=4: 4th card alone in row 2 → same centering behavior (intentional). */
-#cp12-wrap .rooms-grid .room-card:last-child:nth-child(3n + 1) {
+/* Phase 11: lone last card in a 2-col row spans full width — centered, capped at 600px.
+ * Works correctly for odd number of cards (e.g. 7th card alone in row 4). */
+#cp12-wrap .rooms-grid .room-card:last-child:nth-child(2n + 1) {
   grid-column: 1 / -1;
-  max-width: 480px;
+  max-width: 600px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -1510,7 +1509,7 @@ html.i18n-loading [data-i18n-html] {
 }
 
 #cp12-wrap .room-img {
-  aspect-ratio: 4/3;
+  aspect-ratio: 4/5;
   position: relative;
   overflow: hidden;
 }
