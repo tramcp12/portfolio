@@ -183,11 +183,11 @@ ok("cp12.js — IIFE 0 cp12Lang global",           js.indexOf("window.cp12Lang")
 ok("cp12.js — IIFE 0 localStorage",              js.indexOf("localStorage") !== -1);
 ok("cp12.js — IIFE 1 rooms renderer",            js.indexOf("rooms-data") !== -1);
 ok("cp12.js — IIFE 1 cp12RenderRooms global",    js.indexOf("window.cp12RenderRooms") !== -1);
-ok("cp12.js — IIFE 2 heroPlayBtn",               js.indexOf("heroPlayBtn") !== -1);
-ok("cp12.js — IIFE 3 filter-tabs",               js.indexOf("filter-tabs") !== -1);
-ok("cp12.js — IIFE 4 cp12OpenModal global",      js.indexOf("window.cp12OpenModal") !== -1);
-ok("cp12.js — IIFE 4 IntersectionObserver",      js.indexOf("IntersectionObserver") !== -1);
-ok("cp12.js — IIFE 4 prefers-reduced-motion fallback", js.indexOf("classList.add(\"visible\")") !== -1);
+ok("cp12.js — IIFE 3 heroPlayBtn",               js.indexOf("heroPlayBtn") !== -1);
+ok("cp12.js — IIFE 4 filter-tabs",               js.indexOf("filter-tabs") !== -1);
+ok("cp12.js — IIFE 5 cp12OpenModal global",      js.indexOf("window.cp12OpenModal") !== -1);
+ok("cp12.js — IIFE 5 IntersectionObserver",      js.indexOf("IntersectionObserver") !== -1);
+ok("cp12.js — IIFE 5 prefers-reduced-motion fallback", js.indexOf("classList.add(\"visible\")") !== -1);
 ok("cp12.js — XSS cp12Esc shared utility",        js.indexOf("window.cp12Esc") !== -1);
 ok("cp12.js — IIFE 6 cp12ObserveLazy global",   js.indexOf("window.cp12ObserveLazy") !== -1);
 ok("cp12.js — IIFE 6 lazy shimmer cp12-loaded", js.indexOf("cp12-loaded") !== -1);

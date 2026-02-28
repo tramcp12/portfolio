@@ -4,7 +4,7 @@
  * Watches all [data-bg] elements via IntersectionObserver.
  * On viewport entry (300px ahead): preloads image off-DOM,
  * then applies via style.backgroundImage using JSON.stringify
- * for safe URL escaping (matches data-cover pattern, Phase 8).
+ * for safe URL escaping (matches data-cover pattern).
  *
  * P-1 safe: new Image() is never inserted into the DOM.
  * Covers: 6 travel cards + 7 room catalog covers.

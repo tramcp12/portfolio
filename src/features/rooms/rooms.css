@@ -32,7 +32,7 @@
 
 #cp12-wrap .rooms-grid {
   display: grid;
-  /* Phase 11: auto-fill for large catalog cards — 2-col on desktop, 1-col on mobile */
+  /* auto-fill for large catalog cards — 2-col on desktop, 1-col on mobile */
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 480px), 1fr));
   gap: 2px;
   max-width: 1200px;
@@ -41,7 +41,7 @@
   z-index: 1;
 }
 
-/* Phase 11: lone last card in a 2-col row spans full width — centered, capped at 600px.
+/* lone last card in a 2-col row spans full width — centered, capped at 600px.
  * Works correctly for odd number of cards (e.g. 7th card alone in row 4). */
 #cp12-wrap .rooms-grid .room-card:last-child:nth-child(2n + 1) {
   grid-column: 1 / -1;
@@ -68,10 +68,10 @@
   inset: 0;
   transition: transform 0.6s ease;
   will-change: transform;
-  /* Phase 8: real photos fill the image area */
+  /* real photos fill the image area */
   background-size: cover;
   background-position: center;
-  /* Phase 8: neutral fallback when neither coverPhoto nor bgClass is present */
+  /* neutral fallback when neither coverPhoto nor bgClass is present */
   background-color: var(--pine-dark);
 }
 
@@ -323,7 +323,7 @@
 /* ── Rooms responsive rules ──────────────────────────────── */
 
 @media (max-width: 900px) {
-  /* Phase 8: rooms-grid uses auto-fill — no override needed; it goes 3→2→1 naturally.
+  /* rooms-grid uses auto-fill — no override needed; it goes 3→2→1 naturally.
    * rooms-header still collapses from 2-col to 1-col at 900px. */
   #cp12-wrap .rooms-header {
     grid-template-columns: 1fr;

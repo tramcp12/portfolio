@@ -1,4 +1,4 @@
-/* ── 1. Hero / Video ──────────────────────────────────────── */
+/* ── 3. Hero / Video ──────────────────────────────────────── */
 (function () {
   try {
     var heroPlay = document.getElementById("heroPlayBtn");

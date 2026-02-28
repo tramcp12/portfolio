@@ -175,7 +175,7 @@
 
       var desc = (isVi && r.desc_vi) ? r.desc_vi : r.desc;
 
-      /* Phase 10 update: Native lazy loading instead of intersection observer data-bg */
+      /* Native lazy loading instead of intersection observer data-bg */
       var hasCover    = !!r.coverPhoto;
       var bgClassAttr = hasCover ? "" : (r.bgClass ? (" " + escHtml(r.bgClass)) : "");
       var imgOrPattern = hasCover ? '<img class="room-img-bg-asset" src="' + escHtml(r.coverPhoto) + '" alt="' + escHtml(name) + '" loading="lazy" />' : '<div class="room-img-pattern"></div>';
@@ -200,7 +200,7 @@
 
     grid.innerHTML = html;
 
-    /* Phase 10: Notify IIFE 6 (lazy-loader.js) of newly rendered [data-bg] elements.
+    /* Notify IIFE 6 (lazy-loader.js) of newly rendered [data-bg] elements.
      * cp12ObserveLazy is defined by the time language switches trigger re-render. */
     if (window.cp12ObserveLazy) window.cp12ObserveLazy(grid);
 
@@ -531,7 +531,7 @@
 })();
 
 
-/* ── 1. Hero / Video ──────────────────────────────────────── */
+/* ── 3. Hero / Video ──────────────────────────────────────── */
 (function () {
   try {
     var heroPlay = document.getElementById("heroPlayBtn");
@@ -558,7 +558,7 @@
 })();
 
 
-/* ── 2. Travel filter tabs ────────────────────────────────── */
+/* ── 4. Travel filter tabs ────────────────────────────────── */
 (function () {
   try {
   var wrap = document.getElementById("cp12-wrap");
@@ -652,7 +652,7 @@
 })();
 
 
-/* ── 3. Modal · Mobile nav · IO reveal · Scroll · Dots · Anchors ── */
+/* ── 5. Modal · Mobile nav · IO reveal · Scroll · Dots · Anchors ── */
 (function () {
   try {
     var wrap = document.getElementById("cp12-wrap");
@@ -1011,7 +1011,7 @@
  * Watches all [data-bg] elements via IntersectionObserver.
  * On viewport entry (300px ahead): preloads image off-DOM,
  * then applies via style.backgroundImage using JSON.stringify
- * for safe URL escaping (matches data-cover pattern, Phase 8).
+ * for safe URL escaping (matches data-cover pattern).
  *
  * P-1 safe: new Image() is never inserted into the DOM.
  * Covers: 6 travel cards + 7 room catalog covers.

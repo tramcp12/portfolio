@@ -1,4 +1,4 @@
-/* ── 3. Modal · Mobile nav · IO reveal · Scroll · Dots · Anchors ── */
+/* ── 5. Modal · Mobile nav · IO reveal · Scroll · Dots · Anchors ── */
 (function () {
   try {
     var wrap = document.getElementById("cp12-wrap");

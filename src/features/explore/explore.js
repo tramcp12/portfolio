@@ -1,4 +1,4 @@
-/* ── 2. Travel filter tabs ────────────────────────────────── */
+/* ── 4. Travel filter tabs ────────────────────────────────── */
 (function () {
   try {
   var wrap = document.getElementById("cp12-wrap");

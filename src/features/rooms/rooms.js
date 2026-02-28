@@ -58,7 +58,7 @@
 
       var desc = (isVi && r.desc_vi) ? r.desc_vi : r.desc;
 
-      /* Phase 10 update: Native lazy loading instead of intersection observer data-bg */
+      /* Native lazy loading instead of intersection observer data-bg */
       var hasCover    = !!r.coverPhoto;
       var bgClassAttr = hasCover ? "" : (r.bgClass ? (" " + escHtml(r.bgClass)) : "");
       var imgOrPattern = hasCover ? '<img class="room-img-bg-asset" src="' + escHtml(r.coverPhoto) + '" alt="' + escHtml(name) + '" loading="lazy" />' : '<div class="room-img-pattern"></div>';
@@ -83,7 +83,7 @@
 
     grid.innerHTML = html;
 
-    /* Phase 10: Notify IIFE 6 (lazy-loader.js) of newly rendered [data-bg] elements.
+    /* Notify IIFE 6 (lazy-loader.js) of newly rendered [data-bg] elements.
      * cp12ObserveLazy is defined by the time language switches trigger re-render. */
     if (window.cp12ObserveLazy) window.cp12ObserveLazy(grid);
 
