@@ -53,7 +53,8 @@ portfolio/
 ├── img/                 # LEGACY — kept until production URLs verified post-deploy
 │                        # Delete this folder in a SEPARATE commit after deployment
 │
-├── validate.js          # Architectural invariant checker (12 rules)
+├── validate.js          # Architectural invariant checker (17 rules)
+├── test.js              # 359-check test suite (schemas, output, IIFE structure, assets)
 ├── package.json         # Dev tooling
 ├── .gitignore
 │
@@ -89,16 +90,17 @@ Install dev dependencies (one-time):
 npm install
 ```
 
-Run all checks (build + validate + lint):
+Run all checks (build + validate + lint + test):
 ```bash
 npm run build     # assembles outputs, then runs all checks (preferred)
-npm run check     # validate + lint against existing output files only
+npm run check     # validate + lint + test.js against existing output files only
 ```
 
 Or individually:
 ```bash
-node validate.js          # 16 architectural invariant checks
+node validate.js          # 17 architectural invariant checks
 npx html-validate index.html  # HTML spec compliance
+npm test                  # 359-check test suite (schemas, output, IIFEs, assets)
 ```
 
 > **`index.html`, `cp12.css`, `cp12.js` are build outputs.** Edit `src/` source files, then run `npm run build`. Do not edit the root output files directly.
@@ -119,7 +121,11 @@ npx html-validate index.html  # HTML spec compliance
 | P-1 | `index.html` | No `<img>` tags — all images are CSS `background` properties |
 | H-1 | `index.html` | `og:image` meta tag present for social sharing |
 | A-2 | `cp12.css` | No legacy `url(img/...)` references — all static assets under `static/img/` |
-| B-1 | `index.html` | `cp12-room-drawer` exists and is placed outside `<main>` |
+| B-1 | `index.html` | `cp12-room-modal` exists and is placed outside `<main>` |
+| I18N-1 | strings JSON | `strings.vi.json` and `strings.en.json` have equal key counts |
+| I18N-2 | strings JSON | All vi keys present in en |
+| I18N-3 | strings JSON | All en keys present in vi |
+| L-1 | `index.html` | At least one `[data-bg]` element present (lazy-loader active) |
 
 ### Manual Testing Checklist
 
@@ -127,9 +133,13 @@ npx html-validate index.html  # HTML spec compliance
 - Test responsive layout at 768px and 480px widths
 - Verify scroll-triggered animations
 - Test modal open/close (click play button, Escape key, backdrop click)
-- Test hamburger menu on mobile viewport
+- Test hamburger menu on mobile viewport (appears at ≤900px, not 768px)
+- Verify language switcher appears in mobile overlay at ≤900px; hidden in nav bar
+- Test language toggle keeps both VI|EN buttons in sync (nav + mobile overlay)
 - Test travel filter tabs (All / Running / Food / Nature)
 - Test keyboard navigation (PageDown, Shift+ArrowDown)
+- Test video modal fade-in/fade-out (0.28s opacity transition)
+- Verify focus returns to trigger element after closing mobile nav or modals
 - Run Lighthouse or axe DevTools accessibility audit
 
 ### Branch Strategy
@@ -160,7 +170,7 @@ src/layout/nav-mobile.css     ← .nav-mobile-overlay panel
 src/layout/dots.css           ← #cp12-dots, .dot, tooltip
 src/layout/next-btn.css       ← #cp12-next-btn floating button
 src/core/buttons.css          ← .btn-primary/.btn-gold/.btn-outline/.btn-ghost (CSS-2)
-src/core/section-labels.css   ← .section-label variants
+src/core/section-labels.css   ← .section-label variants + .section-heading (shared across sections)
 src/core/animations.css       ← @keyframes + .cp12-reveal + prefers-reduced-motion (A-1)
 src/features/home/home.css    ← .hero + sect-home animation sigs + hero responsive
 src/features/video/video.css  ← .video-section + sect-video
@@ -181,36 +191,49 @@ src/core/supports.css         ← @supports backdrop-filter (must be last)
 - Section animation signatures (`.sect-X .card { opacity: 0 }` + `.sect-X.animated .card { animation: ... }`) belong **at the bottom** of each feature's CSS file
 - Font family strings may only appear in `src/core/tokens.css` (CSS-1 build guard enforces this)
 - All colours must use CSS tokens — no hard-coded hex values
+- `.section-heading` is a **shared component** — define/edit it in `section-labels.css`, not in individual feature files
+- Section full-width backgrounds belong on the outer `.sect-X` element; inner containers use `max-width` + `margin: 0 auto`
+- Mobile overlay z-index must exceed nav bar (nav: 1000, overlay: **1001**)
 
 ## JavaScript Architecture
 
-`cp12.js` is **generated** by `build.js` from six IIFE source files in DOM order. Each IIFE uses independent local variables — do not merge them.
+`cp12.js` is **generated** by `build.js` from seven IIFE source files in DOM order. Each IIFE uses independent local variables — do not merge them.
 
 | IIFE | Source file | Responsibility |
 |------|-------------|---------------|
-| 0 | `src/shared/lang-switcher.js` | i18n language switcher — reads `#lang-vi-data` / `#lang-en-data` JSON, applies `[data-i18n]` attribute swaps, re-renders rooms + refreshes modal on language change |
-| 1 | `src/features/rooms/rooms.js` | Rooms renderer — reads `#rooms-data` inline JSON, builds `#rooms-grid` with `escHtml()` XSS guard; attaches photo-modal click handlers after each render |
-| 2 | `src/features/rooms/room-modal.js` | Room detail modal — photo navigation, focus trap, `cp12OpenRoomModal` / `cp12CloseRoomModal` / `cp12RefreshModalLang` globals |
+| 0 | `src/shared/lang-switcher.js` | i18n — reads `#lang-vi-data`/`#lang-en-data` JSON, applies `[data-i18n]`/`[data-i18n-html]`/`[data-i18n-aria-label]` swaps, re-renders rooms + refreshes modal on lang change; exposes `window.cp12Esc` XSS utility |
+| 1 | `src/features/rooms/rooms.js` | Rooms renderer — reads `#rooms-data` inline JSON, builds `#rooms-grid`; XSS-safe via `window.cp12Esc`; i18n strings cached per language (`roomStringsCache`) |
+| 2 | `src/features/rooms/room-modal.js` | Room detail modal — photo navigation, focus trap, `cp12OpenRoomModal`/`cp12CloseRoomModal`/`cp12RefreshModalLang` globals; XSS-safe via `window.cp12Esc` |
 | 3 | `src/features/video/video.js` | Hero play button + video frame click/keydown handlers |
-| 4 | `src/features/explore/explore.js` | Travel filter tabs (`data-filter`, `aria-selected`, live count) |
-| 5 | `src/shared/scroll-reveal.js` | Welcome modal, mobile nav, IO reveal, scroll RAF, dot nav, anchor scroll |
+| 4 | `src/features/explore/explore.js` | Travel filter tabs (`data-filter`, `aria-selected`, live count) — W3C APG Tabs pattern |
+| 5 | `src/shared/scroll-reveal.js` | Video modal, mobile nav (with focus save/restore), IO reveal, scroll RAF, dot nav, anchor scroll |
+| 6 | `src/shared/lazy-loader.js` | Image lazy loading via `[data-bg]` + IntersectionObserver; must be last IIFE |
 
-`window.cp12OpenModal` is set in IIFE 5 and called (with guard) from IIFE 3. `window.cp12OpenRoomModal` is set in IIFE 2 and called (with guard) from IIFE 1. Both guards are defensive coding, kept for robustness.
+Globals: `window.cp12OpenModal` (IIFE 5, called from IIFE 3), `window.cp12OpenRoomModal` (IIFE 2, called from IIFE 1), `window.cp12Esc` (IIFE 0, used by IIFEs 1 & 2 for XSS escaping), `window.cp12ObserveLazy` (IIFE 6).
 
 ### Language Switcher (IIFE 0)
 
 i18n strings are injected by `build.js` into `index.html` as:
 ```html
-<script id="strings-vi" type="application/json">{…}</script>
-<script id="strings-en" type="application/json">{…}</script>
+<script id="lang-vi-data" type="application/json">{…}</script>
+<script id="lang-en-data" type="application/json">{…}</script>
 ```
-IIFE 0 reads the active language from `localStorage` (`cp12-lang`, default `"vi"`), then walks all `[data-i18n]` elements to swap text. A FOUC-prevention inline script in `<head>` pre-sets `lang` attribute and adds `.i18n-loading` before IIFE 0 runs.
+IIFE 0 reads the active language from `localStorage` (`cp12-lang`, default `"vi"`), then walks:
+- `[data-i18n]` — swaps `textContent`
+- `[data-i18n-html]` — swaps `innerHTML` (for strings containing `<br>`/`<em>`)
+- `[data-i18n-aria-label]` — swaps `aria-label` attribute
 
-**To edit strings**: modify `src/data/strings.vi.json` or `src/data/strings.en.json`, then run `npm run build`.
+A FOUC-prevention inline script in `<head>` pre-sets `lang` attribute and adds `.i18n-loading` before IIFE 0 runs.
+
+**Dual lang buttons**: `#cp12-lang-btn` (desktop nav) and `#cp12-lang-btn-mobile` (mobile overlay) are both synced by IIFE 0 on every language change.
+
+**To edit strings**: modify `src/data/strings.vi.json` or `src/data/strings.en.json`, then run `npm run build`. Both files must have identical key sets (I18N-1/2/3 invariants).
+
+**XSS utility**: `window.cp12Esc` is set by IIFE 0 and used as `var escHtml = window.cp12Esc` in IIFEs 1 and 2. Do not add local copies.
 
 ### Rooms Renderer (IIFE 1)
 
-Room cards are driven by a `<script id="rooms-data" type="application/json">` element in `index.html`. IIFE 1 parses it and renders into `<div id="rooms-grid">`. All output is XSS-safe via `escHtml()`. Do not use raw `innerHTML` with untrusted data in this IIFE.
+Room cards are driven by a `<script id="rooms-data" type="application/json">` element in `index.html`. IIFE 1 parses it and renders into `<div id="rooms-grid">`. All output is XSS-safe via `window.cp12Esc` (aliased locally as `escHtml`). Do not use raw `innerHTML` with untrusted data in this IIFE. i18n strings are cached per language in `roomStringsCache` to avoid re-parsing 142-key JSON on every render.
 
 ---
 
@@ -361,6 +384,8 @@ Staggered children use `:nth-child` selectors with increasing `animation-delay`.
 | Attribute | Element | Purpose |
 |-----------|---------|---------|
 | `data-i18n` | Any text-bearing element | i18n key — IIFE 0 swaps `textContent` on language change |
+| `data-i18n-html` | Elements with HTML children | i18n key — IIFE 0 swaps `innerHTML` (allows `<br>`, `<em>`, `<strong>`) |
+| `data-i18n-aria-label` | Interactive controls | i18n key — IIFE 0 swaps `aria-label` attribute on language change |
 | `data-category` | Travel cards | Shown/hidden by filter tabs |
 | `data-filter` | Filter tab buttons | Active value (`all`, `running`, `food`, `nature`) |
 | `data-label` | Dot nav items | Tooltip text |
