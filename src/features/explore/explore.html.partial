@@ -94,13 +94,13 @@
                   <div class="diff-badge" data-i18n="explore.diff.easy">Easy</div>
                 </div>
                 <div class="travel-body">
-                  <p class="travel-cat">Running &middot; Lakeside</p>
-                  <h3 class="travel-name">Hồ Xuân Hương</h3>
+                  <p class="travel-cat" data-i18n="explore.card1.cat">Running &middot; Lakeside</p>
+                  <h3 class="travel-name" data-i18n="explore.card1.name">Hồ Xuân Hương</h3>
                   <div class="travel-meta">
-                    <span><span aria-hidden="true">📍</span> 0.8km away</span>
-                    <span><span aria-hidden="true">⏱</span> 45–60 mins</span>
+                    <span><span aria-hidden="true">📍</span> <span data-i18n="explore.card1.dist">0.8km away</span></span>
+                    <span><span aria-hidden="true">⏱</span> <span data-i18n="explore.card1.time">45–60 mins</span></span>
                   </div>
-                  <p class="travel-highlight">
+                  <p class="travel-highlight" data-i18n="explore.card1.highlight">
                     Active recovery done right. Start with an easy, crisp 5km 
                     shakeout run around the lake. At 1,500m elevation, a morning 
                     jog here hits different.
@@ -115,13 +115,13 @@
                   <div class="diff-badge" data-i18n="explore.diff.easy">Easy</div>
                 </div>
                 <div class="travel-body">
-                  <p class="travel-cat">Nature &middot; Photography</p>
-                  <h3 class="travel-name">Vườn Hoa Thành Phố Đà Lạt</h3>
+                  <p class="travel-cat" data-i18n="explore.card2.cat">Nature &middot; Photography</p>
+                  <h3 class="travel-name" data-i18n="explore.card2.name">Vườn Hoa Thành Phố Đà Lạt</h3>
                   <div class="travel-meta">
-                    <span><span aria-hidden="true">📍</span> 2km away</span>
-                    <span><span aria-hidden="true">⏱</span> 1–2 hours</span>
+                    <span><span aria-hidden="true">📍</span> <span data-i18n="explore.card2.dist">2km away</span></span>
+                    <span><span aria-hidden="true">⏱</span> <span data-i18n="explore.card2.time">1–2 hours</span></span>
                   </div>
-                  <p class="travel-highlight">
+                  <p class="travel-highlight" data-i18n="explore.card2.highlight">
                     The city's iconic flower park overlooking Xuan Huong Lake. 
                     Features hundreds of flower species including hydrangeas, 
                     orchids, and roses perfectly curated.
@@ -136,13 +136,13 @@
                   <div class="diff-badge" data-i18n="explore.diff.hard">Hard</div>
                 </div>
                 <div class="travel-body">
-                  <p class="travel-cat">Trail Running &middot; Mountain</p>
-                  <h3 class="travel-name">Đỉnh núi Langbiang</h3>
+                  <p class="travel-cat" data-i18n="explore.card3.cat">Trail Running &middot; Mountain</p>
+                  <h3 class="travel-name" data-i18n="explore.card3.name">Đỉnh núi Langbiang</h3>
                   <div class="travel-meta">
-                    <span><span aria-hidden="true">📍</span> 12km away</span>
-                    <span><span aria-hidden="true">⏱</span> 3–4 hours</span>
+                    <span><span aria-hidden="true">📍</span> <span data-i18n="explore.card3.dist">12km away</span></span>
+                    <span><span aria-hidden="true">⏱</span> <span data-i18n="explore.card3.time">3–4 hours</span></span>
                   </div>
-                  <p class="travel-highlight">
+                  <p class="travel-highlight" data-i18n="explore.card3.highlight">
                     2,167m - The Roof of Da Lat. Skip the easy Radar Peak road to 
                     tackle the real 10.6km loop up Ba Mountain. That last 360m push 
                     with 717m total elevation gain tests every muscle.
@@ -157,13 +157,13 @@
                   <div class="diff-badge" data-i18n="explore.diff.easy">Easy</div>
                 </div>
                 <div class="travel-body">
-                  <p class="travel-cat">Food &amp; Culture</p>
-                  <h3 class="travel-name">Chợ đêm thành phố Đà Lạt</h3>
+                  <p class="travel-cat" data-i18n="explore.card4.cat">Food &amp; Culture</p>
+                  <h3 class="travel-name" data-i18n="explore.card4.name">Chợ đêm thành phố Đà Lạt</h3>
                   <div class="travel-meta">
-                    <span><span aria-hidden="true">📍</span> 0.5km away</span>
-                    <span><span aria-hidden="true">⏱</span> 1–3 hours</span>
+                    <span><span aria-hidden="true">📍</span> <span data-i18n="explore.card4.dist">0.5km away</span></span>
+                    <span><span aria-hidden="true">⏱</span> <span data-i18n="explore.card4.time">1–3 hours</span></span>
                   </div>
-                  <p class="travel-highlight">
+                  <p class="travel-highlight" data-i18n="explore.card4.highlight">
                     Swap your trail shoes for sandals. Replenish your calories with 
                     authentic bánh tráng nướng and hot soy milk in the chilly mountain 
                     air after a big hike.
@@ -178,13 +178,13 @@
                   <div class="diff-badge" data-i18n="explore.diff.easy">Easy</div>
                 </div>
                 <div class="travel-body">
-                  <p class="travel-cat">Nature &middot; Photography</p>
-                  <h3 class="travel-name">Đồi chè Cầu Đất Đà Lạt</h3>
+                  <p class="travel-cat" data-i18n="explore.card5.cat">Nature &middot; Photography</p>
+                  <h3 class="travel-name" data-i18n="explore.card5.name">Đồi chè Cầu Đất Đà Lạt</h3>
                   <div class="travel-meta">
-                    <span><span aria-hidden="true">📍</span> 25km away</span>
-                    <span><span aria-hidden="true">⏱</span> Half day</span>
+                    <span><span aria-hidden="true">📍</span> <span data-i18n="explore.card5.dist">25km away</span></span>
+                    <span><span aria-hidden="true">⏱</span> <span data-i18n="explore.card5.time">Half day</span></span>
                   </div>
-                  <p class="travel-highlight">
+                  <p class="travel-highlight" data-i18n="explore.card5.highlight">
                     Dial in the vert for Dalat Ultra Trail! The 20.7-mile loop transitions 
                     from smooth dirt roads to technical rocky descents. Log 1,200m D+ 
                     before the heat hits.
@@ -199,13 +199,13 @@
                   <div class="diff-badge" data-i18n="explore.diff.easyMed">Easy–Med</div>
                 </div>
                 <div class="travel-body">
-                  <p class="travel-cat">Culture &amp; Spirituality</p>
-                  <h3 class="travel-name">Thiền viện Trúc Lâm Đà Lạt</h3>
+                  <p class="travel-cat" data-i18n="explore.card6.cat">Culture &amp; Spirituality</p>
+                  <h3 class="travel-name" data-i18n="explore.card6.name">Thiền viện Trúc Lâm Đà Lạt</h3>
                   <div class="travel-meta">
-                    <span><span aria-hidden="true">📍</span> 5km away</span>
-                    <span><span aria-hidden="true">⏱</span> Half day</span>
+                    <span><span aria-hidden="true">📍</span> <span data-i18n="explore.card6.dist">5km away</span></span>
+                    <span><span aria-hidden="true">⏱</span> <span data-i18n="explore.card6.time">Half day</span></span>
                   </div>
-                  <p class="travel-highlight">
+                  <p class="travel-highlight" data-i18n="explore.card6.highlight">
                     Take the cable car up; earn the 4km pine-trail descent back to
                     town. Fully runnable with switchbacks — time it early morning
                     before tour groups hit the trail.
