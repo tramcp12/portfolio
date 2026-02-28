@@ -83,6 +83,11 @@
   color: var(--charcoal);
 }
 
+#cp12-wrap .tab:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 4px;
+}
+
 /* Travel grid */
 #cp12-wrap .travel-grid {
   display: grid;
