@@ -66,6 +66,7 @@
 
 #cp12-wrap .nav-mobile-overlay .lang-btn {
   color: var(--mist);
+  font-size: 1.1rem;
 }
 
 #cp12-wrap .nav-mobile-overlay .lang-btn:hover {

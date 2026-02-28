@@ -316,7 +316,7 @@ html.i18n-loading [data-i18n-html] {
   background: transparent;
   color: var(--mist);
   font-family: var(--font-sans);
-  font-size: 0.65rem;
+  font-size: 0.78rem;
   font-weight: 500;
   letter-spacing: 0.1em;
   cursor: pointer;
@@ -465,6 +465,7 @@ html.i18n-loading [data-i18n-html] {
 
 #cp12-wrap .nav-mobile-overlay .lang-btn {
   color: var(--mist);
+  font-size: 1.1rem;
 }
 
 #cp12-wrap .nav-mobile-overlay .lang-btn:hover {
