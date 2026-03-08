@@ -37,10 +37,38 @@
     var priceLabelText = isVi ? "VND / đêm" : "VND / night";
     var roomStrings = getRoomStrings(lang);
     var viewPhotosPrefix = roomStrings["rooms.viewPhotos"] || (isVi ? "Xem ảnh phòng" : "View photos for");
+    var comingSoonText = roomStrings["rooms.comingSoon"] || (isVi ? "Sắp Có" : "Coming Soon");
+    var comingSoonDescText = roomStrings["rooms.comingSoonDesc"] || (isVi ? "Phòng dorm sắp khai trương." : "Dorm beds opening soon.");
 
     var html = rooms.map(function (r) {
-      /* CRIT-1: use name_vi when language is Vietnamese */
       var name = (isVi && r.name_vi) ? r.name_vi : r.name;
+
+      /* Coming Soon card — no modal, no booking link */
+      if (r.comingSoon) {
+        var csName = name;
+        var csDesc = (isVi && r.desc_vi) ? r.desc_vi : r.desc;
+        var csAmenities = (isVi && r.amenities_vi) ? r.amenities_vi : (r.amenities || []);
+        var csPills = csAmenities.map(function (a) { return '<span class="pill">' + escHtml(a) + "</span>"; }).join("\n                  ");
+        var csMeta = ((isVi && r.meta_vi) ? r.meta_vi : (r.meta || [])).map(function (m) {
+          return '<span><span aria-hidden="true">' + escHtml(m.icon) + "</span> " + escHtml(m.text) + "</span>";
+        }).join("\n                  ");
+        return (
+          '<div class="room-card room-card--coming-soon">' +
+          '<div class="room-img">' +
+          '<div class="room-img-bg"><div class="room-coming-soon-overlay" aria-hidden="true"><span class="room-coming-soon-icon">🛏️</span></div></div>' +
+          '<div class="room-price-tag"><span class="price-vnd">' + escHtml(r.price) + '</span><span class="price-label">' + priceLabelText + "</span></div>" +
+          "</div>" +
+          '<div class="room-body">' +
+          '<span class="coming-soon-badge" aria-label="' + escHtml(comingSoonText) + '">' + escHtml(comingSoonText) + "</span>" +
+          '<h3 class="room-name">' + escHtml(csName) + "</h3>" +
+          '<div class="room-meta">' + csMeta + "</div>" +
+          '<p class="room-desc">' + escHtml(csDesc) + "</p>" +
+          '<div class="amenity-pills">' + csPills + "</div>" +
+          '<span class="room-link room-link--soon" aria-disabled="true">' + escHtml(comingSoonText) + " →</span>" +
+          "</div>" +
+          "</div>"
+        );
+      }
 
       var featuredBadge = r.featured
         ? '<span class="featured-badge"><span class="sr-only">Featured room: </span><span aria-hidden="true">⭐</span> ' + featuredText + "</span>"
@@ -57,6 +85,19 @@
       }).join("\n                  ");
 
       var desc = (isVi && r.desc_vi) ? r.desc_vi : r.desc;
+      var bestFor = (isVi && r.bestFor_vi) ? r.bestFor_vi : (r.bestFor || null);
+      var bestForHtml = bestFor
+        ? '<p class="room-best-for">' + escHtml(bestFor) + "</p>"
+        : "";
+
+      /* Pre-filled booking deeplink: mailto with room name in subject */
+      var bookSubject = (isVi && r.bookSubject_vi) ? r.bookSubject_vi
+                      : r.bookSubject ? r.bookSubject
+                      : (isVi ? "Đặt phòng — " : "Booking — ") + name;
+      var bookGreeting = isVi ? "Xin%20ch%C3%A0o%20CP12%2C" : "Hi%20CP12%2C";
+      var bookHref = "mailto:cp12tramdungchill@gmail.com?subject=" +
+                     encodeURIComponent(bookSubject) +
+                     "&body=" + bookGreeting;
 
       /* Native lazy loading instead of intersection observer data-bg */
       var hasCover    = !!r.coverPhoto;
@@ -74,8 +115,9 @@
         '<h3 class="room-name">' + escHtml(name) + "</h3>" +
         '<div class="room-meta">' + metaItems + "</div>" +
         '<p class="room-desc">' + escHtml(desc) + "</p>" +
+        bestForHtml +
         '<div class="amenity-pills">' + pills + "</div>" +
-        '<a href="#book" class="room-link">' + bookLinkText + "</a>" +
+        '<a href="' + escHtml(bookHref) + '" class="room-link">' + bookLinkText + "</a>" +
         "</div>" +
         "</div>"
       );
@@ -93,7 +135,9 @@
       (function (roomIndex) {
         var cardLang = window.cp12Lang || "vi";
         var r = rooms[roomIndex];
-        var roomName = r ? ((cardLang === "vi" && r.name_vi) ? r.name_vi : r.name) : "room";
+        if (r && r.comingSoon) return; /* coming-soon cards have no modal */
+        var isCardVi = cardLang === "vi";
+        var roomName = r ? ((isCardVi && r.name_vi) ? r.name_vi : r.name) : "room";
 
         cards[roomIndex].addEventListener("click", function (e) {
           /* Don't intercept clicks on the "Book this room" anchor */

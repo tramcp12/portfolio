@@ -14,7 +14,6 @@
             </p>
             <div class="hero-btns fade-up delay-3">
               <a href="#rooms" class="btn-primary" data-i18n="hero.exploreRooms">Explore Rooms</a>
-              <a href="#explore" class="btn-outline" data-i18n="hero.trailGuide">Trail Guide &rarr;</a>
             </div>
           </div>
 
@@ -41,9 +40,9 @@
                   <span class="sr-only">7 <span data-i18n="hero.stat.roomTypes">Room Types</span></span>
                 </div>
                 <div class="stat-box">
-                  <span class="stat-num" aria-hidden="true">6+</span>
-                  <span class="stat-label" aria-hidden="true" data-i18n="hero.stat.localRoutes">Local Routes</span>
-                  <span class="sr-only">6+ <span data-i18n="hero.stat.localRoutes">Local Routes</span></span>
+                  <span class="stat-num" aria-hidden="true">450K</span>
+                  <span class="stat-label" aria-hidden="true" data-i18n="hero.stat.priceFrom">VND / night</span>
+                  <span class="sr-only">From 450K <span data-i18n="hero.stat.priceFrom">VND / night</span></span>
                 </div>
                 <div class="stat-box">
                   <span class="stat-num" aria-hidden="true">1500m</span>

@@ -35,8 +35,13 @@ var expected = [
   "src/layout/footer.html.partial", "src/layout/modal.html.partial",
   "src/layout/jsonld.html.partial",
   "src/features/home/home.html.partial", "src/features/video/video.html.partial",
-  "src/features/rooms/rooms.html.partial", "src/features/explore/explore.html.partial",
-  "src/features/about/about.html.partial", "src/features/journal/journal.html.partial",
+  "src/features/rooms/rooms.html.partial",
+  "src/features/testimonials/testimonials.html.partial", "src/features/testimonials/testimonials.css",
+  "src/features/explore/explore.html.partial",
+  "src/features/about/about.html.partial",
+  "src/features/location/location.html.partial", "src/features/location/location.css",
+  "src/features/journal/journal.html.partial",
+  "src/features/faq/faq.html.partial", "src/features/faq/faq.css",
   "src/features/cta/cta.html.partial",
   // JS IIFEs (6 files)
   "src/shared/lang-switcher.js",
@@ -57,10 +62,13 @@ console.log("\n\u2500\u2500 Data file schemas");
 // rooms.json
 var rooms = JSON.parse(fs.readFileSync("src/data/rooms.json", "utf8"));
 ok("rooms.json — is array", Array.isArray(rooms));
-ok("rooms.json — 7 entries", rooms.length === 7);
+ok("rooms.json — 7 entries", rooms.filter(function(r){ return !r.comingSoon; }).length === 7);
 rooms.forEach(function(r, i) {
-  /* Phase 8 schema: id + coverPhoto replace bgClass */
-  ["id","coverPhoto","name","price","featured","meta","desc","amenities","desc_vi","meta_vi","amenities_vi"].forEach(function(k) {
+  /* Phase 8 schema: id + coverPhoto replace bgClass (comingSoon rooms exempt from coverPhoto) */
+  var requiredKeys = r.comingSoon
+    ? ["id","name","price","featured","meta","desc","amenities","desc_vi","meta_vi","amenities_vi"]
+    : ["id","coverPhoto","name","price","featured","meta","desc","amenities","desc_vi","meta_vi","amenities_vi"];
+  requiredKeys.forEach(function(k) {
     ok("rooms[" + i + "]." + k + " present", k in r);
   });
   ok("rooms[" + i + "].meta non-empty array",   Array.isArray(r.meta) && r.meta.length > 0);
@@ -69,8 +77,10 @@ rooms.forEach(function(r, i) {
     ok("rooms[" + i + "].meta[" + j + "].icon", !!m.icon);
     ok("rooms[" + i + "].meta[" + j + "].text", !!m.text);
   });
-  /* Phase 8: coverPhoto must point to catalog path */
-  ok("rooms[" + i + "].coverPhoto valid path", /^static\/img\/rooms\/catalog\/.+\.jpg$/.test(r.coverPhoto));
+  /* Phase 8: coverPhoto must point to catalog path (skipped for comingSoon rooms) */
+  if (!r.comingSoon) {
+    ok("rooms[" + i + "].coverPhoto valid path", /^static\/img\/rooms\/catalog\/.+\.jpg$/.test(r.coverPhoto));
+  }
   /* Phase 8: photos must be an array (empty is allowed for draft rooms) */
   ok("rooms[" + i + "].photos is array", Array.isArray(r.photos));
 });
@@ -127,7 +137,7 @@ ok("index.html contains #rooms-grid target",  html.indexOf('id="rooms-grid"') !=
 ok("#rooms-data is valid JSON array",         function() {
   var m = html.match(/<script id="rooms-data"[^>]*>([\s\S]*?)<\/script>/);
   if (!m) return false;
-  try { var d = JSON.parse(m[1].trim()); return Array.isArray(d) && d.length === 7; }
+  try { var d = JSON.parse(m[1].trim()); return Array.isArray(d) && d.filter(function(r){ return !r.comingSoon; }).length === 7; }
   catch(e) { return false; }
 }());
 ok("#rooms-data comes after #cp12-wrap close", function() {

@@ -104,9 +104,9 @@ function injectJson(id, data) {
     "\n    </script>";
 }
 
-/* ── HTML ── Phase 2+7+9: assemble from src/ partials
+/* ── HTML ── Phase 2+7+9+10: assemble from src/ partials
  * Order: shell-head → dots → chrome → main-open →
- *   home → video → rooms → explore → about → journal →
+ *   home → video → rooms → testimonials → explore → about → location → journal → faq →
  *   main-close → cta → footer → modal → room-modal → shell-close → jsonld
  */
 var htmlParts = [
@@ -117,9 +117,12 @@ var htmlParts = [
   readSrc("features/home/home.html.partial"),
   readSrc("features/video/video.html.partial"),
   readSrc("features/rooms/rooms.html.partial"),
+  readSrc("features/testimonials/testimonials.html.partial"),
   readSrc("features/explore/explore.html.partial"),
   readSrc("features/about/about.html.partial"),
+  readSrc("features/location/location.html.partial"),
   readSrc("features/journal/journal.html.partial"),
+  readSrc("features/faq/faq.html.partial"),
   "\n      </main>\n      <!-- /#cp12-main -->",
   readSrc("features/cta/cta.html.partial"),
   readSrc("layout/footer.html.partial"),
@@ -135,11 +138,12 @@ var htmlParts = [
 ];
 var html = htmlParts.join("\n");
 
-/* ── CSS  ── Phase 1+7+9: concat from src/ source files
+/* ── CSS  ── Phase 1+7+9+10: concat from src/ source files
  * Cascade order: tokens → reset → accessibility →
  *   nav → nav-mobile → dots → next-btn →
  *   buttons → section-labels → animations → lazy-loader →
- *   home → video → rooms → room-modal → explore → about → journal → cta →
+ *   home → video → rooms → room-modal → testimonials → explore → about →
+ *   location → journal → faq → cta →
  *   footer → modal → responsive-sentinel → supports
  */
 var cssSources = [
@@ -158,9 +162,12 @@ var cssSources = [
   "features/video/video.css",
   "features/rooms/rooms.css",
   "features/rooms/room-modal.css",
+  "features/testimonials/testimonials.css",
   "features/explore/explore.css",
   "features/about/about.css",
+  "features/location/location.css",
   "features/journal/journal.css",
+  "features/faq/faq.css",
   "features/cta/cta.css",
   "layout/footer.css",
   "layout/modal.css",

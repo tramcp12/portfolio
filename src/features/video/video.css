@@ -2,6 +2,10 @@
  * src/features/video/video.css
  * ──────────────────────────────────────────────────────────── */
 
+/* Hide until real welcome video is ready — revert by removing these two rules */
+#cp12-wrap #video { display: none; }
+#cp12-wrap #cp12-dots [data-target="video"] { display: none; }
+
 #cp12-wrap .video-section {
   background: linear-gradient(
     180deg,

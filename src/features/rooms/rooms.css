@@ -266,7 +266,17 @@
   line-height: 1.7;
   color: var(--text-warm);
   opacity: 0.75;
-  margin-bottom: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+
+#cp12-wrap .room-best-for {
+  font-size: 0.78rem;
+  line-height: 1.6;
+  color: var(--pine);
+  opacity: 0.85;
+  margin-bottom: 1.25rem;
+  padding-left: 0.75rem;
+  border-left: 2px solid var(--gold);
 }
 
 #cp12-wrap .amenity-pills {
@@ -360,4 +370,46 @@
   #cp12-wrap .rooms-grid {
     gap: 1rem;
   }
+}
+
+/* ── Coming Soon card ───────────────────────────────────── */
+#cp12-wrap .room-card--coming-soon {
+  opacity: 0.82;
+  pointer-events: none;
+}
+
+#cp12-wrap .room-coming-soon-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--pine-dark-90, rgba(26,48,40,0.9)) 0%, rgba(45,74,62,0.75) 100%);
+}
+
+#cp12-wrap .room-coming-soon-icon {
+  font-size: 3rem;
+  opacity: 0.7;
+}
+
+#cp12-wrap .coming-soon-badge {
+  display: inline-block;
+  padding: 0.2rem 0.7rem;
+  border-radius: 4px;
+  background: var(--gold);
+  color: var(--pine-dark);
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+
+#cp12-wrap .room-link--soon {
+  display: inline-block;
+  color: var(--slate-light);
+  font-size: 0.85rem;
+  cursor: default;
+  opacity: 0.6;
 }

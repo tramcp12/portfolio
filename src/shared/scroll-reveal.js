@@ -158,7 +158,7 @@
     /* ── Per-section animation signatures ── */
     var sections = Array.from(
       document.querySelectorAll(
-        "#home,#video,#rooms,#explore,#about,#journal,#book",
+        "#home,#video,#rooms,#testimonials,#explore,#about,#location,#journal,#faq,#book",
       ),
     );
     if ("IntersectionObserver" in window) {
@@ -214,6 +214,7 @@
       }
       var current = sections[0];
       sections.forEach(function (s) {
+        if (s.offsetHeight === 0) return; /* skip display:none sections */
         if (s.getBoundingClientRect().top + scrollY - navH <= midY)
           current = s;
       });

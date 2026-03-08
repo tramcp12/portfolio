@@ -105,7 +105,7 @@
     currentLang = lang || "vi";
 
     var isVi     = currentLang === "vi";
-    var name     = (isVi && r.name_vi)     ? r.name_vi     : r.name;
+    var name     = (isVi && r.name_vi) ? r.name_vi : r.name;
     var desc     = (isVi && r.desc_vi)     ? r.desc_vi     : r.desc;
     var amenities= (isVi && r.amenities_vi)? r.amenities_vi: (r.amenities || []);
     var metaList = (isVi && r.meta_vi)     ? r.meta_vi     : (r.meta || []);
@@ -136,8 +136,15 @@
     buildThumbs();
     if (currentPhotos.length > 0) showPhoto(0);
 
-    /* i18n labels */
-    if (bookBtn)  bookBtn.textContent = getString("panel.bookBtn");
+    /* i18n labels + pre-filled booking href */
+    if (bookBtn) {
+      bookBtn.textContent = getString("panel.bookBtn");
+      var bookSubject = (isVi && r.bookSubject_vi) ? r.bookSubject_vi
+                      : r.bookSubject ? r.bookSubject
+                      : (isVi ? "Đặt phòng — " : "Booking — ") + name;
+      bookBtn.href = "mailto:cp12tramdungchill@gmail.com?subject=" +
+                     encodeURIComponent(bookSubject);
+    }
     if (closeBtn) closeBtn.setAttribute("aria-label", getString("panel.close"));
     if (prevBtn)  prevBtn.setAttribute("aria-label", getString("panel.prevPhoto"));
     if (nextBtn)  nextBtn.setAttribute("aria-label", getString("panel.nextPhoto"));

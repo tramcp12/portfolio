@@ -1,0 +1,97 @@
+        <section
+          class="location-section sect-location"
+          id="location"
+          aria-labelledby="locationHeading"
+          data-section="location"
+        >
+          <div class="location-inner">
+            <div class="section-label section-label--light" aria-hidden="true" data-i18n="location.label">
+              Find Us
+            </div>
+            <h2 class="section-heading" id="locationHeading" data-i18n-html="location.heading">
+              At the edge of <em>the city.</em>
+            </h2>
+            <p class="location-intro cp12-reveal" data-i18n="location.intro">
+              228/6 Đường Phú Đồng Thiên Vương, Phường 8, Đà Lạt — 3km from the center, 10 minutes from the night market, and right beside some of the best trails in the highlands.
+            </p>
+
+            <div class="location-grid cp12-reveal">
+
+              <div class="location-distances">
+                <div class="distance-card">
+                  <span class="dist-icon" aria-hidden="true">🏙️</span>
+                  <div class="dist-info">
+                    <span class="dist-name" data-i18n="location.dalat.name">Đà Lạt City Center</span>
+                    <span class="dist-value" data-i18n="location.dalat.dist">~3 km</span>
+                    <span class="dist-time" data-i18n="location.dalat.time">10 min by motorbike</span>
+                  </div>
+                </div>
+                <div class="distance-card">
+                  <span class="dist-icon" aria-hidden="true">🏃</span>
+                  <div class="dist-info">
+                    <span class="dist-name" data-i18n="location.trail.name">Nearest Trail</span>
+                    <span class="dist-value" data-i18n="location.trail.dist">~2 km</span>
+                    <span class="dist-time" data-i18n="location.trail.time">10 min walk</span>
+                  </div>
+                </div>
+                <div class="distance-card">
+                  <span class="dist-icon" aria-hidden="true">🛒</span>
+                  <div class="dist-info">
+                    <span class="dist-name" data-i18n="location.market.name">Night Market</span>
+                    <span class="dist-value" data-i18n="location.market.dist">~4.4 km</span>
+                    <span class="dist-time" data-i18n="location.market.time">15 min by motorbike</span>
+                  </div>
+                </div>
+                <div class="distance-card">
+                  <span class="dist-icon" aria-hidden="true">🌊</span>
+                  <div class="dist-info">
+                    <span class="dist-name" data-i18n="location.lake.name">Hồ Xuân Hương</span>
+                    <span class="dist-value" data-i18n="location.lake.dist">~3.4 km</span>
+                    <span class="dist-time" data-i18n="location.lake.time">15 min walk</span>
+                  </div>
+                </div>
+                <div class="distance-card">
+                  <span class="dist-icon" aria-hidden="true">🚌</span>
+                  <div class="dist-info">
+                    <span class="dist-name" data-i18n="location.bus.name">Bus Station</span>
+                    <span class="dist-value" data-i18n="location.bus.dist">~4 km</span>
+                    <span class="dist-time" data-i18n="location.bus.time">15 min by taxi</span>
+                  </div>
+                </div>
+                <div class="distance-card">
+                  <span class="dist-icon" aria-hidden="true">✈️</span>
+                  <div class="dist-info">
+                    <span class="dist-name" data-i18n="location.airport.name">Liên Khương Airport</span>
+                    <span class="dist-value" data-i18n="location.airport.dist">~30 km</span>
+                    <span class="dist-time" data-i18n="location.airport.time">45 min by taxi</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="location-map-block">
+                <a
+                  href="https://maps.google.com/?q=228/6+Đường+Phú+Đồng+Thiên+Vương,+Phường+8,+Đà+Lạt,+Lâm+Đồng"
+                  class="location-map-link"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="View Trạm CP12 location on Google Maps"
+                  data-i18n-aria-label="location.mapLinkLabel"
+                >
+                  <div class="location-map-placeholder" role="img" aria-hidden="true">
+                    <span class="map-pin-icon" aria-hidden="true">📍</span>
+                    <address class="map-address">
+                      228/6 Đường Phú Đồng<br>
+                      Thiên Vương, Phường 8<br>
+                      Đà Lạt, Lâm Đồng
+                    </address>
+                  </div>
+                  <span class="btn-outline location-map-btn" data-i18n="location.mapBtn">
+                    Open in Google Maps &rarr;
+                  </span>
+                </a>
+              </div>
+
+            </div>
+          </div>
+        </section>
+

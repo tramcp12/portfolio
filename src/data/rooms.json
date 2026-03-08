@@ -2,8 +2,10 @@
   {
     "id": "jan-01",
     "coverPhoto": "static/img/rooms/catalog/jan-01.jpg",
-    "name": "Room Jan 01",
-    "name_vi": "Phòng Đơn Jan 01",
+    "name": "Jan 01",
+    "name_vi": "Jan 01",
+    "bestFor": "Best for: couples or solo travelers who want a private balcony with misty hillside views at sunrise.",
+    "bestFor_vi": "Lý tưởng cho: cặp đôi hoặc khách solo muốn ban công riêng nhìn ra sườn đồi sương mờ lúc bình minh.",
     "price": "585K",
     "featured": true,
     "desc": "A cozy private room with a balcony overlooking Đà Lạt's misty hillsides. Cabin-style furnishings, private bathroom, and the kind of quiet that helps you sleep well.",
@@ -62,8 +64,10 @@
   {
     "id": "feb-02",
     "coverPhoto": "static/img/rooms/catalog/feb-02.jpg",
-    "name": "Room Feb 02",
-    "name_vi": "Phòng Đôi Feb 02",
+    "name": "Feb 02",
+    "name_vi": "Feb 02",
+    "bestFor": "Best for: two friends traveling together who want space to spread out after a long trail day.",
+    "bestFor_vi": "Lý tưởng cho: hai người bạn đồng hành muốn không gian rộng rãi sau một ngày dài trên đường mòn.",
     "price": "850K",
     "featured": false,
     "desc": "A spacious twin room with two beds and a private balcony — ideal for friends traveling together. Ample space to unwind after a day on the trails.",
@@ -132,8 +136,10 @@
   {
     "id": "mar-03",
     "coverPhoto": "static/img/rooms/catalog/mar-03.jpg",
-    "name": "Room Mar 3",
-    "name_vi": "Phòng Đơn Mar 3",
+    "name": "Mar 03",
+    "name_vi": "Mar 03",
+    "bestFor": "Best for: guests who want a bright, airy room with city views and easy access to town.",
+    "bestFor_vi": "Lý tưởng cho: khách muốn phòng thoáng sáng với view thành phố và dễ dàng khám phá trung tâm.",
     "price": "585K",
     "featured": false,
     "desc": "Bright and airy with a private balcony offering city views. Cabin décor, private bathroom, and natural highland light — a great base for exploring Đà Lạt.",
@@ -192,8 +198,10 @@
   {
     "id": "aug-08",
     "coverPhoto": "static/img/rooms/catalog/aug-08.jpg",
-    "name": "Room Aug 8",
-    "name_vi": "Phòng Đơn Aug 8",
+    "name": "Aug 08",
+    "name_vi": "Aug 08",
+    "bestFor": "Best for: travelers who appreciate character and light — the arched window and tall ceiling make this CP12's most distinctive room.",
+    "bestFor_vi": "Lý tưởng cho: khách yêu thích không gian cá tính — cửa sổ vòm và trần cao khiến đây là phòng đặc trưng nhất tại CP12.",
     "price": "585K",
     "featured": false,
     "desc": "A single room with a distinctive arched window and generous ceiling height. Spacious, modern, and filled with natural light — one of CP12's most characterful rooms.",
@@ -272,8 +280,10 @@
   {
     "id": "sep-09",
     "coverPhoto": "static/img/rooms/catalog/sep-09.jpg",
-    "name": "Room Sep 9",
-    "name_vi": "Phòng Đơn Sep 9",
+    "name": "Sep 09",
+    "name_vi": "Sep 09",
+    "bestFor": "Best for: solo travelers or couples who want solid comfort, great natural light, and a fair price.",
+    "bestFor_vi": "Lý tưởng cho: khách solo hoặc cặp đôi muốn sự thoải mái đáng tin cậy, ánh sáng tự nhiên tốt và giá hợp lý.",
     "price": "540K",
     "featured": false,
     "desc": "A well-lit single room with generous natural light and a modern feel. Private bathroom and all the essentials — solid comfort at a great price.",
@@ -372,8 +382,10 @@
   {
     "id": "oct-10",
     "coverPhoto": "static/img/rooms/catalog/oct-10.jpg",
-    "name": "Room Oct 10",
-    "name_vi": "Phòng Đơn Oct 10",
+    "name": "Oct 10",
+    "name_vi": "Oct 10",
+    "bestFor": "Best for: solo travelers who want a clean, modern room without extras they won't use.",
+    "bestFor_vi": "Lý tưởng cho: khách solo muốn phòng sạch sẽ, hiện đại, không cần những tiện nghi thừa.",
     "price": "540K",
     "featured": false,
     "desc": "A clean and practical single room with modern lines and a private bathroom. Compact and comfortable — a popular pick for solo travelers.",
@@ -427,8 +439,10 @@
   {
     "id": "nov-11",
     "coverPhoto": "static/img/rooms/catalog/nov-11.jpg",
-    "name": "Room Nov 11",
-    "name_vi": "Phòng Đơn Nov 11",
+    "name": "Nov 11",
+    "name_vi": "Nov 11",
+    "bestFor": "Best for: budget travelers who want a quiet, well-kept room at the best price in the house.",
+    "bestFor_vi": "Lý tưởng cho: khách tiết kiệm muốn phòng yên tĩnh, sạch sẽ ở mức giá tốt nhất tại CP12.",
     "price": "450K",
     "featured": false,
     "desc": "Our most affordable room — cozy, minimally furnished, with a shared bathroom. Everything you need for a comfortable night at the best price in the house.",
@@ -468,5 +482,24 @@
         "alt_vi": "Cửa sổ"
       }
     ]
+  },
+  {
+    "id": "dorm",
+    "comingSoon": true,
+    "name": "Dorm",
+    "name_vi": "Dorm",
+    "price": "180K",
+    "featured": false,
+    "desc": "Shared dormitory beds in a social room — ideal for solo travelers on a budget who want to connect with fellow adventurers. Opening soon.",
+    "desc_vi": "Giường dorm trong phòng tập thể — lý tưởng cho du khách solo ngân sách hợp lý muốn kết nối với những người đồng hành. Sắp khai trương.",
+    "meta": [
+      { "icon": "🛏️", "text": "Shared dorm" }
+    ],
+    "meta_vi": [
+      { "icon": "🛏️", "text": "Phòng tập thể" }
+    ],
+    "amenities": ["WiFi", "Shared Bathroom", "Shared Kitchen", "BBQ Area", "Locker"],
+    "amenities_vi": ["WiFi", "Toilet chung", "Bếp chung", "Bãi nướng", "Tủ khóa"],
+    "photos": []
   }
 ]
