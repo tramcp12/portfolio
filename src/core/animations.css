@@ -145,18 +145,75 @@
   #cp12-wrap .travel-card-img-bg {
     transition: none;
   }
+  /* Disable all card hover transforms */
   #cp12-wrap .btn-primary:hover,
   #cp12-wrap .btn-gold:hover,
   #cp12-wrap .btn-outline:hover,
   #cp12-wrap .btn-ghost:hover {
     transform: none;
+    box-shadow: none;
   }
   #cp12-wrap .play-btn:hover {
     transform: none;
   }
   #cp12-wrap .travel-card:hover,
-  #cp12-wrap .blog-card:hover {
+  #cp12-wrap .blog-card:hover,
+  #cp12-wrap .room-card:hover {
     transform: none;
+    box-shadow: none;
+  }
+  /* Disable nav link underline animation */
+  #cp12-wrap .nav-links a::after {
+    transition: none;
+  }
+  /* Disable image zoom on hover */
+  #cp12-wrap .room-card:hover .room-img-bg,
+  #cp12-wrap .travel-card:hover .travel-card-img-bg,
+  #cp12-wrap .blog-card:hover .bi1,
+  #cp12-wrap .blog-card:hover .bi2,
+  #cp12-wrap .blog-card:hover .bi3 {
+    transform: none;
+    filter: none;
+  }
+  /* Disable overlay fade on hover */
+  #cp12-wrap .room-img::after,
+  #cp12-wrap .travel-card-img::after,
+  #cp12-wrap .blog-card-img::after {
+    transition: none;
+    opacity: 0;
+  }
+  /* Disable social link lift */
+  #cp12-wrap .social-link:hover {
+    transform: none;
+    box-shadow: none;
+  }
+  /* Disable filter tab lift */
+  #cp12-wrap .tab:hover:not(.active) {
+    transform: none;
+    box-shadow: none;
+  }
+  /* Disable booking step-num scale */
+  #cp12-wrap .booking-step:hover .step-num {
+    transform: none;
+    box-shadow: none;
+  }
+  /* Disable nav CTA lift */
+  #cp12-wrap .cp12-main-nav a.nav-cta:hover {
+    transform: none;
+    box-shadow: none;
+  }
+  /* Disable room-link and blog-link gap animation */
+  #cp12-wrap .room-link,
+  #cp12-wrap .blog-link {
+    transition: color 0.3s;
+  }
+  #cp12-wrap .room-link:hover,
+  #cp12-wrap .blog-link:hover {
+    gap: 0.5rem;
+  }
+  #cp12-wrap .room-link::after,
+  #cp12-wrap .blog-link::after {
+    transition: none;
   }
   #cp12-next-btn {
     animation: none;

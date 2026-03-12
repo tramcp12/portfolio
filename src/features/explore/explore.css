@@ -42,6 +42,9 @@
   margin-bottom: 4rem;
 }
 
+/* section heading — private variant of the .section-heading pattern.
+ * Differs from shared: size 3.5rem (vs 3.8rem), color cream (dark bg), em color gold.
+ * Future: add class="travel-heading section-heading" to HTML and reduce this to overrides. */
 #cp12-wrap .travel-heading {
   font-family: var(--font-serif);
   font-size: 3.5rem;
@@ -71,7 +74,9 @@
   color: var(--mist);
   background: transparent;
   cursor: pointer;
-  transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+  transition: background-color 0.25s, border-color 0.25s, color 0.25s,
+              transform 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.25s;
   font-family: var(--font-sans);
   min-height: 44px;
 }
@@ -81,6 +86,11 @@
   background: var(--gold);
   border-color: var(--gold);
   color: var(--charcoal);
+}
+
+#cp12-wrap .tab:hover:not(.active) {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(179, 160, 91, 0.25);
 }
 
 #cp12-wrap .tab:focus-visible {
@@ -101,7 +111,7 @@
   position: relative;
   overflow: hidden;
   /* IMPORTANT-3: opacity added for smooth filter fade (display:none set after transition) */
-  transition: background-color 0.3s, border-color 0.3s, transform 0.3s, opacity 0.22s;
+  transition: background-color 0.35s, border-color 0.35s, transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.35s, opacity 0.22s;
 }
 
 /* IMPORTANT-3: fading-out state — JS sets display:none after FILTER_FADE_MS */
@@ -111,9 +121,16 @@
 }
 
 #cp12-wrap .travel-card:hover {
-  background: rgba(255, 255, 255, 0.09);
-  border-color: rgba(201, 169, 110, 0.3);
-  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(201, 169, 110, 0.45);
+  transform: translateY(-5px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3);
+}
+
+/* Focus visible for keyboard navigation */
+#cp12-wrap .travel-card:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
 }
 
 #cp12-wrap .travel-card-img {
@@ -127,12 +144,34 @@
   inset: 0;
   background-size: cover;
   background-position: center;
-  transition: transform 0.5s ease;
+  transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1),
+              filter 0.55s ease;
   will-change: transform;
 }
 
 #cp12-wrap .travel-card:hover .travel-card-img-bg {
-  transform: scale(1.05);
+  transform: scale(1.07);
+  filter: brightness(1.08);
+}
+
+/* Overlay on travel card image hover */
+#cp12-wrap .travel-card-img::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    transparent 40%,
+    rgba(179, 160, 91, 0.15) 100%
+  );
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+
+#cp12-wrap .travel-card:hover .travel-card-img::after {
+  opacity: 1;
 }
 
 /* Travel card images: backgrounds applied lazily by lazy-loader.js (IIFE 6).
@@ -170,6 +209,8 @@
   padding: 1.5rem;
 }
 
+/* card eyebrow — shared typography from section-labels.css (.card-eyebrow);
+ * only color is specific to this section */
 #cp12-wrap .travel-cat {
   font-size: 0.65rem;
   letter-spacing: 0.2em;

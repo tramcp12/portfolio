@@ -54,10 +54,41 @@
   text-transform: uppercase;
   color: var(--mist);
   transition: color 0.3s;
+  position: relative;
+}
+
+/* Animated underline — grows from center on hover */
+#cp12-wrap .nav-links a::after {
+  content: "";
+  position: absolute;
+  bottom: -3px;
+  left: 50%;
+  width: 0;
+  height: 1px;
+  background: currentColor;
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 #cp12-wrap .nav-links a:hover {
   color: var(--cream);
+}
+
+#cp12-wrap .nav-links a:hover::after {
+  width: 100%;
+  left: 0;
+}
+
+#cp12-wrap .nav-links a:focus-visible {
+  outline: none;
+  color: var(--cream);
+}
+
+/* Focus indicator for nav links: extend the underline animation instead of a box */
+#cp12-wrap .nav-links a:focus-visible::after {
+  width: 100%;
+  left: 0;
+  background: var(--gold);
 }
 
 #cp12-wrap .cp12-main-nav a.nav-cta {
@@ -71,12 +102,26 @@
     background 0.3s ease,
     color 0.3s ease,
     border-color 0.3s ease,
-    box-shadow 0.3s ease;
+    box-shadow 0.3s ease,
+    transform 0.3s ease;
+}
+
+/* Nav CTA — no underline pseudo-element */
+#cp12-wrap .cp12-main-nav a.nav-cta::after {
+  display: none;
 }
 
 #cp12-wrap .cp12-main-nav a.nav-cta:hover {
   background: var(--terracotta);
   color: var(--cream);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(196, 114, 74, 0.3);
+}
+
+#cp12-wrap .cp12-main-nav a.nav-cta:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+  border-radius: 2px;
 }
 
 
@@ -135,6 +180,12 @@
 }
 #cp12-wrap .cp12-main-nav.nav-over-dark .nav-links a:hover {
   color: var(--gold);
+}
+
+#cp12-wrap .cp12-main-nav.scrolled:not(.nav-over-dark) .nav-links a:hover::after,
+#cp12-wrap .cp12-main-nav.nav-over-dark .nav-links a:hover::after {
+  width: 100%;
+  left: 0;
 }
 #cp12-wrap .cp12-main-nav.nav-over-dark a.nav-cta {
   background: var(--gold);

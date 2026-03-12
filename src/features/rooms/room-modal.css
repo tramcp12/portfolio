@@ -137,7 +137,7 @@
   background-position: center;
   border: 2px solid transparent;
   cursor: pointer;
-  transition: border-color 0.2s, opacity 0.2s;
+  transition: border-color 0.2s, opacity 0.2s, transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   opacity: 0.52;
 }
 
@@ -145,6 +145,7 @@
 #cp12-wrap .room-modal-thumb:hover {
   border-color: var(--gold);
   opacity: 1;
+  transform: scale(1.06);
 }
 
 /* ── Content column (right 45%) ── */
@@ -223,11 +224,20 @@
   text-transform: uppercase;
   text-decoration: none;
   font-weight: 500;
-  transition: background 0.3s;
+  transition: background 0.3s,
+              transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.3s;
 }
 
 #cp12-wrap .room-modal-book-btn:hover {
-  background: var(--pine-light);
+  background: var(--terracotta);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(196, 114, 74, 0.3);
+}
+
+#cp12-wrap .room-modal-book-btn:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
 }
 
 /* ── Close button ── */
@@ -249,11 +259,18 @@
   align-items: center;
   justify-content: center;
   z-index: 10;
-  transition: background 0.2s;
+  transition: background 0.2s,
+              transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 #cp12-wrap .room-modal-close:hover {
   background: rgba(26, 48, 40, 1);
+  transform: rotate(90deg);
+}
+
+#cp12-wrap .room-modal-close:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
 }
 
 /* ── Selected card outline (visible before modal opens + after close) ── */
@@ -277,6 +294,11 @@
   }
   #cp12-wrap .room-modal-thumb {
     transition: none;
+    transform: none;
+  }
+  #cp12-wrap .room-modal-thumb.active,
+  #cp12-wrap .room-modal-thumb:hover {
+    transform: none;
   }
   #cp12-wrap .room-modal-prev,
   #cp12-wrap .room-modal-next {
@@ -285,8 +307,15 @@
   #cp12-wrap .room-modal-close {
     transition: none;
   }
+  #cp12-wrap .room-modal-close:hover {
+    transform: none;
+  }
   #cp12-wrap .room-modal-book-btn {
     transition: none;
+  }
+  #cp12-wrap .room-modal-book-btn:hover {
+    transform: none;
+    box-shadow: none;
   }
 }
 

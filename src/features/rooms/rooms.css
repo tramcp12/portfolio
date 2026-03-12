@@ -66,17 +66,11 @@
 #cp12-wrap .room-img-bg {
   position: absolute;
   inset: 0;
-  transition: transform 0.6s ease;
-  will-change: transform;
   /* real photos fill the image area */
   background-size: cover;
   background-position: center;
   /* neutral fallback when neither coverPhoto nor bgClass is present */
   background-color: var(--pine-dark);
-}
-
-#cp12-wrap .room-card:hover .room-img-bg {
-  transform: scale(1.05);
 }
 
 #cp12-wrap .room-img-bg-asset {
@@ -296,28 +290,34 @@
   border: 1px solid rgba(45, 74, 62, 0.15);
 }
 
+/* arrow link — shared base from section-labels.css (.card-arrow-link);
+ * only color overrides are specific to this section */
 #cp12-wrap .room-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
   font-size: 0.72rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--pine);
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  transition: color 0.3s;
   font-weight: 500;
+  color: var(--pine);
+  transition: color 0.3s, gap 0.3s;
 }
 
 #cp12-wrap .room-link::after {
-  content: "→";
-  transition: transform 0.3s;
+  content: "\2192";
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
+
 #cp12-wrap .room-link:hover {
   color: var(--terracotta);
+  gap: 0.75rem;
 }
+
 #cp12-wrap .room-link:hover::after {
-  transform: translateX(4px);
+  transform: translateX(5px);
 }
+
 
 /* ── Rooms section animation signatures ───────────────────── */
 

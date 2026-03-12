@@ -68,6 +68,9 @@
   margin-top: 0.4rem;
 }
 
+/* section heading — private variant of the .section-heading pattern.
+ * Differs from shared: size 3rem (vs 3.8rem), line-height 1.15 (vs 1.05).
+ * Future: add class="about-heading section-heading" to HTML and reduce this to overrides. */
 #cp12-wrap .about-heading {
   font-family: var(--font-serif);
   font-size: 3rem;

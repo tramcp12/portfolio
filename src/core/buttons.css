@@ -16,11 +16,21 @@
   transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
               color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
               border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1),
               transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   display: inline-flex;
   align-items: center;
   justify-content: center;
   min-height: 44px;
+}
+
+/* Focus visible — shared accessible ring */
+#cp12-wrap .btn-primary:focus-visible,
+#cp12-wrap .btn-gold:focus-visible,
+#cp12-wrap .btn-outline:focus-visible,
+#cp12-wrap .btn-ghost:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
 }
 
 /* Primary / Gold — filled */
@@ -34,7 +44,8 @@
 #cp12-wrap .btn-gold:hover {
   background: var(--terracotta);
   color: var(--warm-white);
-  transform: translateY(-1px);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(196, 114, 74, 0.35);
 }
 
 /* Outline — mist border */
@@ -46,7 +57,8 @@
 #cp12-wrap .btn-outline:hover {
   border-color: var(--mist);
   color: var(--warm-white);
-  transform: translateY(-1px);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(184, 202, 189, 0.15);
 }
 
 /* Ghost — gold border */
@@ -58,4 +70,6 @@
 #cp12-wrap .btn-ghost:hover {
   border-color: var(--gold);
   background: var(--gold-10);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(179, 160, 91, 0.2);
 }

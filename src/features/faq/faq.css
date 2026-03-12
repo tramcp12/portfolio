@@ -31,10 +31,17 @@
 #cp12-wrap .faq-item > summary {
   list-style: none;
   cursor: pointer;
+  /* Suppress default browser focus ring on <summary> — we use a custom one below */
+  outline: none;
 }
 
 #cp12-wrap .faq-item > summary::-webkit-details-marker {
   display: none;
+}
+
+/* Suppress any outline on the <details> element itself */
+#cp12-wrap .faq-item {
+  outline: none;
 }
 
 #cp12-wrap .faq-question {
@@ -46,9 +53,20 @@
   user-select: none;
 }
 
+/* Intentional keyboard focus ring — only when navigating by keyboard */
 #cp12-wrap .faq-question:focus-visible {
   outline: 2px solid var(--pine);
   outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Open-state treatment: left gold accent + subtle background tint on the summary row */
+#cp12-wrap .faq-item[open] > .faq-question {
+  border-left: 2px solid var(--gold);
+  padding-left: 0.75rem;
+  background: var(--cream);
+  margin-left: -0.75rem;
+  padding-right: 0.25rem;
 }
 
 #cp12-wrap .faq-question h3 {

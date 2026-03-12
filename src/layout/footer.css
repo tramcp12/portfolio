@@ -59,7 +59,9 @@
   transition:
     background 0.3s,
     color 0.3s,
-    border-color 0.3s;
+    border-color 0.3s,
+    transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.3s;
 }
 
 #cp12-wrap .social-link svg {
@@ -71,6 +73,13 @@
   background: var(--gold);
   color: var(--charcoal);
   border-color: var(--gold);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(179, 160, 91, 0.3);
+}
+
+#cp12-wrap .social-link:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
 }
 
 #cp12-wrap .footer-col-title {

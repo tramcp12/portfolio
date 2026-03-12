@@ -78,6 +78,13 @@
   font-size: 0.9rem;
   font-weight: 500;
   flex-shrink: 0;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.3s;
+}
+
+#cp12-wrap .booking-step:hover .step-num {
+  transform: scale(1.12);
+  box-shadow: 0 4px 14px rgba(196, 114, 74, 0.4);
 }
 
 #cp12-wrap .step-text strong {

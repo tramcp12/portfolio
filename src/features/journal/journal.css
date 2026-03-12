@@ -23,6 +23,9 @@
   margin-bottom: 4rem;
 }
 
+/* section heading — private variant of the .section-heading pattern.
+ * Differs from shared: size 3rem (vs 3.8rem), margin-bottom 1rem.
+ * Future: add class="blog-heading section-heading" to HTML and reduce this to overrides. */
 #cp12-wrap .blog-heading {
   font-family: var(--font-serif);
   font-size: 3rem;
@@ -53,12 +56,15 @@
 #cp12-wrap .blog-card {
   background: var(--warm-white);
   overflow: hidden;
-  transition: transform 0.3s;
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.35s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
 }
 
 #cp12-wrap .blog-card:hover {
-  transform: translateY(-3px);
+  transform: translateY(-5px);
+  box-shadow: 0 16px 40px rgba(42, 37, 34, 0.13),
+              0 4px 12px rgba(42, 37, 34, 0.06);
 }
 
 #cp12-wrap .blog-card-img {
@@ -69,6 +75,48 @@
 
 #cp12-wrap .blog-card.large .blog-card-img {
   aspect-ratio: 4/3;
+}
+
+/* Image zoom layers (bi1/bi2/bi3 are background-only elements without a separate child element,
+ * so we zoom via a pseudo-overlay approach on the image container itself) */
+#cp12-wrap .bi1,
+#cp12-wrap .bi2,
+#cp12-wrap .bi3 {
+  transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1),
+              filter 0.55s ease;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+}
+
+#cp12-wrap .blog-card:hover .bi1,
+#cp12-wrap .blog-card:hover .bi2,
+#cp12-wrap .blog-card:hover .bi3 {
+  transform: scale(1.06);
+  filter: brightness(1.06);
+}
+
+/* Hover overlay on blog card image */
+#cp12-wrap .blog-card-img::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    transparent 50%,
+    rgba(42, 37, 34, 0.15) 100%
+  );
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+
+#cp12-wrap .blog-card:hover .blog-card-img::after {
+  opacity: 1;
 }
 
 /* ── Blog card image layers ──
@@ -150,6 +198,8 @@
   padding: 1.5rem;
 }
 
+/* card eyebrow — shared typography from section-labels.css (.card-eyebrow);
+ * only color and margin are specific to this section */
 #cp12-wrap .blog-card-cat {
   font-size: 0.65rem;
   letter-spacing: 0.2em;
@@ -177,6 +227,8 @@
   opacity: 0.65;
 }
 
+/* arrow link — shared base from section-labels.css (.card-arrow-link);
+ * color and margin-top are specific to this section */
 #cp12-wrap .blog-link {
   display: inline-flex;
   align-items: center;
@@ -184,14 +236,29 @@
   font-size: 0.7rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
+  font-weight: 500;
   color: var(--pine);
   margin-top: 1rem;
-  font-weight: 500;
-  transition: color 0.3s;
+  transition: color 0.3s, gap 0.3s;
+}
+
+#cp12-wrap .blog-link::after {
+  content: "\2192";
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 #cp12-wrap .blog-link:hover {
   color: var(--terracotta);
+  gap: 0.75rem;
+}
+
+#cp12-wrap .blog-link:hover::after {
+  transform: translateX(4px);
+}
+
+#cp12-wrap .blog-card:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
 }
 
 /* ── Journal section animation signatures ─────────────────── */
