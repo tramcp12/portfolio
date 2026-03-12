@@ -218,6 +218,16 @@
   #cp12-next-btn {
     animation: none;
   }
+  /* Disable entrance animations for new light sections (REC-5) */
+  #cp12-wrap .sect-testimonials .testimonial-card,
+  #cp12-wrap .sect-testimonials.animated .testimonial-card,
+  #cp12-wrap .sect-location .location-grid,
+  #cp12-wrap .sect-location.animated .location-grid,
+  #cp12-wrap .sect-faq .faq-item,
+  #cp12-wrap .sect-faq.animated .faq-item {
+    animation: none;
+    opacity: 1;
+  }
   /* Suppress infinite glow pulse on CTA button (WCAG 2.1 SC 2.3.3) */
   #cp12-wrap .sect-book.animated .btn-primary {
     animation-name: cp12ScaleUp;

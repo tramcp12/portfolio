@@ -12,7 +12,7 @@
   var grid = document.getElementById("rooms-grid");
   if (!grid || !Array.isArray(rooms)) return;
 
-  var escHtml = window.cp12Esc;
+  var escHtml = window.cp12Esc || function(s) { return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); };
 
   /* Read i18n strings from injected data element — cached per language for the page lifetime */
   var roomStringsCache = {};

@@ -31,7 +31,11 @@
 #cp12-wrap .faq-item > summary {
   list-style: none;
   cursor: pointer;
-  /* Suppress default browser focus ring on <summary> — we use a custom one below */
+  /* Intentional: suppress default browser focus ring on <summary>.
+   * A custom keyboard focus ring is provided via .faq-question:focus-visible
+   * below (2px solid var(--pine)), which activates only for keyboard navigation.
+   * Browsers that don't support :focus-visible lose visible focus here, but
+   * the custom rule on .faq-question provides adequate coverage for modern browsers. */
   outline: none;
 }
 

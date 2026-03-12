@@ -129,7 +129,7 @@
   var grid = document.getElementById("rooms-grid");
   if (!grid || !Array.isArray(rooms)) return;
 
-  var escHtml = window.cp12Esc;
+  var escHtml = window.cp12Esc || function(s) { return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); };
 
   /* Read i18n strings from injected data element — cached per language for the page lifetime */
   var roomStringsCache = {};
@@ -313,7 +313,7 @@
   try {
     var dataEl = document.getElementById("rooms-data");
     if (dataEl) rooms = JSON.parse(dataEl.textContent);
-  } catch (e) {}
+  } catch (e) { console.warn("[CP12] room-modal: rooms data parse error:", e); }
 
   var currentRoomIndex  = -1;
   var currentPhotoIndex = 0;
@@ -341,7 +341,7 @@
     return getString("panel.photoCount").replace("{n}", n).replace("{total}", total);
   }
 
-  var escHtml = window.cp12Esc;
+  var escHtml = window.cp12Esc || function(s) { return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); };
 
   /* CRIT-3: set aria-hidden via JS init — display:none alone is sufficient for AT
    * but we also need aria-hidden so removeAttribute("aria-hidden") signals open state */

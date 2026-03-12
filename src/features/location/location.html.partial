@@ -54,8 +54,8 @@
                   <span class="dist-icon" aria-hidden="true">🚌</span>
                   <div class="dist-info">
                     <span class="dist-name" data-i18n="location.bus.name">Bus Station</span>
-                    <span class="dist-value" data-i18n="location.bus.dist">~4 km</span>
-                    <span class="dist-time" data-i18n="location.bus.time">15 min by taxi</span>
+                    <span class="dist-value" data-i18n="location.bus.dist">~100 m</span>
+                    <span class="dist-time" data-i18n="location.bus.time">2 min walk</span>
                   </div>
                 </div>
                 <div class="distance-card">

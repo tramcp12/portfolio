@@ -1111,6 +1111,16 @@ html.i18n-loading [data-i18n-html] {
   #cp12-next-btn {
     animation: none;
   }
+  /* Disable entrance animations for new light sections (REC-5) */
+  #cp12-wrap .sect-testimonials .testimonial-card,
+  #cp12-wrap .sect-testimonials.animated .testimonial-card,
+  #cp12-wrap .sect-location .location-grid,
+  #cp12-wrap .sect-location.animated .location-grid,
+  #cp12-wrap .sect-faq .faq-item,
+  #cp12-wrap .sect-faq.animated .faq-item {
+    animation: none;
+    opacity: 1;
+  }
   /* Suppress infinite glow pulse on CTA button (WCAG 2.1 SC 2.3.3) */
   #cp12-wrap .sect-book.animated .btn-primary {
     animation-name: cp12ScaleUp;
@@ -1745,114 +1755,6 @@ html.i18n-loading [data-i18n-html] {
   display: block;
 }
 
-/* ── Room card image layers ──
-   Each uses 3 comma-separated backgrounds:
-   1. Diagonal light shaft (subtle specular highlight)
-   2. Radial atmospheric glow
-   3. Base gradient
-──────────────────────────────────────────────── */
-
-/* r1: Phòng Trạm — deep forest dawn, rattan warmth */
-#cp12-wrap .room-img-bg.r1 {
-  background:
-    linear-gradient(
-      120deg,
-      transparent 38%,
-      rgba(255, 255, 255, 0.06) 54%,
-      transparent 70%
-    ),
-    radial-gradient(
-      ellipse at 50% 110%,
-      rgba(201, 169, 110, 0.22) 0%,
-      transparent 62%
-    ),
-    linear-gradient(
-      160deg,
-      var(--pine-dark) 0%,
-      var(--pine) 48%,
-      var(--pine-light) 100%
-    );
-}
-
-/* r2: Góc Gió — warm terracotta earth, hand-painted walls */
-#cp12-wrap .room-img-bg.r2 {
-  background:
-    linear-gradient(
-      140deg,
-      transparent 30%,
-      rgba(255, 220, 180, 0.08) 50%,
-      transparent 70%
-    ),
-    radial-gradient(
-      ellipse at 30% 0%,
-      rgba(201, 169, 110, 0.25) 0%,
-      transparent 55%
-    ),
-    linear-gradient(
-      155deg,
-      var(--brown-deep) 0%,
-      var(--earth) 40%,
-      var(--terracotta) 80%,
-      var(--terracotta-dark) 100%
-    );
-}
-
-/* r3: Tổ Chim — pine canopy at dawn, teal sky horizon */
-#cp12-wrap .room-img-bg.r3 {
-  background:
-    linear-gradient(
-      110deg,
-      transparent 40%,
-      rgba(255, 255, 255, 0.05) 56%,
-      transparent 72%
-    ),
-    radial-gradient(
-      ellipse at 80% 15%,
-      rgba(93, 139, 122, 0.3) 0%,
-      transparent 50%
-    ),
-    linear-gradient(
-      170deg,
-      var(--pine-dark) 0%,
-      var(--pine-deep) 30%,
-      var(--pine-light) 65%,
-      var(--pine-mid) 100%
-    );
-}
-
-/* r4: Dorm Trạm — cool mountain mist, blue-grey atmosphere */
-#cp12-wrap .room-img-bg.r4 {
-  background:
-    linear-gradient(
-      125deg,
-      transparent 35%,
-      rgba(200, 210, 230, 0.07) 52%,
-      transparent 68%
-    ),
-    radial-gradient(
-      ellipse at 50% 0%,
-      rgba(113, 128, 150, 0.35) 0%,
-      transparent 60%
-    ),
-    linear-gradient(
-      155deg,
-      var(--slate-dark) 0%,
-      var(--slate) 45%,
-      var(--slate-mid) 75%,
-      var(--slate-light) 100%
-    );
-}
-
-#cp12-wrap .room-img-pattern {
-  position: absolute;
-  inset: 0;
-  opacity: 0.15;
-  background-image: radial-gradient(
-    circle at 30% 40%,
-    white 0px,
-    transparent 60%
-  );
-}
 
 #cp12-wrap .room-price-tag {
   position: absolute;
@@ -3717,7 +3619,11 @@ html.i18n-loading [data-i18n-html] {
 #cp12-wrap .faq-item > summary {
   list-style: none;
   cursor: pointer;
-  /* Suppress default browser focus ring on <summary> — we use a custom one below */
+  /* Intentional: suppress default browser focus ring on <summary>.
+   * A custom keyboard focus ring is provided via .faq-question:focus-visible
+   * below (2px solid var(--pine)), which activates only for keyboard navigation.
+   * Browsers that don't support :focus-visible lose visible focus here, but
+   * the custom rule on .faq-question provides adequate coverage for modern browsers. */
   outline: none;
 }
 
