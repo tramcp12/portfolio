@@ -319,7 +319,6 @@
   var currentPhotoIndex = 0;
   var currentPhotos     = [];
   var currentLang       = "vi";
-  var selectedCardEl    = null;
   var lastFocus         = null;
   var savedScrollY      = 0;
   var isOpen            = false;
@@ -448,16 +447,6 @@
   function openModal(roomIndex, lang) {
     if (isOpen && roomIndex === currentRoomIndex) return; /* same room, already open */
 
-    /* Update selected card highlight */
-    if (selectedCardEl) selectedCardEl.classList.remove("room-card--selected");
-    var grid = document.getElementById("rooms-grid");
-    if (grid) {
-      var cards = grid.querySelectorAll(".room-card");
-      if (cards[roomIndex]) {
-        selectedCardEl = cards[roomIndex];
-        selectedCardEl.classList.add("room-card--selected");
-      }
-    }
     currentRoomIndex = roomIndex;
     currentLang = lang || "vi";
 
@@ -498,11 +487,6 @@
     modal.classList.remove("open");
     modal.setAttribute("aria-hidden", "true");
     document.body.style.overflow = "";
-
-    if (selectedCardEl) {
-      selectedCardEl.classList.remove("room-card--selected");
-      selectedCardEl = null;
-    }
 
     /* IMPORTANT-2: capture and clear lastFocus before async timeout to
      * prevent race condition where scrollTo triggers layout shift and

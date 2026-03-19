@@ -1730,6 +1730,7 @@ html.i18n-loading [data-i18n-html] {
   background: var(--warm-white);
   overflow: hidden;
   cursor: pointer;
+  box-shadow: 0 1px 8px rgba(26, 48, 40, 0.07);
 }
 
 #cp12-wrap .room-img {
@@ -1876,14 +1877,6 @@ html.i18n-loading [data-i18n-html] {
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-#cp12-wrap .room-link:hover {
-  color: var(--terracotta);
-  gap: 0.75rem;
-}
-
-#cp12-wrap .room-link:hover::after {
-  transform: translateX(5px);
-}
 
 
 /* ── Rooms section animation signatures ───────────────────── */
@@ -2256,12 +2249,6 @@ html.i18n-loading [data-i18n-html] {
   outline-offset: 2px;
 }
 
-/* ── Selected card outline (visible before modal opens + after close) ── */
-
-#cp12-wrap .room-card--selected {
-  outline: 2px solid var(--gold);
-  outline-offset: -2px;
-}
 
 /* ── Reduced-motion guard ── */
 
@@ -3652,13 +3639,9 @@ html.i18n-loading [data-i18n-html] {
   border-radius: 2px;
 }
 
-/* Open-state treatment: left gold accent + subtle background tint on the summary row */
+/* Open-state treatment: subtle background tint + slightly bolder text */
 #cp12-wrap .faq-item[open] > .faq-question {
-  border-left: 2px solid var(--gold);
-  padding-left: 0.75rem;
   background: var(--cream);
-  margin-left: -0.75rem;
-  padding-right: 0.25rem;
 }
 
 #cp12-wrap .faq-question h3 {

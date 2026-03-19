@@ -273,12 +273,6 @@
   outline-offset: 2px;
 }
 
-/* ── Selected card outline (visible before modal opens + after close) ── */
-
-#cp12-wrap .room-card--selected {
-  outline: 2px solid var(--gold);
-  outline-offset: -2px;
-}
 
 /* ── Reduced-motion guard ── */
 

@@ -64,13 +64,9 @@
   border-radius: 2px;
 }
 
-/* Open-state treatment: left gold accent + subtle background tint on the summary row */
+/* Open-state treatment: subtle background tint + slightly bolder text */
 #cp12-wrap .faq-item[open] > .faq-question {
-  border-left: 2px solid var(--gold);
-  padding-left: 0.75rem;
   background: var(--cream);
-  margin-left: -0.75rem;
-  padding-right: 0.25rem;
 }
 
 #cp12-wrap .faq-question h3 {
