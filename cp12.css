@@ -780,7 +780,7 @@ html.i18n-loading [data-i18n-html] {
   font-size: 0.7rem;
   letter-spacing: 0.3em;
   text-transform: uppercase;
-  color: var(--gold);
+  color: var(--pine);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -794,7 +794,7 @@ html.i18n-loading [data-i18n-html] {
   display: block;
   width: 40px;
   height: 1px;
-  background: var(--gold);
+  background: currentColor;
   opacity: 0.5;
 }
 
@@ -809,10 +809,11 @@ html.i18n-loading [data-i18n-html] {
 }
 
 #cp12-wrap .section-label--gold {
-  color: var(--gold);
+  color: var(--pine);
 }
 
 #cp12-wrap .section-label--cta {
+  color: var(--gold);
   margin-bottom: 1.5rem;
 }
 
@@ -820,7 +821,7 @@ html.i18n-loading [data-i18n-html] {
  * Same gold color as default; declared explicitly so the modifier is intentional
  * and can be themed independently if background colors change. */
 #cp12-wrap .section-label--light {
-  color: var(--gold);
+  color: var(--pine);
 }
 
 /* ── Section heading (used across rooms, about, journal) ── */
@@ -1729,7 +1730,6 @@ html.i18n-loading [data-i18n-html] {
   position: relative;
   background: var(--warm-white);
   overflow: hidden;
-  cursor: pointer;
   box-shadow: 0 1px 8px rgba(26, 48, 40, 0.07);
 }
 
@@ -1814,7 +1814,7 @@ html.i18n-loading [data-i18n-html] {
   margin-bottom: 1rem;
   font-size: 0.75rem;
   letter-spacing: 0.08em;
-  color: var(--earth);
+  color: var(--pine);
 }
 
 #cp12-wrap .room-meta span {
@@ -1854,8 +1854,16 @@ html.i18n-loading [data-i18n-html] {
   text-transform: uppercase;
   padding: 0.3rem 0.7rem;
   background: var(--cream);
-  color: var(--pine);
+  color: var(--pine-dark);
   border: 1px solid rgba(45, 74, 62, 0.15);
+}
+
+/* room actions — native controls avoid making the whole card interactive */
+#cp12-wrap .room-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem 1.25rem;
 }
 
 /* arrow link — shared base from section-labels.css (.card-arrow-link);
@@ -1865,10 +1873,15 @@ html.i18n-loading [data-i18n-html] {
   align-items: center;
   gap: 0.5rem;
   font-size: 0.72rem;
+  font-family: var(--font-body);
   letter-spacing: 0.2em;
   text-transform: uppercase;
   font-weight: 500;
   color: var(--pine);
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
   transition: color 0.3s, gap 0.3s;
 }
 
@@ -1957,7 +1970,7 @@ html.i18n-loading [data-i18n-html] {
   padding: 0.2rem 0.7rem;
   border-radius: 4px;
   background: var(--gold);
-  color: var(--pine-dark);
+  color: var(--charcoal-deep);
   font-family: var(--font-body);
   font-size: 0.7rem;
   font-weight: 500;
@@ -3285,7 +3298,7 @@ html.i18n-loading [data-i18n-html] {
 
 #cp12-wrap .blog-subtext {
   font-size: 0.9rem;
-  opacity: 0.65;
+  color: var(--text-warm);
   max-width: 500px;
   margin: 0 auto;
   line-height: 1.7;
@@ -3911,7 +3924,7 @@ html.i18n-loading [data-i18n-html] {
 #cp12-wrap footer {
   background: var(--charcoal-deep);
   padding: 5rem 3rem 2rem;
-  color: rgba(253, 250, 245, 0.5);
+  color: rgba(253, 250, 245, 0.78);
 }
 
 #cp12-wrap .footer-grid {
@@ -3940,7 +3953,7 @@ html.i18n-loading [data-i18n-html] {
 #cp12-wrap .footer-tagline {
   font-size: 0.82rem;
   line-height: 1.7;
-  opacity: 0.6;
+  color: rgba(253, 250, 245, 0.82);
   margin-bottom: 1.5rem;
 }
 
@@ -4026,7 +4039,7 @@ html.i18n-loading [data-i18n-html] {
   display: flex;
   justify-content: space-between;
   font-size: 0.72rem;
-  opacity: 0.35;
+  color: rgba(253, 250, 245, 0.72);
 }
 
 #cp12-wrap .address-text {

@@ -7,12 +7,12 @@
  * for safe URL escaping (matches data-cover pattern).
  *
  * P-1 safe: new Image() is never inserted into the DOM.
- * Covers: 6 travel cards + 7 room catalog covers.
+ * Covers: static travel cards and any future [data-bg] elements rendered later.
  *
  * Public API (set on window for IIFE 1 rooms.js):
  *   window.cp12ObserveLazy(container?)
  *     — re-observes [data-bg] inside container (or whole doc)
- *     — called by rooms.js after each re-render
+ *     — available to renderers that add [data-bg] elements after initial load
  * ──────────────────────────────────────────────────────────── */
 (function () {
   var lazyObserver;
@@ -60,7 +60,7 @@
       }
     );
 
-    /* Initial scan — picks up static travel cards + rendered room cards */
+    /* Initial scan — picks up static travel cards and any server-rendered data-bg elements */
     observeAll(document);
 
     /* Expose for rooms.js (IIFE 1) to call after each re-render */

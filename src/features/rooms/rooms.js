@@ -37,6 +37,7 @@
     var priceLabelText = isVi ? "VND / đêm" : "VND / night";
     var roomStrings = getRoomStrings(lang);
     var viewPhotosPrefix = roomStrings["rooms.viewPhotos"] || (isVi ? "Xem ảnh phòng" : "View photos for");
+    var viewPhotosText = isVi ? "Xem ảnh" : "View photos";
     var comingSoonText = roomStrings["rooms.comingSoon"] || (isVi ? "Sắp Có" : "Coming Soon");
     var comingSoonDescText = roomStrings["rooms.comingSoonDesc"] || (isVi ? "Phòng dorm sắp khai trương." : "Dorm beds opening soon.");
 
@@ -117,7 +118,10 @@
         '<p class="room-desc">' + escHtml(desc) + "</p>" +
         bestForHtml +
         '<div class="amenity-pills">' + pills + "</div>" +
+        '<div class="room-actions">' +
+        '<button type="button" class="room-link room-photo-btn" data-room-id="' + escHtml(r.id || "") + '" aria-label="' + escHtml(viewPhotosPrefix + " " + name) + '">' + escHtml(viewPhotosText) + "</button>" +
         '<a href="' + escHtml(bookHref) + '" class="room-link">' + bookLinkText + "</a>" +
+        "</div>" +
         "</div>" +
         "</div>"
       );
@@ -125,39 +129,23 @@
 
     grid.innerHTML = html;
 
-    /* Notify IIFE 6 (lazy-loader.js) of newly rendered [data-bg] elements.
-     * cp12ObserveLazy is defined by the time language switches trigger re-render. */
-    if (window.cp12ObserveLazy) window.cp12ObserveLazy(grid);
+    /* Notify IIFE 6 only if future room markup includes lazy CSS backgrounds. */
+    if (window.cp12ObserveLazy && grid.querySelector("[data-bg]")) window.cp12ObserveLazy(grid);
 
     /* Attach gallery click handlers after each innerHTML write (handlers are destroyed on re-render) */
-    var cards = grid.querySelectorAll(".room-card");
-    for (var ri = 0; ri < cards.length; ri++) {
+    var photoBtns = grid.querySelectorAll(".room-photo-btn");
+    for (var ri = 0; ri < photoBtns.length; ri++) {
       (function (roomIndex) {
-        var cardLang = window.cp12Lang || "vi";
-        var r = rooms[roomIndex];
-        if (r && r.comingSoon) return; /* coming-soon cards have no modal */
-        var isCardVi = cardLang === "vi";
-        var roomName = r ? ((isCardVi && r.name_vi) ? r.name_vi : r.name) : "room";
-
-        cards[roomIndex].addEventListener("click", function (e) {
-          /* Don't intercept clicks on the "Book this room" anchor */
-          if (e.target.closest("a")) return;
+        photoBtns[roomIndex].addEventListener("click", function () {
+          var roomId = photoBtns[roomIndex].getAttribute("data-room-id");
+          var dataIndex = rooms.findIndex(function (room) {
+            return room.id === roomId;
+          });
+          if (dataIndex < 0) return;
           if (window.cp12OpenRoomModal) {
-            window.cp12OpenRoomModal(roomIndex, window.cp12Lang || "vi");
+            window.cp12OpenRoomModal(dataIndex, window.cp12Lang || "vi");
           } else {
             console.warn("[CP12] room modal not ready");
-          }
-        });
-        /* Keyboard activation: Enter/Space on the card itself */
-        cards[roomIndex].setAttribute("tabindex", "0");
-        cards[roomIndex].setAttribute("role", "button");
-        cards[roomIndex].setAttribute("aria-label", viewPhotosPrefix + " " + roomName);
-        cards[roomIndex].addEventListener("keydown", function (e) {
-          if (e.key === "Enter" || e.key === " ") {
-            e.preventDefault();
-            if (window.cp12OpenRoomModal) {
-              window.cp12OpenRoomModal(roomIndex, window.cp12Lang || "vi");
-            }
           }
         });
       }(ri));

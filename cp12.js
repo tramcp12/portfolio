@@ -49,11 +49,13 @@
       document.getElementById("cp12-lang-btn-mobile")
     ];
     var isEn = lang === "en";
-    var langLabel = strings["nav.lang.label"] || (isEn ? "Switch to Vietnamese" : "Switch to English");
+    var langAction = strings["nav.lang.label"] || (isEn ? "Switch to Vietnamese" : "Switch to English");
     langBtns.forEach(function(btn) {
       if (!btn) return;
       btn.setAttribute("aria-pressed", isEn ? "true" : "false");
-      btn.setAttribute("aria-label", langLabel);
+      btn.removeAttribute("aria-label");
+      var actionEl = btn.querySelector(".lang-action");
+      if (actionEl) actionEl.textContent = langAction;
       var viEl = btn.querySelector(".lang-vi");
       var enEl = btn.querySelector(".lang-en");
       if (lang === "vi") {
@@ -154,6 +156,7 @@
     var priceLabelText = isVi ? "VND / đêm" : "VND / night";
     var roomStrings = getRoomStrings(lang);
     var viewPhotosPrefix = roomStrings["rooms.viewPhotos"] || (isVi ? "Xem ảnh phòng" : "View photos for");
+    var viewPhotosText = isVi ? "Xem ảnh" : "View photos";
     var comingSoonText = roomStrings["rooms.comingSoon"] || (isVi ? "Sắp Có" : "Coming Soon");
     var comingSoonDescText = roomStrings["rooms.comingSoonDesc"] || (isVi ? "Phòng dorm sắp khai trương." : "Dorm beds opening soon.");
 
@@ -234,7 +237,10 @@
         '<p class="room-desc">' + escHtml(desc) + "</p>" +
         bestForHtml +
         '<div class="amenity-pills">' + pills + "</div>" +
+        '<div class="room-actions">' +
+        '<button type="button" class="room-link room-photo-btn" data-room-id="' + escHtml(r.id || "") + '" aria-label="' + escHtml(viewPhotosPrefix + " " + name) + '">' + escHtml(viewPhotosText) + "</button>" +
         '<a href="' + escHtml(bookHref) + '" class="room-link">' + bookLinkText + "</a>" +
+        "</div>" +
         "</div>" +
         "</div>"
       );
@@ -242,39 +248,23 @@
 
     grid.innerHTML = html;
 
-    /* Notify IIFE 6 (lazy-loader.js) of newly rendered [data-bg] elements.
-     * cp12ObserveLazy is defined by the time language switches trigger re-render. */
-    if (window.cp12ObserveLazy) window.cp12ObserveLazy(grid);
+    /* Notify IIFE 6 only if future room markup includes lazy CSS backgrounds. */
+    if (window.cp12ObserveLazy && grid.querySelector("[data-bg]")) window.cp12ObserveLazy(grid);
 
     /* Attach gallery click handlers after each innerHTML write (handlers are destroyed on re-render) */
-    var cards = grid.querySelectorAll(".room-card");
-    for (var ri = 0; ri < cards.length; ri++) {
+    var photoBtns = grid.querySelectorAll(".room-photo-btn");
+    for (var ri = 0; ri < photoBtns.length; ri++) {
       (function (roomIndex) {
-        var cardLang = window.cp12Lang || "vi";
-        var r = rooms[roomIndex];
-        if (r && r.comingSoon) return; /* coming-soon cards have no modal */
-        var isCardVi = cardLang === "vi";
-        var roomName = r ? ((isCardVi && r.name_vi) ? r.name_vi : r.name) : "room";
-
-        cards[roomIndex].addEventListener("click", function (e) {
-          /* Don't intercept clicks on the "Book this room" anchor */
-          if (e.target.closest("a")) return;
+        photoBtns[roomIndex].addEventListener("click", function () {
+          var roomId = photoBtns[roomIndex].getAttribute("data-room-id");
+          var dataIndex = rooms.findIndex(function (room) {
+            return room.id === roomId;
+          });
+          if (dataIndex < 0) return;
           if (window.cp12OpenRoomModal) {
-            window.cp12OpenRoomModal(roomIndex, window.cp12Lang || "vi");
+            window.cp12OpenRoomModal(dataIndex, window.cp12Lang || "vi");
           } else {
             console.warn("[CP12] room modal not ready");
-          }
-        });
-        /* Keyboard activation: Enter/Space on the card itself */
-        cards[roomIndex].setAttribute("tabindex", "0");
-        cards[roomIndex].setAttribute("role", "button");
-        cards[roomIndex].setAttribute("aria-label", viewPhotosPrefix + " " + roomName);
-        cards[roomIndex].addEventListener("keydown", function (e) {
-          if (e.key === "Enter" || e.key === " ") {
-            e.preventDefault();
-            if (window.cp12OpenRoomModal) {
-              window.cp12OpenRoomModal(roomIndex, window.cp12Lang || "vi");
-            }
           }
         });
       }(ri));
@@ -947,6 +937,7 @@
       var show = scrollY > window.innerHeight * 0.2 && !atBottom;
       nextBtn.classList.toggle("visible", show);
       nextBtn.setAttribute("aria-hidden", show ? "false" : "true");
+      nextBtn.tabIndex = show ? 0 : -1;
     }
 
     if (nextBtn) {
@@ -1050,12 +1041,12 @@
  * for safe URL escaping (matches data-cover pattern).
  *
  * P-1 safe: new Image() is never inserted into the DOM.
- * Covers: 6 travel cards + 7 room catalog covers.
+ * Covers: static travel cards and any future [data-bg] elements rendered later.
  *
  * Public API (set on window for IIFE 1 rooms.js):
  *   window.cp12ObserveLazy(container?)
  *     — re-observes [data-bg] inside container (or whole doc)
- *     — called by rooms.js after each re-render
+ *     — available to renderers that add [data-bg] elements after initial load
  * ──────────────────────────────────────────────────────────── */
 (function () {
   var lazyObserver;
@@ -1103,7 +1094,7 @@
       }
     );
 
-    /* Initial scan — picks up static travel cards + rendered room cards */
+    /* Initial scan — picks up static travel cards and any server-rendered data-bg elements */
     observeAll(document);
 
     /* Expose for rooms.js (IIFE 1) to call after each re-render */

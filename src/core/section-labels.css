@@ -6,7 +6,7 @@
   font-size: 0.7rem;
   letter-spacing: 0.3em;
   text-transform: uppercase;
-  color: var(--gold);
+  color: var(--pine);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -20,7 +20,7 @@
   display: block;
   width: 40px;
   height: 1px;
-  background: var(--gold);
+  background: currentColor;
   opacity: 0.5;
 }
 
@@ -35,10 +35,11 @@
 }
 
 #cp12-wrap .section-label--gold {
-  color: var(--gold);
+  color: var(--pine);
 }
 
 #cp12-wrap .section-label--cta {
+  color: var(--gold);
   margin-bottom: 1.5rem;
 }
 
@@ -46,7 +47,7 @@
  * Same gold color as default; declared explicitly so the modifier is intentional
  * and can be themed independently if background colors change. */
 #cp12-wrap .section-label--light {
-  color: var(--gold);
+  color: var(--pine);
 }
 
 /* ── Section heading (used across rooms, about, journal) ── */

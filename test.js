@@ -18,7 +18,7 @@ function ok(label, cond) {
 /* ── 1. Source file coverage ─────────────────────────────────────────────── */
 console.log("\n\u2500\u2500 Source file coverage");
 var expected = [
-  // CSS source (22 files)
+  // CSS source
   "src/core/tokens.css", "src/core/reset.css", "src/core/accessibility.css",
   "src/core/buttons.css", "src/core/section-labels.css", "src/core/animations.css",
   "src/shared/lazy-loader.css",
@@ -26,10 +26,10 @@ var expected = [
   "src/layout/nav.css", "src/layout/nav-mobile.css", "src/layout/dots.css",
   "src/layout/next-btn.css", "src/layout/footer.css", "src/layout/modal.css",
   "src/features/home/home.css", "src/features/video/video.css",
-  "src/features/rooms/rooms.css", "src/features/explore/explore.css",
+  "src/features/rooms/rooms.css", "src/features/rooms/room-modal.css", "src/features/explore/explore.css",
   "src/features/about/about.css", "src/features/journal/journal.css",
   "src/features/cta/cta.css",
-  // HTML partials (14 files)
+  // HTML partials
   "src/shell-head.html",
   "src/layout/chrome.html.partial", "src/layout/dots.html.partial",
   "src/layout/footer.html.partial", "src/layout/modal.html.partial",
@@ -43,9 +43,9 @@ var expected = [
   "src/features/journal/journal.html.partial",
   "src/features/faq/faq.html.partial", "src/features/faq/faq.css",
   "src/features/cta/cta.html.partial",
-  // JS IIFEs (6 files)
+  // JS IIFEs
   "src/shared/lang-switcher.js",
-  "src/features/rooms/rooms.js", "src/features/video/video.js",
+  "src/features/rooms/rooms.js", "src/features/rooms/room-modal.js", "src/features/video/video.js",
   "src/features/explore/explore.js", "src/shared/scroll-reveal.js",
   "src/shared/lazy-loader.js",
   // Data (5 files)
@@ -181,7 +181,7 @@ ok("index.html — theme-color meta",              html.indexOf("theme-color") !
 ok("index.html — cp12.js defer",                 html.indexOf('src="cp12.js" defer') !== -1);
 
 // CSS invariants (quick)
-ok("cp12.css — :root variables block",           html.indexOf("rooms-grid") !== -1); // grid appears in HTML
+ok("cp12.css — :root variables block",           /:root\s*\{[\s\S]*--pine\s*:/.test(css));
 ok("cp12.css — @keyframes cp12fu",               /\@keyframes cp12fu/.test(css));
 ok("cp12.css — .cp12-reveal class",              /\.cp12-reveal/.test(css));
 ok("cp12.css — dot-nav styles",                  /#cp12-dots/.test(css));
@@ -221,6 +221,8 @@ ok("rooms.js — escHtml guard",         roomsJs.indexOf("escHtml") !== -1);
 ok("lang-switcher.js — XSS &amp; replacement", switcherJs.indexOf("&amp;") !== -1);
 ok("rooms.js — cp12RenderRooms export",roomsJs.indexOf("window.cp12RenderRooms") !== -1);
 ok("rooms.js — lang-aware desc_vi",    roomsJs.indexOf("desc_vi") !== -1);
+ok("rooms.js — native photo button",   roomsJs.indexOf("room-photo-btn") !== -1);
+ok("rooms.js — no card role button",   roomsJs.indexOf('setAttribute("role", "button")') === -1);
 ok("video.js — self-contained IIFE",   /\(function\s*\(\)/.test(videoJs));
 ok("video.js — cp12OpenModal guard",   videoJs.indexOf("window.cp12OpenModal") !== -1);
 ok("explore.js — self-contained IIFE", /\(function\s*\(\)/.test(exploreJs));
@@ -252,7 +254,12 @@ staticImgs.forEach(function(f) {
   ok(f + " exists", fs.existsSync(path.join(__dirname, f)));
 });
 ok("favicon.svg at root",                  fs.existsSync(path.join(__dirname, "favicon.svg")));
+ok("robots.txt at root",                   fs.existsSync(path.join(__dirname, "robots.txt")));
 ok("static/docs/.gitkeep placeholder",     fs.existsSync(path.join(__dirname, "static/docs/.gitkeep")));
+
+var robotsTxt = fs.readFileSync("robots.txt", "utf8");
+ok("robots.txt — allows crawlers",          /User-agent:\s*\*/.test(robotsTxt) && /Allow:\s*\//.test(robotsTxt));
+ok("index.html — CSP allows same-origin connect", /connect-src 'self'/.test(html));
 
 // A-2: No legacy img/ URL references in generated CSS
 ok("cp12.css — A-2: no legacy url(img/...) paths", !/url\(["']?img\//.test(css));

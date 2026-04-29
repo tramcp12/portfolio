@@ -49,11 +49,13 @@
       document.getElementById("cp12-lang-btn-mobile")
     ];
     var isEn = lang === "en";
-    var langLabel = strings["nav.lang.label"] || (isEn ? "Switch to Vietnamese" : "Switch to English");
+    var langAction = strings["nav.lang.label"] || (isEn ? "Switch to Vietnamese" : "Switch to English");
     langBtns.forEach(function(btn) {
       if (!btn) return;
       btn.setAttribute("aria-pressed", isEn ? "true" : "false");
-      btn.setAttribute("aria-label", langLabel);
+      btn.removeAttribute("aria-label");
+      var actionEl = btn.querySelector(".lang-action");
+      if (actionEl) actionEl.textContent = langAction;
       var viEl = btn.querySelector(".lang-vi");
       var enEl = btn.querySelector(".lang-en");
       if (lang === "vi") {

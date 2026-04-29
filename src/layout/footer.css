@@ -5,7 +5,7 @@
 #cp12-wrap footer {
   background: var(--charcoal-deep);
   padding: 5rem 3rem 2rem;
-  color: rgba(253, 250, 245, 0.5);
+  color: rgba(253, 250, 245, 0.78);
 }
 
 #cp12-wrap .footer-grid {
@@ -34,7 +34,7 @@
 #cp12-wrap .footer-tagline {
   font-size: 0.82rem;
   line-height: 1.7;
-  opacity: 0.6;
+  color: rgba(253, 250, 245, 0.82);
   margin-bottom: 1.5rem;
 }
 
@@ -120,7 +120,7 @@
   display: flex;
   justify-content: space-between;
   font-size: 0.72rem;
-  opacity: 0.35;
+  color: rgba(253, 250, 245, 0.72);
 }
 
 #cp12-wrap .address-text {
