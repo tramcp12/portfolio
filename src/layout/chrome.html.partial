@@ -7,6 +7,7 @@
         id="cp12-next-btn"
         aria-label="Scroll to next section"
         data-i18n-aria-label="nav.nextSection"
+        tabindex="-1"
       >
         &#8595;
       </button>
@@ -28,10 +29,10 @@
           type="button"
           id="cp12-lang-btn"
           class="lang-btn"
-          aria-label="Switch to English"
           aria-pressed="false"
         >
           <span class="lang-vi lang-active">VI</span><span class="lang-sep" aria-hidden="true">|</span><span class="lang-en">EN</span>
+          <span class="sr-only lang-action">Switch to English</span>
         </button>
         <button
           type="button"
@@ -84,10 +85,9 @@
           type="button"
           id="cp12-lang-btn-mobile"
           class="lang-btn"
-          aria-label="Switch to English"
           aria-pressed="false"
         >
           <span class="lang-vi lang-active">VI</span><span class="lang-sep" aria-hidden="true">|</span><span class="lang-en">EN</span>
+          <span class="sr-only lang-action">Switch to English</span>
         </button>
       </div>
-

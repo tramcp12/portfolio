@@ -258,6 +258,7 @@
       var show = scrollY > window.innerHeight * 0.2 && !atBottom;
       nextBtn.classList.toggle("visible", show);
       nextBtn.setAttribute("aria-hidden", show ? "false" : "true");
+      nextBtn.tabIndex = show ? 0 : -1;
     }
 
     if (nextBtn) {

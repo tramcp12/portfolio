@@ -41,7 +41,7 @@
 
 #cp12-wrap .blog-subtext {
   font-size: 0.9rem;
-  opacity: 0.65;
+  color: var(--text-warm);
   max-width: 500px;
   margin: 0 auto;
   line-height: 1.7;
