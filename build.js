@@ -9,12 +9,13 @@
  *   HTML assembled from src/ partials in DOM order.
  *
  * Phase 3 (complete): JS split
- *   JS assembled from 5 IIFE source files in DOM order.
+ *   JS assembled from 7 IIFE source files in DOM order.
  *
  * Phase 4 (complete): Data layer
  *   src/data/rooms.json injected as <script id="rooms-data"> for IIFE 1.
  *   src/data/travel.json and src/data/journal.json are reference files
- *   (static HTML partials retained for SEO; no runtime renderers yet).
+ *   kept aligned with i18n strings by test.js; static HTML partials retained
+ *   for SEO and no-JS fallback; no runtime renderers yet.
  *
  * Phase 5 (complete): i18n layer
  *   src/data/strings.vi.json and strings.en.json injected as
@@ -309,6 +310,9 @@ run("node validate.js");
 
 console.log("Running HTML lint...");
 run("npx html-validate index.html");
+
+console.log("Running test suite...");
+run("node test.js");
 
 var elapsed = ((Date.now() - t0) / 1000).toFixed(2);
 console.log("\nBuild complete in " + elapsed + "s\n");

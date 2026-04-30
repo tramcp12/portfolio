@@ -2,7 +2,7 @@
 /**
  * validate.js — Architectural invariant checker for Trạm CP12
  *
- * Checks 14 invariants across index.html, cp12.css, cp12.js, and i18n data.
+ * Checks 17 invariants across index.html, cp12.css, cp12.js, and i18n data.
  * Exit 0 = all pass. Exit 1 = one or more failures.
  */
 
@@ -56,10 +56,10 @@ check("JS-1", "try { } catch (e) { } init guard exists in cp12.js", /try\s*\{/.t
 /* ── JS-3: Nav element is cached via cachedNav pattern ── */
 check("JS-3", "var cachedNav = null pattern exists in cp12.js", /var cachedNav\s*=\s*null/.test(js));
 
-/* ── P-1: No <img> tags in index.html ── */
+/* ── P-1: No authored <img> tags in generated index.html ── */
 /* Strip HTML comments first to avoid false positives */
 var htmlNoComments = html.replace(/<!--[\s\S]*?-->/g, "");
-check("P-1", "No <img> tags in index.html (all images are CSS backgrounds)", !/<img[\s>]/i.test(htmlNoComments));
+check("P-1", "No authored <img> tags in generated index.html", !/<img[\s>]/i.test(htmlNoComments));
 
 /* ── H-1: og:image meta tag present in index.html ── */
 check("H-1", "og:image meta tag present in index.html", /property="og:image"/.test(html));

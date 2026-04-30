@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
- * test-validate.js — Comprehensive validation suite for Trạm CP12
- * Run: node test-validate.js
+ * test.js — Comprehensive validation suite for Trạm CP12
+ * Run: node test.js
  * Exit 0 = all pass, Exit 1 = failures found
  */
 "use strict";
@@ -120,6 +120,23 @@ ok("strings.en.json — is object",      typeof stringsEn === "object");
   ok("strings.en[" + k + "]", !!stringsEn[k]);
 });
 
+travel.forEach(function(t, i) {
+  var n = i + 1;
+  ok("travel[" + i + "] cat matches strings.en",       t.cat       === stringsEn["explore.card" + n + ".cat"]);
+  ok("travel[" + i + "] name matches strings.en",      t.name      === stringsEn["explore.card" + n + ".name"]);
+  ok("travel[" + i + "] distance matches strings.en",  t.distance  === stringsEn["explore.card" + n + ".dist"]);
+  ok("travel[" + i + "] duration matches strings.en",  t.duration  === stringsEn["explore.card" + n + ".time"]);
+  ok("travel[" + i + "] highlight matches strings.en", t.highlight === stringsEn["explore.card" + n + ".highlight"]);
+});
+
+journal.forEach(function(j, i) {
+  var n = i + 1;
+  ok("journal[" + i + "] cat matches strings.en",     j.cat     === stringsEn["journal.card" + n + ".cat"]);
+  ok("journal[" + i + "] title matches strings.en",   j.title   === stringsEn["journal.card" + n + ".title"]);
+  ok("journal[" + i + "] excerpt matches strings.en", j.excerpt === stringsEn["journal.card" + n + ".excerpt"]);
+  ok("journal[" + i + "] href points to booking CTA", j.href === "#book");
+});
+
 /* ── 3. Generated output checks ──────────────────────────────────────────── */
 console.log("\n\u2500\u2500 Generated output checks");
 var html = fs.readFileSync("index.html", "utf8");
@@ -167,11 +184,13 @@ ok("index.html — lang-btn in nav",             html.indexOf('id="cp12-lang-btn
 
 // HTML structure
 ok("index.html — <main id=\"cp12-main\">",       html.indexOf('<main id="cp12-main">') !== -1);
-ok("index.html — all 7 sections present",        function() {
-  return ["#home","#video","#rooms","#explore","#about","#journal","#book"].every(function(id) {
+ok("index.html — key sections present",          function() {
+  return ["#home","#video","#rooms","#testimonials","#explore","#about","#location","#journal","#faq","#book"].every(function(id) {
     return html.indexOf('id="' + id.slice(1) + '"') !== -1;
   });
 }());
+ok("index.html — 3 testimonial cards",           (html.match(/class="testimonial-card/g) || []).length === 3);
+ok("index.html — Nhân Ái Nguyễn review present", html.indexOf("Nhân Ái Nguyễn") !== -1 && html.indexOf("The homestay is clean and fully equipped.") !== -1);
 ok("index.html — skip-nav link",                 html.indexOf("skip-nav") !== -1);
 ok("index.html — og:image meta",                 /property="og:image"/.test(html));
 ok("index.html — twitter:card meta",             /name="twitter:card"/.test(html));

@@ -34,9 +34,9 @@
                     Dalat for Runners: Your Complete Trail Guide from Trạm CP12
                   </h3>
                   <p class="blog-card-excerpt" data-i18n="journal.card1.excerpt">
-                    Dalat is one of Southeast Asia's best-kept secrets for trail
-                    runners. Sitting at 1,500m above sea level with cool
-                    mountain air and pine-forested ridgelines.
+                    Dalat is trail running's best-kept secret in Southeast Asia —
+                    1,500m altitude, cool air year-round, and 50km of singletrack
+                    within 30 minutes of CP12. Here's every route, graded.
                   </p>
                   <a href="#book" class="blog-link">
                     <span data-i18n="journal.readMore">Read More</span>
@@ -100,4 +100,3 @@
         </section>
 
         <!-- CTA -->
-

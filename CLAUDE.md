@@ -48,7 +48,7 @@ Build guards that run **before writing outputs** (failures abort the build):
 - **Phase 10**: Every `data-bg="static/img/..."` attribute in HTML must point to an existing file
 - **CRIT-1**: i18n strings may only contain `<br>`, `<em>`, `<strong>` tags (XSS guard)
 
-After writing outputs, `build.js` runs `validate.js` then `html-validate`.
+After writing outputs, `build.js` runs `validate.js`, `html-validate`, then `test.js`.
 
 ---
 
@@ -67,7 +67,7 @@ After writing outputs, `build.js` runs `validate.js` then `html-validate`.
 | R-1     | `@media (max-width: 768px)` breakpoint in CSS |
 | JS-1    | `try { } catch (e) { }` init guard in `cp12.js` |
 | JS-3    | `var cachedNav = null` nav caching pattern in `cp12.js` |
-| P-1     | No `<img>` tags in `index.html` — all images via CSS `background` |
+| P-1     | No authored `<img>` tags in generated `index.html`; runtime JS may create image elements |
 | H-1     | `og:image` meta tag present |
 | A-2     | No legacy `url(img/...)` references in CSS — all under `static/img/` |
 | B-1     | `#cp12-room-modal` exists and is placed **outside** `<main>` |
@@ -134,6 +134,8 @@ IIFE 0 reads `localStorage` key `cp12-lang` (default `"vi"`) and applies string 
 **Dual lang buttons:** `#cp12-lang-btn` (desktop nav) and `#cp12-lang-btn-mobile` (mobile overlay) are synced on every language change.
 
 **To edit strings:** modify `src/data/strings.vi.json` or `src/data/strings.en.json`, then rebuild. Both files must have identical key sets (I18N-1/2/3 invariants). Only `<br>`, `<em>`, `<strong>` are allowed in string values (CRIT-1 guard).
+
+Explore and Journal reference data in `src/data/travel.json` and `src/data/journal.json` must stay aligned with the English i18n card strings; `test.js` enforces this contract.
 
 ---
 
