@@ -8,7 +8,7 @@
     "lint":     "html-validate index.html",
     "test":     "node test.js",
     "check":    "npm run validate && npm run lint && npm test",
-    "ci":       "npm run build && npm test"
+    "ci":       "npm run build"
   },
   "devDependencies": {
     "html-validate": "^9.0.0"

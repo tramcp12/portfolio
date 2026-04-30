@@ -105,8 +105,8 @@
                   <p class="travel-cat" data-i18n="explore.card1.cat">Running &middot; Lakeside</p>
                   <h3 class="travel-name" data-i18n="explore.card1.name">Hồ Xuân Hương</h3>
                   <div class="travel-meta">
-                    <span><span aria-hidden="true">📍</span> <span data-i18n="explore.card1.dist">0.8km away</span></span>
-                    <span><span aria-hidden="true">⏱</span> <span data-i18n="explore.card1.time">45–60 mins</span></span>
+                    <span><span aria-hidden="true">📍</span> <span data-i18n="explore.card1.dist">3.4km away</span></span>
+                    <span><span aria-hidden="true">⏱</span> <span data-i18n="explore.card1.time">15–30 mins</span></span>
                   </div>
                   <p class="travel-highlight" data-i18n="explore.card1.highlight">
                     Active recovery done right. Start with an easy, crisp 5km 
@@ -126,8 +126,8 @@
                   <p class="travel-cat" data-i18n="explore.card2.cat">Nature &middot; Photography</p>
                   <h3 class="travel-name" data-i18n="explore.card2.name">Vườn Hoa Thành Phố Đà Lạt</h3>
                   <div class="travel-meta">
-                    <span><span aria-hidden="true">📍</span> <span data-i18n="explore.card2.dist">2km away</span></span>
-                    <span><span aria-hidden="true">⏱</span> <span data-i18n="explore.card2.time">1–2 hours</span></span>
+                    <span><span aria-hidden="true">📍</span> <span data-i18n="explore.card2.dist">3.4km away</span></span>
+                    <span><span aria-hidden="true">⏱</span> <span data-i18n="explore.card2.time">15-30 mins</span></span>
                   </div>
                   <p class="travel-highlight" data-i18n="explore.card2.highlight">
                     The city's iconic flower park overlooking Xuan Huong Lake. 
@@ -147,8 +147,8 @@
                   <p class="travel-cat" data-i18n="explore.card3.cat">Trail Running &middot; Mountain</p>
                   <h3 class="travel-name" data-i18n="explore.card3.name">Đỉnh núi Langbiang</h3>
                   <div class="travel-meta">
-                    <span><span aria-hidden="true">📍</span> <span data-i18n="explore.card3.dist">12km away</span></span>
-                    <span><span aria-hidden="true">⏱</span> <span data-i18n="explore.card3.time">3–4 hours</span></span>
+                    <span><span aria-hidden="true">📍</span> <span data-i18n="explore.card3.dist">11.5km away</span></span>
+                    <span><span aria-hidden="true">⏱</span> <span data-i18n="explore.card3.time">1-2 hours</span></span>
                   </div>
                   <p class="travel-highlight" data-i18n="explore.card3.highlight">
                     2,167m - The Roof of Da Lat. Skip the easy Radar Peak road to 
@@ -168,8 +168,8 @@
                   <p class="travel-cat" data-i18n="explore.card4.cat">Food &amp; Culture</p>
                   <h3 class="travel-name" data-i18n="explore.card4.name">Chợ đêm thành phố Đà Lạt</h3>
                   <div class="travel-meta">
-                    <span><span aria-hidden="true">📍</span> <span data-i18n="explore.card4.dist">0.5km away</span></span>
-                    <span><span aria-hidden="true">⏱</span> <span data-i18n="explore.card4.time">1–3 hours</span></span>
+                    <span><span aria-hidden="true">📍</span> <span data-i18n="explore.card4.dist">4.4km away</span></span>
+                    <span><span aria-hidden="true">⏱</span> <span data-i18n="explore.card4.time">20-30 mins</span></span>
                   </div>
                   <p class="travel-highlight" data-i18n="explore.card4.highlight">
                     Swap your trail shoes for sandals. Replenish your calories with 
@@ -189,8 +189,8 @@
                   <p class="travel-cat" data-i18n="explore.card5.cat">Nature &middot; Photography</p>
                   <h3 class="travel-name" data-i18n="explore.card5.name">Đồi chè Cầu Đất Đà Lạt</h3>
                   <div class="travel-meta">
-                    <span><span aria-hidden="true">📍</span> <span data-i18n="explore.card5.dist">25km away</span></span>
-                    <span><span aria-hidden="true">⏱</span> <span data-i18n="explore.card5.time">Half day</span></span>
+                    <span><span aria-hidden="true">📍</span> <span data-i18n="explore.card5.dist">26km away</span></span>
+                    <span><span aria-hidden="true">⏱</span> <span data-i18n="explore.card5.time">1-2 hours</span></span>
                   </div>
                   <p class="travel-highlight" data-i18n="explore.card5.highlight">
                     Dial in the vert for Dalat Ultra Trail! The 20.7-mile loop transitions 
@@ -210,8 +210,8 @@
                   <p class="travel-cat" data-i18n="explore.card6.cat">Culture &amp; Spirituality</p>
                   <h3 class="travel-name" data-i18n="explore.card6.name">Thiền viện Trúc Lâm Đà Lạt</h3>
                   <div class="travel-meta">
-                    <span><span aria-hidden="true">📍</span> <span data-i18n="explore.card6.dist">5km away</span></span>
-                    <span><span aria-hidden="true">⏱</span> <span data-i18n="explore.card6.time">Half day</span></span>
+                    <span><span aria-hidden="true">📍</span> <span data-i18n="explore.card6.dist">7.4km away</span></span>
+                    <span><span aria-hidden="true">⏱</span> <span data-i18n="explore.card6.time">30-45 mins</span></span>
                   </div>
                   <p class="travel-highlight" data-i18n="explore.card6.highlight">
                     Take the cable car up; earn the 4km pine-trail descent back to
@@ -225,4 +225,3 @@
           </div>
           <!-- /.travel-inner -->
         </section>
-
