@@ -238,6 +238,7 @@
   text-transform: uppercase;
   font-weight: 500;
   color: var(--pine);
+  min-height: 44px;
   margin-top: 1rem;
   transition: color 0.3s, gap 0.3s;
 }

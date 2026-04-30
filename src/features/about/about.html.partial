@@ -1,6 +1,11 @@
 
         <!-- About -->
-        <section id="about" class="sect-about" aria-labelledby="aboutHeading">
+        <section
+          id="about"
+          class="sect-about"
+          aria-labelledby="aboutHeading"
+          data-section="about"
+        >
           <div class="about-section">
             <div class="about-visual cp12-reveal">
               <div
@@ -72,4 +77,3 @@
             </div>
           </div>
         </section>
-

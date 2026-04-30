@@ -4,6 +4,7 @@
           class="blog-section sect-journal"
           id="journal"
           aria-labelledby="journalHeading"
+          data-section="journal"
         >
           <div class="blog-inner">
             <div class="blog-header">

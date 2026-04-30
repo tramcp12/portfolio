@@ -9,10 +9,45 @@ var fs   = require("fs");
 var path = require("path");
 var errors = [];
 var passes = [];
+var SECTION_IDS = ["home","video","rooms","testimonials","explore","about","location","journal","faq","book"];
 
 function ok(label, cond) {
   if (cond) passes.push("  \u2705 " + label);
   else      errors.push("  \u274C " + label);
+}
+
+function sameArray(a, b) {
+  return a.length === b.length && a.every(function(item, idx) {
+    return item === b[idx];
+  });
+}
+
+function normalizeText(s) {
+  return String(s)
+    .replace(/<br\s*\/?>/g, " ")
+    .replace(/<[^>]*>/g, " ")
+    .replace(/&amp;/g, "&")
+    .replace(/&middot;/g, "\u00b7")
+    .replace(/&rarr;/g, "\u2192")
+    .replace(/&mdash;/g, "\u2014")
+    .replace(/&nbsp;/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function attrValues(markup, attr) {
+  var values = [];
+  var re = new RegExp(attr + "=\"([^\"]+)\"", "g");
+  var m;
+  while ((m = re.exec(markup)) !== null) values.push(m[1]);
+  return values;
+}
+
+function fallbackText(markup, i18nKey) {
+  var key = i18nKey.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  var re = new RegExp("<[^>]+data-i18n=\"" + key + "\"[^>]*>([\\s\\S]*?)<\\/[^>]+>");
+  var m = markup.match(re);
+  return m ? normalizeText(m[1]) : null;
 }
 
 /* ── 1. Source file coverage ─────────────────────────────────────────────── */
@@ -137,6 +172,25 @@ journal.forEach(function(j, i) {
   ok("journal[" + i + "] href points to booking CTA", j.href === "#book");
 });
 
+var explorePartial = fs.readFileSync("src/features/explore/explore.html.partial", "utf8");
+var journalPartial = fs.readFileSync("src/features/journal/journal.html.partial", "utf8");
+
+travel.forEach(function(t, i) {
+  var n = i + 1;
+  ok("explore fallback card" + n + " cat matches strings.en",       fallbackText(explorePartial, "explore.card" + n + ".cat")       === normalizeText(stringsEn["explore.card" + n + ".cat"]));
+  ok("explore fallback card" + n + " name matches strings.en",      fallbackText(explorePartial, "explore.card" + n + ".name")      === normalizeText(stringsEn["explore.card" + n + ".name"]));
+  ok("explore fallback card" + n + " distance matches strings.en",  fallbackText(explorePartial, "explore.card" + n + ".dist")      === normalizeText(stringsEn["explore.card" + n + ".dist"]));
+  ok("explore fallback card" + n + " duration matches strings.en",  fallbackText(explorePartial, "explore.card" + n + ".time")      === normalizeText(stringsEn["explore.card" + n + ".time"]));
+  ok("explore fallback card" + n + " highlight matches strings.en", fallbackText(explorePartial, "explore.card" + n + ".highlight") === normalizeText(stringsEn["explore.card" + n + ".highlight"]));
+});
+
+journal.forEach(function(j, i) {
+  var n = i + 1;
+  ok("journal fallback card" + n + " cat matches strings.en",     fallbackText(journalPartial, "journal.card" + n + ".cat")     === normalizeText(stringsEn["journal.card" + n + ".cat"]));
+  ok("journal fallback card" + n + " title matches strings.en",   fallbackText(journalPartial, "journal.card" + n + ".title")   === normalizeText(stringsEn["journal.card" + n + ".title"]));
+  ok("journal fallback card" + n + " excerpt matches strings.en", fallbackText(journalPartial, "journal.card" + n + ".excerpt") === normalizeText(stringsEn["journal.card" + n + ".excerpt"]));
+});
+
 /* ── 3. Generated output checks ──────────────────────────────────────────── */
 console.log("\n\u2500\u2500 Generated output checks");
 var html = fs.readFileSync("index.html", "utf8");
@@ -185,12 +239,17 @@ ok("index.html — lang-btn in nav",             html.indexOf('id="cp12-lang-btn
 // HTML structure
 ok("index.html — <main id=\"cp12-main\">",       html.indexOf('<main id="cp12-main">') !== -1);
 ok("index.html — key sections present",          function() {
-  return ["#home","#video","#rooms","#testimonials","#explore","#about","#location","#journal","#faq","#book"].every(function(id) {
-    return html.indexOf('id="' + id.slice(1) + '"') !== -1;
+  return SECTION_IDS.every(function(id) {
+    return html.indexOf('id="' + id + '"') !== -1;
   });
 }());
-ok("index.html — 3 testimonial cards",           (html.match(/class="testimonial-card/g) || []).length === 3);
-ok("index.html — Nhân Ái Nguyễn review present", html.indexOf("Nhân Ái Nguyễn") !== -1 && html.indexOf("The homestay is clean and fully equipped.") !== -1);
+var dataSectionIds = attrValues(html, "data-section");
+var dotsNavMatch = html.match(/<nav id="cp12-dots"[\s\S]*?<\/nav>/);
+var dotTargets = dotsNavMatch ? attrValues(dotsNavMatch[0], "data-target") : [];
+ok("index.html — data-section order matches page sections", sameArray(dataSectionIds, SECTION_IDS));
+ok("index.html — dot targets match data-section order", sameArray(dotTargets, dataSectionIds));
+ok("index.html — at least 3 testimonial cards",  (html.match(/class="testimonial-card/g) || []).length >= 3);
+ok("index.html — Nhân Ái Nguyễn review present", html.indexOf("Nhân Ái Nguyễn") !== -1 && html.indexOf("Homestay sạch sẽ, đầy đủ tiện nghi.") !== -1);
 ok("index.html — skip-nav link",                 html.indexOf("skip-nav") !== -1);
 ok("index.html — og:image meta",                 /property="og:image"/.test(html));
 ok("index.html — twitter:card meta",             /name="twitter:card"/.test(html));
@@ -251,6 +310,7 @@ ok("scroll-reveal.js — cachedNav",     revealJs.indexOf("var cachedNav = null"
 ok("scroll-reveal.js — focus trap",    revealJs.indexOf("focus trap") !== -1);
 ok("scroll-reveal.js — passive scroll",revealJs.indexOf("passive") !== -1);
 ok("scroll-reveal.js — RAF batching",  revealJs.indexOf("rafPending") !== -1);
+ok("scroll-reveal.js — uses data-section registry", revealJs.indexOf('querySelectorAll("[data-section]")') !== -1);
 var lazyLoaderJs = fs.readFileSync("src/shared/lazy-loader.js", "utf8");
 ok("lazy-loader.js — self-contained IIFE",      /\(function\s*\(\)/.test(lazyLoaderJs));
 ok("lazy-loader.js — IntersectionObserver",     lazyLoaderJs.indexOf("IntersectionObserver") !== -1);
