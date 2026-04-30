@@ -1880,7 +1880,8 @@ html.i18n-loading [data-i18n-html] {
   color: var(--pine);
   background: none;
   border: 0;
-  padding: 0;
+  min-height: 44px;
+  padding: 0.25rem 0;
   cursor: pointer;
   transition: color 0.3s, gap 0.3s;
 }
@@ -2486,7 +2487,7 @@ html.i18n-loading [data-i18n-html] {
 }
 #cp12-wrap .sect-testimonials.animated .testimonial-card:nth-child(1) { animation-delay: 0.1s; }
 #cp12-wrap .sect-testimonials.animated .testimonial-card:nth-child(2) { animation-delay: 0.25s; }
-#cp12-wrap .sect-testimonials.animated .testimonial-card:nth-child(3) { animation-delay: 0.4s; }
+#cp12-wrap .sect-testimonials.animated .testimonial-card:nth-child(n+3) { animation-delay: 0.4s; }
 
 /* ── 11. Travel / Explore section ────────────────────────────
  * src/features/explore/explore.css
@@ -3501,6 +3502,7 @@ html.i18n-loading [data-i18n-html] {
   text-transform: uppercase;
   font-weight: 500;
   color: var(--pine);
+  min-height: 44px;
   margin-top: 1rem;
   transition: color 0.3s, gap 0.3s;
 }

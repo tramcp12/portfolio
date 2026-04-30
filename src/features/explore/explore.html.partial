@@ -4,6 +4,7 @@
           class="travel-section sect-explore"
           id="explore"
           aria-labelledby="travelHeading"
+          data-section="explore"
         >
 
           <div class="travel-inner">

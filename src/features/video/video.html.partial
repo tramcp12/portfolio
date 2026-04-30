@@ -4,6 +4,7 @@
           class="video-section sect-video"
           id="video"
           aria-labelledby="videoHeading"
+          data-section="video"
         >
           <div class="video-container">
             <p class="section-label" aria-hidden="true" data-i18n="video.label">Welcome to CP12</p>
@@ -31,4 +32,3 @@
             </button>
           </div>
         </section>
-

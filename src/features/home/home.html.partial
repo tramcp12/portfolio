@@ -1,5 +1,10 @@
         <!-- Hero -->
-        <section class="hero sect-home" id="home" aria-labelledby="heroHeading">
+        <section
+          class="hero sect-home"
+          id="home"
+          aria-labelledby="heroHeading"
+          data-section="home"
+        >
           <div class="hero-left">
             <p class="hero-tag fade-up" data-i18n="hero.tag">
               Đà Lạt &middot; Central Highlands &middot; Vietnam
@@ -58,4 +63,3 @@
             <span data-i18n="hero.scroll">Scroll</span>
           </div>
         </section>
-

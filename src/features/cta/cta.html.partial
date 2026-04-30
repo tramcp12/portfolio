@@ -2,6 +2,7 @@
         class="cta-section sect-book"
         id="book"
         aria-labelledby="ctaHeading"
+        data-section="book"
       >
         <div class="cta-bg-lines" aria-hidden="true"></div>
         <div class="cta-content">
@@ -66,4 +67,3 @@
           </div>
         </div>
       </section>
-

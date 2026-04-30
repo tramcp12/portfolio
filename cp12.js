@@ -835,11 +835,7 @@
     }
 
     /* ── Per-section animation signatures ── */
-    var sections = Array.from(
-      document.querySelectorAll(
-        "#home,#video,#rooms,#testimonials,#explore,#about,#location,#journal,#faq,#book",
-      ),
-    );
+    var sections = Array.from(document.querySelectorAll("[data-section]"));
     if ("IntersectionObserver" in window) {
       var sio = new IntersectionObserver(
         function (entries) {
