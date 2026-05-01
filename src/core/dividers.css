@@ -1,0 +1,22 @@
+/* -- Divider utilities -------------------------------------------
+ * src/core/dividers.css
+ * Hairline separators for editorial and structural breaks.
+ * ---------------------------------------------------------------- */
+
+#cp12-wrap .divider {
+  display: block;
+  inline-size: 100%;
+  block-size: 1px;
+  border: 0;
+  margin-block: var(--sp-6);
+  background: var(--border-subtle);
+}
+
+#cp12-wrap .divider--gold {
+  background: var(--text-accent);
+}
+
+#cp12-wrap .divider--full-bleed {
+  inline-size: 100vw;
+  margin-inline: calc(50% - 50vw);
+}

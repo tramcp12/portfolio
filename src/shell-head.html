@@ -26,10 +26,10 @@
     <meta property="og:url" content="https://tramcp12.github.io/portfolio/" >
     <meta
       property="og:image"
-      content="https://tramcp12.github.io/portfolio/static/img/travel/langbiang.jpg">
+      content="https://tramcp12.github.io/portfolio/static/img/hero/hero-cover-1200.jpg">
     <meta
       property="og:image:alt"
-      content="Langbiang mountain trail — Đà Lạt, Vietnam">
+      content="Trạm CP12 Dalat Homestay — Hero Cover">
     <meta name="twitter:card" content="summary_large_image" >
     <meta name="twitter:title" content="Trạm CP12 — A Traveler's Base Camp in Đà Lạt" >
     <meta name="twitter:description" content="Where travelers find home. Pine forests, mountain air, and genuine warmth — from 180,000 VND/night in the heart of Đà Lạt." >
@@ -41,16 +41,14 @@
     <link rel="alternate" hreflang="vi" href="https://tramcp12.github.io/portfolio/" >
     <link rel="alternate" hreflang="x-default" href="https://tramcp12.github.io/portfolio/" >
     <link rel="icon" href="favicon.svg" type="image/svg+xml" >
-    <!-- Critical image preload: hero-cover is a CSS background — must preload explicitly for LCP -->
-    <link rel="preload" as="image" fetchpriority="high" href="static/img/hero-cover.jpg" >
-    <!-- Scroll-proximity prefetch for first room cover (injected by build.js from rooms[0].coverPhoto) -->
+    <!-- Targeted AVIF/WebP Preload to resolve LCP under 2.0s without candidate mismatches -->
+    <link rel="preload" as="image" imagesrcset="static/img/hero/hero-cover-480.avif 480w, static/img/hero/hero-cover-768.avif 768w, static/img/hero/hero-cover-1200.avif 1200w, static/img/hero/hero-cover-1920.avif 1920w" imagesizes="100vw" type="image/avif">
+    <link rel="preload" as="image" imagesrcset="static/img/hero/hero-cover-480.webp 480w, static/img/hero/hero-cover-768.webp 768w, static/img/hero/hero-cover-1200.webp 1200w, static/img/hero/hero-cover-1920.webp 1920w" imagesizes="100vw" type="image/webp">
+    <!-- Room catalog images are lazy responsive pictures; build.js intentionally does not preload them. -->
     <!-- @ROOMS_COVER_PRELOAD@ -->
     <!-- DNS prefetch for booking channels -->
     <link rel="dns-prefetch" href="https://zalo.me" >
     <link rel="preconnect" href="https://fonts.googleapis.com" >
-    <!-- YouTube preconnect for faster modal video load -->
-    <link rel="preconnect" href="https://www.youtube.com" >
-    <link rel="preconnect" href="https://i.ytimg.com" >
     <link
       rel="preconnect"
       href="https://fonts.gstatic.com"

@@ -1,24 +1,10 @@
-/* ── 3. Hero / Video ──────────────────────────────────────── */
+/* ── 3. Hero play button — opens welcome-video modal (IIFE 5 owns the modal) ── */
 (function () {
   try {
-    var heroPlay = document.getElementById("heroPlayBtn");
-    var videoFrame = document.getElementById("videoFrame");
-
+    const heroPlay = document.getElementById("heroPlayBtn");
     if (heroPlay) {
       heroPlay.addEventListener("click", function () {
         if (window.cp12OpenModal) window.cp12OpenModal(heroPlay);
-      });
-    }
-
-    if (videoFrame) {
-      videoFrame.addEventListener("click", function () {
-        if (window.cp12OpenModal) window.cp12OpenModal(videoFrame);
-      });
-      videoFrame.addEventListener("keydown", function (e) {
-        if (e.key === "Enter" || e.key === " ") {
-          e.preventDefault();
-          if (window.cp12OpenModal) window.cp12OpenModal(videoFrame);
-        }
       });
     }
   } catch (e) { console.warn("[CP12] video init error:", e); }

@@ -22,5 +22,5 @@
           </div>
 
           <!-- Rendered at runtime from #rooms-data JSON by cp12.js IIFE 1 -->
-          <div id="rooms-grid" class="rooms-grid"></div>
+          <div id="rooms-grid" class="rooms-grid rooms-grid--featured"></div>
         </section>

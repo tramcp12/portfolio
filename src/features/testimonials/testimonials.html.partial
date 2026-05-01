@@ -16,10 +16,10 @@
 
               <article class="testimonial-card cp12-reveal">
                 <header class="testimonial-header">
-                  <div class="testimonial-avatar testimonial-avatar--pine" aria-hidden="true">K</div>
+                  <div class="testimonial-avatar testimonial-avatar-pine" aria-hidden="true">K</div>
                   <div class="testimonial-meta">
                     <span class="testimonial-name">Khoa Vũ</span>
-                    <span class="testimonial-badge">Local Guide</span>
+                    <span class="testimonial-badge">September 2025 · Room 204</span>
                     <div class="testimonial-stars" aria-label="5 out of 5 stars">★★★★★</div>
                   </div>
                   <svg class="testimonial-maps-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -33,9 +33,10 @@
 
               <article class="testimonial-card cp12-reveal">
                 <header class="testimonial-header">
-                  <div class="testimonial-avatar testimonial-avatar--terracotta" aria-hidden="true">H</div>
+                  <div class="testimonial-avatar testimonial-avatar-terracotta" aria-hidden="true">H</div>
                   <div class="testimonial-meta">
                     <span class="testimonial-name">Hồng Luân Vi</span>
+                    <span class="testimonial-badge">October 2025 · Room 201</span>
                     <div class="testimonial-stars" aria-label="5 out of 5 stars">★★★★★</div>
                   </div>
                   <svg class="testimonial-maps-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -49,10 +50,10 @@
 
               <article class="testimonial-card cp12-reveal">
                 <header class="testimonial-header">
-                  <div class="testimonial-avatar testimonial-avatar--gold" aria-hidden="true">N</div>
+                  <div class="testimonial-avatar testimonial-avatar-gold" aria-hidden="true">N</div>
                   <div class="testimonial-meta">
                     <span class="testimonial-name">Nhân Ái Nguyễn</span>
-                    <span class="testimonial-badge">3 reviews</span>
+                    <span class="testimonial-badge">November 2025 · Room 205</span>
                     <div class="testimonial-stars" aria-label="5 out of 5 stars">★★★★★</div>
                   </div>
                   <svg class="testimonial-maps-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">

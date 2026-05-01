@@ -36,21 +36,26 @@
 }
 
 #cp12-wrap *:focus-visible {
-  outline: 2px solid var(--gold);
-  outline-offset: 3px;
+  outline: var(--focus-ring);
+  outline-offset: var(--focus-ring-offset);
   border-radius: 1px;
 }
 
 /* :focus fallback for browsers without :focus-visible support */
 #cp12-wrap *:focus:not(:focus-visible) {
-  outline: 2px solid var(--gold);
-  outline-offset: 3px;
+  outline: var(--focus-ring);
+  outline-offset: var(--focus-ring-offset);
 }
 
 #cp12-wrap button:focus-visible,
 #cp12-wrap a:focus-visible {
-  outline: 2px solid var(--gold);
-  outline-offset: 3px;
+  outline: var(--focus-ring);
+  outline-offset: var(--focus-ring-offset);
+}
+
+#cp12-wrap .touch-target {
+  min-block-size: 44px;
+  min-inline-size: 44px;
 }
 
 /* Mobile nav CTA colour (replaces inline style) */

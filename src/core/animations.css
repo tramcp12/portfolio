@@ -158,7 +158,8 @@
   }
   #cp12-wrap .travel-card:hover,
   #cp12-wrap .blog-card:hover,
-  #cp12-wrap .room-card:hover {
+  #cp12-wrap .room-card:hover,
+  #cp12-wrap .room-card-featured:hover {
     transform: none;
     box-shadow: none;
   }

@@ -3,8 +3,8 @@
  * ──────────────────────────────────────────────────────────── */
 
 #cp12-wrap .cta-section {
-  background: var(--charcoal);
-  padding: 8rem 3rem;
+  background: var(--surface-inverse-strong);
+  padding: var(--sp-10) var(--sp-7);
   text-align: center;
   position: relative;
   overflow: hidden;
@@ -17,8 +17,8 @@
     -45deg,
     transparent,
     transparent 60px,
-    rgba(201, 169, 110, 0.03) 60px,
-    rgba(201, 169, 110, 0.03) 61px
+    var(--gold-warm-3) 60px,
+    var(--gold-warm-3) 61px
   );
 }
 
@@ -29,90 +29,107 @@
 
 #cp12-wrap .cta-title {
   font-family: var(--font-serif);
-  font-size: 4.5rem;
-  color: var(--cream);
+  font-size: var(--fs-display);
+  color: var(--surface-base);
   font-weight: 300;
   line-height: 1;
-  margin-bottom: 1.5rem;
+  margin-bottom: var(--sp-5);
 }
 
 #cp12-wrap .cta-title em {
   font-style: italic;
-  color: var(--gold);
+  color: var(--interactive-accent);
 }
 
 #cp12-wrap .cta-sub {
-  font-size: 0.95rem;
-  color: rgba(184, 202, 189, 0.7);
+  font-size: var(--fs-body);
+  color: var(--mist-70);
   max-width: 500px;
-  margin: 0 auto 3rem;
+  margin: 0 auto var(--sp-7);
   line-height: 1.8;
 }
 
-/* How-to-book step strip */
-#cp12-wrap .booking-steps {
+/* Channel Cards */
+#cp12-wrap .channel-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
-  max-width: 560px;
-  margin: 0 auto 2.5rem;
+  gap: var(--sp-5);
+  max-width: 900px;
+  margin: 0 auto var(--sp-6);
 }
 
-#cp12-wrap .booking-step {
+#cp12-wrap .channel-card {
+  background: var(--surface-dark-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-2);
+  padding: var(--sp-5);
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  gap: 0.6rem;
+  gap: var(--sp-3);
+  text-decoration: none;
+  transition: background-color var(--dur-2) var(--ease-default),
+              border-color var(--dur-2) var(--ease-default);
 }
 
-#cp12-wrap .step-num {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: var(--terracotta);
-  color: var(--warm-white);
+#cp12-wrap .channel-card:hover {
+  background: var(--surface-dark-card-hover);
+  border-color: var(--interactive-accent);
+}
+
+#cp12-wrap .channel-icon {
+  font-size: var(--fs-h3);
+  color: var(--interactive-accent);
+  margin-bottom: var(--sp-1);
+}
+
+#cp12-wrap .channel-body {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.9rem;
+  flex-direction: column;
+  gap: var(--sp-1);
+}
+
+#cp12-wrap .channel-body strong {
+  font-size: var(--fs-lead);
+  color: var(--surface-base);
   font-weight: 500;
-  flex-shrink: 0;
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-              box-shadow 0.3s;
 }
 
-#cp12-wrap .booking-step:hover .step-num {
-  transform: scale(1.12);
-  box-shadow: 0 4px 14px rgba(196, 114, 74, 0.4);
+#cp12-wrap .channel-contact {
+  font-size: var(--fs-caption);
+  color: var(--text-inverse);
+  opacity: 0.9;
 }
 
-#cp12-wrap .step-text strong {
-  display: block;
-  font-size: 0.75rem;
+#cp12-wrap .channel-reply {
+  font-size: var(--fs-micro);
+  color: var(--interactive-accent);
   letter-spacing: 0.05em;
-  color: var(--cream);
-  font-weight: 500;
-  margin-bottom: 0.2rem;
+  text-transform: uppercase;
+  margin-top: var(--sp-2);
 }
 
-#cp12-wrap .step-text p {
-  font-size: 0.7rem;
-  color: rgba(184, 202, 189, 0.6);
-  line-height: 1.5;
-  margin: 0;
-}
-
-#cp12-wrap .cta-btns {
+/* Practical Strip */
+#cp12-wrap .cta-practical-strip {
   display: flex;
   justify-content: center;
-  gap: 1rem;
   flex-wrap: wrap;
+  gap: var(--sp-6);
+  color: var(--text-inverse);
+  opacity: 0.8;
+  font-size: var(--fs-caption);
+  letter-spacing: 0.05em;
 }
 
-/* Facebook button icon+text gap */
-#cp12-wrap .btn-ghost--facebook {
-  gap: 0.5rem;
+#cp12-wrap .practical-item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+}
+
+#cp12-wrap .practical-item span[aria-hidden="true"] {
+  color: var(--interactive-accent);
 }
 
 #cp12-wrap .address-text {
@@ -121,78 +138,74 @@
 
 /* ── CTA section animation signatures ─────────────────────── */
 
-#cp12-wrap .sect-book .booking-steps {
+#cp12-wrap .sect-book .channel-grid {
   opacity: 0;
 }
-#cp12-wrap .sect-book.animated .booking-steps {
-  animation: cp12fu 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.25s forwards;
+
+#cp12-wrap .sect-book.animated .channel-grid {
+  animation: cp12fu var(--dur-pause) var(--ease-out-quart) var(--dur-250) forwards;
 }
+
 #cp12-wrap .sect-book .cta-title {
   opacity: 0;
 }
+
 #cp12-wrap .sect-book.animated .cta-title {
-  animation: cp12fu 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.1s forwards;
+  animation: cp12fu var(--dur-900) var(--ease-out-quart) var(--dur-100) forwards;
 }
-#cp12-wrap .sect-book .btn-primary,
-#cp12-wrap .sect-book .btn-ghost {
+
+#cp12-wrap .sect-book .cta-practical-strip {
   opacity: 0;
 }
-#cp12-wrap .sect-book.animated .btn-ghost {
-  animation: cp12ScaleUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.48s forwards;
-}
-#cp12-wrap .sect-book.animated .btn-primary {
-  animation-name: cp12ScaleUp, cp12GlowPulse;
-  animation-duration: 0.7s, 2.5s;
-  animation-delay: 0.35s, 1.2s;
-  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1), ease-in-out;
-  animation-fill-mode: forwards, none;
-  animation-iteration-count: 1, infinite;
+
+#cp12-wrap .sect-book.animated .cta-practical-strip {
+  animation: cp12fu var(--dur-pause) var(--ease-out-quart) var(--dur-480) forwards;
 }
 
 /* ── CTA responsive rules ────────────────────────────────── */
 
-@media (max-width: 768px) {
+@media (width <= 768px) {
   #cp12-wrap .cta-section {
-    padding: 5rem 2rem;
+    padding: var(--sp-8) var(--sp-5);
   }
+
   /* Scale down large CTA title at tablet — 4.5rem is very large for 768px */
   #cp12-wrap .cta-title {
-    font-size: 3.2rem;
+    font-size: var(--fs-h1);
   }
 }
 
-@media (max-width: 600px) {
-  #cp12-wrap .booking-steps {
+@media (width <= 600px) {
+  #cp12-wrap .channel-grid {
     grid-template-columns: 1fr;
-    max-width: 280px;
-    gap: 1rem;
-  }
-  #cp12-wrap .booking-step {
-    flex-direction: row;
-    text-align: left;
-    align-items: flex-start;
+    max-width: 320px;
+    gap: var(--sp-4);
   }
 }
 
-@media (max-width: 480px) {
+@media (width <= 480px) {
   #cp12-wrap .cta-title {
-    font-size: 2.6rem;
+    font-size: var(--fs-h2);
   }
+
   #cp12-wrap .cta-section {
-    padding: 4rem 1.5rem;
+    padding: var(--sp-8) var(--sp-5);
   }
-  #cp12-wrap .cta-btns {
+
+  #cp12-wrap .cta-practical-strip {
     flex-direction: column;
+    gap: var(--sp-3);
     align-items: center;
   }
+
   #cp12-wrap .cta-sub {
-    font-size: 0.88rem;
+    font-size: var(--fs-caption);
   }
 }
 
-@media (max-width: 430px) {
+@media (width <= 430px) {
   /* Tighter CTA title */
   #cp12-wrap .cta-title {
-    font-size: 2.2rem;
+    font-size: var(--fs-h3);
   }
 }

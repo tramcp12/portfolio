@@ -1,7 +1,11 @@
 node_modules/
 .serena/
 .claude/
+.codex
+.playwright-mcp/
 claudedocs/
+agent-docs/
+verify-*.png
 .DS_Store
 *.log
 
@@ -9,3 +13,4 @@ claudedocs/
 # They are intentionally committed because GitHub Pages serves them directly from
 # this branch. Do not edit these files manually — edit src/ instead and run:
 #   npm run build
+.idea/

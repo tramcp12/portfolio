@@ -7,12 +7,12 @@
   display: none;
   position: fixed;
   inset: 0;
-  background: var(--pine);
+  background: var(--surface-brand);
   z-index: 1001; /* Must exceed nav bar z-index (1000) so overlay renders above hamburger */
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 2.5rem;
+  gap: var(--sp-7);
 }
 
 #cp12-wrap .nav-mobile-overlay.open {
@@ -21,11 +21,12 @@
 
 #cp12-wrap .nav-mobile-overlay a {
   font-family: var(--font-serif);
-  font-size: 2.2rem;
-  color: var(--cream);
+  font-size: var(--fs-h3);
+  color: var(--surface-base);
   letter-spacing: 0.05em;
   font-weight: 300;
-  transition: color 0.2s;
+  transition: color var(--dur-200) var(--ease-default);
+
   /* WCAG 2.5.5: min touch target for mobile nav links */
   min-height: 44px;
   display: flex;
@@ -33,7 +34,7 @@
 }
 
 #cp12-wrap .nav-mobile-overlay a:hover {
-  color: var(--gold);
+  color: var(--interactive-accent);
 }
 
 #cp12-wrap .nav-mobile-close {
@@ -42,11 +43,12 @@
   right: 1.5rem;
   background: none;
   border: none;
-  color: var(--cream);
-  font-size: 2rem;
+  color: var(--surface-base);
+  font-size: var(--fs-h3);
   cursor: pointer;
   line-height: 1;
-  padding: 0.5rem;
+  padding: var(--sp-2);
+
   /* WCAG 2.5.5: minimum 44×44px touch target */
   min-width: 44px;
   min-height: 44px;
@@ -60,31 +62,32 @@
 #cp12-wrap .nav-mobile-divider {
   width: 2.5rem;
   border: none;
-  border-top: 1px solid rgba(245, 240, 232, 0.15);
+  border-top: 1px solid var(--cream-warm-15);
   margin: 0;
 }
 
 #cp12-wrap .nav-mobile-overlay .lang-btn {
-  color: var(--mist);
-  font-size: 1.1rem;
+  color: var(--surface-muted);
+  font-size: var(--fs-lead);
 }
 
 #cp12-wrap .nav-mobile-overlay .lang-btn:hover {
-  color: var(--gold);
+  color: var(--interactive-accent);
 }
 
 #cp12-wrap .nav-mobile-overlay .lang-btn .lang-active {
-  color: var(--gold);
+  color: var(--interactive-accent);
 }
 
 /* ── Mobile overlay responsive ───────────────────────────── */
 
-@media (max-width: 480px) {
+@media (width <= 480px) {
   /* Tighten font size slightly for very narrow screens */
   #cp12-wrap .nav-mobile-overlay a {
-    font-size: 1.8rem;
+    font-size: var(--fs-h4);
   }
+
   #cp12-wrap .nav-mobile-overlay {
-    gap: 1.8rem;
+    gap: var(--sp-6);
   }
 }

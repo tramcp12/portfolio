@@ -107,7 +107,7 @@ function injectJson(id, data) {
 
 /* ── HTML ── Phase 2+7+9+10: assemble from src/ partials
  * Order: shell-head → dots → chrome → main-open →
- *   home → video → rooms → testimonials → explore → about → location → journal → faq →
+ *   home → rooms → testimonials → explore → about → location → journal → faq →
  *   main-close → cta → footer → modal → room-modal → shell-close → jsonld
  */
 var htmlParts = [
@@ -116,7 +116,6 @@ var htmlParts = [
   readSrc("layout/chrome.html.partial"),
   "\n      <main id=\"cp12-main\">",
   readSrc("features/home/home.html.partial"),
-  readSrc("features/video/video.html.partial"),
   readSrc("features/rooms/rooms.html.partial"),
   readSrc("features/testimonials/testimonials.html.partial"),
   readSrc("features/explore/explore.html.partial"),
@@ -140,27 +139,29 @@ var htmlParts = [
 var html = htmlParts.join("\n");
 
 /* ── CSS  ── Phase 1+7+9+10: concat from src/ source files
- * Cascade order: tokens → reset → accessibility →
+ * Cascade order: tokens → reset → typography →
  *   nav → nav-mobile → dots → next-btn →
- *   buttons → section-labels → animations → lazy-loader →
- *   home → video → rooms → room-modal → testimonials → explore → about →
+ *   buttons → accessibility → dividers → tags → section-labels → animations → lazy-loader →
+ *   home → rooms → room-modal → testimonials → explore → about →
  *   location → journal → faq → cta →
  *   footer → modal → responsive-sentinel → supports
  */
 var cssSources = [
   "core/tokens.css",
   "core/reset.css",
-  "core/accessibility.css",
+  "core/typography.css",
   "layout/nav.css",
   "layout/nav-mobile.css",
   "layout/dots.css",
   "layout/next-btn.css",
   "core/buttons.css",
+  "core/accessibility.css",
+  "core/dividers.css",
+  "core/tags.css",
   "core/section-labels.css",
   "core/animations.css",
   "shared/lazy-loader.css",
   "features/home/home.css",
-  "features/video/video.css",
   "features/rooms/rooms.css",
   "features/rooms/room-modal.css",
   "features/testimonials/testimonials.css",
@@ -290,14 +291,16 @@ if (!allowDraft) {
   });
 }
 
-/* ── Phase 8c: LCP preload injection — first room cover prefetch ─────────── */
-/* Rooms section is below the fold; this is a scroll-proximity prefetch, not LCP.
- * No fetchpriority attribute — let the browser schedule it after critical resources. */
-var roomsPreloadTag = "";
-if (roomsData[0] && roomsData[0].coverPhoto) {
-  roomsPreloadTag = '<link rel="preload" as="image" href="' + roomsData[0].coverPhoto + '" >';
-}
-html = html.replace("<!-- @ROOMS_COVER_PRELOAD@ -->", roomsPreloadTag);
+/* ── Phase 8c: room image scheduling ─────────────────────────────────────── */
+/* Rooms are below the fold. Do not preload catalog images here; eager room
+ * preloads compete with the hero image and hurt the Phase 2 LCP gate. */
+html = html.replace("<!-- @ROOMS_COVER_PRELOAD@ -->", "");
+
+/* ── Phase 8d: JSON-LD numberOfRooms injection — count of bookable rooms ── */
+/* Drives schema.org/LodgingBusiness numberOfRooms; counts only non-comingSoon
+ * rooms so structured data reflects what guests can actually book today.    */
+var bookableRoomsCount = roomsData.filter(function (r) { return !r.comingSoon; }).length;
+html = html.replace("@ROOMS_COUNT@", String(bookableRoomsCount));
 
 writeRoot("index.html", html);
 writeRoot("cp12.css",   css);

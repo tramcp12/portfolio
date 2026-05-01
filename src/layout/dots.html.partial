@@ -12,15 +12,6 @@
         <button
           type="button"
           class="dot"
-          data-target="video"
-          data-label="Film"
-          aria-label="Go to welcome film"
-          data-i18n-aria-label="nav.dot.video"
-          tabindex="-1"
-        ></button>
-        <button
-          type="button"
-          class="dot"
           data-target="rooms"
           data-label="Rooms"
           aria-label="Go to rooms"

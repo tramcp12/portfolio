@@ -1,13 +1,13 @@
 /* ── 0. Language Switcher ─────────────────────────────────── */
 (function () {
-  var STORAGE_KEY = "cp12-lang";
-  var DEFAULT_LANG = "vi";
+  const STORAGE_KEY = "cp12-lang";
+  const DEFAULT_LANG = "vi";
 
   /* ── Parse string data injected by build.js ── */
-  var stringsMap = {};
+  const stringsMap = {};
   try {
-    var viEl = document.getElementById("lang-vi-data");
-    var enEl = document.getElementById("lang-en-data");
+    const viEl = document.getElementById("lang-vi-data");
+    const enEl = document.getElementById("lang-en-data");
     if (viEl) stringsMap["vi"] = JSON.parse(viEl.textContent);
     if (enEl) stringsMap["en"] = JSON.parse(enEl.textContent);
   } catch (e) {
@@ -16,27 +16,27 @@
 
   /* ── Apply a language to the page ── */
   function applyLang(lang) {
-    var strings = stringsMap[lang];
+    const strings = stringsMap[lang];
     if (!strings) return;
 
     /* data-i18n: replace textContent (no HTML child elements) */
-    var textEls = document.querySelectorAll("[data-i18n]");
-    for (var i = 0; i < textEls.length; i++) {
-      var key = textEls[i].getAttribute("data-i18n");
+    const textEls = document.querySelectorAll("[data-i18n]");
+    for (let i = 0; i < textEls.length; i++) {
+      const key = textEls[i].getAttribute("data-i18n");
       if (strings[key] !== undefined) textEls[i].textContent = strings[key];
     }
 
     /* data-i18n-html: replace innerHTML (headings with <br>/<em>) */
-    var htmlEls = document.querySelectorAll("[data-i18n-html]");
-    for (var j = 0; j < htmlEls.length; j++) {
-      var hkey = htmlEls[j].getAttribute("data-i18n-html");
+    const htmlEls = document.querySelectorAll("[data-i18n-html]");
+    for (let j = 0; j < htmlEls.length; j++) {
+      const hkey = htmlEls[j].getAttribute("data-i18n-html");
       if (strings[hkey] !== undefined) htmlEls[j].innerHTML = strings[hkey];
     }
 
     /* data-i18n-aria-label: translate aria-label attribute */
-    var ariaEls = document.querySelectorAll("[data-i18n-aria-label]");
-    for (var k = 0; k < ariaEls.length; k++) {
-      var akey = ariaEls[k].getAttribute("data-i18n-aria-label");
+    const ariaEls = document.querySelectorAll("[data-i18n-aria-label]");
+    for (let k = 0; k < ariaEls.length; k++) {
+      const akey = ariaEls[k].getAttribute("data-i18n-aria-label");
       if (strings[akey] !== undefined) ariaEls[k].setAttribute("aria-label", strings[akey]);
     }
 
@@ -44,26 +44,26 @@
     document.documentElement.lang = lang;
 
     /* Update lang toggle button state — sync both nav and mobile overlay buttons */
-    var langBtns = [
+    const langBtns = [
       document.getElementById("cp12-lang-btn"),
       document.getElementById("cp12-lang-btn-mobile")
     ];
-    var isEn = lang === "en";
-    var langAction = strings["nav.lang.label"] || (isEn ? "Switch to Vietnamese" : "Switch to English");
+    const isEn = lang === "en";
+    const langAction = strings["nav.lang.label"] || (isEn ? "Switch to Vietnamese" : "Switch to English");
     langBtns.forEach(function(btn) {
       if (!btn) return;
       btn.setAttribute("aria-pressed", isEn ? "true" : "false");
       btn.removeAttribute("aria-label");
-      var actionEl = btn.querySelector(".lang-action");
+      const actionEl = btn.querySelector(".lang-action");
       if (actionEl) actionEl.textContent = langAction;
-      var viEl = btn.querySelector(".lang-vi");
-      var enEl = btn.querySelector(".lang-en");
+      const langViChild = btn.querySelector(".lang-vi");
+      const langEnChild = btn.querySelector(".lang-en");
       if (lang === "vi") {
-        if (viEl) viEl.classList.add("lang-active");
-        if (enEl) enEl.classList.remove("lang-active");
+        if (langViChild) langViChild.classList.add("lang-active");
+        if (langEnChild) langEnChild.classList.remove("lang-active");
       } else {
-        if (viEl) viEl.classList.remove("lang-active");
-        if (enEl) enEl.classList.add("lang-active");
+        if (langViChild) langViChild.classList.remove("lang-active");
+        if (langEnChild) langEnChild.classList.add("lang-active");
       }
     });
 
@@ -86,7 +86,7 @@
   };
 
   /* ── Apply initial language + remove FOUC guard class ── */
-  var initialLang = (function () {
+  const initialLang = (function () {
     try { return localStorage.getItem(STORAGE_KEY) || DEFAULT_LANG; } catch (e) { return DEFAULT_LANG; }
   }());
   window.cp12Lang = initialLang;
@@ -104,7 +104,7 @@
   };
 
   /* ── Wire lang toggle button clicks — nav + mobile overlay ── */
-  var allLangBtns = [
+  const allLangBtns = [
     document.getElementById("cp12-lang-btn"),
     document.getElementById("cp12-lang-btn-mobile")
   ];

@@ -5,7 +5,32 @@
           aria-labelledby="heroHeading"
           data-section="home"
         >
-          <div class="hero-left">
+          <picture class="hero-media">
+            <source
+              type="image/avif"
+              srcset="static/img/hero/hero-cover-480.avif 480w, static/img/hero/hero-cover-768.avif 768w, static/img/hero/hero-cover-1200.avif 1200w, static/img/hero/hero-cover-1920.avif 1920w"
+              sizes="100vw"
+            >
+            <source
+              type="image/webp"
+              srcset="static/img/hero/hero-cover-480.webp 480w, static/img/hero/hero-cover-768.webp 768w, static/img/hero/hero-cover-1200.webp 1200w, static/img/hero/hero-cover-1920.webp 1920w"
+              sizes="100vw"
+            >
+            <img
+              class="hero-media-img"
+              src="static/img/hero/hero-cover-1200.jpg"
+              srcset="static/img/hero/hero-cover-480.jpg 480w, static/img/hero/hero-cover-768.jpg 768w, static/img/hero/hero-cover-1200.jpg 1200w, static/img/hero/hero-cover-1920.jpg 1920w"
+              sizes="100vw"
+              alt=""
+              width="1920"
+              height="1080"
+              fetchpriority="high"
+              aria-hidden="true"
+            >
+          </picture>
+          <div class="hero-overlay" aria-hidden="true"></div>
+
+          <div class="hero-content">
             <p class="hero-tag fade-up" data-i18n="hero.tag">
               Đà Lạt &middot; Central Highlands &middot; Vietnam
             </p>
@@ -19,44 +44,29 @@
             </p>
             <div class="hero-btns fade-up delay-3">
               <a href="#rooms" class="btn-primary" data-i18n="hero.exploreRooms">Explore Rooms</a>
+              <button
+                type="button"
+                class="btn-ghost hero-play-btn"
+                id="heroPlayBtn"
+                data-i18n="hero.watchVideo"
+              >Watch Welcome Video</button>
             </div>
           </div>
 
-          <div class="hero-right">
-            <div class="hero-image-bg"></div>
-            <div class="hero-image-overlay"></div>
-            <span class="hero-pine-icon" aria-hidden="true">🌲</span>
-            <div class="hero-image-content">
-              <div class="play-btn-wrap">
-                <button
-                  type="button"
-                  class="play-btn"
-                  id="heroPlayBtn"
-                  aria-label="Watch welcome video"
-                ></button>
-                <span class="play-label" aria-hidden="true" data-i18n="hero.watchVideo"
-                  >Watch Welcome Video</span
-                >
-              </div>
-              <section class="hero-stats" aria-label="Quick facts">
-                <div class="stat-box">
-                  <span class="stat-num" aria-hidden="true">7</span>
-                  <span class="stat-label" aria-hidden="true" data-i18n="hero.stat.roomTypes">Room Types</span>
-                  <span class="sr-only">7 <span data-i18n="hero.stat.roomTypes">Room Types</span></span>
-                </div>
-                <div class="stat-box">
-                  <span class="stat-num" aria-hidden="true">450K</span>
-                  <span class="stat-label" aria-hidden="true" data-i18n="hero.stat.priceFrom">VND / night</span>
-                  <span class="sr-only">From 450K <span data-i18n="hero.stat.priceFrom">VND / night</span></span>
-                </div>
-                <div class="stat-box">
-                  <span class="stat-num" aria-hidden="true">1500m</span>
-                  <span class="stat-label" aria-hidden="true" data-i18n="hero.stat.altitude">Altitude</span>
-                  <span class="sr-only">1500m <span data-i18n="hero.stat.altitude">Altitude</span></span>
-                </div>
-              </section>
-            </div>
-          </div>
+          <aside class="hero-glance-stat" data-i18n-aria-label="hero.glance.label" aria-label="Quick facts">
+            <dl class="stat-box">
+              <dt class="stat-label" data-i18n="hero.stat.roomTypes">Room Types</dt>
+              <dd class="stat-num num">7</dd>
+            </dl>
+            <dl class="stat-box">
+              <dt class="stat-label" data-i18n="hero.stat.priceFrom">VND / night</dt>
+              <dd class="stat-num num">450K</dd>
+            </dl>
+            <dl class="stat-box">
+              <dt class="stat-label" data-i18n="hero.stat.altitude">Altitude</dt>
+              <dd class="stat-num num">1500m</dd>
+            </dl>
+          </aside>
 
           <div class="scroll-hint" aria-hidden="true">
             <div class="scroll-line"></div>

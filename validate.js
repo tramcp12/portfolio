@@ -2,7 +2,7 @@
 /**
  * validate.js — Architectural invariant checker for Trạm CP12
  *
- * Checks 17 invariants across index.html, cp12.css, cp12.js, and i18n data.
+ * Checks 18 invariants across index.html, cp12.css, cp12.js, and source data/CSS.
  * Exit 0 = all pass. Exit 1 = one or more failures.
  */
 
@@ -27,6 +27,20 @@ function check(id, description, condition) {
   } else {
     failures.push("  \u274C " + id + ": " + description);
   }
+}
+
+function listCssFiles(dir) {
+  var entries = fs.readdirSync(dir, { withFileTypes: true });
+  var files = [];
+  entries.forEach(function (entry) {
+    var fullPath = path.join(dir, entry.name);
+    if (entry.isDirectory()) {
+      files = files.concat(listCssFiles(fullPath));
+    } else if (/\.css$/.test(entry.name)) {
+      files.push(fullPath);
+    }
+  });
+  return files;
 }
 
 /* ── CSS-1: Each font family appears exactly once in cp12.css ── */
@@ -54,12 +68,20 @@ check("R-1", "@media (max-width: 768px) exists in CSS", /max-width\s*:\s*768px/.
 check("JS-1", "try { } catch (e) { } init guard exists in cp12.js", /try\s*\{/.test(js) && /catch\s*\(e\)/.test(js));
 
 /* ── JS-3: Nav element is cached via cachedNav pattern ── */
-check("JS-3", "var cachedNav = null pattern exists in cp12.js", /var cachedNav\s*=\s*null/.test(js));
+check("JS-3", "let cachedNav = null pattern exists in cp12.js", /(var|let) cachedNav\s*=\s*null/.test(js));
 
-/* ── P-1: No authored <img> tags in generated index.html ── */
+/* ── P-1: No authored <img> tags outside the Phase 2 hero picture ── */
 /* Strip HTML comments first to avoid false positives */
 var htmlNoComments = html.replace(/<!--[\s\S]*?-->/g, "");
-check("P-1", "No authored <img> tags in generated index.html", !/<img[\s>]/i.test(htmlNoComments));
+var authoredImgTags = htmlNoComments.match(/<img\b[^>]*>/gi) || [];
+var heroMediaImgs = authoredImgTags.filter(function (tag) {
+  return /class="[^"]*\bhero-media-img\b[^"]*"/.test(tag);
+});
+check(
+  "P-1",
+  "No authored <img> tags outside the hero picture fallback",
+  authoredImgTags.length === heroMediaImgs.length && heroMediaImgs.length === 1
+);
 
 /* ── H-1: og:image meta tag present in index.html ── */
 check("H-1", "og:image meta tag present in index.html", /property="og:image"/.test(html));
@@ -87,6 +109,74 @@ check("B-1", "cp12-room-modal exists in index.html and is outside <main>", roomM
 
 /* ── L-1: Lazy loader active — at least one data-bg attribute in index.html ── */
 check("L-1", "At least one [data-bg] element in index.html (lazy-loader.js active)", /data-bg="static\/img\//.test(html));
+
+/* ── INV-18: Feature/layout CSS must use color tokens — no raw rgb()/rgba() ── */
+/* Catches literal color values that should be defined as palette tokens in
+ * src/core/tokens.css. Detects both legacy rgba(R,G,B,A) and modern rgb(R G B / N%) */
+var rawColorLiteralPattern = /\brgba?\([0-9]/g;
+var inv18Files = listCssFiles(path.join(root, "src", "features"))
+  .concat(listCssFiles(path.join(root, "src", "layout")));
+var inv18Violations = [];
+inv18Files.forEach(function (filePath) {
+  var relPath = path.relative(root, filePath);
+  var content = fs.readFileSync(filePath, "utf8");
+  var lines = content.split("\n");
+  lines.forEach(function (line, index) {
+    rawColorLiteralPattern.lastIndex = 0;
+    if (rawColorLiteralPattern.test(line)) {
+      inv18Violations.push(relPath + ":" + (index + 1));
+    }
+  });
+});
+check(
+  "INV-18",
+  "Feature/layout CSS uses color tokens (no raw rgb/rgba literals)" +
+    (inv18Violations.length ? " (" + inv18Violations.slice(0, 8).join(", ") + ")" : ""),
+  inv18Violations.length === 0
+);
+
+/* ── INV-19: Every build source array entry must exist on disk ──
+ * Catches the "delete the file but forget the array entry" bug —
+ * which would otherwise surface as an unhelpful ENOENT mid-build.
+ */
+var buildSrcContent = fs.readFileSync(path.join(root, "build.js"), "utf8");
+function extractSourcePaths(arrayName) {
+  var blockMatch = buildSrcContent.match(new RegExp("var\\s+" + arrayName + "\\s*=\\s*\\[([\\s\\S]*?)\\]"));
+  if (!blockMatch) return [];
+  return (blockMatch[1].match(/"([^"]+\.(?:css|js))"/g) || []).map(function (s) { return s.slice(1, -1); });
+}
+var inv19Sources = extractSourcePaths("cssSources").concat(extractSourcePaths("jsSources"));
+var inv19Missing = inv19Sources.filter(function (rel) {
+  return !fs.existsSync(path.join(root, "src", rel));
+});
+check(
+  "INV-19",
+  "Every build source (cssSources/jsSources) entry exists under src/" +
+    (inv19Missing.length ? " (missing: " + inv19Missing.join(", ") + ")" : " (" + inv19Sources.length + " entries verified)"),
+  inv19Missing.length === 0
+);
+
+/* ── INV-20: Every static/img/... path referenced by social-meta tags must exist ──
+ * Covers og:image, twitter:image, and JSON-LD "image" — the class of bug where a
+ * redesign moves the hero asset but the social/structured-data tags keep pointing
+ * at the old file. URLs are absolute (https://tramcp12.github.io/portfolio/...);
+ * we extract the path-relative portion.
+ */
+var shellHead = fs.readFileSync(path.join(root, "src", "shell-head.html"), "utf8");
+var jsonldSrc = fs.readFileSync(path.join(root, "src", "layout", "jsonld.html.partial"), "utf8");
+var metaImgPattern = /https:\/\/tramcp12\.github\.io\/portfolio\/(static\/img\/[^"\s)]+)/g;
+var inv20Refs = [];
+var inv20Match;
+while ((inv20Match = metaImgPattern.exec(shellHead + "\n" + jsonldSrc)) !== null) {
+  inv20Refs.push(inv20Match[1]);
+}
+var inv20Missing = inv20Refs.filter(function (p) { return !fs.existsSync(path.join(root, p)); });
+check(
+  "INV-20",
+  "Every social-meta / JSON-LD image path exists" +
+    (inv20Missing.length ? " (missing: " + inv20Missing.join(", ") + ")" : " (" + inv20Refs.length + " references verified)"),
+  inv20Missing.length === 0
+);
 
 /* ── Output ── */
 console.log("\nTr\u1ea1m CP12 \u2014 Architectural Invariants\n");

@@ -3,16 +3,14 @@
  * ──────────────────────────────────────────────────────────── */
 
 #cp12-wrap .blog-section {
-  background: var(--cream);
-  padding: 8rem 3rem;
+  background: var(--surface-base);
+  padding: var(--sp-9) var(--sp-6);
   position: relative;
   overflow: hidden;
 }
 
-/* Section transition: cream (blog) → charcoal (CTA) — removed; now handled by section bg */
-
 #cp12-wrap .blog-inner {
-  max-width: 1200px;
+  max-width: var(--container-default);
   margin: 0 auto;
   position: relative;
   z-index: 1;
@@ -20,51 +18,51 @@
 
 #cp12-wrap .blog-header {
   text-align: center;
-  margin-bottom: 4rem;
+  margin-bottom: var(--sp-8);
 }
 
-/* section heading — private variant of the .section-heading pattern.
- * Differs from shared: size 3rem (vs 3.8rem), margin-bottom 1rem.
- * Future: add class="blog-heading section-heading" to HTML and reduce this to overrides. */
 #cp12-wrap .blog-heading {
   font-family: var(--font-serif);
-  font-size: 3rem;
-  color: var(--pine);
+  font-size: var(--fs-display-fluid);
+  color: var(--text-primary);
   font-weight: 300;
-  margin-bottom: 1rem;
+  margin-bottom: var(--sp-4);
 }
 
 #cp12-wrap .blog-heading em {
   font-style: italic;
-  color: var(--terracotta);
+  color: var(--text-accent);
 }
 
 #cp12-wrap .blog-subtext {
-  font-size: 0.9rem;
-  color: var(--text-warm);
+  font-size: var(--fs-body);
+  color: var(--text-secondary);
   max-width: 500px;
   margin: 0 auto;
-  line-height: 1.7;
+  line-height: var(--lh-body);
 }
 
 #cp12-wrap .blog-grid {
   display: grid;
   grid-template-columns: 1.6fr 1fr 1fr;
-  gap: 1.5rem;
+  gap: var(--sp-5);
 }
 
 #cp12-wrap .blog-card {
-  background: var(--warm-white);
+  background: var(--surface-elevated);
   overflow: hidden;
-  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
-              box-shadow 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: var(--radius-2);
+  border: 1px solid var(--border-subtle);
+  transition: transform var(--dur-3) var(--ease-standard),
+              box-shadow var(--dur-3) var(--ease-standard);
   position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
 #cp12-wrap .blog-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 16px 40px rgba(42, 37, 34, 0.13),
-              0 4px 12px rgba(42, 37, 34, 0.06);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-2);
 }
 
 #cp12-wrap .blog-card-img {
@@ -77,19 +75,38 @@
   aspect-ratio: 4/3;
 }
 
-/* Image zoom layers (bi1/bi2/bi3 are background-only elements without a separate child element,
- * so we zoom via a pseudo-overlay approach on the image container itself) */
 #cp12-wrap .bi1,
 #cp12-wrap .bi2,
 #cp12-wrap .bi3 {
-  transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1),
-              filter 0.55s ease;
+  transition: transform var(--dur-550) var(--ease-standard),
+              filter var(--dur-550) var(--ease-default);
   width: 100%;
   height: 100%;
   position: absolute;
   inset: 0;
   background-size: cover;
   background-position: center;
+}
+
+#cp12-wrap .bi1 {
+  background:
+    radial-gradient(ellipse at 85% 10%, var(--gold-warm-28) 0%, transparent 45%),
+    linear-gradient(115deg, transparent 45%, var(--white-5) 58%, transparent 72%),
+    linear-gradient(155deg, var(--surface-inverse) 0%, var(--surface-brand) 55%, var(--surface-brand-mid) 100%);
+}
+
+#cp12-wrap .bi2 {
+  background:
+    radial-gradient(ellipse at 50% 0%, var(--gold-warm-32) 0%, transparent 55%),
+    linear-gradient(140deg, transparent 40%, var(--sun-highlight-6) 58%, transparent 75%),
+    linear-gradient(150deg, var(--gradient-earth-deep) 0%, var(--surface-earth) 45%, var(--surface-accent) 80%, var(--gradient-earth-warm) 100%);
+}
+
+#cp12-wrap .bi3 {
+  background:
+    radial-gradient(ellipse at 55% 5%, var(--cool-blue-light-30) 0%, transparent 50%),
+    linear-gradient(180deg, var(--cool-blue-20) 0%, transparent 40%),
+    linear-gradient(150deg, var(--surface-cool) 0%, var(--gradient-cool-deep) 40%, var(--surface-cool-mid) 80%, var(--gradient-cool-indigo) 100%);
 }
 
 #cp12-wrap .blog-card:hover .bi1,
@@ -99,158 +116,80 @@
   filter: brightness(1.06);
 }
 
-/* Hover overlay on blog card image */
-#cp12-wrap .blog-card-img::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    180deg,
-    transparent 50%,
-    rgba(42, 37, 34, 0.15) 100%
-  );
-  opacity: 0;
-  transition: opacity 0.4s ease;
-  pointer-events: none;
-  z-index: 1;
-}
-
-#cp12-wrap .blog-card:hover .blog-card-img::after {
-  opacity: 1;
-}
-
-/* ── Blog card image layers ──
-   bi1: forest running trail — pine canopy with sun break
-   bi2: solo warm golden hour — amber earth atmospheric
-   bi3: hidden gems at dusk  — indigo twilight with moonrise
-──────────────────────────────────────────────────────── */
-
-#cp12-wrap .bi1 {
-  background:
-    /* top-right sun break through canopy */
-    radial-gradient(
-      ellipse at 85% 10%,
-      rgba(201, 169, 110, 0.28) 0%,
-      transparent 45%
-    ),
-    /* subtle diagonal shaft */
-    linear-gradient(
-        115deg,
-        transparent 45%,
-        rgba(255, 255, 255, 0.05) 58%,
-        transparent 72%
-      ),
-    /* forest base */
-    linear-gradient(
-        155deg,
-        var(--pine-dark) 0%,
-        var(--pine) 55%,
-        var(--pine-mid) 100%
-      );
-}
-
-#cp12-wrap .bi2 {
-  background:
-    /* golden hour glow from top */
-    radial-gradient(
-      ellipse at 50% 0%,
-      rgba(201, 169, 110, 0.32) 0%,
-      transparent 55%
-    ),
-    /* warm side light */
-    linear-gradient(
-        140deg,
-        transparent 40%,
-        rgba(255, 200, 130, 0.06) 58%,
-        transparent 75%
-      ),
-    /* earth base */
-    linear-gradient(
-        150deg,
-        var(--brown-dark) 0%,
-        var(--earth) 45%,
-        var(--terracotta) 80%,
-        var(--earth-warm) 100%
-      );
-}
-
-#cp12-wrap .bi3 {
-  background:
-    /* moonrise glow at top-centre */
-    radial-gradient(
-      ellipse at 55% 5%,
-      rgba(150, 170, 230, 0.3) 0%,
-      transparent 50%
-    ),
-    /* horizontal twilight band */
-    linear-gradient(180deg, rgba(74, 106, 173, 0.2) 0%, transparent 40%),
-    /* indigo-blue base */
-    linear-gradient(
-        150deg,
-        var(--slate-blue) 0%,
-        var(--blue-deep) 40%,
-        var(--slate-blue-mid) 80%,
-        var(--indigo-muted) 100%
-      );
-}
-
 #cp12-wrap .blog-card-body {
-  padding: 1.5rem;
+  padding: var(--sp-5);
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
-/* card eyebrow — shared typography from section-labels.css (.card-eyebrow);
- * only color and margin are specific to this section */
 #cp12-wrap .blog-card-cat {
-  font-size: 0.65rem;
-  letter-spacing: 0.2em;
+  font-size: var(--fs-micro);
+  letter-spacing: var(--ls-wide);
   text-transform: uppercase;
-  color: var(--terracotta);
-  margin-bottom: 0.6rem;
+  color: var(--text-accent);
+  margin-bottom: var(--sp-3);
+  font-weight: 600;
 }
 
 #cp12-wrap .blog-card-title {
   font-family: var(--font-serif);
-  font-size: 1.4rem;
-  color: var(--pine);
+  font-size: var(--fs-h4);
+  color: var(--text-primary);
   font-weight: 400;
-  line-height: 1.25;
-  margin-bottom: 0.8rem;
+  line-height: var(--lh-tight);
+  margin-bottom: var(--sp-3);
 }
 
 #cp12-wrap .blog-card.large .blog-card-title {
-  font-size: 1.8rem;
+  font-size: var(--fs-h3);
+}
+
+#cp12-wrap .blog-card-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  font-size: var(--fs-caption);
+  color: var(--text-muted);
+  margin-bottom: var(--sp-3);
+}
+
+#cp12-wrap .blog-card-meta span:not(:last-child)::after {
+  content: "·";
+  margin-left: var(--sp-2);
+  opacity: 0.6;
 }
 
 #cp12-wrap .blog-card-excerpt {
-  font-size: 0.82rem;
-  line-height: 1.7;
-  opacity: 0.65;
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  color: var(--text-secondary);
+  margin-bottom: var(--sp-4);
+  flex: 1;
 }
 
-/* arrow link — shared base from section-labels.css (.card-arrow-link);
- * color and margin-top are specific to this section */
 #cp12-wrap .blog-link {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  font-size: 0.7rem;
-  letter-spacing: 0.18em;
+  gap: var(--sp-2);
+  font-size: var(--fs-caption);
+  letter-spacing: var(--ls-wide);
   text-transform: uppercase;
   font-weight: 500;
-  color: var(--pine);
+  color: var(--text-primary);
   min-height: 44px;
-  margin-top: 1rem;
-  transition: color 0.3s, gap 0.3s;
+  margin-top: auto;
+  transition: color var(--dur-3) var(--ease-default), gap var(--dur-3) var(--ease-default);
 }
 
 #cp12-wrap .blog-link::after {
   content: "\2192";
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform var(--dur-3) var(--ease-standard);
 }
 
 #cp12-wrap .blog-link:hover {
-  color: var(--terracotta);
-  gap: 0.75rem;
+  color: var(--text-accent);
+  gap: var(--sp-3);
 }
 
 #cp12-wrap .blog-link:hover::after {
@@ -258,8 +197,8 @@
 }
 
 #cp12-wrap .blog-card:focus-visible {
-  outline: 2px solid var(--gold);
-  outline-offset: 2px;
+  outline: var(--focus-ring);
+  outline-offset: var(--focus-ring-offset);
 }
 
 /* ── Journal section animation signatures ─────────────────── */
@@ -267,65 +206,43 @@
 #cp12-wrap .sect-journal .blog-heading {
   opacity: 0;
 }
+
 #cp12-wrap .sect-journal.animated .blog-heading {
-  animation: cp12fu 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation: cp12fu var(--dur-pause) var(--ease-out-quart) forwards;
 }
+
 #cp12-wrap .sect-journal .blog-card {
   opacity: 0;
 }
+
 #cp12-wrap .sect-journal.animated .blog-card.large {
-  animation: cp12ScaleUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.15s forwards;
+  animation: cp12ScaleUp var(--dur-pause) var(--ease-out-quart) var(--dur-150) forwards;
 }
+
 #cp12-wrap .sect-journal.animated .blog-card:not(.large):nth-child(2) {
-  animation: cp12fu 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.3s forwards;
+  animation: cp12fu var(--dur-700) var(--ease-out-quart) var(--dur-300) forwards;
 }
+
 #cp12-wrap .sect-journal.animated .blog-card:not(.large):nth-child(3) {
-  animation: cp12fu 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.44s forwards;
+  animation: cp12fu var(--dur-700) var(--ease-out-quart) var(--dur-440) forwards;
 }
 
 /* ── Journal responsive rules ────────────────────────────── */
 
-@media (max-width: 900px) {
+@media (width <= 900px) {
   #cp12-wrap .blog-grid {
     grid-template-columns: 1fr;
   }
 }
 
-@media (max-width: 768px) {
+@media (width <= 768px) {
   #cp12-wrap .blog-section {
-    padding: 4rem 2rem 6rem;
-  }
-  /* Scale down blog heading to match section hierarchy */
-  #cp12-wrap .blog-heading {
-    font-size: 2.4rem;
+    padding: var(--sp-8) var(--sp-4);
   }
 }
 
-@media (max-width: 640px) {
-  #cp12-wrap .blog-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media (max-width: 480px) {
+@media (width <= 480px) {
   #cp12-wrap .blog-section {
-    padding: 4rem 1.5rem;
-  }
-  #cp12-wrap .blog-heading {
-    font-size: 2.2rem;
-  }
-  /* Reduce large card title for narrow screens */
-  #cp12-wrap .blog-card.large .blog-card-title {
-    font-size: 1.5rem;
-  }
-}
-
-@media (max-width: 430px) {
-  /* blog-card: prevent any width blowout */
-  #cp12-wrap .blog-card {
-    width: 100%;
-  }
-  #cp12-wrap .blog-heading {
-    font-size: 2rem;
+    padding: var(--sp-8) var(--sp-3);
   }
 }

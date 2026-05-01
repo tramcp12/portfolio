@@ -3,37 +3,39 @@
  * ──────────────────────────────────────────────────────────── */
 
 #cp12-wrap .faq-section {
-  background: var(--warm-white);
-  padding: 5rem 3rem 7rem;
+  background: var(--surface-elevated);
+  padding: var(--sp-9) var(--sp-6);
 }
 
 #cp12-wrap .faq-inner {
-  max-width: 900px;
+  max-width: var(--container-narrow);
   margin: 0 auto;
 }
 
 #cp12-wrap .faq-grid {
-  margin-top: 3rem;
+  margin-top: var(--sp-8);
   display: flex;
   flex-direction: column;
 }
 
 /* ── Individual FAQ item ── */
 #cp12-wrap .faq-item {
-  border-bottom: 1px solid var(--mist);
+  border-bottom: 1px solid var(--border-subtle);
+  outline: none; /* Suppress any outline on the <details> element itself */
 }
 
 #cp12-wrap .faq-item:first-of-type {
-  border-top: 1px solid var(--mist);
+  border-top: 1px solid var(--border-subtle);
 }
 
 /* Remove browser default triangle — both Firefox/Chrome and Safari */
 #cp12-wrap .faq-item > summary {
   list-style: none;
   cursor: pointer;
+
   /* Intentional: suppress default browser focus ring on <summary>.
    * A custom keyboard focus ring is provided via .faq-question:focus-visible
-   * below (2px solid var(--pine)), which activates only for keyboard navigation.
+   * below (2px solid var(--surface-brand)), which activates only for keyboard navigation.
    * Browsers that don't support :focus-visible lose visible focus here, but
    * the custom rule on .faq-question provides adequate coverage for modern browsers. */
   outline: none;
@@ -43,89 +45,93 @@
   display: none;
 }
 
-/* Suppress any outline on the <details> element itself */
-#cp12-wrap .faq-item {
-  outline: none;
-}
+/* Intentional keyboard focus ring — only when navigating by keyboard */
 
 #cp12-wrap .faq-question {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1.25rem 0;
-  gap: 1rem;
+  padding: var(--sp-5) 0;
+  gap: var(--sp-4);
   user-select: none;
 }
 
 /* Intentional keyboard focus ring — only when navigating by keyboard */
 #cp12-wrap .faq-question:focus-visible {
-  outline: 2px solid var(--pine);
-  outline-offset: 2px;
-  border-radius: 2px;
+  outline: var(--focus-ring);
+  outline-offset: var(--focus-ring-offset);
+  border-radius: var(--radius-1);
 }
 
 /* Open-state treatment: subtle background tint + slightly bolder text */
 #cp12-wrap .faq-item[open] > .faq-question {
-  background: var(--cream);
+  background: var(--surface-base);
 }
 
 #cp12-wrap .faq-question h3 {
   font-family: var(--font-body);
-  font-size: 0.975rem;
+  font-size: var(--fs-body);
   font-weight: 500;
-  color: var(--charcoal);
+  color: var(--text-primary);
   margin: 0;
-  line-height: 1.5;
+  line-height: var(--lh-snug);
 }
 
 /* Custom toggle icon via ::after */
 #cp12-wrap .faq-question::after {
   content: "+";
   font-family: var(--font-body);
-  font-size: 1.4rem;
+  font-size: var(--fs-h4);
   font-weight: 300;
-  color: var(--pine);
+  color: var(--text-brand);
   line-height: 1;
   flex-shrink: 0;
-  transition: transform 0.2s ease, color 0.2s ease;
+  transition: transform var(--dur-2) var(--ease-default), color var(--dur-2) var(--ease-default);
 }
 
 #cp12-wrap .faq-item[open] > .faq-question::after {
   content: "\00D7";
-  color: var(--terracotta);
+  color: var(--text-accent);
 }
 
 /* Answer text */
 #cp12-wrap .faq-answer {
-  font-size: 0.9rem;
-  line-height: 1.85;
-  color: var(--text-warm);
-  padding: 0 1rem 1.5rem 0;
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  color: var(--text-secondary);
+  padding: 0 var(--sp-4) var(--sp-6) 0;
   margin: 0;
   opacity: 0.85;
 }
 
 /* ── Responsive ── */
-@media (max-width: 768px) {
+@media (width <= 768px) {
   #cp12-wrap .faq-section {
-    padding: 4rem 1.5rem 5rem;
+    padding: var(--sp-8) var(--sp-4);
   }
 
   #cp12-wrap .faq-question h3 {
-    font-size: 0.9rem;
+    font-size: var(--fs-body);
+  }
+}
+
+@media (width <= 480px) {
+  #cp12-wrap .faq-section {
+    padding: var(--sp-8) var(--sp-3);
   }
 }
 
 /* ── Section animation signature ── */
 #cp12-wrap .sect-faq .faq-item { opacity: 0; }
+
 #cp12-wrap .sect-faq.animated .faq-item {
-  animation: cp12fu 0.5s ease both;
+  animation: cp12fu var(--dur-500) var(--ease-default) both;
 }
-#cp12-wrap .sect-faq.animated .faq-item:nth-child(1) { animation-delay: 0.05s; }
-#cp12-wrap .sect-faq.animated .faq-item:nth-child(2) { animation-delay: 0.1s; }
-#cp12-wrap .sect-faq.animated .faq-item:nth-child(3) { animation-delay: 0.15s; }
-#cp12-wrap .sect-faq.animated .faq-item:nth-child(4) { animation-delay: 0.2s; }
-#cp12-wrap .sect-faq.animated .faq-item:nth-child(5) { animation-delay: 0.25s; }
-#cp12-wrap .sect-faq.animated .faq-item:nth-child(6) { animation-delay: 0.3s; }
-#cp12-wrap .sect-faq.animated .faq-item:nth-child(7) { animation-delay: 0.35s; }
-#cp12-wrap .sect-faq.animated .faq-item:nth-child(8) { animation-delay: 0.4s; }
+#cp12-wrap .sect-faq.animated .faq-item:nth-child(1) { animation-delay: var(--dur-instant); }
+#cp12-wrap .sect-faq.animated .faq-item:nth-child(2) { animation-delay: var(--dur-100); }
+#cp12-wrap .sect-faq.animated .faq-item:nth-child(3) { animation-delay: var(--dur-150); }
+#cp12-wrap .sect-faq.animated .faq-item:nth-child(4) { animation-delay: var(--dur-200); }
+#cp12-wrap .sect-faq.animated .faq-item:nth-child(5) { animation-delay: var(--dur-250); }
+#cp12-wrap .sect-faq.animated .faq-item:nth-child(6) { animation-delay: var(--dur-300); }
+#cp12-wrap .sect-faq.animated .faq-item:nth-child(7) { animation-delay: var(--dur-350); }
+#cp12-wrap .sect-faq.animated .faq-item:nth-child(8) { animation-delay: var(--dur-400); }
