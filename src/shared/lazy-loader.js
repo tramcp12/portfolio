@@ -15,14 +15,14 @@
  *     — available to renderers that add [data-bg] elements after initial load
  * ──────────────────────────────────────────────────────────── */
 (function () {
-  var lazyObserver;
+  let lazyObserver;
 
   /* Apply background-image for one element and mark it loaded */
   function loadBg(el) {
-    var src = el.dataset.bg; /* dataset read — XSS safe */
+    const src = el.dataset.bg; /* dataset read — XSS safe */
     if (!src) return;
 
-    var preload = new Image(); /* off-DOM — never inserted (P-1 safe) */
+    const preload = new Image(); /* off-DOM — never inserted (P-1 safe) */
     preload.onload = function () {
       /* JSON.stringify escapes quotes/special chars in the URL */
       el.style.backgroundImage = "url(" + JSON.stringify(src) + ")";
@@ -41,8 +41,8 @@
 
   /* Observe all [data-bg] elements within root (or document) */
   function observeAll(root) {
-    var els = (root || document).querySelectorAll("[data-bg]");
-    for (var i = 0; i < els.length; i++) {
+    const els = (root || document).querySelectorAll("[data-bg]");
+    for (let i = 0; i < els.length; i++) {
       lazyObserver.observe(els[i]);
     }
   }
@@ -50,7 +50,7 @@
   try {
     lazyObserver = new IntersectionObserver(
       function (entries) {
-        for (var i = 0; i < entries.length; i++) {
+        for (let i = 0; i < entries.length; i++) {
           if (entries[i].isIntersecting) loadBg(entries[i].target);
         }
       },
@@ -70,9 +70,9 @@
     console.warn("[CP12] Lazy loader init error:", e);
     /* Graceful fallback: apply all deferred backgrounds immediately */
     try {
-      var fallbacks = document.querySelectorAll("[data-bg]");
-      for (var j = 0; j < fallbacks.length; j++) {
-        var fbSrc = fallbacks[j].dataset.bg;
+      const fallbacks = document.querySelectorAll("[data-bg]");
+      for (let j = 0; j < fallbacks.length; j++) {
+        const fbSrc = fallbacks[j].dataset.bg;
         if (fbSrc) {
           fallbacks[j].style.backgroundImage = "url(" + JSON.stringify(fbSrc) + ")";
           fallbacks[j].classList.add("cp12-loaded");

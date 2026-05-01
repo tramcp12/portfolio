@@ -17,10 +17,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Development Workflow
 
 ```bash
-npm install           # one-time: installs html-validate (dev only)
+npm install           # one-time: installs validation/lint dev tools
 npm run build         # assemble outputs + validate + lint + run test suite
 npm run check         # validate + lint + test against existing output (no rebuild)
-node validate.js      # 17 architectural invariant checks only
+node validate.js      # 18 architectural invariant checks only
+npm run lint:css      # warning-only CSS token/stylelint report
 npm test              # test suite only
 node build.js --allow-draft  # bypass empty name/price guard (local editing)
 ```
@@ -54,7 +55,7 @@ After writing outputs, `build.js` runs `validate.js`, `html-validate`, then `tes
 
 ## Architectural Invariants (`validate.js`)
 
-17 checks enforced on built output. These **must not be broken**:
+18 checks enforced on built output and source CSS. These **must not be broken**:
 
 | Check   | Rule |
 | ------- | ---- |
@@ -75,6 +76,9 @@ After writing outputs, `build.js` runs `validate.js`, `html-validate`, then `tes
 | I18N-2  | All vi keys present in en |
 | I18N-3  | All en keys present in vi |
 | L-1     | At least one `data-bg="static/img/..."` attribute in HTML |
+| INV-18  | Feature/layout CSS under `src/features/` and `src/layout/` may only reference semantic color tokens, not raw palette tokens |
+| INV-19  | Every entry in `build.js`'s `cssSources` / `jsSources` arrays must resolve to a file under `src/` |
+| INV-20  | Every `static/img/...` path referenced from `og:image`, `twitter:image`, or JSON-LD `"image"` must exist on disk |
 
 ---
 
@@ -181,6 +185,7 @@ Cascade order is defined in the `cssSources` array in `build.js`. Key rules:
 
 - Font family strings may only appear in `src/core/tokens.css` (CSS-1 guard)
 - All colours must use CSS tokens — no hard-coded hex values
+- Feature/layout CSS must use semantic color tokens only; raw palette tokens are restricted to `src/core/*` (INV-18)
 - `.section-heading` is a shared component defined in `src/core/section-labels.css` — do not redefine in feature files
 - Section animation signatures (`.sect-X .card { opacity: 0 }` + `.sect-X.animated .card { animation: … }`) go at the **bottom** of each feature's CSS file
 - Cross-cutting `@media (max-width: 768px)` rules go in `src/core/responsive-sentinel.css`

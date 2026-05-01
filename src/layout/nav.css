@@ -8,52 +8,52 @@
   left: 0;
   right: 0;
   z-index: 1000;
-  padding: 1.5rem 3rem;
+  padding: var(--sp-5) var(--sp-7);
   display: flex;
   justify-content: space-between;
   align-items: center;
+
   /* Base transparency, overridden by .nav-over-dark on load */
   background: transparent;
   backdrop-filter: none;
-  -webkit-backdrop-filter: none;
   border-bottom: 1px solid transparent;
   transition:
-    background 0.45s ease,
-    backdrop-filter 0.45s ease,
-    border-color 0.45s ease,
-    box-shadow 0.45s ease;
+    background var(--dur-450) var(--ease-default),
+    backdrop-filter var(--dur-450) var(--ease-default),
+    border-color var(--dur-450) var(--ease-default),
+    box-shadow var(--dur-450) var(--ease-default);
 }
 
 /* ── Nav element base styles ─────────────────────────────── */
 
 #cp12-wrap .nav-logo {
   font-family: var(--font-serif);
-  font-size: 1.5rem;
+  font-size: var(--fs-h4);
   font-weight: 600;
-  color: var(--cream);
+  color: var(--surface-base);
   letter-spacing: 0.05em;
-  transition: color 0.45s ease;
+  transition: color var(--dur-450) var(--ease-default);
 }
 
 #cp12-wrap .nav-logo span {
   font-style: italic;
   font-weight: 300;
-  color: var(--gold);
-  transition: color 0.45s ease;
+  color: var(--interactive-accent);
+  transition: color var(--dur-450) var(--ease-default);
 }
 
 #cp12-wrap .nav-links {
   display: flex;
-  gap: 2.5rem;
+  gap: var(--sp-7);
   list-style: none;
 }
 
 #cp12-wrap .nav-links a {
-  font-size: 0.78rem;
+  font-size: var(--fs-micro);
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--mist);
-  transition: color 0.3s;
+  color: var(--surface-muted);
+  transition: color var(--dur-300) var(--ease-default);
   position: relative;
 }
 
@@ -65,13 +65,13 @@
   left: 50%;
   width: 0;
   height: 1px;
-  background: currentColor;
-  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-              left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background: currentcolor;
+  transition: width var(--dur-300) var(--ease-standard),
+              left var(--dur-300) var(--ease-standard);
 }
 
 #cp12-wrap .nav-links a:hover {
-  color: var(--cream);
+  color: var(--surface-base);
 }
 
 #cp12-wrap .nav-links a:hover::after {
@@ -81,29 +81,29 @@
 
 #cp12-wrap .nav-links a:focus-visible {
   outline: none;
-  color: var(--cream);
+  color: var(--surface-base);
 }
 
 /* Focus indicator for nav links: extend the underline animation instead of a box */
 #cp12-wrap .nav-links a:focus-visible::after {
   width: 100%;
   left: 0;
-  background: var(--gold);
+  background: var(--interactive-accent);
 }
 
 #cp12-wrap .cp12-main-nav a.nav-cta {
-  background: var(--pine);
-  color: var(--cream);
-  padding: 0.6rem 1.4rem;
-  font-size: 0.72rem;
+  background: var(--surface-brand);
+  color: var(--surface-base);
+  padding: var(--sp-2) var(--sp-5);
+  font-size: var(--fs-micro);
   letter-spacing: 0.2em;
   text-transform: uppercase;
   transition:
-    background 0.3s ease,
-    color 0.3s ease,
-    border-color 0.3s ease,
-    box-shadow 0.3s ease,
-    transform 0.3s ease;
+    background var(--dur-300) var(--ease-default),
+    color var(--dur-300) var(--ease-default),
+    border-color var(--dur-300) var(--ease-default),
+    box-shadow var(--dur-300) var(--ease-default),
+    transform var(--dur-300) var(--ease-default);
 }
 
 /* Nav CTA — no underline pseudo-element */
@@ -112,143 +112,56 @@
 }
 
 #cp12-wrap .cp12-main-nav a.nav-cta:hover {
-  background: var(--terracotta);
-  color: var(--cream);
+  background: var(--surface-accent);
+  color: var(--surface-base);
   transform: translateY(-1px);
-  box-shadow: 0 4px 14px rgba(196, 114, 74, 0.3);
+  box-shadow: var(--shadow-warm-hover);
 }
 
 #cp12-wrap .cp12-main-nav a.nav-cta:focus-visible {
-  outline: 2px solid var(--gold);
+  outline: 2px solid var(--interactive-accent);
   outline-offset: 3px;
   border-radius: 2px;
-}
-
-
-
-/* ── Scrolled over LIGHT sections (rooms, about, journal) ──────────────────
-   Warm cream frosted glass — neutral, readable                              */
-#cp12-wrap .cp12-main-nav.scrolled:not(.nav-over-dark) {
-  background: rgba(253, 250, 245, 0.9);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border-bottom: 1px solid rgba(45, 74, 62, 0.08);
-}
-
-#cp12-wrap .cp12-main-nav.scrolled:not(.nav-over-dark) .nav-logo {
-  color: var(--pine);
-}
-#cp12-wrap .cp12-main-nav.scrolled:not(.nav-over-dark) .nav-logo span {
-  color: var(--earth);
-}
-#cp12-wrap .cp12-main-nav.scrolled:not(.nav-over-dark) .nav-links a {
-  color: var(--pine);
-}
-#cp12-wrap .cp12-main-nav.scrolled:not(.nav-over-dark) .nav-links a:hover {
-  color: var(--terracotta);
-}
-#cp12-wrap .cp12-main-nav.scrolled:not(.nav-over-dark) a.nav-cta {
-  background: var(--pine);
-  color: var(--cream);
-  border: 1px solid transparent;
-}
-#cp12-wrap .cp12-main-nav.scrolled:not(.nav-over-dark) a.nav-cta:hover {
-  background: var(--terracotta);
-  color: var(--cream);
-}
-
-/* ── Over DARK sections (hero, video, explore, book) ──────────────
-   Pine Forest frosted glass — immersive, brand-forward                      */
-#cp12-wrap .cp12-main-nav.nav-over-dark {
-  background: rgba(26, 48, 40, 0.92);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid rgba(201, 169, 110, 0.18);
-}
-
-#cp12-wrap .cp12-main-nav.nav-over-dark .nav-logo {
-  color: var(--cream);
-}
-#cp12-wrap .cp12-main-nav.nav-over-dark .nav-logo span {
-  color: var(--gold);
-}
-#cp12-wrap .cp12-main-nav.scrolled:not(.nav-over-dark) .nav-hamburger {
-  color: var(--pine);
-}
-#cp12-wrap .cp12-main-nav.nav-over-dark .nav-links a {
-  color: var(--mist);
-}
-#cp12-wrap .cp12-main-nav.nav-over-dark .nav-links a:hover {
-  color: var(--gold);
-}
-
-#cp12-wrap .cp12-main-nav.scrolled:not(.nav-over-dark) .nav-links a:hover::after,
-#cp12-wrap .cp12-main-nav.nav-over-dark .nav-links a:hover::after {
-  width: 100%;
-  left: 0;
-}
-#cp12-wrap .cp12-main-nav.nav-over-dark a.nav-cta {
-  background: var(--gold);
-  color: var(--charcoal);
-}
-#cp12-wrap .cp12-main-nav.nav-over-dark a.nav-cta:hover {
-  background: var(--terracotta);
-  color: var(--cream);
-}
-#cp12-wrap .cp12-main-nav.nav-over-dark .nav-hamburger {
-  color: var(--cream);
 }
 
 /* ── Language toggle button ─────────────────────────────── */
 #cp12-wrap .lang-btn {
   display: inline-flex;
   align-items: center;
-  gap: 0.2rem;
-  padding: 0.3rem 0.55rem;
+  gap: var(--sp-1);
+  padding: var(--sp-1) var(--sp-2);
   border: none;
   background: transparent;
-  color: var(--mist);
+  color: var(--surface-muted);
   font-family: var(--font-sans);
-  font-size: 0.78rem;
+  font-size: var(--fs-micro);
   font-weight: 500;
   letter-spacing: 0.1em;
   cursor: pointer;
-  transition: color 0.3s;
+  transition: color var(--dur-300) var(--ease-default);
+
   /* WCAG 2.5.5: minimum touch target height */
   min-height: 44px;
   justify-content: center;
 }
 
 #cp12-wrap .lang-btn:hover {
-  color: var(--gold);
+  color: var(--interactive-accent);
 }
 
 #cp12-wrap .lang-btn:focus-visible {
-  outline: 2px solid var(--gold);
+  outline: 2px solid var(--interactive-accent);
   outline-offset: 2px;
 }
 
 #cp12-wrap .lang-btn .lang-active {
   font-weight: 700;
-  color: var(--gold);
+  color: var(--interactive-accent);
 }
 
 #cp12-wrap .lang-btn .lang-sep {
   opacity: 0.35;
-  margin: 0 0.1rem;
-}
-
-/* Adapt lang button to nav colorway states */
-#cp12-wrap .cp12-main-nav.scrolled:not(.nav-over-dark) .lang-btn {
-  color: var(--slate);
-}
-
-#cp12-wrap .cp12-main-nav.scrolled:not(.nav-over-dark) .lang-btn:hover {
-  color: var(--pine);
-}
-
-#cp12-wrap .cp12-main-nav.scrolled:not(.nav-over-dark) .lang-btn .lang-active {
-  color: var(--earth);
+  margin: 0 calc(var(--sp-1) / 2);
 }
 
 /* Mobile hamburger */
@@ -257,9 +170,10 @@
   background: none;
   border: none;
   cursor: pointer;
-  padding: 0.5rem;
-  color: var(--pine);
+  padding: var(--sp-2);
+  color: var(--surface-brand);
   line-height: 1;
+
   /* WCAG 2.5.5: minimum 44×44px touch target */
   min-width: 44px;
   min-height: 44px;
@@ -271,21 +185,127 @@
   display: block;
 }
 
+/* ── Over DARK sections (hero, video, explore, book) ──────────────
+   Pine Forest frosted glass — immersive, brand-forward                      */
+#cp12-wrap .cp12-main-nav.nav-over-dark {
+  background: var(--surface-dark-nav);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--gold-warm-18);
+}
+
+#cp12-wrap .cp12-main-nav.nav-over-dark .nav-logo {
+  color: var(--surface-base);
+}
+
+#cp12-wrap .cp12-main-nav.nav-over-dark .nav-logo span {
+  color: var(--interactive-accent);
+}
+
+#cp12-wrap .cp12-main-nav.nav-over-dark .nav-hamburger {
+  color: var(--surface-base);
+}
+
+#cp12-wrap .cp12-main-nav.nav-over-dark .nav-links a {
+  color: var(--surface-muted);
+}
+
+#cp12-wrap .cp12-main-nav.nav-over-dark .nav-links a:hover {
+  color: var(--interactive-accent);
+}
+
+#cp12-wrap .cp12-main-nav.nav-over-dark .nav-links a:hover::after {
+  width: 100%;
+  left: 0;
+}
+
+#cp12-wrap .cp12-main-nav.nav-over-dark a.nav-cta {
+  background: var(--interactive-accent);
+  color: var(--surface-inverse-strong);
+}
+
+#cp12-wrap .cp12-main-nav.nav-over-dark a.nav-cta:hover {
+  background: var(--surface-accent);
+  color: var(--surface-base);
+}
+
+/* ── Scrolled over LIGHT sections (rooms, about, journal) ──────────────────
+   Warm cream frosted glass — neutral, readable                              */
+#cp12-wrap .cp12-main-nav.scrolled:not(.nav-over-dark) {
+  background: var(--surface-frosted-nav);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--pine-base-8);
+}
+
+/* Deep-scroll shadow lift — toggled by scroll-reveal.js when y > 80 */
+#cp12-wrap .cp12-main-nav.scrolled-deep {
+  box-shadow: var(--shadow-2);
+}
+
+#cp12-wrap .cp12-main-nav.scrolled:not(.nav-over-dark) .nav-logo {
+  color: var(--surface-brand);
+}
+
+#cp12-wrap .cp12-main-nav.scrolled:not(.nav-over-dark) .nav-logo span {
+  color: var(--surface-earth);
+}
+
+#cp12-wrap .cp12-main-nav.scrolled:not(.nav-over-dark) .nav-hamburger {
+  color: var(--surface-brand);
+}
+
+#cp12-wrap .cp12-main-nav.scrolled:not(.nav-over-dark) .nav-links a {
+  color: var(--surface-brand);
+}
+
+#cp12-wrap .cp12-main-nav.scrolled:not(.nav-over-dark) .nav-links a:hover {
+  color: var(--surface-accent);
+}
+
+#cp12-wrap .cp12-main-nav.scrolled:not(.nav-over-dark) .nav-links a:hover::after {
+  width: 100%;
+  left: 0;
+}
+
+#cp12-wrap .cp12-main-nav.scrolled:not(.nav-over-dark) a.nav-cta {
+  background: var(--surface-brand);
+  color: var(--surface-base);
+  border: 1px solid transparent;
+}
+
+#cp12-wrap .cp12-main-nav.scrolled:not(.nav-over-dark) a.nav-cta:hover {
+  background: var(--surface-accent);
+  color: var(--surface-base);
+}
+
+/* Adapt lang button to nav colorway states */
+#cp12-wrap .cp12-main-nav.scrolled:not(.nav-over-dark) .lang-btn {
+  color: var(--text-subtle);
+}
+
+#cp12-wrap .cp12-main-nav.scrolled:not(.nav-over-dark) .lang-btn:hover {
+  color: var(--surface-brand);
+}
+
+#cp12-wrap .cp12-main-nav.scrolled:not(.nav-over-dark) .lang-btn .lang-active {
+  color: var(--surface-earth);
+}
+
 /* ── Nav responsive rules ────────────────────────────────── */
 
 /* Hide desktop lang button when hamburger appears — moved into mobile overlay */
-@media (max-width: 900px) {
+@media (width <= 900px) {
   #cp12-wrap .cp12-main-nav .lang-btn {
     display: none;
   }
 }
 
-@media (max-width: 480px) {
+@media (width <= 480px) {
   #cp12-wrap .cp12-main-nav {
-    padding: 0.75rem 1rem;
+    padding: var(--sp-3) var(--sp-4);
   }
+
   /* Tighten nav-logo size on very small screens */
   #cp12-wrap .nav-logo {
-    font-size: 1.2rem;
+    font-size: var(--fs-lead);
   }
 }

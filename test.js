@@ -9,7 +9,7 @@ var fs   = require("fs");
 var path = require("path");
 var errors = [];
 var passes = [];
-var SECTION_IDS = ["home","video","rooms","testimonials","explore","about","location","journal","faq","book"];
+var SECTION_IDS = ["home","rooms","testimonials","explore","about","location","journal","faq","book"];
 
 function ok(label, cond) {
   if (cond) passes.push("  \u2705 " + label);
@@ -60,7 +60,7 @@ var expected = [
   "src/core/responsive-sentinel.css", "src/core/supports.css",
   "src/layout/nav.css", "src/layout/nav-mobile.css", "src/layout/dots.css",
   "src/layout/next-btn.css", "src/layout/footer.css", "src/layout/modal.css",
-  "src/features/home/home.css", "src/features/video/video.css",
+  "src/features/home/home.css",
   "src/features/rooms/rooms.css", "src/features/rooms/room-modal.css", "src/features/explore/explore.css",
   "src/features/about/about.css", "src/features/journal/journal.css",
   "src/features/cta/cta.css",
@@ -69,7 +69,7 @@ var expected = [
   "src/layout/chrome.html.partial", "src/layout/dots.html.partial",
   "src/layout/footer.html.partial", "src/layout/modal.html.partial",
   "src/layout/jsonld.html.partial",
-  "src/features/home/home.html.partial", "src/features/video/video.html.partial",
+  "src/features/home/home.html.partial",
   "src/features/rooms/rooms.html.partial",
   "src/features/testimonials/testimonials.html.partial", "src/features/testimonials/testimonials.css",
   "src/features/explore/explore.html.partial",
@@ -255,6 +255,8 @@ ok("index.html — og:image meta",                 /property="og:image"/.test(ht
 ok("index.html — twitter:card meta",             /name="twitter:card"/.test(html));
 ok("index.html — canonical link",               /rel="canonical"/.test(html));
 ok("index.html — JSON-LD LodgingBusiness",       html.indexOf('"@type": "LodgingBusiness"') !== -1);
+var bookableRoomsCount = rooms.filter(function (r) { return !r.comingSoon; }).length;
+ok("index.html — JSON-LD numberOfRooms matches bookable count", new RegExp('"numberOfRooms":\\s*' + bookableRoomsCount + '\\b').test(html));
 ok("index.html — theme-color meta",              html.indexOf("theme-color") !== -1);
 ok("index.html — cp12.js defer",                 html.indexOf('src="cp12.js" defer') !== -1);
 
@@ -306,7 +308,7 @@ ok("video.js — cp12OpenModal guard",   videoJs.indexOf("window.cp12OpenModal")
 ok("explore.js — self-contained IIFE", /\(function\s*\(\)/.test(exploreJs));
 ok("explore.js — aria-selected",       exploreJs.indexOf("aria-selected") !== -1);
 ok("scroll-reveal.js — try/catch",     /try\s*\{/.test(revealJs) && /catch\s*\(e\)/.test(revealJs));
-ok("scroll-reveal.js — cachedNav",     revealJs.indexOf("var cachedNav = null") !== -1);
+ok("scroll-reveal.js — cachedNav",     revealJs.indexOf("let cachedNav = null") !== -1);
 ok("scroll-reveal.js — focus trap",    revealJs.indexOf("focus trap") !== -1);
 ok("scroll-reveal.js — passive scroll",revealJs.indexOf("passive") !== -1);
 ok("scroll-reveal.js — RAF batching",  revealJs.indexOf("rafPending") !== -1);
@@ -322,6 +324,18 @@ ok("lazy-loader.js — try/catch fallback",       /try\s*\{/.test(lazyLoaderJs) 
 console.log("\n\u2500\u2500 Static assets");
 
 var staticImgs = [
+  "static/img/hero/hero-cover-480.avif",
+  "static/img/hero/hero-cover-480.webp",
+  "static/img/hero/hero-cover-480.jpg",
+  "static/img/hero/hero-cover-768.avif",
+  "static/img/hero/hero-cover-768.webp",
+  "static/img/hero/hero-cover-768.jpg",
+  "static/img/hero/hero-cover-1200.avif",
+  "static/img/hero/hero-cover-1200.webp",
+  "static/img/hero/hero-cover-1200.jpg",
+  "static/img/hero/hero-cover-1920.avif",
+  "static/img/hero/hero-cover-1920.webp",
+  "static/img/hero/hero-cover-1920.jpg",
   "static/img/travel/lake-run.jpg",
   "static/img/travel/flower-garden.jpg",
   "static/img/travel/langbiang.jpg",
@@ -331,6 +345,15 @@ var staticImgs = [
 ];
 staticImgs.forEach(function(f) {
   ok(f + " exists", fs.existsSync(path.join(__dirname, f)));
+});
+rooms.filter(function (r) { return !!r.coverPhoto; }).forEach(function (r) {
+  var stem = path.basename(r.coverPhoto, ".jpg");
+  [360, 540, 720, 1080].forEach(function (w) {
+    ["avif", "webp", "jpg"].forEach(function (format) {
+      var variant = "static/img/rooms/catalog/variants/" + stem + "-" + w + "." + format;
+      ok(variant + " exists", fs.existsSync(path.join(__dirname, variant)));
+    });
+  });
 });
 ok("favicon.svg at root",                  fs.existsSync(path.join(__dirname, "favicon.svg")));
 ok("robots.txt at root",                   fs.existsSync(path.join(__dirname, "robots.txt")));

@@ -1,0 +1,45 @@
+/* -- Tag utilities -----------------------------------------------
+ * src/core/tags.css
+ * Compact labels, badges, and status markers.
+ * ---------------------------------------------------------------- */
+
+#cp12-wrap .tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-block-size: 28px;
+  padding: var(--sp-1) var(--sp-3);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-pill);
+  background: var(--surface-tonal);
+  color: var(--text-secondary);
+  font-size: var(--fs-micro);
+  line-height: var(--lh-loose);
+  letter-spacing: var(--ls-wide);
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+#cp12-wrap .tag--accent {
+  border-color: var(--interactive-accent);
+  background: var(--gold-10);
+  color: var(--text-accent);
+}
+
+#cp12-wrap .tag--badge {
+  border-color: transparent;
+  background: var(--interactive-accent);
+  color: var(--text-primary);
+}
+
+#cp12-wrap .tag--status-available {
+  border-color: var(--border-strong);
+  background: var(--surface-elevated);
+  color: var(--interactive-primary);
+}
+
+#cp12-wrap .tag--status-soon {
+  border-color: var(--border-default);
+  background: var(--surface-tonal);
+  color: var(--text-muted);
+}

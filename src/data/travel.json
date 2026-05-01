@@ -6,8 +6,12 @@
     "difficulty": "Easy",
     "cat": "Running · Lakeside",
     "name": "Hồ Xuân Hương",
-    "distance": "3.4km away",
-    "duration": "15–30 mins",
+    "distance": "3.4 KM",
+    "duration": "15–30 MIN",
+    "distance_km": 3.4,
+    "duration_min_low": 15,
+    "duration_min_high": 30,
+    "destination_coords": "11.9427,108.4485",
     "highlight": "Active recovery done right. Start with an easy, crisp 5km shakeout run around the lake. At 1,500m elevation, a morning jog here hits different."
   },
   {
@@ -16,8 +20,12 @@
     "difficulty": "Easy",
     "cat": "Nature · Photography",
     "name": "Vườn Hoa Thành Phố Đà Lạt",
-    "distance": "3.4km away",
-    "duration": "15-30 mins",
+    "distance": "3.4 KM",
+    "duration": "15-30 MIN",
+    "distance_km": 3.4,
+    "duration_min_low": 15,
+    "duration_min_high": 30,
+    "destination_coords": "11.9483,108.4522",
     "highlight": "The city's iconic flower park overlooking Xuan Huong Lake. Features hundreds of flower species including hydrangeas, orchids, and roses perfectly curated."
   },
   {
@@ -27,8 +35,12 @@
     "difficulty": "Hard",
     "cat": "Trail Running · Mountain",
     "name": "Đỉnh núi Langbiang",
-    "distance": "11.5km away",
-    "duration": "1-2 hours",
+    "distance": "11.5 KM",
+    "duration": "1-2 HRS",
+    "distance_km": 11.5,
+    "duration_min_low": 60,
+    "duration_min_high": 120,
+    "destination_coords": "12.0454,108.4283",
     "highlight": "2,167m - The Roof of Da Lat. Skip the easy Radar Peak road to tackle the real 10.6km loop up Ba Mountain. That last 360m push with 717m total elevation gain tests every muscle."
   },
   {
@@ -37,8 +49,12 @@
     "difficulty": "Easy",
     "cat": "Food & Culture",
     "name": "Chợ đêm thành phố Đà Lạt",
-    "distance": "4.4km away",
-    "duration": "20-30 mins",
+    "distance": "4.4 KM",
+    "duration": "20-30 MIN",
+    "distance_km": 4.4,
+    "duration_min_low": 20,
+    "duration_min_high": 30,
+    "destination_coords": "11.9416,108.4383",
     "highlight": "Swap your trail shoes for sandals. Replenish your calories with authentic bánh tráng nướng and hot soy milk in the chilly mountain air after a big hike."
   },
   {
@@ -48,8 +64,12 @@
     "difficulty": "Easy",
     "cat": "Nature · Photography",
     "name": "Đồi chè Cầu Đất Đà Lạt",
-    "distance": "26km away",
-    "duration": "1-2 hours",
+    "distance": "26 KM",
+    "duration": "1-2 HRS",
+    "distance_km": 26.0,
+    "duration_min_low": 60,
+    "duration_min_high": 120,
+    "destination_coords": "11.8906,108.5714",
     "highlight": "Dial in the vert for Dalat Ultra Trail! The 20.7-mile loop transitions from smooth dirt roads to technical rocky descents. Log 1,200m D+ before the heat hits."
   },
   {
@@ -58,8 +78,12 @@
     "difficulty": "Easy–Med",
     "cat": "Culture & Spirituality",
     "name": "Thiền viện Trúc Lâm Đà Lạt",
-    "distance": "7.4km away",
-    "duration": "30-45 mins",
+    "distance": "7.4 KM",
+    "duration": "30-45 MIN",
+    "distance_km": 7.4,
+    "duration_min_low": 30,
+    "duration_min_high": 45,
+    "destination_coords": "11.9037,108.4352",
     "highlight": "Take the cable car up; earn the 4km pine-trail descent back to town. Fully runnable with switchbacks — time it early morning before tour groups hit the trail."
   }
 ]

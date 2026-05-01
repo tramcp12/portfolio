@@ -1,0 +1,49 @@
+{
+  "extends": ["stylelint-config-standard"],
+  "plugins": ["stylelint-declaration-strict-value"],
+  "defaultSeverity": "warning",
+  "rules": {
+    "scale-unlimited/declaration-strict-value": [
+      [
+        "font-size",
+        "margin",
+        "margin-top",
+        "margin-right",
+        "margin-bottom",
+        "margin-left",
+        "margin-block",
+        "margin-block-start",
+        "margin-block-end",
+        "margin-inline",
+        "margin-inline-start",
+        "margin-inline-end",
+        "padding",
+        "padding-top",
+        "padding-right",
+        "padding-bottom",
+        "padding-left",
+        "padding-block",
+        "padding-block-start",
+        "padding-block-end",
+        "padding-inline",
+        "padding-inline-start",
+        "padding-inline-end",
+        "gap",
+        "row-gap",
+        "column-gap"
+      ],
+      {
+        "ignoreValues": [
+          "0",
+          "auto",
+          "inherit",
+          "initial",
+          "unset",
+          "none"
+        ],
+        "severity": "warning",
+        "message": "Expected design token for \"${value}\" of \"${property}\""
+      }
+    ]
+  }
+}

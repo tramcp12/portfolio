@@ -1,22 +1,33 @@
 /* ── 4. Travel filter tabs ────────────────────────────────── */
 (function () {
   try {
-  var wrap = document.getElementById("cp12-wrap");
-  var tabs = wrap ? Array.from(wrap.querySelectorAll(".filter-tabs .tab")) : [];
-  var cards = wrap ? Array.from(wrap.querySelectorAll(".travel-card")) : [];
-  var grid = wrap ? wrap.querySelector(".travel-grid") : null;
-  var status = document.getElementById("travel-filter-status");
+  const wrap = document.getElementById("cp12-wrap");
+  const tabs = wrap ? Array.from(wrap.querySelectorAll(".filter-tabs .tab")) : [];
+  const cards = wrap ? Array.from(wrap.querySelectorAll(".explore-card")) : [];
+  const grid = wrap ? wrap.querySelector(".travel-grid") : null;
+  const status = document.getElementById("travel-filter-status");
+  const emptyState = wrap ? wrap.querySelector(".explore-empty") : null;
+
+  function cssDurationMs(token, fallback) {
+    const value = getComputedStyle(document.documentElement).getPropertyValue(token).trim();
+    const match = /^([\d.]+)(ms|s)$/.exec(value);
+    if (!match) return fallback;
+    const amount = Number(match[1]);
+    if (!Number.isFinite(amount)) return fallback;
+    return match[2] === "s" ? amount * 1000 : amount;
+  }
+
   /* IMPORTANT-3: duration must match CSS opacity transition on .travel-card */
-  var FILTER_FADE_MS = 220;
+  const FILTER_FADE_MS = cssDurationMs("--dur-2", 220);
 
   /* CRIT-3: Initialise tabpanel aria-labelledby to the default active tab */
   if (grid) grid.setAttribute("aria-labelledby", "tab-all");
 
   function filterCards(f, activeTabId) {
-    var count = 0;
+    let count = 0;
     cards.forEach(function (c) {
-      var cat = c.getAttribute("data-category");
-      var show = f === "all" || cat === f;
+      const cat = c.getAttribute("data-category");
+      const show = f === "all" || cat === f;
       if (show) {
         count++;
         /* IMPORTANT-3: show first, then fade in via rAF (allows CSS transition) */
@@ -36,13 +47,25 @@
         }(c));
       }
     });
+    
+
+    if (emptyState) {
+      if (count === 0) {
+        emptyState.classList.remove("sr-only");
+        emptyState.removeAttribute("hidden");
+      } else {
+        emptyState.classList.add("sr-only");
+        emptyState.setAttribute("hidden", "true");
+      }
+    }
+
     /* CRIT-3: Keep tabpanel label in sync with the active tab */
     if (grid && activeTabId) {
       grid.setAttribute("aria-labelledby", activeTabId);
     }
     /* CRIT-3: Announce result count via dedicated status element (not tabpanel) */
     if (status) {
-      var isVi = window.cp12Lang === "vi";
+      const isVi = window.cp12Lang === "vi";
       status.textContent = isVi
         ? count + " điểm đến được hiển thị"
         : count + " destination" + (count !== 1 ? "s" : "") + " shown";
@@ -68,7 +91,7 @@
 
     /* REC-1: Arrow key navigation for filter tabs (ARIA tabs pattern) */
     tab.addEventListener("keydown", function (e) {
-      var idx = -1;
+      let idx = -1;
       if (e.key === "ArrowRight" || e.key === "ArrowDown") {
         e.preventDefault();
         idx = (tabIndex + 1) % tabs.length;

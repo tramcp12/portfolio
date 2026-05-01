@@ -1,42 +1,56 @@
 /* ── 2. Room detail modal ────────────────────────────────────── */
 (function () {
-  var modal = document.getElementById("cp12-room-modal");
+  const modal = document.getElementById("cp12-room-modal");
   if (!modal) return;
 
-  var modalInner  = modal.querySelector(".room-modal-inner");
-  var mainImg     = modal.querySelector(".room-modal-main-img");
-  var caption     = modal.querySelector(".room-modal-caption");
-  var counter     = modal.querySelector(".room-modal-counter");
-  var thumbsCont  = modal.querySelector(".room-modal-thumbs");
-  var prevBtn     = modal.querySelector(".room-modal-prev");
-  var nextBtn     = modal.querySelector(".room-modal-next");
-  var closeBtn    = modal.querySelector(".room-modal-close");
-  var bookBtn     = modal.querySelector(".room-modal-book-btn");
-  var modalName   = modal.querySelector(".room-modal-name");
-  var modalPrice  = modal.querySelector(".room-modal-price");
-  var modalDesc   = modal.querySelector(".room-modal-desc");
-  var modalAmen   = modal.querySelector(".room-modal-amenities");
-  var modalMeta   = modal.querySelector(".room-modal-meta");
+  const modalInner  = modal.querySelector(".room-modal-inner");
+  const mainImg     = modal.querySelector(".room-modal-main-img");
+  const caption     = modal.querySelector(".room-modal-caption");
+  const counter     = modal.querySelector(".room-modal-counter");
+  const thumbsCont  = modal.querySelector(".room-modal-thumbs");
+  const prevBtn     = modal.querySelector(".room-modal-prev");
+  const nextBtn     = modal.querySelector(".room-modal-next");
+  const closeBtn    = modal.querySelector(".room-modal-close");
+  const bookBtn     = modal.querySelector(".room-modal-book-btn");
+  const modalName   = modal.querySelector(".room-modal-name");
+  const modalPrice  = modal.querySelector(".room-modal-price");
+  const modalDesc   = modal.querySelector(".room-modal-desc");
+  const modalAmen   = modal.querySelector(".room-modal-amenities");
+  const modalMeta   = modal.querySelector(".room-modal-meta");
 
-  var rooms = [];
+  let rooms = [];
   try {
-    var dataEl = document.getElementById("rooms-data");
+    const dataEl = document.getElementById("rooms-data");
     if (dataEl) rooms = JSON.parse(dataEl.textContent);
   } catch (e) { console.warn("[CP12] room-modal: rooms data parse error:", e); }
 
-  var currentRoomIndex  = -1;
-  var currentPhotoIndex = 0;
-  var currentPhotos     = [];
-  var currentLang       = "vi";
-  var lastFocus         = null;
-  var savedScrollY      = 0;
-  var isOpen            = false;
+  let currentRoomIndex  = -1;
+  let currentPhotoIndex = 0;
+  let currentPhotos     = [];
+  let currentLang       = "vi";
+  let lastFocus         = null;
+  let savedScrollY      = 0;
+  let isOpen            = false;
+
+  function cssDurationMs(token, fallback) {
+    const value = getComputedStyle(document.documentElement).getPropertyValue(token).trim();
+    const match = /^([\d.]+)(ms|s)$/.exec(value);
+    if (!match) return fallback;
+    const amount = Number(match[1]);
+    if (!Number.isFinite(amount)) return fallback;
+    return match[2] === "s" ? amount * 1000 : amount;
+  }
+
+  const modalSwitchMs = cssDurationMs("--dur-3", 380);
+  const modalFocusMs = cssDurationMs("--dur-instant", 50);
+  const modalCloseMs = cssDurationMs("--dur-320", 320);
+  const modalButtonFeedbackMs = cssDurationMs("--dur-150", 150);
 
   /* Cache parsed i18n strings per language to avoid repeated JSON.parse */
-  var stringsCache = {};
+  const stringsCache = {};
   function loadStrings(lang) {
     if (stringsCache[lang]) return stringsCache[lang];
-    var el = document.getElementById("lang-" + lang + "-data");
+    const el = document.getElementById("lang-" + lang + "-data");
     if (!el) return {};
     try { stringsCache[lang] = JSON.parse(el.textContent); }
     catch (e) { stringsCache[lang] = {}; }
@@ -49,7 +63,7 @@
     return getString("panel.photoCount").replace("{n}", n).replace("{total}", total);
   }
 
-  var escHtml = window.cp12Esc || function(s) { return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); };
+  const escHtml = window.cp12Esc || function(s) { return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;"); };
 
   /* CRIT-3: set aria-hidden via JS init — display:none alone is sufficient for AT
    * but we also need aria-hidden so removeAttribute("aria-hidden") signals open state */
@@ -62,8 +76,8 @@
     if (idx >= currentPhotos.length) idx = 0;
     currentPhotoIndex = idx;
 
-    var photo    = currentPhotos[idx];
-    var altLabel = (currentLang === "vi" && photo.alt_vi) ? photo.alt_vi : (photo.alt || "");
+    const photo    = currentPhotos[idx];
+    const altLabel = (currentLang === "vi" && photo.alt_vi) ? photo.alt_vi : (photo.alt || "");
 
     /* Set via DOM API — no innerHTML url() injection */
     mainImg.style.backgroundImage = "url(" + JSON.stringify(photo.src) + ")";
@@ -71,8 +85,8 @@
     if (caption) caption.textContent = altLabel;
     if (counter) counter.textContent = formatPhotoCount(idx + 1, currentPhotos.length);
 
-    var thumbs = thumbsCont ? thumbsCont.querySelectorAll(".room-modal-thumb") : [];
-    for (var i = 0; i < thumbs.length; i++) {
+    const thumbs = thumbsCont ? thumbsCont.querySelectorAll(".room-modal-thumb") : [];
+    for (let i = 0; i < thumbs.length; i++) {
       thumbs[i].classList.toggle("active", i === idx);
       thumbs[i].setAttribute("aria-pressed", i === idx ? "true" : "false");
     }
@@ -82,11 +96,11 @@
     if (!thumbsCont) return;
     thumbsCont.innerHTML = "";
     currentPhotos.forEach(function (photo, idx) {
-      var btn = document.createElement("button");
+      const btn = document.createElement("button");
       btn.type = "button";
       btn.className = "room-modal-thumb" + (idx === currentPhotoIndex ? " active" : "");
       /* IMPORTANT-9 pattern: aria-label on thumbs, not title */
-      var label = (currentLang === "vi" && photo.alt_vi) ? photo.alt_vi : (photo.alt || ("Photo " + (idx + 1)));
+      const label = (currentLang === "vi" && photo.alt_vi) ? photo.alt_vi : (photo.alt || ("Photo " + (idx + 1)));
       btn.setAttribute("aria-label", label);
       btn.setAttribute("aria-pressed", idx === currentPhotoIndex ? "true" : "false");
       btn.style.backgroundImage = "url(" + JSON.stringify(photo.src) + ")";
@@ -99,16 +113,16 @@
 
   /* ── Populate modal for a given room + language ── */
   function populateModal(roomIndex, lang) {
-    var r = rooms[roomIndex];
+    const r = rooms[roomIndex];
     if (!r) return;
     currentLang = lang || "vi";
 
-    var isVi     = currentLang === "vi";
-    var name     = (isVi && r.name_vi) ? r.name_vi : r.name;
-    var desc     = (isVi && r.desc_vi)     ? r.desc_vi     : r.desc;
-    var amenities= (isVi && r.amenities_vi)? r.amenities_vi: (r.amenities || []);
-    var metaList = (isVi && r.meta_vi)     ? r.meta_vi     : (r.meta || []);
-    var nightLbl = isVi ? "VND / đêm" : "VND / night";
+    const isVi     = currentLang === "vi";
+    const name     = (isVi && r.name_vi) ? r.name_vi : r.name;
+    const desc     = (isVi && r.desc_vi)     ? r.desc_vi     : r.desc;
+    const amenities= (isVi && r.amenities_vi)? r.amenities_vi: (r.amenities || []);
+    const metaList = (isVi && r.meta_vi)     ? r.meta_vi     : (r.meta || []);
+    const nightLbl = isVi ? "VND / đêm" : "VND / night";
 
     if (modalName)  modalName.textContent  = name;
     if (modalPrice) modalPrice.textContent = r.price + " " + nightLbl;
@@ -138,7 +152,7 @@
     /* i18n labels + pre-filled booking href */
     if (bookBtn) {
       bookBtn.textContent = getString("panel.bookBtn");
-      var bookSubject = (isVi && r.bookSubject_vi) ? r.bookSubject_vi
+      const bookSubject = (isVi && r.bookSubject_vi) ? r.bookSubject_vi
                       : r.bookSubject ? r.bookSubject
                       : (isVi ? "Đặt phòng — " : "Booking — ") + name;
       bookBtn.href = "mailto:cp12tramdungchill@gmail.com?subject=" +
@@ -165,7 +179,7 @@
       setTimeout(function () {
         populateModal(roomIndex, lang);
         modalInner.classList.remove("room-modal-switching");
-      }, 200);
+      }, modalSwitchMs);
       return;
     }
 
@@ -185,7 +199,7 @@
 
     setTimeout(function () {
       if (closeBtn) closeBtn.focus();
-    }, 50);
+    }, modalFocusMs);
   }
 
   /* ── Close modal ── */
@@ -200,7 +214,7 @@
     /* IMPORTANT-2: capture and clear lastFocus before async timeout to
      * prevent race condition where scrollTo triggers layout shift and
      * moves focus before restoration completes */
-    var focusTarget = lastFocus;
+    const focusTarget = lastFocus;
     lastFocus = null;
 
     setTimeout(function () {
@@ -209,7 +223,7 @@
       window.scrollTo({ top: savedScrollY, behavior: "instant" });
       /* Focus restored after scroll to prevent scroll-to clobbering focus */
       if (focusTarget && focusTarget.focus) focusTarget.focus();
-    }, 320);
+    }, modalCloseMs);
   }
 
   /* ── Refresh language (called by lang-switcher IIFE 0) ── */
@@ -223,12 +237,12 @@
   /* ── Focus trap (WCAG 2.1 AA SC 2.4.3) ── */
   document.addEventListener("keydown", function (e) {
     if (e.key !== "Tab" || !isOpen) return;
-    var focusable = modal.querySelectorAll(
+    const focusable = modal.querySelectorAll(
       "button, [href], input, select, textarea, [tabindex]:not([tabindex=\"-1\"])"
     );
     if (!focusable.length) return;
-    var first = focusable[0];
-    var last  = focusable[focusable.length - 1];
+    const first = focusable[0];
+    const last  = focusable[focusable.length - 1];
     if (e.shiftKey) {
       if (document.activeElement === first) {
         e.preventDefault();
@@ -249,12 +263,12 @@
     if (e.key === "ArrowLeft" && prevBtn) {
       showPhoto(currentPhotoIndex - 1);
       prevBtn.classList.add("btn-active");
-      setTimeout(function() { prevBtn.classList.remove("btn-active"); }, 150);
+      setTimeout(function() { prevBtn.classList.remove("btn-active"); }, modalButtonFeedbackMs);
     }
     if (e.key === "ArrowRight" && nextBtn) {
       showPhoto(currentPhotoIndex + 1);
       nextBtn.classList.add("btn-active");
-      setTimeout(function() { nextBtn.classList.remove("btn-active"); }, 150);
+      setTimeout(function() { nextBtn.classList.remove("btn-active"); }, modalButtonFeedbackMs);
     }
   });
 

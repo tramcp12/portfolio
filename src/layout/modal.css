@@ -7,14 +7,15 @@
   position: fixed;
   inset: 0;
   z-index: 1000000;
-  background: rgba(26, 26, 23, 0.95);
+  background: var(--charcoal-deep-95);
   align-items: center;
   justify-content: center;
-  padding: 2rem;
+  padding: var(--sp-6);
+
   /* Fade transition — visibility keeps it out of tab order when hidden */
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.28s ease, visibility 0.28s ease;
+  transition: opacity var(--dur-280) var(--ease-default), visibility var(--dur-280) var(--ease-default);
 }
 
 #cp12-wrap .modal.open {
@@ -25,9 +26,9 @@
 #cp12-wrap .modal-inner {
   max-width: 800px;
   width: 100%;
-  background: var(--charcoal);
-  border: 1px solid rgba(201, 169, 110, 0.2);
-  padding: 2rem;
+  background: var(--surface-inverse-strong);
+  border: 1px solid var(--gold-warm-20);
+  padding: var(--sp-6);
   position: relative;
 }
 
@@ -37,8 +38,8 @@
   right: 1rem;
   background: none;
   border: none;
-  color: var(--gold);
-  font-size: 1.5rem;
+  color: var(--interactive-accent);
+  font-size: var(--fs-h4);
   cursor: pointer;
   line-height: 1;
   font-family: var(--font-sans);
@@ -51,50 +52,53 @@
 
 #cp12-wrap .modal-video-placeholder {
   aspect-ratio: 16/9;
-  background: var(--pine);
+  background: var(--surface-brand);
   display: flex;
   align-items: center;
   justify-content: center;
   font-family: var(--font-serif);
-  font-size: 1.5rem;
-  color: var(--cream);
+  font-size: var(--fs-h4);
+  color: var(--surface-base);
   text-align: center;
-  padding: 2rem;
+  padding: var(--sp-6);
   flex-direction: column;
-  gap: 1rem;
+  gap: var(--sp-4);
 }
 
 #cp12-wrap .modal-note {
-  font-size: 0.75rem;
-  color: var(--mist);
+  font-size: var(--fs-caption);
+  color: var(--surface-muted);
   letter-spacing: 0.1em;
-  margin-top: 0.5rem;
+  margin-top: var(--sp-2);
 }
 
 /* ── Video modal responsive rules ────────────────────────── */
 
-@media (max-width: 768px) {
+@media (width <= 768px) {
   #cp12-wrap .modal {
-    padding: 1rem;
+    padding: var(--sp-4);
   }
+
   #cp12-wrap .modal-inner {
-    padding: 1.25rem;
+    padding: var(--sp-5);
   }
 }
 
-@media (max-width: 480px) {
+@media (width <= 480px) {
   #cp12-wrap .modal {
     padding: 0;
     align-items: flex-end;
   }
+
   #cp12-wrap .modal-inner {
     /* Full-width bottom sheet on small screens */
     max-width: 100%;
-    padding: 1rem;
-    padding-bottom: env(safe-area-inset-bottom, 0px);
+    padding: var(--sp-4);
+    padding-bottom: env(safe-area-inset-bottom, 0);
   }
+
   #cp12-wrap .modal-video-placeholder {
-    font-size: 1.2rem;
-    padding: 1.5rem;
+    font-size: var(--fs-lead);
+    padding: var(--sp-5);
   }
 }

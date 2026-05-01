@@ -11,10 +11,10 @@
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  background: rgba(29, 42, 38, 0.75);
-  border: 1px solid rgba(201, 169, 110, 0.4);
-  color: var(--gold);
-  font-size: 1.1rem;
+  background: var(--surface-floating-control);
+  border: 1px solid var(--gold-warm-40);
+  color: var(--interactive-accent);
+  font-size: var(--fs-lead);
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -22,10 +22,10 @@
   opacity: 0;
   pointer-events: none;
   transition:
-    opacity 0.4s ease,
-    background 0.25s,
-    transform 0.25s;
-  animation: cp12BobDown 2.4s ease-in-out infinite;
+    opacity var(--dur-400) var(--ease-default),
+    background var(--dur-250) var(--ease-default),
+    transform var(--dur-250) var(--ease-default);
+  animation: cp12BobDown var(--dur-cycle) var(--ease-in-out) infinite;
   backdrop-filter: blur(6px);
 }
 
@@ -35,18 +35,18 @@
 }
 
 #cp12-next-btn:hover {
-  background: var(--pine);
-  border-color: var(--gold);
+  background: var(--surface-brand);
+  border-color: var(--interactive-accent);
   transform: translateX(-50%) translateY(4px);
   animation: none;
 }
 
 #cp12-next-btn:focus-visible {
-  outline: 2px solid var(--gold);
+  outline: 2px solid var(--interactive-accent);
   outline-offset: 3px;
 }
 
-@media (max-width: 600px) {
+@media (width <= 600px) {
   #cp12-next-btn {
     display: none;
   }

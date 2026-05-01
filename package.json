@@ -3,14 +3,23 @@
   "private": true,
   "description": "Trạm CP12 — Homestay Đà Lạt static website",
   "scripts": {
-    "build":    "node build.js",
+    "build": "node build.js",
     "validate": "node validate.js",
-    "lint":     "html-validate index.html",
-    "test":     "node test.js",
-    "check":    "npm run validate && npm run lint && npm test",
-    "ci":       "npm run build"
+    "lint:html": "html-validate index.html",
+    "lint:css": "stylelint \"src/{features,layout}/**/*.css\" --allow-empty-input",
+    "lint:js": "eslint \"src/**/*.js\"",
+    "lint": "npm run lint:html && npm run lint:css && npm run lint:js",
+    "test": "node test.js",
+    "check": "npm run validate && npm run lint && npm test",
+    "ci": "npm run build && npm run check"
   },
   "devDependencies": {
-    "html-validate": "^9.0.0"
+    "eslint": "^10.2.1",
+    "globals": "^17.5.0",
+    "html-validate": "^9.0.0",
+    "sharp": "^0.34.5",
+    "stylelint": "^17.9.1",
+    "stylelint-config-standard": "^40.0.0",
+    "stylelint-declaration-strict-value": "^1.11.1"
   }
 }
