@@ -75,6 +75,7 @@ console.log("\nBuilding Trạm CP12...\n");
 /* ── Data ── Phase 4 + 5: load src/data/ JSON files ──────────────────────── */
 
 var roomsData  = JSON.parse(fs.readFileSync(path.join(root, "src", "data", "rooms.json"),      "utf8"));
+var faqData    = JSON.parse(fs.readFileSync(path.join(root, "src", "data", "faq.json"),        "utf8"));
 var stringsVi  = JSON.parse(fs.readFileSync(path.join(root, "src", "data", "strings.vi.json"), "utf8"));
 var stringsEn  = JSON.parse(fs.readFileSync(path.join(root, "src", "data", "strings.en.json"), "utf8"));
 
@@ -134,6 +135,7 @@ var htmlParts = [
   injectJson("lang-vi-data", stringsVi),
   injectJson("lang-en-data", stringsEn),
   injectJson("rooms-data",   roomsData),
+  injectJson("faq-data",     faqData),
   readSrc("layout/jsonld.html.partial"),
 ];
 var html = htmlParts.join("\n");
@@ -192,6 +194,7 @@ if (bvCount !== 1) throw new Error("CSS-1b build guard: Be Vietnam Pro appears "
 var jsSources = [
   "shared/lang-switcher.js",
   "features/rooms/rooms.js",
+  "features/faq/faq.js",
   "features/rooms/room-modal.js",
   "features/video/video.js",
   "features/explore/explore.js",

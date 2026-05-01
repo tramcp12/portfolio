@@ -73,6 +73,9 @@
     /* Refresh room detail modal if open (IIFE 2 exposes this) */
     if (window.cp12RefreshModalLang) window.cp12RefreshModalLang(lang);
 
+    /* Re-render FAQ with the new language */
+    if (window.cp12RenderFaq) window.cp12RenderFaq(lang);
+
     /* Persist preference */
     try { localStorage.setItem(STORAGE_KEY, lang); } catch (e) {}
 
