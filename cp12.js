@@ -795,9 +795,10 @@
       if (!modal) return;
       modal.classList.remove("open");
       modal.setAttribute("aria-hidden", "true");
+      const dur = parseInt(getComputedStyle(document.documentElement).getPropertyValue("--dur-320").trim()) || 320;
       setTimeout(function () {
         modal.style.display = "";
-      }, 300);
+      }, dur);
       if (lastFocus) lastFocus.focus();
     }
 

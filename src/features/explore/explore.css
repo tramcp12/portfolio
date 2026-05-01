@@ -23,7 +23,7 @@
     var(--surface-accent),
     var(--interactive-accent)
   );
-  z-index: 2;
+  z-index: var(--z-raised);
   pointer-events: none;
 }
 
@@ -31,7 +31,7 @@
   max-width: 1200px;
   margin: 0 auto;
   position: relative;
-  z-index: 1;
+  z-index: var(--z-content);
 }
 
 #cp12-wrap .travel-header {

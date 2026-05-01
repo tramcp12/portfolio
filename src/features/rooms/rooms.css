@@ -10,7 +10,7 @@
 
 #cp12-wrap .rooms-header {
   position: relative;
-  z-index: 1;
+  z-index: var(--z-content);
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(320px, 0.8fr);
   gap: var(--sp-8);
@@ -29,7 +29,7 @@
 
 #cp12-wrap .rooms-grid {
   position: relative;
-  z-index: 1;
+  z-index: var(--z-content);
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: var(--sp-5);
