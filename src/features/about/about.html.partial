@@ -83,7 +83,7 @@
             <cite data-i18n="about.pullQuote.author">— CP12 Team</cite>
           </div>
           
-          <div class="rules-section">
+          <div id="policies" class="rules-section">
             <div class="section-label section-label--center" aria-hidden="true" data-i18n="rules.label">
               House Rules
             </div>
