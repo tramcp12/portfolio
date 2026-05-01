@@ -88,19 +88,19 @@
 
               <details class="faq-item">
                 <summary class="faq-question">
-                  <h3 data-i18n="faq.q9.question">Do the rooms have heaters?</h3>
+                  <h3 data-i18n="faq.q9.question">Freedom to wander: 24/7 Access</h3>
                 </summary>
                 <p class="faq-answer" data-i18n="faq.q9.answer">
-                  Yes, our rooms are equipped with heaters to keep you warm during the chilly Đà Lạt nights.
+                  There is no curfew. After check-in, you will be given a password for 24/7 independent access to the homestay.
                 </p>
               </details>
 
               <details class="faq-item">
                 <summary class="faq-question">
-                  <h3 data-i18n="faq.q9.question">Is there a curfew?</h3>
+                  <h3 data-i18n="faq.q10.question">Mountain chills: Room heating</h3>
                 </summary>
-                <p class="faq-answer" data-i18n="faq.q9.answer">
-                  There is no curfew. After check-in, you will be given a password for 24/7 independent access to the homestay.
+                <p class="faq-answer" data-i18n="faq.q10.answer">
+                  Yes, our rooms are equipped with heaters to keep you warm during the chilly Đà Lạt nights.
                 </p>
               </details>
 
