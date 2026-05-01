@@ -75,5 +75,43 @@
               </div>
               <a href="#book" class="btn-primary" data-i18n="about.bookBtn">Book Your Stay &rarr;</a>
             </div>
+            </div>
+          </div>
+          
+          <div class="rules-section">
+            <div class="section-label section-label--center" aria-hidden="true" data-i18n="rules.label">
+              House Rules
+            </div>
+            <h3 class="rules-heading" data-i18n-html="rules.heading">
+              Policies for a<br><em>peaceful stay.</em>
+            </h3>
+            
+            <div class="rules-grid">
+              <div class="rule-card">
+                <div class="rule-icon" aria-hidden="true">🕒</div>
+                <h4 data-i18n="rules.general.title">General Rules & Quiet Hours</h4>
+                <p data-i18n-html="rules.general.desc">Quiet Time is strictly enforced from <strong>10:00 PM to 7:00 AM</strong>. Please keep voices, music, and TV volumes low. Check-in from 14:00, check-out by 12:00. Turn off AC and lights when leaving.</p>
+              </div>
+              <div class="rule-card">
+                <div class="rule-icon" aria-hidden="true">🍳</div>
+                <h4 data-i18n="rules.kitchen.title">Shared Kitchen & BBQ Area</h4>
+                <p data-i18n-html="rules.kitchen.desc">Clean all dishes and the grill immediately after use. Return items to their original places. Do not move furniture. A cleaning penalty of <strong>200,000 VND</strong> applies if left uncleaned.</p>
+              </div>
+              <div class="rule-card">
+                <div class="rule-icon" aria-hidden="true">🎤</div>
+                <h4 data-i18n="rules.karaoke.title">Karaoke & Entertainment</h4>
+                <p data-i18n-html="rules.karaoke.desc">All Karaoke and loud music must completely stop by <strong>9:30 PM</strong>. Please close doors and windows while singing.</p>
+              </div>
+              <div class="rule-card">
+                <div class="rule-icon" aria-hidden="true">🧺</div>
+                <h4 data-i18n="rules.laundry.title">Laundry & Wash Area</h4>
+                <p data-i18n-html="rules.laundry.desc">Operating hours: <strong>7:00 AM to 9:30 PM</strong>. Please promptly remove clothes once the cycle is complete.</p>
+              </div>
+              <div class="rule-card">
+                <div class="rule-icon" aria-hidden="true">🚭</div>
+                <h4 data-i18n="rules.smoking.title">Smoking Policy</h4>
+                <p data-i18n-html="rules.smoking.desc">Smoking is <strong>100% prohibited</strong> indoors. Designated outdoor areas only. Please maintain general cleanliness.</p>
+              </div>
+            </div>
           </div>
         </section>
