@@ -10,7 +10,7 @@
 
 #cp12-wrap .rooms-header {
   position: relative;
-  z-index: 1;
+  z-index: var(--z-content);
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(320px, 0.8fr);
   gap: var(--sp-8);
@@ -29,7 +29,7 @@
 
 #cp12-wrap .rooms-grid {
   position: relative;
-  z-index: 1;
+  z-index: var(--z-content);
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: var(--sp-5);
@@ -54,16 +54,16 @@
   transform: translateY(-2px);
 }
 
-#cp12-wrap .room-card-featured:hover {
-  box-shadow: var(--shadow-3), var(--shadow-accent-soft);
-  transform: translateY(-8px);
-}
-
 #cp12-wrap .room-card-featured {
   grid-column: 1 / -1;
   grid-template-columns: minmax(0, 1fr) minmax(320px, 0.72fr);
   grid-template-rows: auto;
   min-block-size: 560px;
+}
+
+#cp12-wrap .room-card-featured:hover {
+  box-shadow: var(--shadow-3), var(--shadow-accent-soft);
+  transform: translateY(-8px);
 }
 
 #cp12-wrap .room-card-coming-soon {
@@ -137,7 +137,6 @@
   padding: var(--sp-2) var(--sp-3);
   background: var(--pine-29-75);
   backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
   color: var(--gold-warm);
   border: 1px solid var(--white-15);
   border-radius: var(--radius-sm);

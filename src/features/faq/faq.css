@@ -3,7 +3,7 @@
  * ──────────────────────────────────────────────────────────── */
 
 #cp12-wrap .faq-section {
-  background: var(--surface-elevated);
+  background: var(--surface-base);
   padding: var(--sp-9) var(--sp-6);
 }
 
@@ -65,7 +65,7 @@
 
 /* Open-state treatment: subtle background tint + slightly bolder text */
 #cp12-wrap .faq-item[open] > .faq-question {
-  background: var(--surface-base);
+  background: var(--surface-elevated);
 }
 
 #cp12-wrap .faq-question h3 {

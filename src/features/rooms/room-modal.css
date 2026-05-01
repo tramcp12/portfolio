@@ -272,7 +272,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 10;
+  z-index: var(--z-sticky);
   transition: background var(--dur-200) var(--ease-standard),
               transform var(--dur-200) var(--ease-standard);
 }

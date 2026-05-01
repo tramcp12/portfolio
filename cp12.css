@@ -182,6 +182,15 @@
   --ls-normal: 0;
   --ls-wide: 0.18em;
 
+  /* Z-index stacking ladder */
+  --z-content:   1;        /* in-flow stacked elements (cards, overlays) */
+  --z-raised:    2;        /* raised elements within a section */
+  --z-sticky:    10;       /* sticky elements within scroll containers */
+  --z-nav:       1000;     /* top-level navigation bar */
+  --z-dots:      9000;     /* page-section dot navigator + next-btn */
+  --z-modal:     1000000;  /* full-screen modal / video overlay */
+
+
   /* Spacing scale — strict 4px grid */
   --sp-1: 4px;
   --sp-2: 8px;
@@ -431,7 +440,7 @@
   top: 0;
   left: 0;
   right: 0;
-  z-index: 1000;
+  z-index: var(--z-nav);
   padding: var(--sp-5) var(--sp-7);
   display: flex;
   justify-content: space-between;
@@ -837,7 +846,7 @@
   right: 1.25rem;
   top: 50%;
   transform: translateY(-50%);
-  z-index: 9000;
+  z-index: var(--z-dots);
   display: flex;
   flex-direction: column;
   gap: var(--sp-3);
@@ -941,7 +950,7 @@
   bottom: 2rem;
   left: 50%;
   transform: translateX(-50%) translateY(0);
-  z-index: 9000;
+  z-index: var(--z-dots);
   width: 44px;
   height: 44px;
   border-radius: 50%;
@@ -1677,7 +1686,7 @@ html.i18n-loading [data-i18n-html] {
 #cp12-wrap .hero-overlay {
   position: absolute;
   inset: 0;
-  z-index: 1;
+  z-index: var(--z-content);
   background:
     linear-gradient(90deg, var(--surface-inverse-solid) 0%, var(--surface-inverse-translucent) 44%, transparent 78%),
     linear-gradient(0deg, var(--black-30) 0%, transparent 54%);
@@ -1686,7 +1695,7 @@ html.i18n-loading [data-i18n-html] {
 
 #cp12-wrap .hero-content {
   position: relative;
-  z-index: 2;
+  z-index: var(--z-raised);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -1763,7 +1772,7 @@ html.i18n-loading [data-i18n-html] {
   position: absolute;
   right: var(--sp-7);
   bottom: var(--sp-7);
-  z-index: 2;
+  z-index: var(--z-raised);
   display: grid;
   grid-template-columns: repeat(3, minmax(120px, 1fr));
   inline-size: min(560px, calc(100% - var(--sp-7) * 2));
@@ -1806,7 +1815,7 @@ html.i18n-loading [data-i18n-html] {
   position: absolute;
   bottom: var(--sp-6);
   left: 50%;
-  z-index: 2;
+  z-index: var(--z-raised);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1916,7 +1925,7 @@ html.i18n-loading [data-i18n-html] {
 
 #cp12-wrap .rooms-header {
   position: relative;
-  z-index: 1;
+  z-index: var(--z-content);
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(320px, 0.8fr);
   gap: var(--sp-8);
@@ -1935,7 +1944,7 @@ html.i18n-loading [data-i18n-html] {
 
 #cp12-wrap .rooms-grid {
   position: relative;
-  z-index: 1;
+  z-index: var(--z-content);
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: var(--sp-5);
@@ -1960,16 +1969,16 @@ html.i18n-loading [data-i18n-html] {
   transform: translateY(-2px);
 }
 
-#cp12-wrap .room-card-featured:hover {
-  box-shadow: var(--shadow-3), var(--shadow-accent-soft);
-  transform: translateY(-8px);
-}
-
 #cp12-wrap .room-card-featured {
   grid-column: 1 / -1;
   grid-template-columns: minmax(0, 1fr) minmax(320px, 0.72fr);
   grid-template-rows: auto;
   min-block-size: 560px;
+}
+
+#cp12-wrap .room-card-featured:hover {
+  box-shadow: var(--shadow-3), var(--shadow-accent-soft);
+  transform: translateY(-8px);
 }
 
 #cp12-wrap .room-card-coming-soon {
@@ -2043,7 +2052,6 @@ html.i18n-loading [data-i18n-html] {
   padding: var(--sp-2) var(--sp-3);
   background: var(--pine-29-75);
   backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
   color: var(--gold-warm);
   border: 1px solid var(--white-15);
   border-radius: var(--radius-sm);
@@ -2562,7 +2570,7 @@ html.i18n-loading [data-i18n-html] {
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 10;
+  z-index: var(--z-sticky);
   transition: background var(--dur-200) var(--ease-standard),
               transform var(--dur-200) var(--ease-standard);
 }
@@ -2868,7 +2876,7 @@ html.i18n-loading [data-i18n-html] {
     var(--surface-accent),
     var(--interactive-accent)
   );
-  z-index: 2;
+  z-index: var(--z-raised);
   pointer-events: none;
 }
 
@@ -2876,7 +2884,7 @@ html.i18n-loading [data-i18n-html] {
   max-width: 1200px;
   margin: 0 auto;
   position: relative;
-  z-index: 1;
+  z-index: var(--z-content);
 }
 
 #cp12-wrap .travel-header {
@@ -3604,7 +3612,7 @@ html.i18n-loading [data-i18n-html] {
  * ──────────────────────────────────────────────────────────── */
 
 #cp12-wrap .location-section {
-  background: var(--surface-base);
+  background: var(--surface-elevated);
   padding: var(--sp-9) var(--sp-6);
 }
 
@@ -3725,7 +3733,7 @@ html.i18n-loading [data-i18n-html] {
 #cp12-wrap .map-pin-icon {
   font-size: var(--fs-h2);
   position: relative;
-  z-index: 1;
+  z-index: var(--z-content);
   filter: drop-shadow(0 2px 8px var(--black-40));
 }
 
@@ -3737,7 +3745,7 @@ html.i18n-loading [data-i18n-html] {
   text-align: center;
   font-style: normal;
   position: relative;
-  z-index: 1;
+  z-index: var(--z-content);
 }
 
 #cp12-wrap .location-map-btn {
@@ -3797,7 +3805,7 @@ html.i18n-loading [data-i18n-html] {
   max-width: var(--container-default);
   margin: 0 auto;
   position: relative;
-  z-index: 1;
+  z-index: var(--z-content);
 }
 
 #cp12-wrap .blog-header {
@@ -4036,7 +4044,7 @@ html.i18n-loading [data-i18n-html] {
  * ──────────────────────────────────────────────────────────── */
 
 #cp12-wrap .faq-section {
-  background: var(--surface-elevated);
+  background: var(--surface-base);
   padding: var(--sp-9) var(--sp-6);
 }
 
@@ -4098,7 +4106,7 @@ html.i18n-loading [data-i18n-html] {
 
 /* Open-state treatment: subtle background tint + slightly bolder text */
 #cp12-wrap .faq-item[open] > .faq-question {
-  background: var(--surface-base);
+  background: var(--surface-elevated);
 }
 
 #cp12-wrap .faq-question h3 {
@@ -4195,7 +4203,7 @@ html.i18n-loading [data-i18n-html] {
 
 #cp12-wrap .cta-content {
   position: relative;
-  z-index: 1;
+  z-index: var(--z-content);
 }
 
 #cp12-wrap .cta-title {
@@ -4549,7 +4557,7 @@ html.i18n-loading [data-i18n-html] {
   display: flex;
   position: fixed;
   inset: 0;
-  z-index: 1000000;
+  z-index: var(--z-modal);
   background: var(--charcoal-deep-95);
   align-items: center;
   justify-content: center;

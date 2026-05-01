@@ -3,7 +3,7 @@
  * ──────────────────────────────────────────────────────────── */
 
 #cp12-wrap .location-section {
-  background: var(--surface-base);
+  background: var(--surface-elevated);
   padding: var(--sp-9) var(--sp-6);
 }
 
@@ -124,7 +124,7 @@
 #cp12-wrap .map-pin-icon {
   font-size: var(--fs-h2);
   position: relative;
-  z-index: 1;
+  z-index: var(--z-content);
   filter: drop-shadow(0 2px 8px var(--black-40));
 }
 
@@ -136,7 +136,7 @@
   text-align: center;
   font-style: normal;
   position: relative;
-  z-index: 1;
+  z-index: var(--z-content);
 }
 
 #cp12-wrap .location-map-btn {
