@@ -9,7 +9,7 @@ var fs   = require("fs");
 var path = require("path");
 var errors = [];
 var passes = [];
-var SECTION_IDS = ["home","rooms","testimonials","explore","about","location","journal","faq","book"];
+var SECTION_IDS = ["home","rooms","testimonials","explore","about","faq","location","journal","book"];
 
 function ok(label, cond) {
   if (cond) passes.push("  \u2705 " + label);
