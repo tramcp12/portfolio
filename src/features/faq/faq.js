@@ -13,20 +13,10 @@
     const grid = document.querySelector(".faq-grid");
     if (!grid || !Array.isArray(faq)) return;
 
-    const escHtml = window.cp12Esc || function(s) { return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;"); };
-
-    /* Read i18n strings from injected data element */
-    const faqStringsCache = {};
-    function getStrings(lang) {
-      if (faqStringsCache[lang]) return faqStringsCache[lang];
-      const el = document.getElementById("lang-" + lang + "-data");
-      if (!el) return {};
-      try { faqStringsCache[lang] = JSON.parse(el.textContent); } catch (e) { faqStringsCache[lang] = {}; }
-      return faqStringsCache[lang];
-    }
+    const escHtml = window.cp12Esc;
 
     function renderFaq(lang) {
-      const strings = getStrings(lang);
+      const strings = window.cp12GetStrings(lang);
       
       const html = faq.map(function(item) {
         const qKey = item.key + ".question";

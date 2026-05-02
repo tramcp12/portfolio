@@ -7,7 +7,7 @@
   position: fixed;
   inset: 0;
   z-index: var(--z-modal);
-  background: var(--charcoal-deep-95);
+  background: var(--surface-video-backdrop);
   align-items: center;
   justify-content: center;
   padding: var(--sp-6);

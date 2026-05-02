@@ -8,17 +8,8 @@
   const status = document.getElementById("travel-filter-status");
   const emptyState = wrap ? wrap.querySelector(".explore-empty") : null;
 
-  function cssDurationMs(token, fallback) {
-    const value = getComputedStyle(document.documentElement).getPropertyValue(token).trim();
-    const match = /^([\d.]+)(ms|s)$/.exec(value);
-    if (!match) return fallback;
-    const amount = Number(match[1]);
-    if (!Number.isFinite(amount)) return fallback;
-    return match[2] === "s" ? amount * 1000 : amount;
-  }
-
   /* IMPORTANT-3: duration must match CSS opacity transition on .travel-card */
-  const FILTER_FADE_MS = cssDurationMs("--dur-2", 220);
+  const FILTER_FADE_MS = window.cp12CssDuration("--dur-2", 220);
 
   /* CRIT-3: Initialise tabpanel aria-labelledby to the default active tab */
   if (grid) grid.setAttribute("aria-labelledby", "tab-all");

@@ -96,7 +96,7 @@
   applyLang(initialLang);
   document.documentElement.classList.remove("i18n-loading");
 
-  /* ── Shared HTML escape utility — exposed for IIFEs 1 & 2 ── */
+  /* ── Shared HTML escape utility — exposed for IIFEs 1, 2, 7 ── */
   window.cp12Esc = function (str) {
     return String(str)
       .replace(/&/g, "&amp;")
@@ -104,6 +104,27 @@
       .replace(/>/g, "&gt;")
       .replace(/"/g, "&quot;")
       .replace(/'/g, "&#39;");
+  };
+
+  /* ── Shared i18n string accessor — exposed for IIFEs 1, 2, 7 ──
+   * Single source of truth: stringsMap is parsed once at IIFE-0 init.
+   * Downstream IIFEs avoid re-parsing the same JSON.
+   * ──────────────────────────────────────────────────────────── */
+  window.cp12GetStrings = function (lang) {
+    return stringsMap[lang] || {};
+  };
+
+  /* ── Shared CSS duration token reader — exposed for IIFEs 2, 4, 5 ──
+   * Reads a --dur-* CSS custom property and returns the value in ms.
+   * Falls back if the token is missing or malformed.
+   * ──────────────────────────────────────────────────────────── */
+  window.cp12CssDuration = function (token, fallback) {
+    const value = getComputedStyle(document.documentElement).getPropertyValue(token).trim();
+    const match = /^([\d.]+)(ms|s)$/.exec(value);
+    if (!match) return fallback;
+    const amount = Number(match[1]);
+    if (!Number.isFinite(amount)) return fallback;
+    return match[2] === "s" ? amount * 1000 : amount;
   };
 
   /* ── Wire lang toggle button clicks — nav + mobile overlay ── */
@@ -134,17 +155,7 @@
   const grid = document.getElementById("rooms-grid");
   if (!grid || !Array.isArray(rooms)) return;
 
-  const escHtml = window.cp12Esc || function(s) { return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;"); };
-
-  /* Read i18n strings from injected data element — cached per language for the page lifetime */
-  const roomStringsCache = {};
-  function getRoomStrings(lang) {
-    if (roomStringsCache[lang]) return roomStringsCache[lang];
-    const el = document.getElementById("lang-" + lang + "-data");
-    if (!el) return {};
-    try { roomStringsCache[lang] = JSON.parse(el.textContent); } catch (e) { roomStringsCache[lang] = {}; }
-    return roomStringsCache[lang];
-  }
+  const escHtml = window.cp12Esc;
 
   function renderRooms(lang) {
     if (rooms.length === 0) {
@@ -155,7 +166,7 @@
 
     const isVi = lang === "vi";
     const bookLinkText = isVi ? "Đặt phòng này" : "Book this room";
-    const roomStrings = getRoomStrings(lang);
+    const roomStrings = window.cp12GetStrings(lang);
     const featuredText = roomStrings["rooms.featuredBadge"] || (isVi ? "Nổi bật" : "Featured");
     const priceLabelText = isVi ? "VND / đêm" : "VND / night";
     const viewPhotosPrefix = roomStrings["rooms.viewPhotos"] || (isVi ? "Xem ảnh phòng" : "View photos for");
@@ -311,23 +322,18 @@
     if (window.cp12ObserveLazy && grid.querySelector("[data-bg]")) window.cp12ObserveLazy(grid);
 
     /* Attach gallery click handlers after each innerHTML write (handlers are destroyed on re-render) */
-    const photoBtns = grid.querySelectorAll(".room-photo-btn");
-    for (let ri = 0; ri < photoBtns.length; ri++) {
-      (function (roomIndex) {
-        photoBtns[roomIndex].addEventListener("click", function () {
-          const roomId = photoBtns[roomIndex].getAttribute("data-room-id");
-          const dataIndex = rooms.findIndex(function (room) {
-            return room.id === roomId;
-          });
-          if (dataIndex < 0) return;
-          if (window.cp12OpenRoomModal) {
-            window.cp12OpenRoomModal(dataIndex, window.cp12Lang || "vi");
-          } else {
-            console.warn("[CP12] room modal not ready");
-          }
-        });
-      }(ri));
-    }
+    grid.querySelectorAll(".room-photo-btn").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        const roomId = btn.getAttribute("data-room-id");
+        const dataIndex = rooms.findIndex(function (room) { return room.id === roomId; });
+        if (dataIndex < 0) return;
+        if (window.cp12OpenRoomModal) {
+          window.cp12OpenRoomModal(dataIndex, window.cp12Lang || "vi");
+        } else {
+          console.warn("[CP12] room modal not ready");
+        }
+      });
+    });
   }
 
   /* Expose for lang-switcher (IIFE 0) to call on language change */
@@ -363,20 +369,10 @@
     const grid = document.querySelector(".faq-grid");
     if (!grid || !Array.isArray(faq)) return;
 
-    const escHtml = window.cp12Esc || function(s) { return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;"); };
-
-    /* Read i18n strings from injected data element */
-    const faqStringsCache = {};
-    function getStrings(lang) {
-      if (faqStringsCache[lang]) return faqStringsCache[lang];
-      const el = document.getElementById("lang-" + lang + "-data");
-      if (!el) return {};
-      try { faqStringsCache[lang] = JSON.parse(el.textContent); } catch (e) { faqStringsCache[lang] = {}; }
-      return faqStringsCache[lang];
-    }
+    const escHtml = window.cp12Esc;
 
     function renderFaq(lang) {
-      const strings = getStrings(lang);
+      const strings = window.cp12GetStrings(lang);
       
       const html = faq.map(function(item) {
         const qKey = item.key + ".question";
@@ -442,38 +438,19 @@
   let savedScrollY      = 0;
   let isOpen            = false;
 
-  function cssDurationMs(token, fallback) {
-    const value = getComputedStyle(document.documentElement).getPropertyValue(token).trim();
-    const match = /^([\d.]+)(ms|s)$/.exec(value);
-    if (!match) return fallback;
-    const amount = Number(match[1]);
-    if (!Number.isFinite(amount)) return fallback;
-    return match[2] === "s" ? amount * 1000 : amount;
-  }
+  const modalSwitchMs = window.cp12CssDuration("--dur-3", 380);
+  const modalFocusMs = window.cp12CssDuration("--dur-instant", 50);
+  const modalCloseMs = window.cp12CssDuration("--dur-320", 320);
+  const modalButtonFeedbackMs = window.cp12CssDuration("--dur-150", 150);
 
-  const modalSwitchMs = cssDurationMs("--dur-3", 380);
-  const modalFocusMs = cssDurationMs("--dur-instant", 50);
-  const modalCloseMs = cssDurationMs("--dur-320", 320);
-  const modalButtonFeedbackMs = cssDurationMs("--dur-150", 150);
-
-  /* Cache parsed i18n strings per language to avoid repeated JSON.parse */
-  const stringsCache = {};
-  function loadStrings(lang) {
-    if (stringsCache[lang]) return stringsCache[lang];
-    const el = document.getElementById("lang-" + lang + "-data");
-    if (!el) return {};
-    try { stringsCache[lang] = JSON.parse(el.textContent); }
-    catch (e) { stringsCache[lang] = {}; }
-    return stringsCache[lang];
-  }
   function getString(key) {
-    return loadStrings(currentLang || "vi")[key] || key;
+    return window.cp12GetStrings(currentLang || "vi")[key] || key;
   }
   function formatPhotoCount(n, total) {
     return getString("panel.photoCount").replace("{n}", n).replace("{total}", total);
   }
 
-  const escHtml = window.cp12Esc || function(s) { return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;"); };
+  const escHtml = window.cp12Esc;
 
   /* CRIT-3: set aria-hidden via JS init — display:none alone is sufficient for AT
    * but we also need aria-hidden so removeAttribute("aria-hidden") signals open state */
@@ -514,9 +491,7 @@
       btn.setAttribute("aria-label", label);
       btn.setAttribute("aria-pressed", idx === currentPhotoIndex ? "true" : "false");
       btn.style.backgroundImage = "url(" + JSON.stringify(photo.src) + ")";
-      (function (i) {
-        btn.addEventListener("click", function () { showPhoto(i); });
-      }(idx));
+      btn.addEventListener("click", function () { showPhoto(idx); });
       thumbsCont.appendChild(btn);
     });
   }
@@ -722,17 +697,8 @@
   const status = document.getElementById("travel-filter-status");
   const emptyState = wrap ? wrap.querySelector(".explore-empty") : null;
 
-  function cssDurationMs(token, fallback) {
-    const value = getComputedStyle(document.documentElement).getPropertyValue(token).trim();
-    const match = /^([\d.]+)(ms|s)$/.exec(value);
-    if (!match) return fallback;
-    const amount = Number(match[1]);
-    if (!Number.isFinite(amount)) return fallback;
-    return match[2] === "s" ? amount * 1000 : amount;
-  }
-
   /* IMPORTANT-3: duration must match CSS opacity transition on .travel-card */
-  const FILTER_FADE_MS = cssDurationMs("--dur-2", 220);
+  const FILTER_FADE_MS = window.cp12CssDuration("--dur-2", 220);
 
   /* CRIT-3: Initialise tabpanel aria-labelledby to the default active tab */
   if (grid) grid.setAttribute("aria-labelledby", "tab-all");
@@ -858,7 +824,7 @@
       if (!modal) return;
       modal.classList.remove("open");
       modal.setAttribute("aria-hidden", "true");
-      const dur = parseInt(getComputedStyle(document.documentElement).getPropertyValue("--dur-320").trim()) || 320;
+      const dur = window.cp12CssDuration("--dur-320", 320);
       setTimeout(function () {
         modal.style.display = "";
       }, dur);

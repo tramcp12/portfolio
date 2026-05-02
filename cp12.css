@@ -24,7 +24,6 @@
   --charcoal-deep: #1a1a17;
   --slate: #4a5568;
   --slate-light: #718096;
-  --slate-dark: #2d3748;
   --text-warm: #3d3530;
 
   /* Blues */
@@ -38,7 +37,6 @@
 
   /* Semi-transparent alpha variants (CSS-3) — derived from --gold: #b3a05b = rgb(179,160,91) */
   --gold-10: rgba(179, 160, 91, 0.1);
-  --gold-15: rgba(179, 160, 91, 0.15);
   --gold-20: rgba(179, 160, 91, 0.2);
   --gold-25: rgba(179, 160, 91, 0.25);
   --gold-30: rgba(179, 160, 91, 0.3);
@@ -48,26 +46,16 @@
   /* Gold warm — UI accent shade #c9a96e (distinct from --gold brand) */
   --gold-warm: #c9a96e;
   --gold-warm-3:  rgba(201, 169, 110, 0.03);
-  --gold-warm-15: rgba(201, 169, 110, 0.15);
   --gold-warm-18: rgba(201, 169, 110, 0.18);
   --gold-warm-20: rgba(201, 169, 110, 0.2);
   --gold-warm-25: rgba(201, 169, 110, 0.25);
   --gold-warm-28: rgba(201, 169, 110, 0.28);
-  --gold-warm-30: rgba(201, 169, 110, 0.3);
   --gold-warm-32: rgba(201, 169, 110, 0.32);
-  --gold-warm-35: rgba(201, 169, 110, 0.35);
   --gold-warm-40: rgba(201, 169, 110, 0.4);
-  --gold-warm-45: rgba(201, 169, 110, 0.45);
-  --gold-warm-60: rgba(201, 169, 110, 0.6);
-  --gold-warm-80: rgba(201, 169, 110, 0.8);
 
-  --mist-12: rgba(184, 202, 189, 0.12);
   --mist-20: rgba(184, 202, 189, 0.2);
   --mist-30: rgba(184, 202, 189, 0.3);
   --mist-50: rgba(184, 202, 189, 0.5);
-  --mist-60: rgba(184, 202, 189, 0.6);
-  --mist-70: rgba(184, 202, 189, 0.7);
-  --mist-75: rgba(184, 202, 189, 0.75);
 
   --pine-dark-7:  rgba(26, 48, 40, 0.07);
   --pine-dark-80: rgba(26, 48, 40, 0.8);
@@ -80,8 +68,6 @@
 
   /* Pine base shade — #2d4a3e theme-color, distinct from --pine and --pine-dark */
   --pine-base-8:  rgba(45, 74, 62, 0.08);
-  --pine-base-15: rgba(45, 74, 62, 0.15);
-  --pine-base-75: rgba(45, 74, 62, 0.75);
 
   --pine-29: rgba(29, 42, 38, 0.9);
   --pine-29-25: rgba(29, 42, 38, 0.25);
@@ -90,7 +76,6 @@
   /* Charcoal alpha variants — #2a2522 (matches --charcoal) */
   --charcoal-6:  rgba(42, 37, 34, 0.06);
   --charcoal-13: rgba(42, 37, 34, 0.13);
-  --charcoal-15: rgba(42, 37, 34, 0.15);
   --charcoal-deep-95: rgba(26, 26, 23, 0.95);
 
   /* Terracotta alpha variants — #c4724a (matches --terracotta) */
@@ -98,9 +83,6 @@
   --terracotta-40: rgba(196, 114, 74, 0.4);
 
   /* Cream alpha variants — derived from --warm-white: #fcf8ed = rgb(253,250,245) */
-  --cream-72: rgba(253, 250, 245, 0.72);
-  --cream-78: rgba(253, 250, 245, 0.78);
-  --cream-82: rgba(253, 250, 245, 0.82);
   --cream-90: rgba(253, 250, 245, 0.9);
   --cream-95: rgba(253, 250, 245, 0.95);
   --cream-warm-15: rgba(245, 240, 232, 0.15);
@@ -108,20 +90,10 @@
   /* White surface overlays — used over dark sections (footer, video, dots) */
   --white: #fff;
   --white-2:  rgba(255, 255, 255, 0.02);
-  --white-3:  rgba(255, 255, 255, 0.03);
   --white-5:  rgba(255, 255, 255, 0.05);
-  --white-6:  rgba(255, 255, 255, 0.06);
   --white-10: rgba(255, 255, 255, 0.1);
   --white-15: rgba(255, 255, 255, 0.15);
-  --white-28: rgba(255, 255, 255, 0.28);
-  --white-30: rgba(255, 255, 255, 0.3);
-  --white-35: rgba(255, 255, 255, 0.35);
-  --white-40: rgba(255, 255, 255, 0.4);
-  --white-58: rgba(255, 255, 255, 0.58);
-  --white-62: rgba(255, 255, 255, 0.62);
-  --white-65: rgba(255, 255, 255, 0.65);
   --white-80: rgba(255, 255, 255, 0.8);
-  --white-90: rgba(255, 255, 255, 0.9);
 
   /* Black overlays — for image/video tone-down */
   --black-30: rgba(0, 0, 0, 0.3);
@@ -144,7 +116,6 @@
   --indigo-muted: #3d5490;
 
   /* Layout */
-  --nav-height: 80px;
 
   /* ============================================================
    * Design system v2 — UX/UI redesign foundations (T1.1)
@@ -178,17 +149,17 @@
 
   /* Letter-spacing ladder */
   --ls-tight: -0.02em;
-  --ls-snug: -0.005em;
-  --ls-normal: 0;
   --ls-wide: 0.18em;
 
-  /* Z-index stacking ladder */
+  /* Z-index stacking ladder — canonical, single declaration.
+     Hierarchy: in-flow → sticky → nav → dots → modal (modal dominates). */
+  --z-base:      0;        /* default flow */
   --z-content:   1;        /* in-flow stacked elements (cards, overlays) */
   --z-raised:    2;        /* raised elements within a section */
-  --z-sticky:    10;       /* sticky elements within scroll containers */
+  --z-sticky:    10;       /* sticky elements within scroll containers (e.g., modal close btn) */
   --z-nav:       1000;     /* top-level navigation bar */
-  --z-dots:      9000;     /* page-section dot navigator + next-btn */
-  --z-modal:     1000000;  /* full-screen modal / video overlay */
+  --z-dots:      2000;     /* page-section dot navigator + next-btn — above nav, below modal */
+  --z-modal:     9000;     /* full-screen modal / video overlay — dominates */
 
 
   /* Spacing scale — strict 4px grid */
@@ -237,27 +208,19 @@
   --surface-earth: var(--earth);
   --surface-cool: var(--slate-blue);
   --surface-cool-mid: var(--slate-blue-mid);
-  --text-heading: var(--pine);
   --text-earth: var(--earth);
-  --text-warm-accent: var(--terracotta);
   --text-subtle: var(--slate);
   --text-soft: var(--slate-light);
-  --border-muted: var(--mist);
   --border-accent: var(--gold);
-  --surface-accent-muted: var(--gold-10);
-  --surface-accent-soft: var(--gold-20);
-  --surface-accent-medium: var(--gold-35);
   --border-accent-soft: var(--gold-40);
-  --surface-muted-soft: var(--mist-20);
-  --border-muted-soft: var(--mist-50);
   --surface-inverse-translucent: var(--pine-dark-80);
   --surface-inverse-glass: var(--pine-dark-90);
   --surface-inverse-solid: var(--pine-dark-92);
-  --surface-stats-panel: var(--pine-29);
-  --surface-overlay-light: var(--cream-90);
   --surface-frosted-nav: var(--cream-90);
   --surface-dark-nav: var(--pine-dark-92);
   --surface-modal-backdrop: var(--pine-dark-88);
+  --surface-video-backdrop: var(--charcoal-deep-95);
+  --border-mobile-divider: var(--cream-warm-15);
   --surface-modal-chrome: var(--pine-dark-94);
   --surface-modal-control-hover: var(--white-15);
   --surface-modal-close: var(--pine-dark-85);
@@ -269,15 +232,9 @@
   --surface-progress-tooltip: var(--pine-29);
   --surface-dark-card: var(--white-5);
   --surface-dark-card-hover: var(--white-10);
-  --surface-dark-label: var(--black-50);
-  --surface-video-label: var(--black-40);
   --surface-price-badge: var(--cream-95);
-  --gradient-earth-dark: var(--brown-deep);
   --gradient-earth-deep: var(--brown-dark);
   --gradient-earth-warm: var(--earth-warm);
-  --gradient-warm-strong: var(--terracotta-dark);
-  --gradient-brand-deep: var(--pine-deep);
-  --gradient-cool-muted: var(--slate-mid);
   --gradient-cool-deep: var(--blue-deep);
   --gradient-cool-indigo: var(--indigo-muted);
 
@@ -286,7 +243,6 @@
   --ease-in-out: ease-in-out;
   --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);   /* Material standard */
   --ease-out-quart: cubic-bezier(0.22, 1, 0.36, 1);
-  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-in-out-quad: cubic-bezier(0.45, 0, 0.55, 1);
 
   /* Motion — durations */
@@ -303,44 +259,28 @@
   --dur-350: 350ms;
   --dur-3: 380ms;
   --dur-400: 400ms;
-  --dur-420: 420ms;
   --dur-440: 440ms;
   --dur-450: 450ms;
   --dur-480: 480ms;
   --dur-500: 500ms;
-  --dur-520: 520ms;
   --dur-550: 550ms;
   --dur-600: 600ms;
-  --dur-620: 620ms;
   --dur-4: 640ms;
-  --dur-650: 650ms;
   --dur-700: 700ms;
-  --dur-720: 720ms;
   --dur-pause: 800ms;     /* held entrance animations */
   --dur-850: 850ms;
   --dur-900: 900ms;
-  --dur-1000: 1000ms;
-  --dur-1200: 1200ms;
   --dur-scroll-pulse: 2000ms;
   --dur-cycle: 2400ms;    /* infinite pulse loops */
-  --dur-glow-cycle: 2500ms;
 
   /* Elevation */
-  --shadow-0: none;
   --shadow-1: 0 1px 2px rgba(26, 48, 40, 0.06);
   --shadow-2: 0 4px 12px rgba(26, 48, 40, 0.08);
   --shadow-3: 0 12px 32px rgba(26, 48, 40, 0.12);
-  --shadow-4: 0 24px 64px rgba(26, 48, 40, 0.18);
-  --shadow-inset-soft: inset 0 0 0 1px rgba(45, 74, 62, 0.06);
   --shadow-room-card: 0 1px 8px var(--pine-dark-7);
   --shadow-accent-soft: 0 4px 12px var(--gold-25);
   --shadow-accent-ring: 0 0 0 3px var(--gold-warm-25);
   --shadow-warm-hover: 0 4px 14px var(--terracotta-30);
-  --shadow-warm-strong: 0 4px 14px var(--terracotta-40);
-  --shadow-social-hover: 0 6px 16px var(--gold-30);
-  --shadow-dark-card-hover: 0 16px 40px var(--black-30);
-  --shadow-blog-card-hover: 0 16px 40px var(--charcoal-13),
-                            0 4px 12px var(--charcoal-6);
   --shadow-modal-action: 0 6px 20px var(--terracotta-30);
 
   /* Border radius */
@@ -348,22 +288,11 @@
   --radius-1: 2px;
   --radius-2: 4px;
   --radius-3: 8px;
-  --radius-4: 16px;
   --radius-pill: 999px;
-
-  /* Z-index scale */
-  --z-base: 0;
-  --z-sticky: 100;
-  --z-dropdown: 200;
-  --z-modal-backdrop: 900;
-  --z-modal: 1000;
-  --z-popover: 1100;
-  --z-toast: 1200;
 
   /* Container widths */
   --container-narrow: 720px;
   --container-default: 1200px;
-  --container-wide: 1440px;
 
   /* Focus ring */
   --focus-ring: 2px solid var(--gold);
@@ -807,7 +736,7 @@
 #cp12-wrap .nav-mobile-divider {
   width: 2.5rem;
   border: none;
-  border-top: 1px solid var(--cream-warm-15);
+  border-top: 1px solid var(--border-mobile-divider);
   margin: 0;
 }
 
@@ -4558,7 +4487,7 @@ html.i18n-loading [data-i18n-html] {
   position: fixed;
   inset: 0;
   z-index: var(--z-modal);
-  background: var(--charcoal-deep-95);
+  background: var(--surface-video-backdrop);
   align-items: center;
   justify-content: center;
   padding: var(--sp-6);
