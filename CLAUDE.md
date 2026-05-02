@@ -55,7 +55,7 @@ After writing outputs, `build.js` runs `validate.js`, `html-validate`, then `tes
 
 ## Architectural Invariants (`validate.js`)
 
-18 checks enforced on built output and source CSS. These **must not be broken**:
+20 checks enforced on built output and source CSS. These **must not be broken**:
 
 | Check   | Rule |
 | ------- | ---- |
@@ -100,25 +100,26 @@ The dot-nav (`#cp12-dots`) and `chrome.html.partial` (nav bar) are also outside 
 
 ---
 
-## JavaScript Architecture (7 IIFEs)
+## JavaScript Architecture (8 IIFEs)
 
-`cp12.js` is assembled from 7 IIFE source files in this order. **Do not merge them** — they use intentionally separate variable scopes.
+`cp12.js` is assembled from 8 IIFE source files in this order. **Do not merge them** — they use intentionally separate variable scopes.
 
 | IIFE | Source | Responsibility |
 | ---- | ------ | -------------- |
 | 0 | `src/shared/lang-switcher.js` | i18n — reads `#lang-vi-data`/`#lang-en-data` JSON; applies `[data-i18n]`, `[data-i18n-html]`, `[data-i18n-aria-label]` swaps; re-renders rooms on lang change; exposes `window.cp12Esc` XSS escaper |
 | 1 | `src/features/rooms/rooms.js` | Renders `#rooms-grid` from `#rooms-data` JSON; XSS-safe via `window.cp12Esc`; caches i18n strings per language in `roomStringsCache` |
-| 2 | `src/features/rooms/room-modal.js` | Room detail modal — photo gallery navigation, focus trap; exposes `window.cp12OpenRoomModal`, `window.cp12CloseRoomModal`, `window.cp12RefreshModalLang` |
-| 3 | `src/features/video/video.js` | Hero play button and video iframe handlers |
-| 4 | `src/features/explore/explore.js` | Travel filter tabs (`data-filter`, `aria-selected`, live count) — W3C APG Tabs pattern |
-| 5 | `src/shared/scroll-reveal.js` | Video modal, mobile nav (focus save/restore), IntersectionObserver reveal, scroll RAF, dot-nav, anchor scroll; exposes `window.cp12OpenModal` |
-| 6 | `src/shared/lazy-loader.js` | Lazy-loads CSS backgrounds via `[data-bg]` + IntersectionObserver; **must be last IIFE** |
+| 2 | `src/features/faq/faq.js` | Renders `#faq-accordion` from `#faq-data` JSON; handles expansion toggle and aria states |
+| 3 | `src/features/rooms/room-modal.js` | Room detail modal — photo gallery navigation, focus trap; exposes `window.cp12OpenRoomModal`, `window.cp12CloseRoomModal`, `window.cp12RefreshModalLang` |
+| 4 | `src/features/video/video.js` | Hero play button and video iframe handlers |
+| 5 | `src/features/explore/explore.js` | Travel filter tabs (`data-filter`, `aria-selected`, live count) — W3C APG Tabs pattern |
+| 6 | `src/shared/scroll-reveal.js` | Video modal, mobile nav (focus save/restore), IntersectionObserver reveal, scroll RAF, dot-nav, anchor scroll; exposes `window.cp12OpenModal` |
+| 7 | `src/shared/lazy-loader.js` | Lazy-loads CSS backgrounds via `[data-bg]` + IntersectionObserver; **must be last IIFE** |
 
 **Cross-IIFE globals:** `window.cp12Esc` (IIFE 0, used by 1 & 2), `window.cp12OpenModal` (IIFE 5, called by 3), `window.cp12OpenRoomModal` (IIFE 2, called by 1), `window.cp12ObserveLazy` (IIFE 6).
 
 **Required authoring patterns:**
 - Use `const` and `let` for all declarations (modern JS standards)
-- XSS: all dynamic HTML output must go through `window.cp12Esc` (alias as `var escHtml = window.cp12Esc`)
+- XSS: all dynamic HTML output must go through `window.cp12Esc` (alias as `const escHtml = window.cp12Esc`)
 - Scope all CSS under `#cp12-wrap`
 
 ---
@@ -207,7 +208,7 @@ static/img/
     └── details/{id}/       # Room gallery photos
 ```
 
-All `url("static/img/...")` in CSS and `data-bg="static/img/..."` in HTML are validated at build time. The legacy `img/` folder is kept until production URLs are verified post-deploy — delete it in a separate commit after verifying.
+All `url("static/img/...")` in CSS and `data-bg="static/img/..."` in HTML are validated at build time.
 
 ---
 

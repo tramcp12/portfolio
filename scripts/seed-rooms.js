@@ -15,15 +15,15 @@
 
 "use strict";
 
-var fs   = require("fs");
-var path = require("path");
-var root = path.join(__dirname, "..");
+const fs   = require("fs");
+const path = require("path");
+const root = path.join(__dirname, "..");
 
 /* Sort order for rooms (jan = room 1, nov = room 11, etc.) */
-var ROOM_SORT = ["jan-01", "feb-02", "mar-03", "aug-08", "sep-09", "oct-10", "nov-11"];
+const ROOM_SORT = ["jan-01", "feb-02", "mar-03", "aug-08", "sep-09", "oct-10", "nov-11"];
 
 /* Word corrections for filename → alt text conversion */
-var WORD_MAP = {
+const WORD_MAP = {
   "decord":  "Décor",
   "decords": "Décors"
 };
@@ -52,21 +52,21 @@ function titleCase(str) {
  * for compound names like "lock-key-door" and single-word labels like "door".
  */
 function fileToAlt(filename) {
-  var base = path.basename(filename, path.extname(filename));
+  const base = path.basename(filename, path.extname(filename));
 
   /* Strip leading numeric prefix: "1-bed" → "bed", "2-beds" → "beds" */
   base = base.replace(/^\d+-/, "");
 
   /* Detect trailing photo number: "view-1" → suffix ", Photo 1" */
-  var suffix = "";
-  var trailingMatch = base.match(/^(.*)-(\d+)$/);
+  let suffix = "";
+  const trailingMatch = base.match(/^(.*)-(\d+)$/);
   if (trailingMatch) {
     base   = trailingMatch[1];
     suffix = ", Photo " + trailingMatch[2];
   }
 
   /* Split on dashes, apply word map, title-case each word */
-  var words = base.split("-").map(function (w) {
+  const words = base.split("-").map(function (w) {
     return WORD_MAP[w.toLowerCase()] || titleCase(w);
   });
 
@@ -74,11 +74,11 @@ function fileToAlt(filename) {
 }
 
 /* ── Safety guard: don't overwrite if any room already has a name ── */
-var existingPath = path.join(root, "src", "data", "rooms.json");
+const existingPath = path.join(root, "src", "data", "rooms.json");
 if (fs.existsSync(existingPath)) {
   try {
-    var existing = JSON.parse(fs.readFileSync(existingPath, "utf8"));
-    var anyEdited = Array.isArray(existing) && existing.some(function (r) {
+    const existing = JSON.parse(fs.readFileSync(existingPath, "utf8"));
+    const anyEdited = Array.isArray(existing) && existing.some(function (r) {
       return r.name && r.name !== "";
     });
     if (anyEdited) {
@@ -99,16 +99,16 @@ if (fs.existsSync(existingPath)) {
 }
 
 /* ── Scan disk and build room stubs ── */
-var catalogDir = path.join(root, "static", "img", "rooms", "catalog");
-var detailsDir = path.join(root, "static", "img", "rooms", "details");
+const catalogDir = path.join(root, "static", "img", "rooms", "catalog");
+const detailsDir = path.join(root, "static", "img", "rooms", "details");
 
-var rooms = ROOM_SORT.map(function (id) {
-  var coverPhoto   = "static/img/rooms/catalog/" + id + ".jpg";
-  var detailFolder = path.join(detailsDir, id);
-  var photos = [];
+const rooms = ROOM_SORT.map(function (id) {
+  const coverPhoto   = "static/img/rooms/catalog/" + id + ".jpg";
+  const detailFolder = path.join(detailsDir, id);
+  let photos = [];
 
   if (fs.existsSync(detailFolder)) {
-    var files = fs.readdirSync(detailFolder).filter(function (f) {
+    const files = fs.readdirSync(detailFolder).filter(function (f) {
       return /\.(jpg|jpeg|png|webp)$/i.test(f);
     }).sort();
 
