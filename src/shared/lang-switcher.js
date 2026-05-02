@@ -119,10 +119,10 @@
    * Falls back if the token is missing or malformed.
    * ──────────────────────────────────────────────────────────── */
   window.cp12CssDuration = function (token, fallback) {
-    var value = getComputedStyle(document.documentElement).getPropertyValue(token).trim();
-    var match = /^([\d.]+)(ms|s)$/.exec(value);
+    const value = getComputedStyle(document.documentElement).getPropertyValue(token).trim();
+    const match = /^([\d.]+)(ms|s)$/.exec(value);
     if (!match) return fallback;
-    var amount = Number(match[1]);
+    const amount = Number(match[1]);
     if (!Number.isFinite(amount)) return fallback;
     return match[2] === "s" ? amount * 1000 : amount;
   };

@@ -67,7 +67,7 @@ After writing outputs, `build.js` runs `validate.js`, `html-validate`, then `tes
 | A-1     | `@media (prefers-reduced-motion: reduce)` guard in CSS |
 | R-1     | `@media (max-width: 768px)` breakpoint in CSS |
 | JS-1    | `try { } catch (e) { }` init guard in `cp12.js` |
-| JS-3    | `var cachedNav = null` nav caching pattern in `cp12.js` |
+| JS-3    | `let cachedNav = null` nav caching pattern in `cp12.js` |
 | P-1     | No authored `<img>` tags in generated `index.html`; runtime JS may create image elements |
 | H-1     | `og:image` meta tag present |
 | A-2     | No legacy `url(img/...)` references in CSS — all under `static/img/` |
@@ -117,7 +117,7 @@ The dot-nav (`#cp12-dots`) and `chrome.html.partial` (nav bar) are also outside 
 **Cross-IIFE globals:** `window.cp12Esc` (IIFE 0, used by 1 & 2), `window.cp12OpenModal` (IIFE 5, called by 3), `window.cp12OpenRoomModal` (IIFE 2, called by 1), `window.cp12ObserveLazy` (IIFE 6).
 
 **Required authoring patterns:**
-- Use `var` for IIFE-scoped declarations (modern browser APIs are fine)
+- Use `const` and `let` for all declarations (modern JS standards)
 - XSS: all dynamic HTML output must go through `window.cp12Esc` (alias as `var escHtml = window.cp12Esc`)
 - Scope all CSS under `#cp12-wrap`
 
