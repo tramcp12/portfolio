@@ -12,17 +12,7 @@
   const grid = document.getElementById("rooms-grid");
   if (!grid || !Array.isArray(rooms)) return;
 
-  const escHtml = window.cp12Esc || function(s) { return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;"); };
-
-  /* Read i18n strings from injected data element — cached per language for the page lifetime */
-  const roomStringsCache = {};
-  function getRoomStrings(lang) {
-    if (roomStringsCache[lang]) return roomStringsCache[lang];
-    const el = document.getElementById("lang-" + lang + "-data");
-    if (!el) return {};
-    try { roomStringsCache[lang] = JSON.parse(el.textContent); } catch (e) { roomStringsCache[lang] = {}; }
-    return roomStringsCache[lang];
-  }
+  const escHtml = window.cp12Esc;
 
   function renderRooms(lang) {
     if (rooms.length === 0) {
@@ -33,7 +23,7 @@
 
     const isVi = lang === "vi";
     const bookLinkText = isVi ? "Đặt phòng này" : "Book this room";
-    const roomStrings = getRoomStrings(lang);
+    const roomStrings = window.cp12GetStrings(lang);
     const featuredText = roomStrings["rooms.featuredBadge"] || (isVi ? "Nổi bật" : "Featured");
     const priceLabelText = isVi ? "VND / đêm" : "VND / night";
     const viewPhotosPrefix = roomStrings["rooms.viewPhotos"] || (isVi ? "Xem ảnh phòng" : "View photos for");
@@ -189,23 +179,18 @@
     if (window.cp12ObserveLazy && grid.querySelector("[data-bg]")) window.cp12ObserveLazy(grid);
 
     /* Attach gallery click handlers after each innerHTML write (handlers are destroyed on re-render) */
-    const photoBtns = grid.querySelectorAll(".room-photo-btn");
-    for (let ri = 0; ri < photoBtns.length; ri++) {
-      (function (roomIndex) {
-        photoBtns[roomIndex].addEventListener("click", function () {
-          const roomId = photoBtns[roomIndex].getAttribute("data-room-id");
-          const dataIndex = rooms.findIndex(function (room) {
-            return room.id === roomId;
-          });
-          if (dataIndex < 0) return;
-          if (window.cp12OpenRoomModal) {
-            window.cp12OpenRoomModal(dataIndex, window.cp12Lang || "vi");
-          } else {
-            console.warn("[CP12] room modal not ready");
-          }
-        });
-      }(ri));
-    }
+    grid.querySelectorAll(".room-photo-btn").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        const roomId = btn.getAttribute("data-room-id");
+        const dataIndex = rooms.findIndex(function (room) { return room.id === roomId; });
+        if (dataIndex < 0) return;
+        if (window.cp12OpenRoomModal) {
+          window.cp12OpenRoomModal(dataIndex, window.cp12Lang || "vi");
+        } else {
+          console.warn("[CP12] room modal not ready");
+        }
+      });
+    });
   }
 
   /* Expose for lang-switcher (IIFE 0) to call on language change */

@@ -32,38 +32,19 @@
   let savedScrollY      = 0;
   let isOpen            = false;
 
-  function cssDurationMs(token, fallback) {
-    const value = getComputedStyle(document.documentElement).getPropertyValue(token).trim();
-    const match = /^([\d.]+)(ms|s)$/.exec(value);
-    if (!match) return fallback;
-    const amount = Number(match[1]);
-    if (!Number.isFinite(amount)) return fallback;
-    return match[2] === "s" ? amount * 1000 : amount;
-  }
+  const modalSwitchMs = window.cp12CssDuration("--dur-3", 380);
+  const modalFocusMs = window.cp12CssDuration("--dur-instant", 50);
+  const modalCloseMs = window.cp12CssDuration("--dur-320", 320);
+  const modalButtonFeedbackMs = window.cp12CssDuration("--dur-150", 150);
 
-  const modalSwitchMs = cssDurationMs("--dur-3", 380);
-  const modalFocusMs = cssDurationMs("--dur-instant", 50);
-  const modalCloseMs = cssDurationMs("--dur-320", 320);
-  const modalButtonFeedbackMs = cssDurationMs("--dur-150", 150);
-
-  /* Cache parsed i18n strings per language to avoid repeated JSON.parse */
-  const stringsCache = {};
-  function loadStrings(lang) {
-    if (stringsCache[lang]) return stringsCache[lang];
-    const el = document.getElementById("lang-" + lang + "-data");
-    if (!el) return {};
-    try { stringsCache[lang] = JSON.parse(el.textContent); }
-    catch (e) { stringsCache[lang] = {}; }
-    return stringsCache[lang];
-  }
   function getString(key) {
-    return loadStrings(currentLang || "vi")[key] || key;
+    return window.cp12GetStrings(currentLang || "vi")[key] || key;
   }
   function formatPhotoCount(n, total) {
     return getString("panel.photoCount").replace("{n}", n).replace("{total}", total);
   }
 
-  const escHtml = window.cp12Esc || function(s) { return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;"); };
+  const escHtml = window.cp12Esc;
 
   /* CRIT-3: set aria-hidden via JS init — display:none alone is sufficient for AT
    * but we also need aria-hidden so removeAttribute("aria-hidden") signals open state */
@@ -104,9 +85,7 @@
       btn.setAttribute("aria-label", label);
       btn.setAttribute("aria-pressed", idx === currentPhotoIndex ? "true" : "false");
       btn.style.backgroundImage = "url(" + JSON.stringify(photo.src) + ")";
-      (function (i) {
-        btn.addEventListener("click", function () { showPhoto(i); });
-      }(idx));
+      btn.addEventListener("click", function () { showPhoto(idx); });
       thumbsCont.appendChild(btn);
     });
   }

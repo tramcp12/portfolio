@@ -62,7 +62,7 @@
 #cp12-wrap .nav-mobile-divider {
   width: 2.5rem;
   border: none;
-  border-top: 1px solid var(--cream-warm-15);
+  border-top: 1px solid var(--border-mobile-divider);
   margin: 0;
 }
 

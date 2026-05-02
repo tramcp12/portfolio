@@ -96,7 +96,7 @@
   applyLang(initialLang);
   document.documentElement.classList.remove("i18n-loading");
 
-  /* ── Shared HTML escape utility — exposed for IIFEs 1 & 2 ── */
+  /* ── Shared HTML escape utility — exposed for IIFEs 1, 2, 7 ── */
   window.cp12Esc = function (str) {
     return String(str)
       .replace(/&/g, "&amp;")
@@ -104,6 +104,27 @@
       .replace(/>/g, "&gt;")
       .replace(/"/g, "&quot;")
       .replace(/'/g, "&#39;");
+  };
+
+  /* ── Shared i18n string accessor — exposed for IIFEs 1, 2, 7 ──
+   * Single source of truth: stringsMap is parsed once at IIFE-0 init.
+   * Downstream IIFEs avoid re-parsing the same JSON.
+   * ──────────────────────────────────────────────────────────── */
+  window.cp12GetStrings = function (lang) {
+    return stringsMap[lang] || {};
+  };
+
+  /* ── Shared CSS duration token reader — exposed for IIFEs 2, 4, 5 ──
+   * Reads a --dur-* CSS custom property and returns the value in ms.
+   * Falls back if the token is missing or malformed.
+   * ──────────────────────────────────────────────────────────── */
+  window.cp12CssDuration = function (token, fallback) {
+    var value = getComputedStyle(document.documentElement).getPropertyValue(token).trim();
+    var match = /^([\d.]+)(ms|s)$/.exec(value);
+    if (!match) return fallback;
+    var amount = Number(match[1]);
+    if (!Number.isFinite(amount)) return fallback;
+    return match[2] === "s" ? amount * 1000 : amount;
   };
 
   /* ── Wire lang toggle button clicks — nav + mobile overlay ── */

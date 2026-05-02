@@ -182,13 +182,15 @@
   --ls-normal: 0;
   --ls-wide: 0.18em;
 
-  /* Z-index stacking ladder */
+  /* Z-index stacking ladder — canonical, single declaration.
+     Hierarchy: in-flow → sticky → nav → dots → modal (modal dominates). */
+  --z-base:      0;        /* default flow */
   --z-content:   1;        /* in-flow stacked elements (cards, overlays) */
   --z-raised:    2;        /* raised elements within a section */
-  --z-sticky:    10;       /* sticky elements within scroll containers */
+  --z-sticky:    10;       /* sticky elements within scroll containers (e.g., modal close btn) */
   --z-nav:       1000;     /* top-level navigation bar */
-  --z-dots:      9000;     /* page-section dot navigator + next-btn */
-  --z-modal:     1000000;  /* full-screen modal / video overlay */
+  --z-dots:      2000;     /* page-section dot navigator + next-btn — above nav, below modal */
+  --z-modal:     9000;     /* full-screen modal / video overlay — dominates */
 
 
   /* Spacing scale — strict 4px grid */
@@ -258,6 +260,8 @@
   --surface-frosted-nav: var(--cream-90);
   --surface-dark-nav: var(--pine-dark-92);
   --surface-modal-backdrop: var(--pine-dark-88);
+  --surface-video-backdrop: var(--charcoal-deep-95);
+  --border-mobile-divider: var(--cream-warm-15);
   --surface-modal-chrome: var(--pine-dark-94);
   --surface-modal-control-hover: var(--white-15);
   --surface-modal-close: var(--pine-dark-85);
@@ -350,15 +354,6 @@
   --radius-3: 8px;
   --radius-4: 16px;
   --radius-pill: 999px;
-
-  /* Z-index scale */
-  --z-base: 0;
-  --z-sticky: 100;
-  --z-dropdown: 200;
-  --z-modal-backdrop: 900;
-  --z-modal: 1000;
-  --z-popover: 1100;
-  --z-toast: 1200;
 
   /* Container widths */
   --container-narrow: 720px;

@@ -27,7 +27,7 @@
       if (!modal) return;
       modal.classList.remove("open");
       modal.setAttribute("aria-hidden", "true");
-      const dur = parseInt(getComputedStyle(document.documentElement).getPropertyValue("--dur-320").trim()) || 320;
+      const dur = window.cp12CssDuration("--dur-320", 320);
       setTimeout(function () {
         modal.style.display = "";
       }, dur);
