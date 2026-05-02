@@ -12,7 +12,7 @@
               At the edge of <em>the city.</em>
             </h2>
             <p class="location-intro cp12-reveal" data-i18n="location.intro">
-              228/6 Đường Phù Đổng Thiên Vương, Phường 8, Đà Lạt — 3km from the center, 10 minutes from the night market, and right beside some of the best trails in the highlands.
+              228/6 Đường Phù Đổng Thiên Vương, Lâm Viên - Đà Lạt, Lâm Đồng, Việt Nam — 3km from the center, 10 minutes from the night market, and right beside some of the best trails in the highlands.
             </p>
 
             <div class="location-grid cp12-reveal">
@@ -70,7 +70,7 @@
 
               <div class="location-map-block">
                 <a
-                  href="https://maps.google.com/?q=228/6+Đường+Phù+Đổng+Thiên+Vương,+Phường+8,+Đà+Lạt,+Lâm+Đồng"
+                  href="https://maps.app.goo.gl/9VyG6C782t5F1vPw6"
                   class="location-map-link"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -81,7 +81,7 @@
                     <span class="map-pin-icon" aria-hidden="true">📍</span>
                     <address class="map-address">
                       228/6 Đường Phù Đổng<br>
-                      Thiên Vương, Phường 8<br>
+                      Thiên Vương, Lâm Viên<br>
                       Đà Lạt, Lâm Đồng
                     </address>
                   </div>

@@ -67,12 +67,12 @@
             <span class="footer-col-title" data-i18n="footer.col.visit">Visit</span>
             <ul class="footer-links">
               <li>
-                <a href="https://maps.app.goo.gl/PCN6DtU5gCf45SzDA" target="_blank" rel="noopener noreferrer">
-                  228/6 Đường Phù Đổng Thiên Vương,<br>Phường 8, Đà Lạt
+                <a href="https://maps.app.goo.gl/9VyG6C782t5F1vPw6" target="_blank" rel="noopener noreferrer">
+                  228/6 Đường Phù Đổng Thiên Vương,<br>Lâm Viên - Đà Lạt
                 </a>
               </li>
               <li>
-                <a href="https://maps.app.goo.gl/PCN6DtU5gCf45SzDA" target="_blank" rel="noopener noreferrer" data-i18n="footer.link.googleMaps">
+                <a href="https://maps.app.goo.gl/9VyG6C782t5F1vPw6" target="_blank" rel="noopener noreferrer" data-i18n="footer.link.googleMaps">
                   Open in Google Maps
                 </a>
               </li>

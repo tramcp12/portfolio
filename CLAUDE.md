@@ -214,6 +214,6 @@ All `url("static/img/...")` in CSS and `data-bg="static/img/..."` in HTML are va
 ## Contact & Deployment
 
 - **Email:** `cp12tramdungchill@gmail.com` · **Phone:** `+84765679228`
-- **Address:** 228/6 Đường Phú Đồng Thiên Vương, Phường 8, Đà Lạt, Lâm Đồng
+- **Address:** 228/6 Đường Phù Đổng Thiên Vương, Lâm Viên - Đà Lạt, Lâm Đồng, Việt Nam
 - Push to `main` → `pages.yml` deploys to GitHub Pages automatically
 - GitHub repo settings required once: **Settings → Pages → Source: GitHub Actions**
