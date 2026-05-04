@@ -135,9 +135,9 @@
   top: var(--sp-5);
   left: var(--sp-5);
   padding: var(--sp-2) var(--sp-3);
-  background: var(--pine-29-75);
+  background: var(--surface-brand-translucent);
   backdrop-filter: blur(12px);
-  color: var(--gold-warm);
+  color: var(--surface-accent-warm);
   border: 1px solid var(--white-15);
   border-radius: var(--radius-sm);
   box-shadow: var(--shadow-2);
@@ -161,7 +161,7 @@
 #cp12-wrap .room-name {
   margin: 0 0 var(--sp-3);
   color: var(--surface-brand);
-  font-family: var(--font-serif);
+  font-family: var(--typography-serif);
   font-size: var(--fs-h3);
   font-weight: 300;
   line-height: var(--lh-snug);
@@ -237,7 +237,7 @@
   background: none;
   color: var(--surface-brand);
   cursor: pointer;
-  font-family: var(--font-body);
+  font-family: var(--typography-body);
   font-size: var(--fs-micro);
   font-weight: 500;
   letter-spacing: var(--ls-wide);
@@ -284,7 +284,7 @@
   padding: var(--sp-1) var(--sp-3);
   background: var(--interactive-accent);
   color: var(--surface-inverse-deep);
-  font-family: var(--font-body);
+  font-family: var(--typography-body);
   font-size: var(--fs-micro);
   font-weight: 500;
   letter-spacing: var(--ls-wide);

@@ -17,7 +17,7 @@
 }
 
 #cp12-wrap .footer-logo {
-  font-family: var(--font-serif);
+  font-family: var(--typography-serif);
   font-size: var(--fs-h2);
   color: var(--surface-base);
   font-weight: 300;

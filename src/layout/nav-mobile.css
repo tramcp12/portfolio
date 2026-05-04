@@ -20,7 +20,7 @@
 }
 
 #cp12-wrap .nav-mobile-overlay a {
-  font-family: var(--font-serif);
+  font-family: var(--typography-serif);
   font-size: var(--fs-h3);
   color: var(--surface-base);
   letter-spacing: 0.05em;

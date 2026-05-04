@@ -27,7 +27,7 @@
   max-width: 800px;
   width: 100%;
   background: var(--surface-inverse-strong);
-  border: 1px solid var(--gold-warm-20);
+  border: 1px solid var(--surface-accent-warm-20);
   padding: var(--sp-6);
   position: relative;
 }
@@ -42,7 +42,7 @@
   font-size: var(--fs-h4);
   cursor: pointer;
   line-height: 1;
-  font-family: var(--font-sans);
+  font-family: var(--typography-sans);
   min-width: 44px;
   min-height: 44px;
   display: flex;
@@ -56,7 +56,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: var(--font-serif);
+  font-family: var(--typography-serif);
   font-size: var(--fs-h4);
   color: var(--surface-base);
   text-align: center;
