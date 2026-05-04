@@ -69,7 +69,7 @@
   font-size: var(--fs-lead);
   font-weight: 600;
   color: var(--surface-brand);
-  font-family: var(--font-serif);
+  font-family: var(--typography-serif);
 }
 
 #cp12-wrap .dist-time {
@@ -125,7 +125,7 @@
   font-size: var(--fs-h2);
   position: relative;
   z-index: var(--z-content);
-  filter: drop-shadow(0 2px 8px var(--black-40));
+  filter: drop-shadow(0 2px 8px var(--surface-overlay-dark));
 }
 
 #cp12-wrap .map-address {

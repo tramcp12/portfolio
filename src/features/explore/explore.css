@@ -45,7 +45,7 @@
 /* section heading — private variant of the .section-heading pattern.
  * Future: add class="travel-heading section-heading" to HTML and reduce this to overrides. */
 #cp12-wrap .travel-heading {
-  font-family: var(--font-serif);
+  font-family: var(--typography-serif);
   font-size: var(--fs-h1);
   font-weight: 300;
   color: var(--surface-base);
@@ -69,14 +69,14 @@
   font-size: var(--fs-micro);
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  border: 1px solid var(--mist-30);
+  border: 1px solid var(--surface-muted-soft);
   color: var(--surface-muted);
   background: transparent;
   cursor: pointer;
   transition: background-color var(--dur-2) var(--ease-default), border-color var(--dur-2) var(--ease-default), color var(--dur-2) var(--ease-default),
               transform var(--dur-2) var(--ease-spring),
               box-shadow var(--dur-2) var(--ease-default);
-  font-family: var(--font-sans);
+  font-family: var(--typography-sans);
   min-height: 44px;
 }
 
@@ -110,7 +110,7 @@
   padding: var(--sp-8) var(--sp-4);
   color: var(--text-muted);
   font-size: var(--fs-body);
-  font-family: var(--font-sans);
+  font-family: var(--typography-sans);
 }
 
 #cp12-wrap .explore-card {
@@ -170,7 +170,7 @@
 }
 
 #cp12-wrap .explore-name {
-  font-family: var(--font-serif);
+  font-family: var(--typography-serif);
   font-size: var(--fs-h4);
   color: var(--text-primary);
   font-weight: 300;

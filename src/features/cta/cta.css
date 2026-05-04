@@ -17,8 +17,8 @@
     -45deg,
     transparent,
     transparent 60px,
-    var(--gold-warm-3) 60px,
-    var(--gold-warm-3) 61px
+    var(--surface-accent-warm-3) 60px,
+    var(--surface-accent-warm-3) 61px
   );
 }
 
@@ -28,7 +28,7 @@
 }
 
 #cp12-wrap .cta-title {
-  font-family: var(--font-serif);
+  font-family: var(--typography-serif);
   font-size: var(--fs-display);
   color: var(--surface-base);
   font-weight: 300;
@@ -43,7 +43,7 @@
 
 #cp12-wrap .cta-sub {
   font-size: var(--fs-body);
-  color: var(--mist-70);
+  color: var(--surface-muted-mid);
   max-width: 500px;
   margin: 0 auto var(--sp-7);
   line-height: 1.8;

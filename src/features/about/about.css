@@ -52,7 +52,7 @@
 }
 
 #cp12-wrap .about-img-accent .big-num {
-  font-family: var(--font-serif);
+  font-family: var(--typography-serif);
   font-size: var(--fs-display);
   color: var(--surface-elevated);
   display: block;
@@ -64,7 +64,7 @@
   font-size: var(--fs-micro);
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--white-80);
+  color: var(--text-inverse-soft);
   margin-top: var(--sp-1);
 }
 
@@ -72,7 +72,7 @@
  * Differs from shared: size 3rem (vs 3.8rem), line-height 1.15 (vs 1.05).
  * Future: add class="about-heading section-heading" to HTML and reduce this to overrides. */
 #cp12-wrap .about-heading {
-  font-family: var(--font-serif);
+  font-family: var(--typography-serif);
   font-size: var(--fs-h1);
   font-weight: 300;
   color: var(--surface-brand);
@@ -172,7 +172,7 @@
 }
 
 #cp12-wrap .about-pullquote blockquote {
-  font-family: var(--font-serif);
+  font-family: var(--typography-serif);
   font-size: var(--fs-h2);
   font-weight: 300;
   line-height: 1.3;
@@ -302,7 +302,7 @@
 }
 
 #cp12-wrap .rules-heading {
-  font-family: var(--font-serif);
+  font-family: var(--typography-serif);
   font-size: var(--fs-h2);
   font-weight: 300;
   color: var(--surface-brand);

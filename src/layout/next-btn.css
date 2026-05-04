@@ -12,7 +12,7 @@
   height: 44px;
   border-radius: 50%;
   background: var(--surface-floating-control);
-  border: 1px solid var(--gold-warm-40);
+  border: 1px solid var(--surface-accent-warm-40);
   color: var(--interactive-accent);
   font-size: var(--fs-lead);
   cursor: pointer;

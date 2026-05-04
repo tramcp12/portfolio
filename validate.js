@@ -114,6 +114,7 @@ check("L-1", "At least one [data-bg] element in index.html (lazy-loader.js activ
 /* Catches literal color values that should be defined as palette tokens in
  * src/core/tokens.css. Detects both legacy rgba(R,G,B,A) and modern rgb(R G B / N%) */
 var rawColorLiteralPattern = /\brgba?\([0-9]/g;
+var paletteTokenPattern = /--\b(pine|gold|cream|warm-white|charcoal|earth|terracotta|mist|slate|blue)\b/;
 var inv18Files = listCssFiles(path.join(root, "src", "features"))
   .concat(listCssFiles(path.join(root, "src", "layout")));
 var inv18Violations = [];
@@ -122,15 +123,20 @@ inv18Files.forEach(function (filePath) {
   var content = fs.readFileSync(filePath, "utf8");
   var lines = content.split("\n");
   lines.forEach(function (line, index) {
+    // Check for raw rgb/rgba literals
     rawColorLiteralPattern.lastIndex = 0;
     if (rawColorLiteralPattern.test(line)) {
-      inv18Violations.push(relPath + ":" + (index + 1));
+      inv18Violations.push(relPath + ":" + (index + 1) + " (raw rgb/rgba)");
+    }
+    // Check for palette tokens in feature/layout (Forbidden Zone)
+    if (paletteTokenPattern.test(line)) {
+      inv18Violations.push(relPath + ":" + (index + 1) + " (palette token leak)");
     }
   });
 });
 check(
   "INV-18",
-  "Feature/layout CSS uses color tokens (no raw rgb/rgba literals)" +
+  "Feature/layout CSS uses color tokens (no raw rgb/rgba literals or palette leaks)" +
     (inv18Violations.length ? " (" + inv18Violations.slice(0, 8).join(", ") + ")" : ""),
   inv18Violations.length === 0
 );

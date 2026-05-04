@@ -173,7 +173,7 @@
 }
 
 #cp12-wrap .room-modal-name {
-  font-family: var(--font-serif);
+  font-family: var(--typography-serif);
   font-size: var(--fs-h2);
   font-weight: 300;
   color: var(--surface-brand);
@@ -181,7 +181,7 @@
 }
 
 #cp12-wrap .room-modal-price {
-  font-family: var(--font-serif);
+  font-family: var(--typography-serif);
   font-size: var(--fs-lead);
   color: var(--surface-earth);
   font-weight: 600;

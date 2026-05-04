@@ -69,7 +69,7 @@
 }
 
 #cp12-wrap .faq-question h3 {
-  font-family: var(--font-body);
+  font-family: var(--typography-body);
   font-size: var(--fs-body);
   font-weight: 500;
   color: var(--text-primary);
@@ -80,7 +80,7 @@
 /* Custom toggle icon via ::after */
 #cp12-wrap .faq-question::after {
   content: "+";
-  font-family: var(--font-body);
+  font-family: var(--typography-body);
   font-size: var(--fs-h4);
   font-weight: 300;
   color: var(--text-brand);

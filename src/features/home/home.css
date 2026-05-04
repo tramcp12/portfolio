@@ -39,7 +39,7 @@
   z-index: var(--z-content);
   background:
     linear-gradient(90deg, var(--surface-inverse-solid) 0%, var(--surface-inverse-translucent) 44%, transparent 78%),
-    linear-gradient(0deg, var(--black-30) 0%, transparent 54%);
+    linear-gradient(0deg, var(--surface-overlay-dark-light) 0%, transparent 54%);
   pointer-events: none;
 }
 
@@ -80,7 +80,7 @@
   max-inline-size: 8ch;
   margin: 0 0 var(--sp-5);
   color: var(--text-inverse);
-  font-family: var(--font-serif);
+  font-family: var(--typography-serif);
   font-size: var(--fs-display-fluid);
   font-weight: 300;
   line-height: var(--lh-tight);
@@ -146,7 +146,7 @@
   display: block;
   margin: var(--sp-2) 0 0;
   color: var(--interactive-accent);
-  font-family: var(--font-serif);
+  font-family: var(--typography-serif);
   font-size: var(--fs-data-lg);
   line-height: 1;
 }
@@ -208,7 +208,7 @@
   #cp12-wrap .hero-overlay {
     background:
       linear-gradient(0deg, var(--surface-inverse-solid) 0%, var(--surface-inverse-translucent) 48%, transparent 80%),
-      linear-gradient(90deg, var(--black-30) 0%, transparent 64%);
+      linear-gradient(90deg, var(--surface-overlay-dark-light) 0%, transparent 64%);
   }
 
   #cp12-wrap .hero-glance-stat {

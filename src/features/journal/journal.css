@@ -22,7 +22,7 @@
 }
 
 #cp12-wrap .blog-heading {
-  font-family: var(--font-serif);
+  font-family: var(--typography-serif);
   font-size: var(--fs-display-fluid);
   color: var(--text-primary);
   font-weight: 300;
@@ -90,23 +90,23 @@
 
 #cp12-wrap .bi1 {
   background:
-    radial-gradient(ellipse at 85% 10%, var(--gold-warm-28) 0%, transparent 45%),
+    radial-gradient(ellipse at 85% 10%, var(--surface-accent-warm-28) 0%, transparent 45%),
     linear-gradient(115deg, transparent 45%, var(--white-5) 58%, transparent 72%),
     linear-gradient(155deg, var(--surface-inverse) 0%, var(--surface-brand) 55%, var(--surface-brand-mid) 100%);
 }
 
 #cp12-wrap .bi2 {
   background:
-    radial-gradient(ellipse at 50% 0%, var(--gold-warm-32) 0%, transparent 55%),
-    linear-gradient(140deg, transparent 40%, var(--sun-highlight-6) 58%, transparent 75%),
-    linear-gradient(150deg, var(--gradient-earth-deep) 0%, var(--surface-earth) 45%, var(--surface-accent) 80%, var(--gradient-earth-warm) 100%);
+    radial-gradient(ellipse at 50% 0%, var(--surface-accent-warm-32) 0%, transparent 55%),
+    linear-gradient(140deg, transparent 40%, var(--surface-highlight-soft) 58%, transparent 75%),
+    linear-gradient(150deg, var(--gradient-earth-deep-semantic) 0%, var(--surface-earth) 45%, var(--surface-accent) 80%, var(--gradient-earth-warm-semantic) 100%);
 }
 
 #cp12-wrap .bi3 {
   background:
-    radial-gradient(ellipse at 55% 5%, var(--cool-blue-light-30) 0%, transparent 50%),
-    linear-gradient(180deg, var(--cool-blue-20) 0%, transparent 40%),
-    linear-gradient(150deg, var(--surface-cool) 0%, var(--gradient-cool-deep) 40%, var(--surface-cool-mid) 80%, var(--gradient-cool-indigo) 100%);
+    radial-gradient(ellipse at 55% 5%, var(--surface-cool-light) 0%, transparent 50%),
+    linear-gradient(180deg, var(--surface-cool-soft) 0%, transparent 40%),
+    linear-gradient(150deg, var(--surface-cool) 0%, var(--gradient-cool-deep-semantic) 40%, var(--surface-cool-mid) 80%, var(--gradient-cool-indigo-semantic) 100%);
 }
 
 #cp12-wrap .blog-card:hover .bi1,
@@ -133,7 +133,7 @@
 }
 
 #cp12-wrap .blog-card-title {
-  font-family: var(--font-serif);
+  font-family: var(--typography-serif);
   font-size: var(--fs-h4);
   color: var(--text-primary);
   font-weight: 400;

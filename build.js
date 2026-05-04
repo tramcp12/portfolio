@@ -50,7 +50,23 @@ function writeRoot(name, content) {
   console.log("  wrote " + name + " (" + lines + " lines, " + kb + " KB)");
 }
 
+function getFiles(dir, ext) {
+  var results = [];
+  var list = fs.readdirSync(path.join(root, "src", dir));
+  list.forEach(function (file) {
+    var fullPath = path.join(root, "src", dir, file);
+    if (fs.statSync(fullPath).isDirectory()) {
+      var subFiles = getFiles(dir + "/" + file, ext);
+      results = results.concat(subFiles);
+    } else if (file.endsWith(ext)) {
+      results.push(dir + "/" + file);
+    }
+  });
+  return results.sort();
+}
+
 function assertMinSize(name, content, minKB) {
+
   var actual = Buffer.byteLength(content, "utf8") / 1024;
   if (actual < minKB) {
     throw new Error(
@@ -163,21 +179,12 @@ var cssSources = [
   "core/section-labels.css",
   "core/animations.css",
   "shared/lazy-loader.css",
-  "features/home/home.css",
-  "features/rooms/rooms.css",
-  "features/rooms/room-modal.css",
-  "features/testimonials/testimonials.css",
-  "features/explore/explore.css",
-  "features/about/about.css",
-  "features/location/location.css",
-  "features/journal/journal.css",
-  "features/faq/faq.css",
-  "features/cta/cta.css",
+].concat(getFiles("features", ".css")).concat([
   "layout/footer.css",
   "layout/modal.css",
   "core/responsive-sentinel.css",
   "core/supports.css"
-];
+]);
 var css = cssSources.map(function(f) { return readSrc(f); }).join("\n");
 
 // CSS-1 build-time pre-check
@@ -187,20 +194,15 @@ if (cgCount !== 1) throw new Error("CSS-1a build guard: Cormorant Garamond appea
 if (bvCount !== 1) throw new Error("CSS-1b build guard: Be Vietnam Pro appears " + bvCount + " times (expected 1)");
 
 /* ── JS   ── Phase 3+5+7+9+10: concat from src/ IIFE source files
- * Order: lang-switcher (IIFE 0) → rooms (IIFE 1) → room-modal (IIFE 2) →
- *        video (IIFE 3) → explore (IIFE 4) → scroll-reveal (IIFE 5) →
- *        lazy-loader (IIFE 6, must be last — observes [data-bg] after all render)
+ * Order: lang-switcher (IIFE 0) → features (IIFE 1-5) →
+ *        scroll-reveal (IIFE 6) → lazy-loader (IIFE 7, must be last)
  */
 var jsSources = [
   "shared/lang-switcher.js",
-  "features/rooms/rooms.js",
-  "features/faq/faq.js",
-  "features/rooms/room-modal.js",
-  "features/video/video.js",
-  "features/explore/explore.js",
+].concat(getFiles("features", ".js")).concat([
   "shared/scroll-reveal.js",
   "shared/lazy-loader.js"
-];
+]);
 var js = jsSources.map(function(f) { return readSrc(f); }).join("\n\n");
 
 /* ── Size guards ── protect against silent empty-file bugs ── */

@@ -27,7 +27,7 @@
 /* ── Nav element base styles ─────────────────────────────── */
 
 #cp12-wrap .nav-logo {
-  font-family: var(--font-serif);
+  font-family: var(--typography-serif);
   font-size: var(--fs-h4);
   font-weight: 600;
   color: var(--surface-base);
@@ -133,7 +133,7 @@
   border: none;
   background: transparent;
   color: var(--surface-muted);
-  font-family: var(--font-sans);
+  font-family: var(--typography-sans);
   font-size: var(--fs-micro);
   font-weight: 500;
   letter-spacing: 0.1em;
@@ -190,7 +190,7 @@
 #cp12-wrap .cp12-main-nav.nav-over-dark {
   background: var(--surface-dark-nav);
   backdrop-filter: blur(16px);
-  border-bottom: 1px solid var(--gold-warm-18);
+  border-bottom: 1px solid var(--surface-accent-warm-18);
 }
 
 #cp12-wrap .cp12-main-nav.nav-over-dark .nav-logo {
@@ -233,7 +233,7 @@
 #cp12-wrap .cp12-main-nav.scrolled:not(.nav-over-dark) {
   background: var(--surface-frosted-nav);
   backdrop-filter: blur(14px);
-  border-bottom: 1px solid var(--pine-base-8);
+  border-bottom: 1px solid var(--surface-tonal-soft);
 }
 
 /* Deep-scroll shadow lift — toggled by scroll-reveal.js when y > 80 */

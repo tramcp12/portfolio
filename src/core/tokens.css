@@ -233,7 +233,35 @@
   --surface-dark-card: var(--white-5);
   --surface-dark-card-hover: var(--white-10);
   --surface-price-badge: var(--cream-95);
+
+  /* Semantic aliases for palette leakage (INV-18 Fix) */
+  --surface-accent-warm: var(--gold-warm);
+  --surface-accent-warm-3: var(--gold-warm-3);
+  --surface-accent-warm-18: var(--gold-warm-18);
+  --surface-accent-warm-20: var(--gold-warm-20);
+  --surface-accent-warm-28: var(--gold-warm-28);
+  --surface-accent-warm-32: var(--gold-warm-32);
+  --surface-accent-warm-40: var(--gold-warm-40);
+  --surface-muted-soft: var(--mist-30);
+  --surface-muted-mid: rgba(184, 202, 189, 0.7); /* Fixed missing --mist-70 */
+  --surface-brand-translucent: var(--pine-29-75);
+  --surface-tonal-soft: var(--pine-base-8);
+  --surface-highlight-soft: var(--sun-highlight-6);
+  --surface-overlay-dark-light: var(--black-30);
+  --surface-overlay-dark: var(--black-40);
+  --surface-cool-soft: var(--cool-blue-20);
+  --surface-cool-light: var(--cool-blue-light-30);
+  --text-inverse-soft: var(--white-80);
+  --typography-body: var(--font-body);
+  --typography-sans: var(--font-sans);
+  --typography-serif: var(--font-serif);
+  --gradient-earth-deep-semantic: var(--gradient-earth-deep);
+  --gradient-earth-warm-semantic: var(--gradient-earth-warm);
+  --gradient-cool-deep-semantic: var(--gradient-cool-deep);
+  --gradient-cool-indigo-semantic: var(--gradient-cool-indigo);
+
   --gradient-earth-deep: var(--brown-dark);
+
   --gradient-earth-warm: var(--earth-warm);
   --gradient-cool-deep: var(--blue-deep);
   --gradient-cool-indigo: var(--indigo-muted);
